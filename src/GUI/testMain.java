@@ -3,6 +3,7 @@ package GUI;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/*Das ist die ausführbare Main-Datei*/
 public class testMain {
 
 	public static void main(String[] args) {
