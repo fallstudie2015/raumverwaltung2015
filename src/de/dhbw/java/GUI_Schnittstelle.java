@@ -1,6 +1,11 @@
 package de.dhbw.java;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import standardklassen.Buchung;
+import standardklassen.Raum;
 
 public class GUI_Schnittstelle {
 
@@ -10,7 +15,8 @@ public class GUI_Schnittstelle {
 	 * @param _passwort: passwort des Benutzers
 	 * @return: -1 oder persnur , je nach ergebnis der abfrage 	  * -1: alles scheiße      , * persnr: alles gut gelaufen - persnr wird zurückggeben 
 	 */
-	public int einloggen(String email, String _passwort){		
+	public int einloggen(String email, String _passwort)
+	{		
 		//sql abfrage ob nutzer in tabelle und typ(besteller/verwalter/admin) herauslesen, sowie ID
 		SQL_Schnittstelle sqlKlasse = new SQL_Schnittstelle();
 		
@@ -18,7 +24,7 @@ public class GUI_Schnittstelle {
 		_passwort = SHA512_Encrypt.encrypt(_passwort);
 		// abfrageString erstellen
 		String abfrageString = "select * from benutzer where email = '"+ email +"' and passwort = '"+ _passwort +"'" ;
-		ResultSet rs = sqlKlasse.sqlAbfrage(abfrageString);
+		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 		
 		// WIR müsüsen von de rDatenbankgruppe wissern, wie die einloggdaten zurückgegeben wrerden. also die infos.
 		// dementsprechend machen wir dann hier den spezifischen benutzer als ID oder als namen-string und der typ als int oder sonstiges erfahren. 
@@ -62,6 +68,8 @@ public class GUI_Schnittstelle {
 				default: 
 					break;
 				}
+				Main_Raumbuchungssystem.benutzertyp = switchChar;
+				
 				antwort = RSbenutzerID;
 			}
 				
@@ -69,35 +77,76 @@ public class GUI_Schnittstelle {
 		catch(Exception e)
 		{
 			System.out.println("Ausgabe "+e.toString());
-			antwort = 1;
+			antwort = -1;
 		}
 		return antwort;
 	}
-	
-	
-	
-	/**
-	 * nächste methode
-	 */
-	public void initialisiereStartbildschirm(Benutzer benutzer)
+
+	public void ladeStartbildschirm() throws SQLException
 	{
-		char benutzertyp = benutzer.getBenutzertyp();
-		switch (benutzertyp) {
+		Main_Raumbuchungssystem.raumListe.clear();
+		switch (Main_Raumbuchungssystem.benutzertyp) {
 			case'v':
-				System.out.println("läauft V");
-			
-					break;
+				ladeBestellerStartbildschirm();
+				break;
 			case 'b':
-				System.out.println("läauft B");
-		
+				ladeBestellerStartbildschirm();
 				break;
 			case 'a':
 				System.out.println("läauft A");
+				ladeBestellerStartbildschirm();
 				break;
 			default:
-				break;		
+				break;			
+		}
+	}
+		
+		private void ladeVerwalterStartbildschirm() 
+		{
+			// setz den ganzen scheiß visible
+		
+	
+		}
+
+	private void ladeBestellerStartbildschirm() throws SQLException 
+	{
+		// setz den ganzen scheiß visible
+		String abfrage1String = "SELECT * FROM raum";
+		ResultSet rs1 = SQL_Schnittstelle.sqlAbfrage(abfrage1String);
+		
+		while(rs1.next())
+		{
+			Main_Raumbuchungssystem.raumListe.add(new Raum(rs1.getInt("raumid"),rs1.getString("name"),rs1.getString("strasse"),rs1.getString("stock"),rs1.getInt("anzPersonen")));
 		}
 		
+		
+		
+		String abfrage2String ="SELECT * FROM buchung b WHERE b.benutzerid = "+Main_Raumbuchungssystem.benutzerId;
+		ResultSet rs2 = SQL_Schnittstelle.sqlAbfrage(abfrage2String);
+		
+		while (rs2.next()) {
+			Main_Raumbuchungssystem.meineBuchungen.add(
+					new Buchung(
+							rs2.getInt("buchungid"), 
+							rs2.getString("telefon"),
+							rs2.getDate("datum"), 
+							rs2.getTime("zeitvon"), 
+							rs2.getTime("zeitbis"), 
+							rs2.getString("kommentar"), 
+							rs2.getString("bestuhlung"), 
+							rs2.getInt("benutzerid"), 
+							rs2.getInt("raumid"), 
+							rs2.getString("status")
+							)
+					);
+			Buchung b = (Buchung) Main_Raumbuchungssystem.meineBuchungen.get(0);
+			String s = b.getTelefon();
+			System.out.println("läuft teflon: "+ s);
+		}
+
 	}
 	
+	
 }
+
+

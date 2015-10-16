@@ -30,7 +30,7 @@ public class SQL_Schnittstelle {
 	catch(SQLException s){System.out.println("SQL-Exception aufgetreten");}
 	} /* end Konstruktor */
 
-	public ResultSet sqlAbfrage(String abfrage)
+	public static ResultSet sqlAbfrage(String abfrage)
 	{ 
 		Statement stmt = null;
 		ResultSet rs = null;
