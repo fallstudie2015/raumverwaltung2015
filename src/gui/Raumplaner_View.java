@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -45,8 +45,7 @@ public class Raumplaner_View extends JFrame {
 	}
 
 	private JPanel logoPanel() {
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon("C:\\Users\\Tim\\logo.png").getImage().getScaledInstance(300,
-				150, Image.SCALE_DEFAULT));
+		ImageIcon imageIcon = new ImageIcon(getClass().getClassLoader().getResource("ressources/logo.png"));
 		logoLabel = new JLabel(imageIcon, SwingConstants.LEFT);
 		logoLabel.setPreferredSize(new Dimension(300, 150));
 
