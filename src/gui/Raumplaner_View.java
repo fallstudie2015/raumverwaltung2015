@@ -39,20 +39,25 @@ public class Raumplaner_View extends JFrame {
 		getContentPane().add(mainPanel(), BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Raumplaner v.1.0");
-		setMinimumSize(new Dimension(1300, 786));
+		setMinimumSize(new Dimension(1024, 786));
 		setMaximumSize(new Dimension(1920, 1080));
 		setExtendedState(MAXIMIZED_BOTH);
 	}
 
 	private JPanel logoPanel() {
-		ImageIcon imageIcon = new ImageIcon(getClass().getClassLoader().getResource("ressources/logo.png"));
+		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource(
+				"ressources/logo_2.png"));
+		ImageIcon imageIcon = new ImageIcon(ii1.getImage().getScaledInstance(
+				300, 150, Image.SCALE_DEFAULT));
 		logoLabel = new JLabel(imageIcon, SwingConstants.LEFT);
 		logoLabel.setPreferredSize(new Dimension(300, 150));
 
-		ImageIcon imageIcon2 = new ImageIcon(new ImageIcon("C:\\Users\\Tim\\Schrift.png").getImage().getScaledInstance(
-				900, 150, Image.SCALE_DEFAULT));
+		ImageIcon ii2 = new ImageIcon(getClass().getClassLoader().getResource(
+				"ressources/Schrift.png"));
+		ImageIcon imageIcon2 = new ImageIcon(ii2.getImage().getScaledInstance(
+				700, 150, Image.SCALE_DEFAULT));
 		raumplanerLabel = new JLabel(imageIcon2, SwingConstants.LEFT);
-		raumplanerLabel.setPreferredSize(new Dimension(900, 150));
+		raumplanerLabel.setPreferredSize(new Dimension(700, 150));
 
 		JPanel logoPanel = new JPanel();
 		logoPanel.setLayout(new BorderLayout());
@@ -74,19 +79,26 @@ public class Raumplaner_View extends JFrame {
 		upperPanel.add(zv.getZeitPanel());
 		onScrollPanel.add(zv);
 
+		JPanel bvPanel = new JPanel();
+
 		for (int i = 0; i < 20; i++) {
-			rv = new Raum_View("Raum XY" + i);
+			Bestellformular_View bv = new Bestellformular_View();
+			rv = new Raum_View("Raum XY" + i, bv, this);
+			bv.setRaumName(rv.getRaumName());
+			bv.initView();
+			bvPanel.add(bv);
 			upperPanel.add(rv.getRaumLabel());
 			onScrollPanel.add(rv);
 
 		}
 
-		scroller = new JScrollPane(onScrollPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		scroller = new JScrollPane(onScrollPanel,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scroller.getVerticalScrollBar().setUnitIncrement(16);
 
 		JPanel scrollPane = new JPanel(new BorderLayout());
-		// scrollPane.add(upperPanel, BorderLayout.NORTH);
+		scrollPane.add(bvPanel, BorderLayout.EAST);
 		scrollPane.add(scroller, BorderLayout.CENTER);
 
 		return scrollPane;

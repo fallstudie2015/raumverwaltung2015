@@ -7,18 +7,25 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JWindow;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class Raum_View extends JPanel implements MouseListener {
 
 	private JLabel raumLabel;
 	private String raumName;
 	private Raum_View_Label label;
+	private Bestellformular_View bv;
+	private JFrame frame;
 
-	public Raum_View(String name) {
+	public Raum_View(String name, Bestellformular_View bv, JFrame frame) {
 		this.raumName = name;
+		this.bv = bv;
+		this.frame = frame;
 		initView();
 	}
 
@@ -54,7 +61,9 @@ public class Raum_View extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("hey");
+		bv.setVisible(true);
+		// SwingUtilities.updateComponentTreeUI(frame);
+		frame.validate();
 	}
 
 	@Override
@@ -79,5 +88,9 @@ public class Raum_View extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public String getRaumName() {
+		return raumName;
 	}
 }
