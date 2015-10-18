@@ -1,12 +1,9 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -24,34 +21,26 @@ public class Zeit_View extends JPanel {
 	}
 
 	private JPanel uhrzeitenPanel() {
-		// zeitLabel = new JLabel("Zeit", SwingConstants.CENTER);
-		// zeitLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// zeitLabel.setPreferredSize(new Dimension(100, 25));
-
 		JPanel uhrzeitenPanel = new JPanel();
-		uhrzeitenPanel.setLayout(new GridLayout(46, 1));
-		
-		uhrzeitenPanel.add(getZeitPanel());
-				
-		// uhrzeitenPanel.add(zeitLabel);
+		uhrzeitenPanel.setLayout(new GridLayout(45, 1));
 
 		/*
 		 * 8:00 - 19:00 Uhr
 		 */
 		for (int i = 8; i < 19; i++) {
-			JLabel uhrzeitLabel = new JLabel(i + ":00" + " Uhr", SwingConstants.CENTER);
-			uhrzeitLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			JLabel uhrzeitLabel = new JLabel(i + ":00" + " Uhr",
+					SwingConstants.CENTER);
 			uhrzeitLabel.setPreferredSize(new Dimension(100, 30));
 			uhrzeitenPanel.add(uhrzeitLabel);
 			for (int j = 15; j < 46; j += 15) {
-				JLabel uhrzeitLabel2 = new JLabel(i + ":" + j + " Uhr", SwingConstants.CENTER);
-				uhrzeitLabel2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				JLabel uhrzeitLabel2 = new JLabel(i + ":" + j + " Uhr",
+						SwingConstants.CENTER);
 				uhrzeitLabel2.setPreferredSize(new Dimension(100, 30));
 				uhrzeitenPanel.add(uhrzeitLabel2);
 			}
 			if (i + 1 == 19) {
-				JLabel uhrzeitLabel3 = new JLabel(i + 1 + ":00" + " Uhr", SwingConstants.CENTER);
-				uhrzeitLabel3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				JLabel uhrzeitLabel3 = new JLabel(i + 1 + ":00" + " Uhr",
+						SwingConstants.CENTER);
 				uhrzeitLabel3.setPreferredSize(new Dimension(100, 30));
 				uhrzeitenPanel.add(uhrzeitLabel3);
 			}
@@ -60,14 +49,10 @@ public class Zeit_View extends JPanel {
 		return uhrzeitenPanel;
 	}
 
-	public JLayeredPane getZeitPanel() {
+	public JLabel getZeitPanel() {
 		zeitLabel = new JLabel("Zeit", SwingConstants.CENTER);
-		// zeitLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		zeitLabel.setPreferredSize(new Dimension(100, 30));
 
-		JLayeredPane jlp = new JLayeredPane();
-		jlp.add(zeitLabel);
-
-		return jlp;
+		return zeitLabel;
 	}
 }

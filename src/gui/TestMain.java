@@ -1,13 +1,10 @@
 package gui;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 /*Das ist die ausführbare Main-Datei*/
-public class testMain {
+public class TestMain {
 
 	public static void main(String[] args) {
-		login_View l = new login_View();
+		Login_View l = new Login_View();
 		l.setVisible(false);
 
 		Raumplaner_View r = new Raumplaner_View();

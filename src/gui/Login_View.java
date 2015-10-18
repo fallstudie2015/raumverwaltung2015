@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class login_View extends JFrame {
+public class Login_View extends JFrame {
 
 	/*
 	 * Hier wird das Login Fenster erzeugt, es muss nach dem erzeugen auf
@@ -33,7 +33,7 @@ public class login_View extends JFrame {
 	private JPasswordField passwordField;
 	private JButton loginButton, cancelButton;
 
-	public login_View() {
+	public Login_View() {
 		initLogin();
 	}
 

@@ -7,12 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JWindow;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 public class Raum_View extends JPanel implements MouseListener {
 
@@ -20,9 +17,9 @@ public class Raum_View extends JPanel implements MouseListener {
 	private String raumName;
 	private Raum_View_Label label;
 	private Bestellformular_View bv;
-	private JFrame frame;
+	private Raumplaner_View frame;
 
-	public Raum_View(String name, Bestellformular_View bv, JFrame frame) {
+	public Raum_View(String name, Bestellformular_View bv, Raumplaner_View frame) {
 		this.raumName = name;
 		this.bv = bv;
 		this.frame = frame;
@@ -36,9 +33,9 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	private JPanel raumzeitenPanel() {
 		JPanel raumzeitenPanel = new JPanel();
-		raumzeitenPanel.setLayout(new GridLayout(46, 1));
+		raumzeitenPanel.setLayout(new GridLayout(45, 1));
 
-		raumzeitenPanel.add(getRaumLabel());
+		// raumzeitenPanel.add(getRaumLabel());
 
 		for (int i = 0; i < 45; i++) {
 			label = new Raum_View_Label();
@@ -60,9 +57,21 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		bv.setVisible(true);
-		// SwingUtilities.updateComponentTreeUI(frame);
+		frame.getformularScrollPane().setVisible(true);
+
+		// frame.getScrollPane().getHorizontalScrollBar().setEnabled(false);
+		// frame.getScrollPane().getVerticalScrollBar().setEnabled(false);
+		// frame.getScrollPane().getViewport().getView().setEnabled(false);
+		// frame.getScrollPane().getVerticalScrollBar().setUnitIncrement(0);
+		// frame.getScrollPane().getComponent(0).setVisible(false);
+
+		// frame.getScrollPane().getViewport().add(bv, null);
+
+		// for (Component a : frame.getScrollPane().getComponents()) {
+		// a.setVisible(false);
+		// }
+
 		frame.validate();
 	}
 
