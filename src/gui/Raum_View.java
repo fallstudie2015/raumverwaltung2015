@@ -58,6 +58,7 @@ public class Raum_View extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		bv.setVisible(true);
+		bv.setScrollPane(frame.getformularScrollPane());
 		frame.getformularScrollPane().setVisible(true);
 		// frame.getScrollPane().getColumnHeader().setEnabled(false);
 

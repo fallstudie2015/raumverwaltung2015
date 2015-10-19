@@ -51,7 +51,7 @@ public class Bestellformular_View extends JPanel {
 	private final String technik[] = { "Netzwerk (LAN)", "Beamer",
 			"Moderatoren-Koffer", "Sonstige" };
 	private String raumName;
-	private JScrollPane sonstigeScroller;
+	private JScrollPane sonstigeScroller, pane;
 	private JFrame frame;
 	private ButtonGroup group;
 
@@ -358,7 +358,7 @@ public class Bestellformular_View extends JPanel {
 	}
 
 	private JPanel buttonPanel() {
-		vormerkenButton = new JButton("vormerken");
+		vormerkenButton = new JButton("reservieren");
 		vormerkenButton.setPreferredSize(new Dimension(100, 30));
 
 		abbrechenButton = new JButton("abbrechen");
@@ -368,6 +368,7 @@ public class Bestellformular_View extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getBestellformular().setVisible(false);
+				pane.setVisible(false);
 				frame.validate();
 			}
 		});
@@ -389,5 +390,9 @@ public class Bestellformular_View extends JPanel {
 
 	private JPanel getBestellformular() {
 		return this;
+	}
+
+	public void setScrollPane(JScrollPane pane) {
+		this.pane = pane;
 	}
 }

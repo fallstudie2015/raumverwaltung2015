@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -79,8 +80,11 @@ public class Login_View extends JFrame {
 	 * Panel f�r das Label, welches erscheint, wenn die Daten falsch sind
 	 */
 	private JPanel labelPanel() {
-		loginWrongLabel = new JLabel("Test");
+		loginWrongLabel = new JLabel(
+				"Benutzerdaten sind nicht korrekt angegeben!");
+		loginWrongLabel.setForeground(Color.RED);
 		loginWrongLabel.setBorder(BorderFactory.createEmptyBorder(70, 5, 5, 5));
+		loginWrongLabel.setVisible(false);
 
 		JPanel labelPanel = new JPanel();
 		labelPanel.add(loginWrongLabel);
