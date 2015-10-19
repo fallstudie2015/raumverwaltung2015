@@ -110,27 +110,32 @@ public class Raumplaner_View extends JFrame {
 
 		bvList = new ArrayList<Bestellformular_View>();
 
-		if (raumArray.length > 0) {
-			for (Raum raum : raumArray) {
-				// Bestellformular view erstellen
-				Bestellformular_View bv = new Bestellformular_View(this);
+		try {
+			if (raumArray.length > 0) {
+				for (Raum raum : raumArray) {
+					// Bestellformular view erstellen
+					Bestellformular_View bv = new Bestellformular_View(this);
 
-				// R�ume erstellen
-				rv = new Raum_View(raum.getName(), bv, this);
+					// R�ume erstellen
+					rv = new Raum_View(raum.getName(), bv, this);
 
-				// Raumnamen �bergeben
-				bv.setRaumName(rv.getRaumName());
-				bv.initView();
+					// Raumnamen �bergeben
+					bv.setRaumName(rv.getRaumName());
+					bv.initView();
 
-				// Panel hinzuf�gen
-				bvList.add(bv);
-				bvPanel.add(bv);
-				onScrollPanel.add(rv);
+					// Panel hinzuf�gen
+					bvList.add(bv);
+					bvPanel.add(bv);
+					onScrollPanel.add(rv);
 
-				port.add(rv.getRaumLabel());
+					port.add(rv.getRaumLabel());
+				}
+			} else {
+				System.out.println("Keine Räume gefunden");
 			}
-		} else {
-			System.out.println("Keine Räume gefunden");
+		} catch (Exception e) {
+			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
+					"Raumplaner_View.gui");
 		}
 
 		scroller = new JScrollPane(onScrollPanel,
