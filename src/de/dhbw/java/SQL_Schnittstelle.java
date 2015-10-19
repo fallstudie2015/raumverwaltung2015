@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public abstract class SQL_Schnittstelle {
 
@@ -54,27 +55,45 @@ public abstract class SQL_Schnittstelle {
 		return rs;
 	}
 
-	public static Raum[] getRooms() {
-		Raum[] rooms;
+	public static ArrayList<Raum> getRooms() {
+		ArrayList<Raum> raumListe = new ArrayList<Raum>();
 		try {
 			String abfrageString = "SELECT * FROM raum";
 			ResultSet rs = sqlAbfrage(abfrageString);
-			rs.last();
-			rooms = new Raum[rs.getRow()];
-			rs.beforeFirst();
+			rsAusgabe(rs);
 			while (rs.next()) {
-				rooms[rs.getRow() - 1].setRaumID(rs.getInt("raumid"));
-				rooms[rs.getRow() - 1].setAnzPersonen(rs.getInt("anzPersonen"));
-				rooms[rs.getRow() - 1].setName(rs.getString("name"));
-				rooms[rs.getRow() - 1].setStrasse(rs.getString("strasse"));
-				rooms[rs.getRow() - 1].setStock(rs.getString("stock"));
+				raumListe.add(new Raum(rs.getInt("raumid"), rs
+						.getString("name"), rs.getString("strasse"), rs
+						.getString("stock"), rs.getInt("anzPersonen")));
 			}
 		} catch (Exception e) {
 			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
 					"de.dhbw.java.SQL_Schnittstelle_getRooms");
-			rooms = new Raum[1]; // Dummiwert im Fehlerfall, weil Rückgabe ist
-									// pflicht
 		}
-		return rooms;
+		return raumListe;
+	}
+
+	private static void rsAusgabe(ResultSet rs) {
+		System.out.println();
+		System.out.print("zeile" + "\t");
+		try {
+			for (int i = 1; i < rs.getMetaData().getColumnCount() + 1; i++) {
+				System.out.print(rs.getMetaData().getColumnLabel(i) + "\t");
+			}
+			System.out.println("");
+			int zeile = 1;
+			rs.beforeFirst();
+			while (rs.next()) {
+				System.out.print(zeile + ": " + "\t");
+				for (int i = 1; i < rs.getMetaData().getColumnCount() + 1; i++) {
+					System.out.print(rs.getString(i) + "\t");
+				}
+				System.out.println("");
+				zeile++;
+			}
+			rs.beforeFirst();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
