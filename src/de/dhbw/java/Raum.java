@@ -1,4 +1,4 @@
-package standardklassen;
+package de.dhbw.java;
 
 public class Raum {
 	private int raumID;

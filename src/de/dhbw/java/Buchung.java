@@ -1,4 +1,4 @@
-package standardklassen;
+package de.dhbw.java;
 
 import java.sql.Date;
 import java.sql.Time;

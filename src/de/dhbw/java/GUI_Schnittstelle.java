@@ -4,9 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import standardklassen.Buchung;
-import standardklassen.Raum;
-
 public class GUI_Schnittstelle {
 
 	/**
@@ -18,7 +15,6 @@ public class GUI_Schnittstelle {
 	public int einloggen(String email, String _passwort)
 	{		
 		//sql abfrage ob nutzer in tabelle und typ(besteller/verwalter/admin) herauslesen, sowie ID
-		SQL_Schnittstelle sqlKlasse = new SQL_Schnittstelle();
 		
 		//passwort verschluesseln
 		_passwort = SHA512_Encrypt.encrypt(_passwort);

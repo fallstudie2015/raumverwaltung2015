@@ -9,9 +9,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import standardklassen.Buchung;
-import standardklassen.Raum;
-
 public class Main_Raumbuchungssystem {
 
 	// Global Variablen
