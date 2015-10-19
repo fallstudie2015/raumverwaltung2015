@@ -33,8 +33,9 @@ public class Raumplaner_View extends JFrame {
 
 	private JCalendar calendar;
 	private JLabel nameLabel, bereichLabel, logoLabel, raumplanerLabel,
-			raumLabel;
-	private JButton logoutButton, raumAddButton, raumDeleteButton;
+			raumLabel, benutzerLabel;
+	private JButton logoutButton, raumAddButton, raumDeleteButton,
+			benutzerAddButton, benutzerDeleteButton;
 	private JScrollPane scroller, formularScroller;
 	private Raum_View rv;
 	private ArrayList<Bestellformular_View> bvList;
@@ -171,8 +172,44 @@ public class Raumplaner_View extends JFrame {
 		raumAddDelPanel.add(raumPanel);
 		raumAddDelPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		raumAddDelPanel.add(buttonPanel);
+		raumAddDelPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+		raumAddDelPanel.add(benutzerAddDelPanel());
 
 		return raumAddDelPanel;
+	}
+
+	private JPanel benutzerAddDelPanel() {
+		benutzerLabel = new JLabel("Benutzer", SwingConstants.CENTER);
+
+		JPanel benutzerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		benutzerPanel.add(benutzerLabel);
+
+		benutzerAddButton = new JButton("+");
+		benutzerAddButton.setPreferredSize(new Dimension(100, 30));
+
+		benutzerDeleteButton = new JButton("-");
+		benutzerDeleteButton.setPreferredSize(new Dimension(100, 30));
+
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+
+		buttonPanel.add(Box.createHorizontalGlue());
+		buttonPanel.add(benutzerAddButton);
+		buttonPanel.add(Box.createRigidArea(new Dimension(75, 0)));
+		buttonPanel.add(benutzerDeleteButton);
+
+		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+
+		JPanel benutzerAddDelPanel = new JPanel();
+		benutzerAddDelPanel.setLayout(new BoxLayout(benutzerAddDelPanel,
+				BoxLayout.PAGE_AXIS));
+
+		benutzerAddDelPanel.add((Box.createVerticalGlue()));
+		benutzerAddDelPanel.add(benutzerPanel);
+		benutzerAddDelPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+		benutzerAddDelPanel.add(buttonPanel);
+
+		return benutzerAddDelPanel;
 	}
 
 	/*
@@ -235,8 +272,13 @@ public class Raumplaner_View extends JFrame {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 
+		JScrollPane scrollPane = new JScrollPane(leftPanel(),
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
 		mainPanel.add(logoPanel(), BorderLayout.NORTH);
-		mainPanel.add(leftPanel(), BorderLayout.WEST);
+		mainPanel.add(scrollPane, BorderLayout.WEST);
 		mainPanel.add(scrollPanel(), BorderLayout.CENTER);
 
 		// mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -288,6 +330,14 @@ public class Raumplaner_View extends JFrame {
 
 	public void setRaumDeleteButtonListener(ActionListener al) {
 		raumDeleteButton.addActionListener(al);
+	}
+
+	public void setBenutzerAddButtonListener(ActionListener al) {
+		benutzerAddButton.addActionListener(al);
+	}
+
+	public void setBenutzerDeleteButtonListener(ActionListener al) {
+		benutzerDeleteButton.addActionListener(al);
 	}
 
 	public void setCalendarListener(MouseAdapter ml) {
