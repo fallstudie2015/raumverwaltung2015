@@ -42,14 +42,14 @@ public class Raumplaner_View extends JFrame {
 	private JScrollPane scroller, formularScroller;
 	private Raum_View rv;
 	private ArrayList<Bestellformular_View> bvList;
-	private ArrayList<Raum> raumList;
+	private Raum[] raumArray;
 
 	public Raumplaner_View() {
 		initView();
 	}
 
-	public Raumplaner_View(ArrayList<Raum> raumList) {
-		this.raumList = raumList;
+	public Raumplaner_View(Raum[] raumArray) {
+		this.raumArray = raumArray;
 		initView();
 	}
 
@@ -110,23 +110,27 @@ public class Raumplaner_View extends JFrame {
 
 		bvList = new ArrayList<Bestellformular_View>();
 
-		for (int i = 0; i < 20; i++) {
-			// Bestellformular view erstellen
-			Bestellformular_View bv = new Bestellformular_View(this);
+		if (raumArray.length > 0) {
+			for (Raum raum : raumArray) {
+				// Bestellformular view erstellen
+				Bestellformular_View bv = new Bestellformular_View(this);
 
-			// R�ume erstellen
-			rv = new Raum_View("Raum XY" + i, bv, this);
+				// R�ume erstellen
+				rv = new Raum_View(raum.getName(), bv, this);
 
-			// Raumnamen �bergeben
-			bv.setRaumName(rv.getRaumName());
-			bv.initView();
+				// Raumnamen �bergeben
+				bv.setRaumName(rv.getRaumName());
+				bv.initView();
 
-			// Panel hinzuf�gen
-			bvList.add(bv);
-			bvPanel.add(bv);
-			onScrollPanel.add(rv);
+				// Panel hinzuf�gen
+				bvList.add(bv);
+				bvPanel.add(bv);
+				onScrollPanel.add(rv);
 
-			port.add(rv.getRaumLabel());
+				port.add(rv.getRaumLabel());
+			}
+		} else {
+			System.out.println("Keine Räume gefunden");
 		}
 
 		scroller = new JScrollPane(onScrollPanel,
@@ -362,8 +366,8 @@ public class Raumplaner_View extends JFrame {
 		return bvList;
 	}
 
-	public void setRaumList(ArrayList<Raum> raumList) {
-		this.raumList = raumList;
+	public void setRaumArray(Raum[] raumArray) {
+		this.raumArray = raumArray;
 	}
 
 	public void windowAktualisieren() {
