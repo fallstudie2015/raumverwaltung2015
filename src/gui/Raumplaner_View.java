@@ -5,8 +5,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,10 +32,12 @@ import com.toedter.calendar.JCalendar;
 public class Raumplaner_View extends JFrame {
 
 	private JCalendar calendar;
-	private JLabel nameLabel, bereichLabel, logoLabel, raumplanerLabel;
-	private JButton logoutButton;
+	private JLabel nameLabel, bereichLabel, logoLabel, raumplanerLabel,
+			raumLabel;
+	private JButton logoutButton, raumAddButton, raumDeleteButton;
 	private JScrollPane scroller, formularScroller;
 	private Raum_View rv;
+	private ArrayList<Bestellformular_View> bvList;
 
 	public Raumplaner_View() {
 		initView();
@@ -71,8 +78,8 @@ public class Raumplaner_View extends JFrame {
 
 		JPanel logoPanel = new JPanel();
 		logoPanel.setLayout(new BorderLayout());
-		logoPanel.add(logoLabel, BorderLayout.EAST);
-		logoPanel.add(raumplanerLabel, BorderLayout.WEST);
+		logoPanel.add(raumplanerLabel, BorderLayout.EAST);
+		logoPanel.add(logoLabel, BorderLayout.WEST);
 
 		return logoPanel;
 	}
@@ -91,6 +98,8 @@ public class Raumplaner_View extends JFrame {
 
 		JPanel port = new JPanel(new FlowLayout());
 
+		bvList = new ArrayList<Bestellformular_View>();
+
 		for (int i = 0; i < 20; i++) {
 			// Bestellformular view erstellen
 			Bestellformular_View bv = new Bestellformular_View(this);
@@ -103,6 +112,7 @@ public class Raumplaner_View extends JFrame {
 			bv.initView();
 
 			// Panel hinzuf�gen
+			bvList.add(bv);
 			bvPanel.add(bv);
 			onScrollPanel.add(rv);
 
@@ -131,6 +141,40 @@ public class Raumplaner_View extends JFrame {
 		return scrollPane;
 	}
 
+	private JPanel raumAddDelPanel() {
+		raumLabel = new JLabel("Raum", SwingConstants.CENTER);
+
+		JPanel raumPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		raumPanel.add(raumLabel);
+
+		raumAddButton = new JButton("+");
+		raumAddButton.setPreferredSize(new Dimension(100, 30));
+
+		raumDeleteButton = new JButton("-");
+		raumDeleteButton.setPreferredSize(new Dimension(100, 30));
+
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+
+		buttonPanel.add(Box.createHorizontalGlue());
+		buttonPanel.add(raumAddButton);
+		buttonPanel.add(Box.createRigidArea(new Dimension(75, 0)));
+		buttonPanel.add(raumDeleteButton);
+
+		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+
+		JPanel raumAddDelPanel = new JPanel();
+		raumAddDelPanel.setLayout(new BoxLayout(raumAddDelPanel,
+				BoxLayout.PAGE_AXIS));
+
+		raumAddDelPanel.add((Box.createVerticalGlue()));
+		raumAddDelPanel.add(raumPanel);
+		raumAddDelPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+		raumAddDelPanel.add(buttonPanel);
+
+		return raumAddDelPanel;
+	}
+
 	/*
 	 * Das seitlich linke Panel wird mit Kalender und Daten des Benutzers
 	 * gef�llt
@@ -139,6 +183,7 @@ public class Raumplaner_View extends JFrame {
 		calendar = new JCalendar();
 		calendar.setTodayButtonVisible(true);
 		calendar.setPreferredSize(new Dimension(275, 300));
+		calendar.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
 		nameLabel = new JLabel("Name");
 		// nameLabel.setPreferredSize(new Dimension(150, 100));
@@ -159,7 +204,13 @@ public class Raumplaner_View extends JFrame {
 		logoutPanel.add(logoutButton);
 
 		JPanel calendarPanel = new JPanel();
+		calendarPanel.setLayout(new BoxLayout(calendarPanel,
+				BoxLayout.PAGE_AXIS));
+
+		calendarPanel.add(Box.createVerticalGlue());
 		calendarPanel.add(calendar);
+		calendarPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+		calendarPanel.add(raumAddDelPanel());
 
 		JPanel infoPanel = new JPanel();
 		infoPanel.setLayout(new GridLayout(3, 1));
@@ -194,7 +245,7 @@ public class Raumplaner_View extends JFrame {
 	}
 
 	/*
-	 * Die zwei ScrollPanes werden zur�ckgegeben
+	 * Die Komponenten werden zur�ckgegeben
 	 */
 	public JScrollPane getScrollPane() {
 		return scroller;
@@ -202,5 +253,44 @@ public class Raumplaner_View extends JFrame {
 
 	public JScrollPane getformularScrollPane() {
 		return formularScroller;
+	}
+
+	public JCalendar getCalendar() {
+		return calendar;
+	}
+
+	public JButton getLogoutButton() {
+		return logoutButton;
+	}
+
+	public JButton getRaumAddButton() {
+		return raumAddButton;
+	}
+
+	public JButton getRaumDeleteButton() {
+		return raumDeleteButton;
+	}
+
+	public ArrayList<Bestellformular_View> getList() {
+		return bvList;
+	}
+
+	/*
+	 * Listener zu den Button hinzufügen
+	 */
+	public void setLogoutButtonLisener(ActionListener al) {
+		logoutButton.addActionListener(al);
+	}
+
+	public void setRaumAddButtonListener(ActionListener al) {
+		raumAddButton.addActionListener(al);
+	}
+
+	public void setRaumDeleteButtonListener(ActionListener al) {
+		raumDeleteButton.addActionListener(al);
+	}
+
+	public void setCalendarListener(MouseAdapter ml) {
+		calendar.addMouseListener(ml);
 	}
 }
