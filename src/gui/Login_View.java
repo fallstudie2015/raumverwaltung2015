@@ -123,7 +123,7 @@ public class Login_View extends JFrame {
 		};
 		userIDField.addActionListener(al1);
 
-		// Passwort Feld frei machen und Zeichen setzen &#8226
+		// Passwort Feld frei machen und Zeichen setzen
 		MouseListener ml2 = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
