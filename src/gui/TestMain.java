@@ -5,10 +5,10 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		Login_View l = new Login_View();
-		l.setVisible(false);
+		l.setVisible(true);
 
 		Raumplaner_View r = new Raumplaner_View();
-		r.setVisible(true);
+		r.setVisible(false);
 
 	}
 

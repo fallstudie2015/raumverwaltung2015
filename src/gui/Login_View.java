@@ -25,7 +25,7 @@ public class Login_View extends JFrame {
 	 * visible gesetzt werden
 	 * 
 	 * Alle Elemente sind auf einem eigenen Panel implementiert, um deren
-	 * spezifische Größe zu ändern.
+	 * spezifische Grï¿½ï¿½e zu ï¿½ndern.
 	 */
 
 	private JLabel loginWrongLabel, logoLabel;
@@ -40,7 +40,7 @@ public class Login_View extends JFrame {
 	/*
 	 * Rahmenbedingungen setzen
 	 * 
-	 * Auflösung: 786 * 500 als feste und unveränderbare Größe
+	 * Auflï¿½sung: 786 * 500 als feste und unverï¿½nderbare Grï¿½ï¿½e
 	 */
 	private void initLogin() {
 		setLayout(new BorderLayout());
@@ -53,7 +53,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Alle erforderlichen Panel werden zusammengefügt, bevor sie auf das Frame
+	 * Alle erforderlichen Panel werden zusammengefï¿½gt, bevor sie auf das Frame
 	 * gesetzt werden
 	 */
 	private JPanel loginPanel() {
@@ -76,7 +76,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Panel für das Label, welches erscheint, wenn die Daten falsch sind
+	 * Panel fï¿½r das Label, welches erscheint, wenn die Daten falsch sind
 	 */
 	private JPanel labelPanel() {
 		loginWrongLabel = new JLabel("Test");
@@ -89,9 +89,9 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Panel enthält die zwei eingabe Felder
+	 * Panel enthï¿½lt die zwei eingabe Felder
 	 * 
-	 * Die ActionListener müssen noch entfernt werden
+	 * Die ActionListener mï¿½ssen noch entfernt werden
 	 */
 	private JPanel insertFieldPanel() {
 		userIDField = new JTextField("eMail-Adresse");
@@ -103,7 +103,7 @@ public class Login_View extends JFrame {
 		passwordField.setPreferredSize(new Dimension(355, 30));
 		passwordField.setEchoChar((char) 0);
 
-		// userId Feld wird gedrückt
+		// userId Feld wird gedrï¿½ckt
 		MouseListener ml1 = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -113,7 +113,7 @@ public class Login_View extends JFrame {
 		};
 		userIDField.addMouseListener(ml1);
 
-		// ich weiß noch nciht ob man es braucht
+		// ich weiï¿½ noch nciht ob man es braucht
 		ActionListener al1 = new ActionListener() {
 
 			@Override
@@ -129,12 +129,12 @@ public class Login_View extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
 				passwordField.setText("");
-				passwordField.setEchoChar('•');
+				passwordField.setEchoChar('ï¿½');
 			}
 		};
 		passwordField.addMouseListener(ml2);
 
-		// ich weiß noch nciht ob man es braucht
+		// ich weiï¿½ noch nciht ob man es braucht
 		ActionListener al2 = new ActionListener() {
 
 			@Override
@@ -160,9 +160,9 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Panel enthält die zwei Buttons
+	 * Panel enthï¿½lt die zwei Buttons
 	 * 
-	 * ActionListener sind nur zu Testzwecken implementier, müssen noch entfernt
+	 * ActionListener sind nur zu Testzwecken implementier, mï¿½ssen noch entfernt
 	 * werden
 	 */
 	private JPanel buttonPanel() {
@@ -177,7 +177,7 @@ public class Login_View extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				
 			}
 		};
 		loginButton.addActionListener(al1);
@@ -210,7 +210,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Panel enthält ein Firmenlogo o.ä.
+	 * Panel enthï¿½lt ein Firmenlogo o.ï¿½.
 	 */
 	private JPanel logoPanel() {
 		logoLabel = new JLabel("Firmenlogo");
@@ -223,7 +223,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Methoden um ActionListener und andere Listener hinzuzufügen
+	 * Methoden um ActionListener und andere Listener hinzuzufï¿½gen
 	 */
 	public void setUserIDListener(ActionListener al) {
 		this.userIDField.addActionListener(al);
@@ -250,7 +250,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Setter Methoden für die einzelnen Elemente auf dem JFrame
+	 * Setter Methoden fï¿½r die einzelnen Elemente auf dem JFrame
 	 */
 	public JLabel getLoginWrongLabel() {
 		return loginWrongLabel;

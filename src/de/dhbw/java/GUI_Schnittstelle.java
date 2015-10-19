@@ -10,28 +10,27 @@ import standardklassen.Raum;
 public class GUI_Schnittstelle {
 
 	/**
-	 * Gibt intfür die GUI zurück
+	 * Gibt intfuer die GUI zurueck
 	 * @param benutzername: name des benutzers, egal ob Verwalter oder Besteller.
 	 * @param _passwort: passwort des Benutzers
-	 * @return: -1 oder persnur , je nach ergebnis der abfrage 	  * -1: alles scheiße      , * persnr: alles gut gelaufen - persnr wird zurückggeben 
+	 * @return: -1 oder persnur , je nach ergebnis der abfrage 	  * -1: alles scheisse      , * persnr: alles gut gelaufen - persnr wird zurueckggeben 
 	 */
 	public int einloggen(String email, String _passwort)
 	{		
 		//sql abfrage ob nutzer in tabelle und typ(besteller/verwalter/admin) herauslesen, sowie ID
 		SQL_Schnittstelle sqlKlasse = new SQL_Schnittstelle();
 		
-		//passwort verschlüsseln
+		//passwort verschluesseln
 		_passwort = SHA512_Encrypt.encrypt(_passwort);
 		// abfrageString erstellen
 		String abfrageString = "select * from benutzer where email = '"+ email +"' and passwort = '"+ _passwort +"'" ;
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 		
-		// WIR müsüsen von de rDatenbankgruppe wissern, wie die einloggdaten zurückgegeben wrerden. also die infos.
+		// WIR mï¿½sï¿½sen von de rDatenbankgruppe wissern, wie die einloggdaten zurueckgegeben wrerden. also die infos.
 		// dementsprechend machen wir dann hier den spezifischen benutzer als ID oder als namen-string und der typ als int oder sonstiges erfahren. 
-		// also arbeiten wir hier wahrscheinlich mit rs.getString   <--- darum gehts nämlich
-		// wir benutzen danach nurnoch den typ des benutzers, damit wir ein entsprechendes BEnutzer-Objekt erstellen können.
-		// Dieses trägt dann als namen "benutzername"
-		String Rückgabe ="";
+		// also arbeiten wir hier wahrscheinlich mit rs.getString   <--- darum gehts naemlich
+		// wir benutzen danach nurnoch den typ des benutzers, damit wir ein entsprechendes BEnutzer-Objekt erstellen koennen.
+		// Dieses traegt dann als namen "benutzername"
 		String RSvorname = "";
 		String RSnachname = "";
 		String RSbenutzertyp = "";
@@ -43,15 +42,12 @@ public class GUI_Schnittstelle {
 		{
 			while(rs.next())
 			{
-
 				RSvorname = rs.getString("vorname");
 				RSnachname = rs.getString("nachname");
 				RSemail = rs.getString("email");
 				RSbenutzertyp = rs.getString("rolle");
 				RSbenutzerID = rs.getInt("benutzerid");
 				switchChar = RSbenutzertyp.charAt(0);
-				
-				
 				
 				switch (switchChar) {
 				case 'v':
@@ -61,7 +57,7 @@ public class GUI_Schnittstelle {
 					Benutzer.benutzerListe.add(new Besteller(RSemail, RSbenutzerID, RSvorname, RSnachname, switchChar));
 					break;
 				case 'a': 
-					// hier müsste unter umständen noch dein objekt der klasse "admin" erstellt werden können
+					// hier muesste unter umstaenden noch dein objekt der klasse "admin" erstellt werden kï¿½nnen
 					Benutzer.benutzerListe.add(new Admin(RSemail, RSbenutzerID, RSvorname, RSnachname, switchChar));
 					break;
 
@@ -69,7 +65,6 @@ public class GUI_Schnittstelle {
 					break;
 				}
 				Main_Raumbuchungssystem.benutzertyp = switchChar;
-				
 				antwort = RSbenutzerID;
 			}
 				
@@ -93,7 +88,7 @@ public class GUI_Schnittstelle {
 				ladeBestellerStartbildschirm();
 				break;
 			case 'a':
-				System.out.println("läauft A");
+				System.out.println("laeuft A");
 				ladeBestellerStartbildschirm();
 				break;
 			default:
@@ -103,23 +98,28 @@ public class GUI_Schnittstelle {
 		
 		private void ladeVerwalterStartbildschirm() 
 		{
-			// setz den ganzen scheiß visible
+			// setz den ganzen scheiï¿½ visible
 		
 	
 		}
 
 	private void ladeBestellerStartbildschirm() throws SQLException 
 	{
-		// setz den ganzen scheiß visible
+		// setz den ganzen scheiss visible
 		String abfrage1String = "SELECT * FROM raum";
 		ResultSet rs1 = SQL_Schnittstelle.sqlAbfrage(abfrage1String);
 		
 		while(rs1.next())
 		{
-			Main_Raumbuchungssystem.raumListe.add(new Raum(rs1.getInt("raumid"),rs1.getString("name"),rs1.getString("strasse"),rs1.getString("stock"),rs1.getInt("anzPersonen")));
+			Main_Raumbuchungssystem.raumListe.add(
+					new Raum(rs1.getInt("raumid"),
+							rs1.getString("name"),
+							rs1.getString("strasse"),
+							rs1.getString("stock"),
+							rs1.getInt("anzPersonen")
+							)
+					);
 		}
-		
-		
 		
 		String abfrage2String ="SELECT * FROM buchung b WHERE b.benutzerid = "+Main_Raumbuchungssystem.benutzerId;
 		ResultSet rs2 = SQL_Schnittstelle.sqlAbfrage(abfrage2String);
@@ -141,7 +141,7 @@ public class GUI_Schnittstelle {
 					);
 			Buchung b = (Buchung) Main_Raumbuchungssystem.meineBuchungen.get(0);
 			String s = b.getTelefon();
-			System.out.println("läuft teflon: "+ s);
+			System.out.println("laeuft teflon: "+ s);
 		}
 
 	}

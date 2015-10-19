@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class SQL_Schnittstelle {
 	
 	// methode coinncetionaufbauen
-	// methode connection schlie0ßen
+	// methode connection schlieÃŸen
 	// methode batch verarbeitung
 	// methode einzelne query
 	static Connection con; 		// Verbindung zur Datenbank
@@ -17,7 +17,7 @@ public class SQL_Schnittstelle {
 	public SQL_Schnittstelle()
 	{
 	try{
-	// Datenbanktreiber für MySQL laden
+	// Datenbanktreiber fuer MySQL laden
 		Class.forName("com.mysql.jdbc.Driver");
 		System.out.println("Treiber gefunden\n--------------------------------");
 	}
