@@ -8,8 +8,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -41,8 +39,13 @@ public class Login_View extends JFrame {
 	private ActionListener action;
 
 	public Login_View(ActionListener action) {
-		this.action = action;
+		setLoginButtonListener(action);
 		initLogin();
+	}
+
+	public Login_View() {
+		initLogin();
+		setLoginButtonListener(new listener.Login_Listener(this));
 	}
 
 	/*
