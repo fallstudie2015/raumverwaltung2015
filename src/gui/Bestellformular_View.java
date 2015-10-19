@@ -4,13 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -46,10 +52,13 @@ public class Bestellformular_View extends JPanel {
 			"Moderatoren-Koffer", "Sonstige" };
 	private String raumName;
 	private JScrollPane sonstigeScroller;
+	private JFrame frame;
+	private ButtonGroup group;
 
-	public Bestellformular_View() {
+	public Bestellformular_View(JFrame frame) {
 		// initView();
-		setVisible(false);
+		this.frame = frame;
+		this.setVisible(false);
 	}
 
 	public void initView() {
@@ -221,11 +230,22 @@ public class Bestellformular_View extends JPanel {
 		internRB = new JRadioButton("intern", true);
 		externRB = new JRadioButton("extern");
 
-		JPanel inExPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 0));
+		group = new ButtonGroup();
+		group.add(internRB);
+		group.add(externRB);
+
+		JPanel inExPanel = new JPanel();
+		inExPanel.setLayout(new BoxLayout(inExPanel, BoxLayout.LINE_AXIS));
+
+		inExPanel.add(Box.createHorizontalGlue());
 		inExPanel.add(internRB);
+		inExPanel.add(Box.createRigidArea(new Dimension(100, 0)));
 		inExPanel.add(externRB);
 
-		return inExPanel;
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panel.add(inExPanel);
+
+		return panel;
 	}
 
 	private JPanel technikPanel() {
@@ -246,6 +266,24 @@ public class Bestellformular_View extends JPanel {
 		for (String string : technik) {
 			JCheckBox check = new JCheckBox(string);
 			check.setPreferredSize(new Dimension(100, 30));
+			check.addItemListener(new ItemListener() {
+
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					JCheckBox check = (JCheckBox) e.getSource();
+					String name = check.getText();
+
+					if (name == "Sonstige" && check.isSelected()) {
+						sonstigeArea.setVisible(true);
+						sonstigeScroller.setVisible(true);
+						frame.validate();
+					} else {
+						sonstigeArea.setVisible(false);
+						sonstigeScroller.setVisible(false);
+						frame.validate();
+					}
+				}
+			});
 			checkPanel.add(check);
 		}
 
@@ -325,6 +363,14 @@ public class Bestellformular_View extends JPanel {
 
 		abbrechenButton = new JButton("abbrechen");
 		abbrechenButton.setPreferredSize(new Dimension(100, 30));
+		abbrechenButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getBestellformular().setVisible(false);
+				frame.validate();
+			}
+		});
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
@@ -339,5 +385,9 @@ public class Bestellformular_View extends JPanel {
 
 	public void setRaumName(String name) {
 		this.raumName = name;
+	}
+
+	private JPanel getBestellformular() {
+		return this;
 	}
 }

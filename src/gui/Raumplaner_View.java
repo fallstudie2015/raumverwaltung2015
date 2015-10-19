@@ -20,8 +20,8 @@ import com.toedter.calendar.JCalendar;
 /**
  * @author Tim
  * 
- *         Die Klasse liefert die Haupansicht für den Besteller, sowie die
- *         modifizierte Ansicht für den Verwalter
+ *         Die Klasse liefert die Haupansicht fï¿½r den Besteller, sowie die
+ *         modifizierte Ansicht fï¿½r den Verwalter
  *
  */
 public class Raumplaner_View extends JFrame {
@@ -37,7 +37,7 @@ public class Raumplaner_View extends JFrame {
 	}
 
 	/*
-	 * Größe der Ansicht wird festgelegt und alle erforderlichen Panels werden
+	 * Grï¿½ï¿½e der Ansicht wird festgelegt und alle erforderlichen Panels werden
 	 * geladen
 	 */
 	private void initView() {
@@ -79,7 +79,7 @@ public class Raumplaner_View extends JFrame {
 
 	/*
 	 * Beide ScrollPanel werden geladen, jedoch das Bestellformular ist nicht
-	 * sichtbar, erst nach dem klicken auf dem gewünschten raum
+	 * sichtbar, erst nach dem klicken auf dem gewï¿½nschten raum
 	 */
 	private JPanel scrollPanel() {
 		JPanel onScrollPanel = new JPanel();
@@ -93,16 +93,16 @@ public class Raumplaner_View extends JFrame {
 
 		for (int i = 0; i < 20; i++) {
 			// Bestellformular view erstellen
-			Bestellformular_View bv = new Bestellformular_View();
+			Bestellformular_View bv = new Bestellformular_View(this);
 
-			// Räume erstellen
+			// Rï¿½ume erstellen
 			rv = new Raum_View("Raum XY" + i, bv, this);
 
-			// Raumnamen übergeben
+			// Raumnamen ï¿½bergeben
 			bv.setRaumName(rv.getRaumName());
 			bv.initView();
 
-			// Panel hinzufügen
+			// Panel hinzufï¿½gen
 			bvPanel.add(bv);
 			onScrollPanel.add(rv);
 
@@ -133,7 +133,7 @@ public class Raumplaner_View extends JFrame {
 
 	/*
 	 * Das seitlich linke Panel wird mit Kalender und Daten des Benutzers
-	 * gefüllt
+	 * gefï¿½llt
 	 */
 	private JPanel leftPanel() {
 		calendar = new JCalendar();
@@ -194,7 +194,7 @@ public class Raumplaner_View extends JFrame {
 	}
 
 	/*
-	 * Die zwei ScrollPanes werden zurückgegeben
+	 * Die zwei ScrollPanes werden zurï¿½ckgegeben
 	 */
 	public JScrollPane getScrollPane() {
 		return scroller;
