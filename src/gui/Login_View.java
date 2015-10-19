@@ -129,7 +129,7 @@ public class Login_View extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
 				passwordField.setText("");
-				passwordField.setEchoChar('•');
+				passwordField.setEchoChar('\u2022');
 			}
 		};
 		passwordField.addMouseListener(ml2);
