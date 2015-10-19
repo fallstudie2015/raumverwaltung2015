@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -33,14 +34,14 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	private JPanel raumzeitenPanel() {
 		JPanel raumzeitenPanel = new JPanel();
-		raumzeitenPanel.setLayout(new GridLayout(45, 1));
+		raumzeitenPanel.setLayout(new GridLayout(23, 1));
 
 		// raumzeitenPanel.add(getRaumLabel());
 
-		for (int i = 0; i < 45; i++) {
+		for (int i = 0; i < 23; i++) {
 			label = new Raum_View_Label();
 			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			label.setPreferredSize(new Dimension(100, 30));
+			label.setPreferredSize(new Dimension(200, 50));
 			raumzeitenPanel.add(label);
 		}
 
@@ -49,7 +50,8 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	public JLabel getRaumLabel() {
 		raumLabel = new JLabel(raumName, SwingConstants.CENTER);
-		raumLabel.setPreferredSize(new Dimension(100, 30));
+		raumLabel.setFont(new Font(raumName, 0, 18));
+		raumLabel.setPreferredSize(new Dimension(200, 50));
 		raumLabel.addMouseListener(this);
 
 		return raumLabel;
@@ -57,24 +59,21 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		bv.setVisible(true);
-		bv.setScrollPane(frame.getformularScrollPane());
-		frame.getformularScrollPane().setVisible(true);
-		// frame.getScrollPane().getColumnHeader().setEnabled(false);
+		int i = 0;
+		for (Bestellformular_View view : frame.getList()) {
+			if (view.isVisible()) {
+				i++;
+			}
+		}
 
-		// frame.getScrollPane().getHorizontalScrollBar().setEnabled(false);
-		// frame.getScrollPane().getVerticalScrollBar().setEnabled(false);
-		// frame.getScrollPane().getViewport().getView().setEnabled(false);
-		// frame.getScrollPane().getVerticalScrollBar().setUnitIncrement(0);
-		// frame.getScrollPane().getComponent(0).setVisible(false);
+		if (i == 0) {
+			bv.setVisible(true);
+			bv.setScrollPane(frame.getformularScrollPane());
+			bv.setDate(frame.getCalendar());
+			frame.getformularScrollPane().setVisible(true);
 
-		// frame.getScrollPane().getViewport().add(bv, null);
-
-		// for (Component a : frame.getScrollPane().getComponents()) {
-		// a.setVisible(false);
-		// }
-
-		frame.validate();
+			frame.validate();
+		}
 	}
 
 	@Override

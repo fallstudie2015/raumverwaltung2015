@@ -5,19 +5,24 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class Login_View extends JFrame {
 
@@ -33,8 +38,10 @@ public class Login_View extends JFrame {
 	private JTextField userIDField;
 	private JPasswordField passwordField;
 	private JButton loginButton, cancelButton;
+	private ActionListener action;
 
-	public Login_View() {
+	public Login_View(ActionListener action) {
+		this.action = action;
 		initLogin();
 	}
 
@@ -117,16 +124,6 @@ public class Login_View extends JFrame {
 		};
 		userIDField.addMouseListener(ml1);
 
-		// ich wei� noch nciht ob man es braucht
-		ActionListener al1 = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		};
-		userIDField.addActionListener(al1);
-
 		// Passwort Feld frei machen und Zeichen setzen
 		MouseListener ml2 = new MouseAdapter() {
 			@Override
@@ -137,16 +134,6 @@ public class Login_View extends JFrame {
 			}
 		};
 		passwordField.addMouseListener(ml2);
-
-		// ich wei� noch nciht ob man es braucht
-		ActionListener al2 = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		};
-		passwordField.addActionListener(al2);
 
 		JPanel userPanel = new JPanel();
 		userPanel.add(userIDField);
@@ -176,15 +163,7 @@ public class Login_View extends JFrame {
 		cancelButton = new JButton("Abbrechen");
 		cancelButton.setPreferredSize(new Dimension(150, 30));
 
-		// Login Daten werden weitergegeben
-		ActionListener al1 = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		};
-		loginButton.addActionListener(al1);
+		loginButton.addActionListener(action);
 
 		// Systemabbruch
 		ActionListener al2 = new ActionListener() {
@@ -217,8 +196,12 @@ public class Login_View extends JFrame {
 	 * Panel enth�lt ein Firmenlogo o.�.
 	 */
 	private JPanel logoPanel() {
-		logoLabel = new JLabel("Firmenlogo");
-		logoLabel.setPreferredSize(new Dimension(100, 100));
+		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource(
+				"ressources/logo_2.png"));
+		ImageIcon imageIcon = new ImageIcon(ii1.getImage().getScaledInstance(
+				300, 150, Image.SCALE_DEFAULT));
+		logoLabel = new JLabel(imageIcon, SwingConstants.CENTER);
+		logoLabel.setPreferredSize(new Dimension(300, 150));
 
 		JPanel logoPanel = new JPanel();
 		logoPanel.add(logoLabel);
