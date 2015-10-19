@@ -18,8 +18,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -366,6 +368,10 @@ public class Bestellformular_View extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// JOptionPane option = new JOptionPane("Der Raum: " + raumName
+				// + " wurde reserviert!", "Der Raum: " + raumName
+				// + " wurde reserviert!", JOptionPane.OK_OPTION);
+
 				getBestellformular().setVisible(false);
 				pane.setVisible(false);
 				frame.validate();

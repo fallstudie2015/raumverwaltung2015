@@ -60,13 +60,23 @@ public class Raum_View extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int i = 0;
+		Bestellformular_View aktiv = null;
 		for (Bestellformular_View view : frame.getList()) {
 			if (view.isVisible()) {
+				aktiv = view;
 				i++;
 			}
 		}
-
 		if (i == 0) {
+			bv.setVisible(true);
+			bv.setScrollPane(frame.getformularScrollPane());
+			bv.setDate(frame.getCalendar());
+			frame.getformularScrollPane().setVisible(true);
+
+			frame.validate();
+		} else {
+			aktiv.setVisible(false);
+			i = 0;
 			bv.setVisible(true);
 			bv.setScrollPane(frame.getformularScrollPane());
 			bv.setDate(frame.getCalendar());

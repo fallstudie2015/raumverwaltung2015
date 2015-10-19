@@ -22,6 +22,8 @@ import javax.swing.SwingConstants;
 
 import com.toedter.calendar.JCalendar;
 
+import de.dhbw.java.Raum;
+
 /**
  * @author Tim
  * 
@@ -33,14 +35,21 @@ public class Raumplaner_View extends JFrame {
 
 	private JCalendar calendar;
 	private JLabel nameLabel, bereichLabel, logoLabel, raumplanerLabel,
-			raumLabel, benutzerLabel;
+			raumLabel, benutzerLabel, ausstattungLabel;
 	private JButton logoutButton, raumAddButton, raumDeleteButton,
-			benutzerAddButton, benutzerDeleteButton;
+			benutzerAddButton, benutzerDeleteButton, ausstattungAddButton,
+			ausstattungDeleteButton;
 	private JScrollPane scroller, formularScroller;
 	private Raum_View rv;
 	private ArrayList<Bestellformular_View> bvList;
+	private ArrayList<Raum> raumList;
 
 	public Raumplaner_View() {
+		initView();
+	}
+
+	public Raumplaner_View(ArrayList<Raum> raumList) {
+		this.raumList = raumList;
 		initView();
 	}
 
@@ -174,6 +183,8 @@ public class Raumplaner_View extends JFrame {
 		raumAddDelPanel.add(buttonPanel);
 		raumAddDelPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		raumAddDelPanel.add(benutzerAddDelPanel());
+		raumAddDelPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+		raumAddDelPanel.add(ausstattungAddDelPanel());
 
 		return raumAddDelPanel;
 	}
@@ -210,6 +221,40 @@ public class Raumplaner_View extends JFrame {
 		benutzerAddDelPanel.add(buttonPanel);
 
 		return benutzerAddDelPanel;
+	}
+
+	private JPanel ausstattungAddDelPanel() {
+		ausstattungLabel = new JLabel("Ausstattung", SwingConstants.CENTER);
+
+		JPanel ausstattungPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		ausstattungPanel.add(ausstattungLabel);
+
+		ausstattungAddButton = new JButton("+");
+		ausstattungAddButton.setPreferredSize(new Dimension(100, 30));
+
+		ausstattungDeleteButton = new JButton("-");
+		ausstattungDeleteButton.setPreferredSize(new Dimension(100, 30));
+
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+
+		buttonPanel.add(Box.createHorizontalGlue());
+		buttonPanel.add(ausstattungAddButton);
+		buttonPanel.add(Box.createRigidArea(new Dimension(75, 0)));
+		buttonPanel.add(ausstattungDeleteButton);
+
+		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+
+		JPanel ausstattungAddDelPanel = new JPanel();
+		ausstattungAddDelPanel.setLayout(new BoxLayout(ausstattungAddDelPanel,
+				BoxLayout.PAGE_AXIS));
+
+		ausstattungAddDelPanel.add((Box.createVerticalGlue()));
+		ausstattungAddDelPanel.add(ausstattungPanel);
+		ausstattungAddDelPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+		ausstattungAddDelPanel.add(buttonPanel);
+
+		return ausstattungAddDelPanel;
 	}
 
 	/*
@@ -315,6 +360,14 @@ public class Raumplaner_View extends JFrame {
 
 	public ArrayList<Bestellformular_View> getList() {
 		return bvList;
+	}
+
+	public void setRaumList(ArrayList<Raum> raumList) {
+		this.raumList = raumList;
+	}
+
+	public void windowAktualisieren() {
+		this.validate();
 	}
 
 	/*
