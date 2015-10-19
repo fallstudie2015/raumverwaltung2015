@@ -93,7 +93,7 @@ public class Login_View extends JFrame {
 		loginWrongLabel = new JLabel(
 				"Benutzerdaten sind nicht korrekt angegeben!");
 		loginWrongLabel.setForeground(Color.RED);
-		loginWrongLabel.setBorder(BorderFactory.createEmptyBorder(70, 5, 5, 5));
+		loginWrongLabel.setBorder(BorderFactory.createEmptyBorder(40, 5, 5, 5));
 		loginWrongLabel.setVisible(false);
 
 		JPanel labelPanel = new JPanel();
