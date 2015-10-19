@@ -35,6 +35,7 @@ public class Login_Listener implements ActionListener {
 
 			if (benutzerId != -1) {
 				loginView.setVisible(false);
+
 				raumplanerView.setVisible(true);
 			} else {
 				loginView.getLoginWrongLabel().setVisible(true);
