@@ -82,7 +82,7 @@ public class GUI_Schnittstelle {
 		Main_Raumbuchungssystem.raumListe.clear();
 		switch (Main_Raumbuchungssystem.benutzertyp) {
 			case'v':
-				ladeBestellerStartbildschirm();
+				ladeVerwalterStartbildschirm();
 				break;
 			case 'b':
 				ladeBestellerStartbildschirm();
@@ -96,13 +96,6 @@ public class GUI_Schnittstelle {
 		}
 	}
 		
-		private void ladeVerwalterStartbildschirm() 
-		{
-			// setz den ganzen schei� visible
-		
-	
-		}
-
 	private void ladeBestellerStartbildschirm() throws SQLException 
 	{
 		// setz den ganzen scheiss visible
@@ -122,6 +115,46 @@ public class GUI_Schnittstelle {
 		}
 		
 		String abfrage2String ="SELECT * FROM buchung b WHERE b.benutzerid = "+Main_Raumbuchungssystem.benutzerId;
+		ResultSet rs2 = SQL_Schnittstelle.sqlAbfrage(abfrage2String);
+		
+		while (rs2.next()) {
+			Main_Raumbuchungssystem.meineBuchungen.add(
+					new Buchung(
+							rs2.getInt("buchungid"), 
+							rs2.getString("telefon"),
+							rs2.getDate("datum"), 
+							rs2.getTime("zeitvon"), 
+							rs2.getTime("zeitbis"), 
+							rs2.getString("kommentar"), 
+							rs2.getString("bestuhlung"), 
+							rs2.getInt("benutzerid"), 
+							rs2.getInt("raumid"), 
+							rs2.getString("status")
+							)
+					);
+		}
+
+	}
+	
+	private void ladeVerwalterStartbildschirm() throws SQLException 
+	{
+		// setz den ganzen scheiss visible
+		String abfrage1String = "SELECT * FROM raum";
+		ResultSet rs1 = SQL_Schnittstelle.sqlAbfrage(abfrage1String);
+		
+		while(rs1.next())
+		{
+			Main_Raumbuchungssystem.raumListe.add(
+					new Raum(rs1.getInt("raumid"),
+							rs1.getString("name"),
+							rs1.getString("strasse"),
+							rs1.getString("stock"),
+							rs1.getInt("anzPersonen")
+							)
+					);
+		}
+		
+		String abfrage2String ="SELECT * FROM buchung";
 		ResultSet rs2 = SQL_Schnittstelle.sqlAbfrage(abfrage2String);
 		
 		while (rs2.next()) {

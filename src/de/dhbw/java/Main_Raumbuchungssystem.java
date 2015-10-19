@@ -1,5 +1,11 @@
 package de.dhbw.java;
 
+import gui.Login_View;
+import gui.Raum_View;
+import gui.Raumplaner_View;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -18,12 +24,37 @@ public class Main_Raumbuchungssystem {
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
 		
-
-
-		
 		GUI_Schnittstelle gui = new GUI_Schnittstelle();
 		SQL_Schnittstelle sql = new SQL_Schnittstelle();
-		benutzerId = gui.einloggen("maxima.fallstudie@gmx.de", "fallstudie2015");
+		Login_View loginView = new Login_View();
+		Raumplaner_View raumplanerView = new Raumplaner_View();
+		loginView.setVisible(true);
+		loginView.setLoginButtonListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String pw ="";
+				char[] charArray = loginView.getPasswordField().getPassword();
+				for(int i=0; i<charArray.length; i++)
+				{
+					pw += charArray[i];
+				}
+				benutzerId = gui.einloggen(
+						loginView.getUserIDField().getText() /*"maxima.fallstudie@gmx.de"*/,
+						pw) /*"fallstudie2015"*/;
+				if(benutzerId != -1)
+				{
+					loginView.setVisible(false);
+					raumplanerView.setVisible(true);
+				} else
+				{
+					loginView.getLoginWrongLabel().setVisible(true);
+					// sag dem sackgesicht, dass er was flasch eingegeben hat und zähle wie oft er was falsch macht...
+					// code
+				}
+			}
+		});
+		
 		gui.ladeStartbildschirm();
 		Benutzer benutzer = null;
 		Benutzer pruefBenutzer;
