@@ -1,17 +1,15 @@
 package de.dhbw.java;
 
-import java.util.ArrayList;
 
-public class Benutzer {
+public abstract class Benutzer {
 
 	
-	public static ArrayList benutzerListe = new ArrayList<Benutzer>();
-	private String email;
-	private int benutzerID;
-	private String Vorname;
-	private String Nachname;
-	private char benutzertyp;
 	
+	private static String email;
+	private static int benutzerID;
+	private static String Vorname;
+	private static String Nachname;
+	private static char benutzertyp;
 	
 	/**
 	 * @param email
@@ -20,44 +18,63 @@ public class Benutzer {
 	 * @param nachname
 	 * @param benutzertyp
 	 */
-	public Benutzer(String email, int benutzerID, String vorname,
-			String nachname, char benutzertyp) {
-		super();
-		this.email = email;
-		this.benutzerID = benutzerID;
-		Vorname = vorname;
-		Nachname = nachname;
-		this.benutzertyp = benutzertyp;
+
+	public static void setEmail(String email) {
+		Benutzer.email = email;
 	}
 
-	public String getEmail() {
+	public static void setVorname(String vorname) {
+		Vorname = vorname;
+	}
+
+	public static void setNachname(String nachname) {
+		Nachname = nachname;
+	}
+
+	public static void setBenutzertyp(char benutzertyp) {
+		Benutzer.benutzertyp = benutzertyp;
+	}
+
+	public static String getEmail() {
 		return email;
 	}
 
-	public int getBenutzerID() {
+	public static int getBenutzerID() {
 		return benutzerID;
 	}
 
-	public String getVorname() {
+	public static void setBenutzerID(int id) {
+		benutzerID = id;
+	}
+
+
+	public static String getVorname() {
 		return Vorname;
 	}
 
-	public String getNachname() {
+	public static String getNachname() {
 		return Nachname;
 	}
 
-	public char getBenutzertyp() {
+	public static char getBenutzertyp() {
 		return benutzertyp;
 	}
 
-	public int getPersnr() {
+	public static int getPersnr() {
 		return benutzerID;
 	}
 
-
+	public static void setBenutzerGesamt(int benutzerId, String email,
+		String vorname, String nachname, char benutzertyp) {
+		Benutzer.benutzerID = benutzerId;
+		Benutzer.email = email;
+		Benutzer.Vorname = vorname;
+		Benutzer.Nachname = nachname;
+		Benutzer.benutzertyp = benutzertyp;
+	}
 	
 
-	public boolean ausloggen(){
+	public static boolean ausloggen() {
 		
 		return true;
 	}
