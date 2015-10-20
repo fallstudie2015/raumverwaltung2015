@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -51,6 +50,8 @@ public class Login_View extends JFrame {
 	public Login_View() {
 		initLogin();
 		setLoginButtonListener(new listener.Login_Listener(this));
+		userIDField.addActionListener(new listener.Login_Listener(this));
+		passwordField.addActionListener(new listener.Login_Listener(this));
 	}
 
 	/*

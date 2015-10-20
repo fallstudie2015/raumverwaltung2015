@@ -1,9 +1,13 @@
 package de.dhbw.java;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import gui.Error_Message_Box;
+import gui.Login_View;
+import gui.Raumplaner_View;
 
-public class GUI_Schnittstelle {
+import java.sql.ResultSet;
+
+public abstract class GUI_Schnittstelle {
+	private static Raumplaner_View raumplanerView;
 
 	/**
 	 * Gibt intfuer die GUI zurueck
@@ -17,16 +21,15 @@ public class GUI_Schnittstelle {
 	 *          scheisse , * persnr: alles gut gelaufen - persnr wird
 	 *          zurueckggeben
 	 */
-	public void einloggen(String email, String _passwort) {
+	public static void einloggen(String email, String _passwort) {
 		// sql abfrage ob nutzer in tabelle und typ(besteller/verwalter/admin)
 		// herauslesen, sowie ID
 
 		// passwort verschluesseln
 		_passwort = SHA512_Encrypt.encrypt(_passwort);
 		// abfrageString erstellen
-		String abfrageString =
-			"select * from benutzer where email = '" + email +
-				"' and passwort = '" + _passwort + "'";
+		String abfrageString = "select * from benutzer where email = '" + email
+				+ "' and passwort = '" + _passwort + "'";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 		// WIR m�s�sen von de rDatenbankgruppe wissern, wie die einloggdaten
@@ -57,7 +60,7 @@ public class GUI_Schnittstelle {
 			RSbenutzertyp = RSbenutzertypString.charAt(0);
 
 			Benutzer.setBenutzerGesamt(RSbenutzerID, RSemail, RSvorname,
-				RSnachname, RSbenutzertyp);
+					RSnachname, RSbenutzertyp);
 
 		} catch (Exception e) {
 			System.out.println("Ausgabe " + e.toString());
@@ -66,79 +69,39 @@ public class GUI_Schnittstelle {
 
 	}
 
-	public void ladeStartbildschirm() throws SQLException {
-		Main_Raumbuchungssystem.raumListe.clear();
-		switch (Main_Raumbuchungssystem.benutzertyp) {
-		case 'v':
-			ladeVerwalterStartbildschirm();
-			break;
-		case 'b':
-			ladeBestellerStartbildschirm();
-			break;
-		case 'a':
-			System.out.println("laeuft A");
-			ladeBestellerStartbildschirm();
-			break;
-		default:
-			break;
+	public static void check(Login_View loginView) {
+		try {
+			String pw = "";
+			char[] charArray = loginView.getPasswordField().getPassword();
+			for (int i = 0; i < charArray.length; i++) {
+				pw += charArray[i];
+			}
+			System.out.println(pw + " " + loginView.getUserIDField().getText());
+			einloggen(loginView.getUserIDField().getText(), pw);
+			// loginView.getUserIDField().getText(), "maxima.fallstudie@gmx.de"
+			// pw "fallstudie2015
+
+			if (Benutzer.getBenutzerID() != -1) {
+				loginView.setVisible(false);
+				raumplanerView = new Raumplaner_View(
+						SQL_Schnittstelle.getRooms());
+				/*
+				 * 
+				 * Hier müssen die Buchungen benutzerspezifisch geladen werden
+				 */
+				raumplanerView.setVisible(true);
+
+			} else {
+				loginView.getLoginWrongLabel().setVisible(true);
+				// sag dem sackgesicht, dass er was flasch eingegeben hat und
+				// zähle wie oft er was falsch macht...
+				// code
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.GUI_Schnittstelle.check");
 		}
-	}
-
-	private void ladeBestellerStartbildschirm() throws SQLException {
-		// setz den ganzen scheiss visible
-		String abfrage1String = "SELECT * FROM raum";
-		ResultSet rs1 = SQL_Schnittstelle.sqlAbfrage(abfrage1String);
-
-		while (rs1.next()) {
-			Main_Raumbuchungssystem.raumListe.add(new Raum(
-				rs1.getInt("raumid"), rs1.getString("name"), rs1
-					.getString("strasse"), rs1.getString("stock"), rs1
-					.getInt("anzPersonen")));
-		}
-
-		String abfrage2String =
-			"SELECT * FROM buchung b WHERE b.benutzerid = " +
-				Main_Raumbuchungssystem.benutzerId;
-		ResultSet rs2 = SQL_Schnittstelle.sqlAbfrage(abfrage2String);
-
-		while (rs2.next()) {
-			Main_Raumbuchungssystem.meineBuchungen.add(new Buchung(rs2
-				.getInt("buchungid"), rs2.getString("telefon"), rs2
-				.getDate("datum"), rs2.getTime("zeitvon"), rs2
-				.getTime("zeitbis"), rs2.getString("kommentar"), rs2
-				.getString("bestuhlung"), rs2.getInt("benutzerid"), rs2
-				.getInt("raumid"), rs2.getString("status")));
-		}
-
-	}
-
-	private void ladeVerwalterStartbildschirm() throws SQLException {
-		// setz den ganzen scheiss visible
-		String abfrage1String = "SELECT * FROM raum";
-		ResultSet rs1 = SQL_Schnittstelle.sqlAbfrage(abfrage1String);
-
-		while (rs1.next()) {
-			Main_Raumbuchungssystem.raumListe.add(new Raum(
-				rs1.getInt("raumid"), rs1.getString("name"), rs1
-					.getString("strasse"), rs1.getString("stock"), rs1
-					.getInt("anzPersonen")));
-		}
-
-		String abfrage2String = "SELECT * FROM buchung";
-		ResultSet rs2 = SQL_Schnittstelle.sqlAbfrage(abfrage2String);
-
-		while (rs2.next()) {
-			Main_Raumbuchungssystem.meineBuchungen.add(new Buchung(rs2
-				.getInt("buchungid"), rs2.getString("telefon"), rs2
-				.getDate("datum"), rs2.getTime("zeitvon"), rs2
-				.getTime("zeitbis"), rs2.getString("kommentar"), rs2
-				.getString("bestuhlung"), rs2.getInt("benutzerid"), rs2
-				.getInt("raumid"), rs2.getString("status")));
-			Buchung b = (Buchung) Main_Raumbuchungssystem.meineBuchungen.get(0);
-			String s = b.getTelefon();
-			System.out.println("laeuft teflon: " + s);
-		}
-
 	}
 
 }

@@ -11,10 +11,8 @@ public class Start {
 			SQL_Schnittstelle.createConnection();
 			Login_View lf = new Login_View();
 			lf.setVisible(true);
-
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e, "startpunkt.start.main");
 		}
-
 	}
 }
