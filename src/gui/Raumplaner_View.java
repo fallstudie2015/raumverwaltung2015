@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 
 import com.toedter.calendar.JCalendar;
 
+import de.dhbw.java.Buchung;
 import de.dhbw.java.Raum;
 
 /**
@@ -43,13 +44,16 @@ public class Raumplaner_View extends JFrame {
 	private Raum_View rv;
 	private ArrayList<Bestellformular_View> bvList;
 	private ArrayList<Raum> raumList;
+	private ArrayList<Buchung> buchungList;
 
 	public Raumplaner_View() {
 		initView();
 	}
 
-	public Raumplaner_View(ArrayList<Raum> raumList) {
+	public Raumplaner_View(ArrayList<Raum> raumList,
+			ArrayList<Buchung> buchungList) {
 		this.raumList = raumList;
+		this.buchungList = buchungList;
 		initView();
 	}
 
@@ -117,8 +121,15 @@ public class Raumplaner_View extends JFrame {
 					Bestellformular_View bv = new Bestellformular_View(this);
 
 					// R�ume erstellen
-					rv = new Raum_View(raum.getName(), bv, this);
+					rv = new Raum_View(raum, bv, this);
 
+					for (Buchung buchung : buchungList) {
+
+						if (buchung.getRaumID() == raum.getRaumID()) {
+							rv.getBuchung(buchung);
+							rv.setBuchungen(calendar.getDate());
+						}
+					}
 					// Raumnamen �bergeben
 					bv.setRaumName(rv.getRaumName());
 					bv.initView();
