@@ -7,6 +7,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -35,31 +39,46 @@ import de.dhbw.java.Raum;
 public class Raumplaner_View extends JFrame {
 
 	private JCalendar calendar;
-	private JLabel nameLabel, bereichLabel, logoLabel, raumplanerLabel,
-			raumLabel, benutzerLabel, ausstattungLabel;
-	private JButton logoutButton, raumAddButton, raumDeleteButton,
-			benutzerAddButton, benutzerDeleteButton, ausstattungAddButton,
-			ausstattungDeleteButton;
+	private JLabel nameLabel, bereichLabel, logoLabel, raumplanerLabel, raumLabel, benutzerLabel, ausstattungLabel;
+	private JButton logoutButton, raumAddButton, raumDeleteButton, benutzerAddButton, benutzerDeleteButton,
+			ausstattungAddButton, ausstattungDeleteButton;
 	private JScrollPane scroller, formularScroller;
 	private Raum_View rv;
 	private ArrayList<Bestellformular_View> bvList;
 	private ArrayList<Raum> raumList;
 	private ArrayList<Buchung> buchungList;
+	private ArrayList<Raum_View> raumViewList;
+	private Date choosenDate;
 
 	public Raumplaner_View() {
 		initView();
 	}
 
-	public Raumplaner_View(ArrayList<Raum> raumList,
-			ArrayList<Buchung> buchungList) {
+	public Raumplaner_View(ArrayList<Raum> raumList, ArrayList<Buchung> buchungList) {
 		this.raumList = raumList;
 		this.buchungList = buchungList;
+		raumViewList = new ArrayList<Raum_View>();
 		initView();
+		this.choosenDate = new Date(calendar.getDate().getTime());
+		calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				// TODO Auto-generated method stub
+				if (new Date(calendar.getDate().getTime()) != choosenDate) {
+					for (Raum_View rv : raumViewList) {
+						rv.setBuchungen(new Date(calendar.getDate().getTime()));
+					}
+					windowAktualisieren();
+					choosenDate = new Date(calendar.getDate().getTime());
+				}
+			}
+		});
 	}
 
 	/*
-	 * Gr��e der Ansicht wird festgelegt und alle erforderlichen Panels werden
-	 * geladen
+	 * Gr��e der Ansicht wird festgelegt und alle erforderlichen Panels
+	 * werden geladen
 	 */
 	private void initView() {
 		setLayout(new BorderLayout());
@@ -76,17 +95,13 @@ public class Raumplaner_View extends JFrame {
 	 * angeordnet
 	 */
 	private JPanel logoPanel() {
-		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource(
-				"ressources/logo_2.png"));
-		ImageIcon imageIcon = new ImageIcon(ii1.getImage().getScaledInstance(
-				300, 150, Image.SCALE_DEFAULT));
+		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource("ressources/logo_2.png"));
+		ImageIcon imageIcon = new ImageIcon(ii1.getImage().getScaledInstance(300, 150, Image.SCALE_DEFAULT));
 		logoLabel = new JLabel(imageIcon, SwingConstants.LEFT);
 		logoLabel.setPreferredSize(new Dimension(300, 150));
 
-		ImageIcon ii2 = new ImageIcon(getClass().getClassLoader().getResource(
-				"ressources/Schrift.png"));
-		ImageIcon imageIcon2 = new ImageIcon(ii2.getImage().getScaledInstance(
-				700, 150, Image.SCALE_DEFAULT));
+		ImageIcon ii2 = new ImageIcon(getClass().getClassLoader().getResource("ressources/Schrift.png"));
+		ImageIcon imageIcon2 = new ImageIcon(ii2.getImage().getScaledInstance(700, 150, Image.SCALE_DEFAULT));
 		raumplanerLabel = new JLabel(imageIcon2, SwingConstants.LEFT);
 		raumplanerLabel.setPreferredSize(new Dimension(700, 150));
 
@@ -122,15 +137,18 @@ public class Raumplaner_View extends JFrame {
 
 					// R�ume erstellen
 					rv = new Raum_View(raum, bv, this);
+					raumViewList.add(rv);
 
 					for (Buchung buchung : buchungList) {
 
 						if (buchung.getRaumID() == raum.getRaumID()) {
 							rv.getBuchung(buchung);
-							rv.setBuchungen(calendar.getDate());
+							rv.setBuchungen(new Date(calendar.getDate().getTime()));
 						}
 					}
-					// Raumnamen �bergeben
+					windowAktualisieren();
+
+					// Raumnamen uebergeben
 					bv.setRaumName(rv.getRaumName());
 					bv.initView();
 
@@ -141,27 +159,21 @@ public class Raumplaner_View extends JFrame {
 
 					port.add(rv.getRaumLabel());
 				}
-			} else {
-				System.out.println("Keine Räume gefunden");
 			}
 		} catch (Exception e) {
-			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
-					"Raumplaner_View.gui");
+			Error_Message_Box.laufzeitfehler(e, "Raumplaner_View.gui");
 		}
 
-		scroller = new JScrollPane(onScrollPanel,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		scroller = new JScrollPane(onScrollPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroller.getVerticalScrollBar().setUnitIncrement(16);
 		scroller.setColumnHeaderView(port);
 		scroller.setRowHeaderView(zv);
 
-		formularScroller = new JScrollPane(bvPanel,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		formularScroller = new JScrollPane(bvPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		formularScroller.getVerticalScrollBar().setUnitIncrement(16);
-		formularScroller.setPreferredSize(new Dimension(350, formularScroller
-				.getPreferredSize().height));
+		formularScroller.setPreferredSize(new Dimension(350, formularScroller.getPreferredSize().height));
 		formularScroller.setVisible(false);
 
 		JPanel scrollPane = new JPanel(new BorderLayout());
@@ -194,8 +206,7 @@ public class Raumplaner_View extends JFrame {
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
 		JPanel raumAddDelPanel = new JPanel();
-		raumAddDelPanel.setLayout(new BoxLayout(raumAddDelPanel,
-				BoxLayout.PAGE_AXIS));
+		raumAddDelPanel.setLayout(new BoxLayout(raumAddDelPanel, BoxLayout.PAGE_AXIS));
 
 		raumAddDelPanel.add((Box.createVerticalGlue()));
 		raumAddDelPanel.add(raumPanel);
@@ -232,8 +243,7 @@ public class Raumplaner_View extends JFrame {
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
 		JPanel benutzerAddDelPanel = new JPanel();
-		benutzerAddDelPanel.setLayout(new BoxLayout(benutzerAddDelPanel,
-				BoxLayout.PAGE_AXIS));
+		benutzerAddDelPanel.setLayout(new BoxLayout(benutzerAddDelPanel, BoxLayout.PAGE_AXIS));
 
 		benutzerAddDelPanel.add((Box.createVerticalGlue()));
 		benutzerAddDelPanel.add(benutzerPanel);
@@ -266,8 +276,7 @@ public class Raumplaner_View extends JFrame {
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
 		JPanel ausstattungAddDelPanel = new JPanel();
-		ausstattungAddDelPanel.setLayout(new BoxLayout(ausstattungAddDelPanel,
-				BoxLayout.PAGE_AXIS));
+		ausstattungAddDelPanel.setLayout(new BoxLayout(ausstattungAddDelPanel, BoxLayout.PAGE_AXIS));
 
 		ausstattungAddDelPanel.add((Box.createVerticalGlue()));
 		ausstattungAddDelPanel.add(ausstattungPanel);
@@ -283,7 +292,7 @@ public class Raumplaner_View extends JFrame {
 	 */
 	private JPanel leftPanel() {
 		calendar = new JCalendar();
-		calendar.setTodayButtonVisible(true);
+		// calendar.setTodayButtonVisible(true);
 		calendar.setPreferredSize(new Dimension(275, 300));
 		calendar.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
@@ -306,8 +315,7 @@ public class Raumplaner_View extends JFrame {
 		logoutPanel.add(logoutButton);
 
 		JPanel calendarPanel = new JPanel();
-		calendarPanel.setLayout(new BoxLayout(calendarPanel,
-				BoxLayout.PAGE_AXIS));
+		calendarPanel.setLayout(new BoxLayout(calendarPanel, BoxLayout.PAGE_AXIS));
 
 		calendarPanel.add(Box.createVerticalGlue());
 		calendarPanel.add(calendar);
@@ -337,8 +345,7 @@ public class Raumplaner_View extends JFrame {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 
-		JScrollPane scrollPane = new JScrollPane(leftPanel(),
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane scrollPane = new JScrollPane(leftPanel(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 

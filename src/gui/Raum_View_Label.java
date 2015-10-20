@@ -13,6 +13,10 @@ public class Raum_View_Label extends JLabel {
 		this.time = time;
 	}
 
+	public Raum_View_Label() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Time getTime() {
 		return time;
 	}

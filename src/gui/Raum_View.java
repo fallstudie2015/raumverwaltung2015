@@ -8,14 +8,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
-import com.toedter.calendar.JCalendar;
 
 import de.dhbw.java.Buchung;
 import de.dhbw.java.Raum;
@@ -24,10 +22,10 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	private JLabel raumLabel;
 	private String raumName;
-	private Raum_View_Label label;
 	private Bestellformular_View bv;
 	private Raumplaner_View frame;
-	private Buchung buchung;
+	private ArrayList<Buchung> buchungList;
+	// private Buchung buchung;
 	private ArrayList<Raum_View_Label> labelList;
 
 	public Raum_View(Raum raum, Bestellformular_View bv, Raumplaner_View frame) {
@@ -35,6 +33,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		this.bv = bv;
 		this.frame = frame;
 		labelList = new ArrayList<Raum_View_Label>();
+		buchungList = new ArrayList<Buchung>();
 		initView();
 	}
 
@@ -50,31 +49,34 @@ public class Raum_View extends JPanel implements MouseListener {
 		// raumzeitenPanel.add(getRaumLabel());
 
 		// for (int i = 0; i < 23; i++) {
-		// label = new Raum_View_Label();
+		// Raum_View_Label label = new Raum_View_Label();
 		// label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		// label.setPreferredSize(new Dimension(200, 50));
 		// raumzeitenPanel.add(label);
 		// }
 
 		for (int i = 8; i < 19; i++) {
-			label = new Raum_View_Label(Time.valueOf(i + ":00"));
+			Raum_View_Label label = new Raum_View_Label(Time.valueOf("0" + i + ":00:00"));
 			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			label.setPreferredSize(new Dimension(200, 50));
+			label.setOpaque(true);
 			raumzeitenPanel.add(label);
 			labelList.add(label);
 			for (int j = 30; j < 31; j += 15) {
-				label = new Raum_View_Label(Time.valueOf(i + ":" + j));
-				label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				label.setPreferredSize(new Dimension(200, 50));
-				raumzeitenPanel.add(label);
-				labelList.add(label);
+				Raum_View_Label label2 = new Raum_View_Label(Time.valueOf("0" + i + ":" + j + ":00"));
+				label2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				label2.setPreferredSize(new Dimension(200, 50));
+				label2.setOpaque(true);
+				raumzeitenPanel.add(label2);
+				labelList.add(label2);
 			}
 			if (i + 1 == 19) {
-				label = new Raum_View_Label(Time.valueOf((i + 1) + ":00"));
-				label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				label.setPreferredSize(new Dimension(200, 50));
-				raumzeitenPanel.add(label);
-				labelList.add(label);
+				Raum_View_Label label3 = new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00"));
+				label3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				label3.setPreferredSize(new Dimension(200, 50));
+				raumzeitenPanel.add(label3);
+				label3.setOpaque(true);
+				labelList.add(label3);
 			}
 		}
 
@@ -91,23 +93,32 @@ public class Raum_View extends JPanel implements MouseListener {
 	}
 
 	public void setBuchungen(Date today) {
-		long diff = buchung.getZeitVon().getTime()
-				- buchung.getZeitBis().getTime();
-		if (today == buchung.getDatum()) {
-			for (Raum_View_Label label : labelList) {
-				if (buchung.getZeitVon() == label.getTime()
-						|| buchung.getZeitBis() == label.getTime()
-						|| ((buchung.getZeitBis().getTime() - label.getTime()
-								.getTime()) <= diff && (buchung.getZeitBis()
-								.getTime() - label.getTime().getTime() >= 0))) {
-					label.setBackground(Color.RED);
+		labelLeeren();
+
+		for (Buchung buchung : buchungList) {
+			if (today.toString().compareTo(buchung.getDatum().toString()) == 0) {
+				for (Raum_View_Label label : labelList) {
+					if (buchung.getZeitVon().equals(label.getTime()) || buchung.getZeitBis().equals(label.getTime())
+							|| (label.getTime().before(buchung.getZeitBis())
+									&& label.getTime().after(buchung.getZeitVon()))) {
+						label.setBackground(Color.RED);
+						// label.setBorder(BorderFactory.createEmptyBorder());
+					}
 				}
+
 			}
 		}
 	}
 
+	public void labelLeeren() {
+		for (Raum_View_Label label : labelList) {
+			label.setBackground(Color.WHITE);
+			// label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		}
+	}
+
 	public void getBuchung(Buchung buchung) {
-		this.buchung = buchung;
+		this.buchungList.add(buchung);
 	}
 
 	@Override
