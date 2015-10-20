@@ -8,6 +8,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -37,6 +41,7 @@ public class Login_View extends JFrame {
 	private JPasswordField passwordField;
 	private JButton loginButton, cancelButton;
 	private ActionListener action;
+	private static int wait = 0;
 
 	public Login_View(ActionListener action) {
 		setLoginButtonListener(action);
@@ -109,6 +114,7 @@ public class Login_View extends JFrame {
 	 */
 	private JPanel insertFieldPanel() {
 		userIDField = new JTextField("eMail-Adresse");
+		userIDField.selectAll();
 		userIDField.setBorder(BorderFactory.createEtchedBorder());
 		userIDField.setPreferredSize(new Dimension(355, 30));
 
@@ -137,6 +143,17 @@ public class Login_View extends JFrame {
 			}
 		};
 		passwordField.addMouseListener(ml2);
+		passwordField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				super.focusGained(e);
+				if (wait == 0) {
+					passwordField.setText("");
+					passwordField.setEchoChar('\u2022');
+					wait++;
+				}
+			}
+		});
 
 		JPanel userPanel = new JPanel();
 		userPanel.add(userIDField);
@@ -233,6 +250,10 @@ public class Login_View extends JFrame {
 
 	public void setLoginButtonListener(ActionListener al) {
 		this.loginButton.addActionListener(al);
+	}
+
+	public void setLoginButtonKeyListener(KeyAdapter kl) {
+		this.loginButton.addKeyListener(kl);
 	}
 
 	public void setCancelButtonListener(ActionListener al) {
