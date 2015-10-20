@@ -13,9 +13,8 @@ import javax.mail.internet.MimeMessage;
 
 public class MailConnection {
 
-	public void sendMail(String username, String password,
-			String senderAddress, String recipientsAddress, String subject,
-			String text) {
+	public void sendMail(String username, String password, String senderAddress,
+			String recipientsAddress, String subject, String text) {
 
 		MailAuthenticator auth = new MailAuthenticator(username, password);
 
@@ -27,7 +26,7 @@ public class MailConnection {
 		// properties.put("mail.smtp.port", "587");
 
 		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.host", "smtp.web.de");
+		properties.put("mail.smtp.host", "smtp.gmx.de");
 		properties.put("mail.smtp.user", username); // User name
 		properties.put("mail.smtp.password", password); // password, wird
 		// bereits in MailAuthenticator gespeichert
