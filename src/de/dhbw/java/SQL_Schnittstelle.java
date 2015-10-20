@@ -77,8 +77,7 @@ public abstract class SQL_Schnittstelle {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
 			String abfrageString = "SELECT * FROM buchung b WHERE b.benutzerid = "
- +
-					Benutzer.getBenutzerID();
+					+ Benutzer.getBenutzerID();
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
@@ -119,7 +118,7 @@ public abstract class SQL_Schnittstelle {
 		return buchungListe;
 	}
 
-	private static void rsAusgabe(ResultSet rs) {
+	public static void rsAusgabe(ResultSet rs) {
 		System.out.println();
 		System.out.print("zeile" + "\t");
 		try {

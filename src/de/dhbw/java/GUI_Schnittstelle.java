@@ -32,35 +32,12 @@ public abstract class GUI_Schnittstelle {
 				+ "' and passwort = '" + _passwort + "'";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
-		// WIR m�s�sen von de rDatenbankgruppe wissern, wie die einloggdaten
-		// zurueckgegeben wrerden. also die infos.
-		// dementsprechend machen wir dann hier den spezifischen benutzer als ID
-		// oder als namen-string und der typ als int oder sonstiges erfahren.
-		// also arbeiten wir hier wahrscheinlich mit rs.getString <--- darum
-		// gehts naemlich
-		// wir benutzen danach nurnoch den typ des benutzers, damit wir ein
-		// entsprechendes BEnutzer-Objekt erstellen koennen.
-		// Dieses traegt dann als namen "benutzername"
-		String RSvorname = "";
-		String RSnachname = "";
-		String RSbenutzertypString = "";
-		String RSemail = "";
-		int RSbenutzerID = 0;
-		char RSbenutzertyp = ' ';
-		int antwort = -1;
-
+		SQL_Schnittstelle.rsAusgabe(rs);
 		try {
 			rs.first();
-
-			RSvorname = rs.getString("vorname");
-			RSnachname = rs.getString("nachname");
-			RSemail = rs.getString("email");
-			RSbenutzertypString = rs.getString("rolle");
-			RSbenutzerID = rs.getInt("benutzerid");
-			RSbenutzertyp = RSbenutzertypString.charAt(0);
-
-			Benutzer.setBenutzerGesamt(RSbenutzerID, RSemail, RSvorname,
-					RSnachname, RSbenutzertyp);
+			Benutzer.setBenutzerGesamt(rs.getInt("benutzerid"),
+					rs.getString("email"), rs.getString("vorname"),
+					rs.getString("nachname"), rs.getString("rolle").charAt(0));
 
 		} catch (Exception e) {
 			System.out.println("Ausgabe " + e.toString());
