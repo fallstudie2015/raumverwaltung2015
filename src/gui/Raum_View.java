@@ -65,6 +65,7 @@ public class Raum_View extends JPanel implements MouseListener {
 			if (view.isVisible()) {
 				aktiv = view;
 				i++;
+				
 			}
 		}
 		if (i == 0) {

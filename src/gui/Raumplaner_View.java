@@ -42,14 +42,14 @@ public class Raumplaner_View extends JFrame {
 	private JScrollPane scroller, formularScroller;
 	private Raum_View rv;
 	private ArrayList<Bestellformular_View> bvList;
-	private Raum[] raumArray;
+	private ArrayList<Raum> raumList;
 
 	public Raumplaner_View() {
 		initView();
 	}
 
-	public Raumplaner_View(Raum[] raumArray) {
-		this.raumArray = raumArray;
+	public Raumplaner_View(ArrayList<Raum> raumList) {
+		this.raumList = raumList;
 		initView();
 	}
 
@@ -111,8 +111,8 @@ public class Raumplaner_View extends JFrame {
 		bvList = new ArrayList<Bestellformular_View>();
 
 		try {
-			if (raumArray.length > 0) {
-				for (Raum raum : raumArray) {
+			if (raumList.size() > 0) {
+				for (Raum raum : raumList) {
 					// Bestellformular view erstellen
 					Bestellformular_View bv = new Bestellformular_View(this);
 
@@ -371,8 +371,8 @@ public class Raumplaner_View extends JFrame {
 		return bvList;
 	}
 
-	public void setRaumArray(Raum[] raumArray) {
-		this.raumArray = raumArray;
+	public void setRaumArray(ArrayList<Raum> raumList) {
+		this.raumList = raumList;
 	}
 
 	public void windowAktualisieren() {

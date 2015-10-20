@@ -36,9 +36,9 @@ public class Login_Listener implements ActionListener {
 
 			if (benutzerId != -1) {
 				loginView.setVisible(false);
-				SQL_Schnittstelle.getRooms();
-				// raumplanerView = new Raumplaner_View(
-				// SQL_Schnittstelle.getRooms());
+
+				raumplanerView = new Raumplaner_View(
+						SQL_Schnittstelle.getRooms());
 				raumplanerView.setVisible(true);
 
 			} else {
