@@ -18,7 +18,7 @@ public class Login_Listener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		try {
-			GUI_Schnittstelle.check(loginView);
+			GUI_Schnittstelle.loginCheck(loginView);
 
 		} catch (Exception e) {
 			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(), this

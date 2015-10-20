@@ -77,7 +77,8 @@ public abstract class SQL_Schnittstelle {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
 			String abfrageString = "SELECT * FROM buchung b WHERE b.benutzerid = "
-					+ Main_Raumbuchungssystem.benutzerId;
+ +
+					Benutzer.getBenutzerID();
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {

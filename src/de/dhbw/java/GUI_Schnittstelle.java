@@ -69,7 +69,7 @@ public abstract class GUI_Schnittstelle {
 
 	}
 
-	public static void check(Login_View loginView) {
+	public static void loginCheck(Login_View loginView) {
 		try {
 			String pw = "";
 			char[] charArray = loginView.getPasswordField().getPassword();
