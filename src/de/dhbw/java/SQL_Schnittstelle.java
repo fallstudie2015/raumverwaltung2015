@@ -33,6 +33,8 @@ public abstract class SQL_Schnittstelle {
 					"sql293125", "dG2!gP3!");
 		} catch (SQLException s) {
 			System.out.println("SQL-Exception aufgetreten");
+			Error_Message_Box.laufzeitfehler(s,
+					"de.dhbw.java.SQL_Schnittstelle_createConnection");
 		}
 	}
 
@@ -50,6 +52,7 @@ public abstract class SQL_Schnittstelle {
 			rs = stmt.executeQuery(abfrage);
 		} catch (Exception e) {
 			System.out.println("select " + e.toString());
+			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlAbfrage");
 		}
 
 		return rs;
@@ -69,6 +72,7 @@ public abstract class SQL_Schnittstelle {
 			rowAffected = stmt.executeUpdate(abfrage);
 		} catch (Exception e) {
 			System.out.println("Update/Insert/Delete " + e.toString());
+			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlUpdate");
 		}
 
 		return rowAffected;
@@ -86,8 +90,8 @@ public abstract class SQL_Schnittstelle {
 						.getString("stock"), rs.getInt("anzPersonen")));
 			}
 		} catch (Exception e) {
-			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
-					"de.dhbw.java.SQL_Schnittstelle_getRooms");
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getRooms");
 		}
 		return raumListe;
 	}
@@ -109,8 +113,8 @@ public abstract class SQL_Schnittstelle {
 			}
 
 		} catch (Exception e) {
-			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
-				"de.dhbw.java.SQL_Schnittstelle_getBestellerBuchung");
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getBestellerBuchung");
 		}
 		return buchungListe;
 	}
@@ -131,44 +135,47 @@ public abstract class SQL_Schnittstelle {
 			}
 
 		} catch (Exception e) {
-			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
-				"de.dhbw.java.SQL_Schnittstelle_getVerwaltungBuchung");
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getVerwaltungBuchung");
 		}
 		return buchungListe;
 	}
 
-	
 	public static boolean insertBuchung(int buchungId, String telefon,
-		String datum, String zeitVon, String zeitBis, String kommentar,
-		String bestuhlung, int benutzerId, int raumId, char status) {
-		
+			String datum, String zeitVon, String zeitBis, String kommentar,
+			String bestuhlung, int benutzerId, int raumId, char status) {
+
 		try {
-			String updateString =
-				"INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status) VALUES('" +
-					telefon +
-					"', '" +
-					datum +
-					"', '" +
-					zeitVon +
-					"', '" +
-					zeitBis +
-					"', '" +
-					kommentar +
-					"', '" +
-					bestuhlung +
-					"', " +
-					benutzerId + ", " + raumId + ", '" + status + "')";
+			String updateString = "INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status) VALUES('"
+					+ telefon
+					+ "', '"
+					+ datum
+					+ "', '"
+					+ zeitVon
+					+ "', '"
+					+ zeitBis
+					+ "', '"
+					+ kommentar
+					+ "', '"
+					+ bestuhlung
+					+ "', "
+					+ benutzerId
+					+ ", "
+					+ raumId
+					+ ", '"
+					+ status
+					+ "')";
 
 			int rowAffected = SQL_Schnittstelle.sqlUpdate(updateString);
 
 		} catch (Exception e) {
-			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
-				"de.dhbw.java.SQL_Schnittstelle_insertBuchung");
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.insertBuchung");
 			return false;
 		}
 		return true;
 	}
-	
+
 	public static void rsAusgabe(ResultSet rs) {
 		System.out.println();
 		System.out.print("zeile" + "\t");
@@ -190,6 +197,9 @@ public abstract class SQL_Schnittstelle {
 			rs.beforeFirst();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.rsAusgabe");
+
 		}
 	}
 }

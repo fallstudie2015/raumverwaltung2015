@@ -19,13 +19,11 @@ public class Login_Listener implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		try {
 			GUI_Schnittstelle.loginCheck(loginView);
-
 		} catch (Exception e) {
-			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(), this
-					.getClass().getName());
+			Error_Message_Box.laufzeitfehler(e,
+					"gui.Error_Message_Box.Login_Listener.actionPerformed");
 		}
 		// TODO Auto-generated method stub
-
 	}
 
 }
