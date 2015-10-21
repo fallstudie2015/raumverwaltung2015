@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 
 import com.toedter.calendar.JCalendar;
 
+import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 import de.dhbw.java.Raum;
 
@@ -133,7 +134,7 @@ public class Raumplaner_View extends JFrame {
 			if (raumList.size() > 0) {
 				for (Raum raum : raumList) {
 					// Bestellformular view erstellen
-					Bestellformular_View bv = new Bestellformular_View(this);
+					Bestellformular_View bv = new Bestellformular_View(this, Benutzer.getVorname(), Benutzer.getNachname());
 
 					// R�ume erstellen
 					rv = new Raum_View(raum, bv, this);

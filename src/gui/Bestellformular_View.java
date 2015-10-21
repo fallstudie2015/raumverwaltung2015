@@ -48,9 +48,12 @@ public class Bestellformular_View extends JPanel {
 	private String raumName;
 	private JScrollPane sonstigeScroller, pane;
 	private JFrame frame;
+	private String nutzerVorname, nutzerNachname;
 
-	public Bestellformular_View(JFrame frame) {
+	public Bestellformular_View(JFrame frame, String name, String nachname) {
 		// initView();
+		this.nutzerVorname = name;
+		this.nutzerNachname = nachname;
 		this.frame = frame;
 		this.setVisible(false);
 	}
@@ -86,7 +89,7 @@ public class Bestellformular_View extends JPanel {
 		raumLabel = new JLabel(raumName);
 		raumLabel.setPreferredSize(new Dimension(100, 30));
 
-		nameLabel = new JLabel("Name");
+		nameLabel = new JLabel(nutzerVorname + " " + nutzerNachname);
 		nameLabel.setPreferredSize(new Dimension(50, 30));
 
 		bereichLabel = new JLabel("Bereich");

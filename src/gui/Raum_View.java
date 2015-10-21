@@ -142,7 +142,7 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setVisible(true);
 			bv.setScrollPane(frame.getformularScrollPane());
 			bv.setDate(frame.getCalendar());
-			bv.setMaxPersonen(raum.getAnzPersonen());
+//			bv.setMaxPersonen(raum.getMaxPersonen());
 			frame.getformularScrollPane().setVisible(true);
 
 			frame.validate();
