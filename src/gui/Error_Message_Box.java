@@ -2,16 +2,10 @@ package gui;
 
 import javax.swing.JOptionPane;
 
+import de.dhbw.java.Benutzer;
+import de.dhbw.java.SQL_Schnittstelle;
+
 public class Error_Message_Box {
-
-	public static void errorBox(String fehlertyp, String beschreibung,
-			String methode) {
-		JOptionPane.showMessageDialog(null,
-				"Hier ist die Beschreibung: " + beschreibung
-						+ ". Ist aufgetreten in der Methode: " + methode,
-				fehlertyp, JOptionPane.ERROR_MESSAGE);
-
-	}
 
 	public static void laufzeitfehler(Exception e, String methode) {
 		JOptionPane
@@ -26,6 +20,9 @@ public class Error_Message_Box {
 								+ "\nMessage: "
 								+ e.getMessage(), "Laufzeitfehler",
 						JOptionPane.ERROR_MESSAGE);
+		SQL_Schnittstelle.insertLogging(e.getClass().toString(), methode,
+				e.getLocalizedMessage(), e.getMessage(), "Laufzeitfehler",
+				Benutzer.getBenutzerID());
 
 	}
 }

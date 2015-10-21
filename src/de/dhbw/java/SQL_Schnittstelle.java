@@ -176,6 +176,34 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	public static boolean insertLogging(String klasse, String methode,
+			String localMessage, String message, String type, int benutzerID) {
+
+		try {
+			String updateString = "INSERT INTO logging (klasse, methode, lokalMessage, message, typ, dateTime, benutzerid) VALUES('"
+					+ klasse.replace("'", " ")
+					+ "', '"
+					+ methode.replace("'", " ")
+					+ "', '"
+					+ localMessage.replace("'", " ")
+					+ "', '"
+					+ message.replace("'", " ")
+					+ "', '"
+					+ type.replace("'", " ")
+					+ "', now(), '"
+					+ benutzerID
+					+ "')";
+
+			int rowAffected = SQL_Schnittstelle.sqlUpdate(updateString);
+
+		} catch (Exception e) {
+			// Error_Message_Box.laufzeitfehler(e,
+			// "de.dhbw.java.SQL_Schnittstelle.insertLogging");
+			return false;
+		}
+		return true;
+	}
+
 	public static void rsAusgabe(ResultSet rs) {
 		System.out.println();
 		System.out.print("zeile" + "\t");
