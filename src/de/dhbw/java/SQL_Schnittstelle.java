@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 
 public abstract class SQL_Schnittstelle {
 
@@ -140,7 +139,7 @@ public abstract class SQL_Schnittstelle {
 
 	
 	public static boolean insertBuchung(int buchungId, String telefon,
-		Date datum, Date zeitVon, Date zeitBis, String kommentar,
+		String datum, String zeitVon, String zeitBis, String kommentar,
 		String bestuhlung, int benutzerId, int raumId, char status) {
 		
 		try {
