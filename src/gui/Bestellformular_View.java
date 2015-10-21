@@ -90,7 +90,7 @@ public class Bestellformular_View extends JPanel {
 		raumLabel.setPreferredSize(new Dimension(100, 30));
 
 		nameLabel = new JLabel(nutzerVorname + " " + nutzerNachname);
-		nameLabel.setPreferredSize(new Dimension(50, 30));
+		nameLabel.setPreferredSize(new Dimension(125, 30));
 
 		bereichLabel = new JLabel("Bereich");
 		bereichLabel.setPreferredSize(new Dimension(50, 30));

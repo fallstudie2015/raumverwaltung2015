@@ -134,7 +134,8 @@ public class Raumplaner_View extends JFrame {
 			if (raumList.size() > 0) {
 				for (Raum raum : raumList) {
 					// Bestellformular view erstellen
-					Bestellformular_View bv = new Bestellformular_View(this, Benutzer.getVorname(), Benutzer.getNachname());
+					Bestellformular_View bv = new Bestellformular_View(this, Benutzer.getVorname(),
+							Benutzer.getNachname());
 
 					// R�ume erstellen
 					rv = new Raum_View(raum, bv, this);
@@ -297,7 +298,7 @@ public class Raumplaner_View extends JFrame {
 		calendar.setPreferredSize(new Dimension(275, 300));
 		calendar.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
-		nameLabel = new JLabel("Name");
+		nameLabel = new JLabel((Benutzer.getVorname() + " " + Benutzer.getNachname()));
 		// nameLabel.setPreferredSize(new Dimension(150, 100));
 
 		bereichLabel = new JLabel("Bereich");
