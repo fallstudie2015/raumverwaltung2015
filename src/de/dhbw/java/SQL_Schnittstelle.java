@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 public abstract class SQL_Schnittstelle {
 
@@ -55,6 +56,25 @@ public abstract class SQL_Schnittstelle {
 		return rs;
 	}
 
+	public static int sqlUpdate(String abfrage) {
+		Statement stmt = null;
+		int rowAffected = 0;
+
+		try {
+			stmt = con.createStatement();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		try {
+			rowAffected = stmt.executeUpdate(abfrage);
+		} catch (Exception e) {
+			System.out.println("Update/Insert/Delete " + e.toString());
+		}
+
+		return rowAffected;
+	}
+
 	public static ArrayList<Raum> getRooms() {
 		ArrayList<Raum> raumListe = new ArrayList<Raum>();
 		try {
@@ -91,7 +111,7 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
-					"de.dhbw.java.SQL_Schnittstelle_getRooms");
+				"de.dhbw.java.SQL_Schnittstelle_getBestellerBuchung");
 		}
 		return buchungListe;
 	}
@@ -113,11 +133,43 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
-					"de.dhbw.java.SQL_Schnittstelle_getRooms");
+				"de.dhbw.java.SQL_Schnittstelle_getVerwaltungBuchung");
 		}
 		return buchungListe;
 	}
 
+	
+	public static boolean insertBuchung(int buchungId, String telefon,
+		Date datum, Date zeitVon, Date zeitBis, String kommentar,
+		String bestuhlung, int benutzerId, int raumId, char status) {
+		
+		try {
+			String updateString =
+				"INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status) VALUES('" +
+					telefon +
+					"', '" +
+					datum +
+					"', '" +
+					zeitVon +
+					"', '" +
+					zeitBis +
+					"', '" +
+					kommentar +
+					"', '" +
+					bestuhlung +
+					"', " +
+					benutzerId + ", " + raumId + ", '" + status + "')";
+
+			int rowAffected = SQL_Schnittstelle.sqlUpdate(updateString);
+
+		} catch (Exception e) {
+			Error_Message_Box.errorBox("Laufzeitfehler", e.getMessage(),
+				"de.dhbw.java.SQL_Schnittstelle_insertBuchung");
+			return false;
+		}
+		return true;
+	}
+	
 	public static void rsAusgabe(ResultSet rs) {
 		System.out.println();
 		System.out.print("zeile" + "\t");
