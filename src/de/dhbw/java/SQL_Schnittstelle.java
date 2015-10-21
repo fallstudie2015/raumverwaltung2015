@@ -87,7 +87,7 @@ public abstract class SQL_Schnittstelle {
 			while (rs.next()) {
 				raumListe.add(new Raum(rs.getInt("raumid"), rs
 						.getString("name"), rs.getString("strasse"), rs
-						.getString("stock"), rs.getInt("anzPersonen")));
+						.getString("stock"), rs.getInt("maxAnzPersonen")));
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
