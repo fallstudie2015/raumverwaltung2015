@@ -181,15 +181,15 @@ public abstract class SQL_Schnittstelle {
 
 		try {
 			String updateString = "INSERT INTO logging (klasse, methode, lokalMessage, message, typ, dateTime, benutzerid) VALUES('"
-					+ klasse.replace("'", " ")
+					+ klasse.replace("'", "''")
 					+ "', '"
-					+ methode.replace("'", " ")
+					+ methode.replace("'", "''")
 					+ "', '"
-					+ localMessage.replace("'", " ")
+					+ localMessage.replace("'", "''")
 					+ "', '"
-					+ message.replace("'", " ")
+					+ message.replace("'", "''")
 					+ "', '"
-					+ type.replace("'", " ")
+					+ type.replace("'", "''")
 					+ "', now(), '"
 					+ benutzerID
 					+ "')";
