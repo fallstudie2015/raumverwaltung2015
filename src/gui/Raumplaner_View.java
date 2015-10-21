@@ -385,12 +385,16 @@ public class Raumplaner_View extends JFrame {
 		return raumDeleteButton;
 	}
 
-	public ArrayList<Bestellformular_View> getList() {
+	public ArrayList<Bestellformular_View> getBVList() {
 		return bvList;
 	}
 
 	public void setRaumArray(ArrayList<Raum> raumList) {
 		this.raumList = raumList;
+	}
+
+	public void setBuchungArray(ArrayList<Buchung> buchungList) {
+		this.buchungList = buchungList;
 	}
 
 	public void windowAktualisieren() {

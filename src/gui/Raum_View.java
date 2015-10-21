@@ -25,10 +25,11 @@ public class Raum_View extends JPanel implements MouseListener {
 	private Bestellformular_View bv;
 	private Raumplaner_View frame;
 	private ArrayList<Buchung> buchungList;
-	// private Buchung buchung;
+	private Raum raum;
 	private ArrayList<Raum_View_Label> labelList;
 
 	public Raum_View(Raum raum, Bestellformular_View bv, Raumplaner_View frame) {
+		this.raum = raum;
 		this.raumName = raum.getName();
 		this.bv = bv;
 		this.frame = frame;
@@ -121,11 +122,16 @@ public class Raum_View extends JPanel implements MouseListener {
 		this.buchungList.add(buchung);
 	}
 
+	public void setBuchungNeu(Buchung buchung) {
+		this.buchungList.clear();
+		this.buchungList.add(buchung);
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int i = 0;
 		Bestellformular_View aktiv = null;
-		for (Bestellformular_View view : frame.getList()) {
+		for (Bestellformular_View view : frame.getBVList()) {
 			if (view.isVisible()) {
 				aktiv = view;
 				i++;
@@ -136,6 +142,7 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setVisible(true);
 			bv.setScrollPane(frame.getformularScrollPane());
 			bv.setDate(frame.getCalendar());
+			bv.setMaxPersonen(raum.getAnzPersonen());
 			frame.getformularScrollPane().setVisible(true);
 
 			frame.validate();
