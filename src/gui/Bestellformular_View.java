@@ -329,6 +329,20 @@ public class Bestellformular_View extends JPanel {
 		for (String string : ausstattung) {
 			JCheckBox check = new JCheckBox(string);
 			check.setPreferredSize(new Dimension(100, 30));
+			// check.addItemListener(new ItemListener() {
+			//
+			// @Override
+			// public void itemStateChanged(ItemEvent e) {
+			// JCheckBox check = (JCheckBox) e.getSource();
+			// String name = check.getText();
+			//
+			// if (check.isSelected()) {
+			// ausstattungList.add(name);
+			// } else {
+			// ausstattungList.remove(name);
+			// }
+			// }
+			// });
 			checkPanel.add(check);
 		}
 
