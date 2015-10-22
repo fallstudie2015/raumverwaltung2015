@@ -10,6 +10,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -28,6 +29,9 @@ import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.components.JSpinField;
 
+import de.dhbw.java.Benutzer;
+import de.dhbw.java.SQL_Schnittstelle;
+
 public class Bestellformular_View extends JPanel {
 
 	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel, zeitVonLabel, zeitBisLabel, personenLabel,
@@ -39,7 +43,8 @@ public class Bestellformular_View extends JPanel {
 	private JButton reservierenButton, abbrechenButton;
 	private JTextArea sonstigeArea;
 	private JCheckBox externCheck;
-	private final String stunde[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
+	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
+	private final String stundeBis[] = { "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
 	private final String minute[] = { "00", "30" };
 	private final String ausstattung[] = { "Flipchart", "Metaplanwand", "Leinwand" };
 	private final String bestuhulung[] = { "", "U-Form", "Blockbildung", "Schulbanksystem/parlamentarische Bestuhlung",
@@ -49,9 +54,12 @@ public class Bestellformular_View extends JPanel {
 	private JScrollPane sonstigeScroller, pane;
 	private JFrame frame;
 	private String nutzerVorname, nutzerNachname;
+	private int raumId;
+	private ArrayList<String> ausstattungList;
 
-	public Bestellformular_View(JFrame frame, String name, String nachname) {
+	public Bestellformular_View(JFrame frame, String name, String nachname, int raumId) {
 		// initView();
+		this.raumId = raumId;
 		this.nutzerVorname = name;
 		this.nutzerNachname = nachname;
 		this.frame = frame;
@@ -154,7 +162,7 @@ public class Bestellformular_View extends JPanel {
 		zeitVonLabel = new JLabel("Zeit von:");
 		zeitVonLabel.setPreferredSize(new Dimension(100, 30));
 
-		zeitVonStundeCB = new JComboBox<String>(stunde);
+		zeitVonStundeCB = new JComboBox<String>(stundeVon);
 		zeitVonStundeCB.setPreferredSize(new Dimension(50, 25));
 
 		zeitVonMinuteCB = new JComboBox<String>(minute);
@@ -182,7 +190,7 @@ public class Bestellformular_View extends JPanel {
 		zeitBisLabel = new JLabel("bis:");
 		zeitBisLabel.setPreferredSize(new Dimension(100, 30));
 
-		zeitBisStundeCB = new JComboBox<String>(stunde);
+		zeitBisStundeCB = new JComboBox<String>(stundeBis);
 		zeitBisStundeCB.setPreferredSize(new Dimension(50, 25));
 
 		zeitBisMinuteCB = new JComboBox<String>(minute);
@@ -265,6 +273,12 @@ public class Bestellformular_View extends JPanel {
 						sonstigeArea.setVisible(false);
 						sonstigeScroller.setVisible(false);
 						frame.validate();
+					}
+
+					if (check.isSelected()) {
+						ausstattungList.add(name);
+					} else {
+						ausstattungList.remove(name);
 					}
 				}
 			});
@@ -400,7 +414,7 @@ public class Bestellformular_View extends JPanel {
 		persField.setMaximum(max);
 	}
 
-	private void setBuchung() {
+	private boolean setBuchung() {
 		String telefon = telField.getText();
 		Date datum = new Date(dateChooser.getDate().getTime());
 		Time zeitVon = Time
@@ -409,5 +423,13 @@ public class Bestellformular_View extends JPanel {
 				.valueOf(zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00");
 		String kommentar = sonstigeArea.getText();
 		String bestuhlung = String.valueOf(bestuhlungCB.getSelectedItem());
+		int benutzerId = Benutzer.getBenutzerID();
+		int anzPersonen = persField.getValue();
+
+		// ArrayList<String> ausstattungList = null;
+		boolean externeTeilnehmer = externCheck.isSelected();
+
+		return SQL_Schnittstelle.insertBuchung(telefon, datum.toString(), zeitVon.toString(), zeitBis.toString(),
+				kommentar, bestuhlung, benutzerId, raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer);
 	}
 }
