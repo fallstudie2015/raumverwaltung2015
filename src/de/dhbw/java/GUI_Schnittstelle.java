@@ -32,16 +32,18 @@ public abstract class GUI_Schnittstelle {
 				+ "' and passwort = '" + _passwort + "'";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
-		SQL_Schnittstelle.rsAusgabe(rs);
 		try {
-			rs.first();
-			Benutzer.setBenutzerGesamt(rs.getInt("benutzerid"),
-					rs.getString("email"), rs.getString("vorname"),
-					rs.getString("nachname"), rs.getString("rolle").charAt(0));
+			if (rs.next()) {
+				Benutzer.setBenutzerGesamt(rs.getInt("benutzerid"),
+						rs.getString("email"), rs.getString("vorname"),
+						rs.getString("nachname"),
+						rs.getString("rolle").charAt(0));
+			} else {
+				Benutzer.setBenutzerID(-1);
+			}
 
 		} catch (Exception e) {
 			System.out.println("Ausgabe " + e.toString());
-			Benutzer.setBenutzerID(-1);
 		}
 
 	}
