@@ -364,12 +364,13 @@ public class Raumplaner_View extends JFrame {
 
 	private void buchungenZuordnen() {
 		for (Raum_View rv : raumViewList) {
+			rv.deleteBuchungList();
 			for (Buchung buchung : buchungList) {
 				if (buchung.getRaumID() == rv.getRaumID()) {
 					rv.setBuchungNeu(buchung);
+					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 				}
 			}
-			rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 		}
 	}
 
@@ -422,6 +423,7 @@ public class Raumplaner_View extends JFrame {
 	public void setRaumArray(ArrayList<Raum> raumList) {
 		this.raumList.clear();
 		this.raumList = raumList;
+		raumViewList.clear();
 		bvPanel.removeAll();
 		onScrollPanel.removeAll();
 		port.removeAll();
@@ -435,6 +437,7 @@ public class Raumplaner_View extends JFrame {
 		this.buchungList.clear();
 		this.buchungList = buchungList;
 		buchungenZuordnen();
+		windowAktualisieren();
 	}
 
 	public JPanel getBVPanel() {

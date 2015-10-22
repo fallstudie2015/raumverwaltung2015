@@ -134,8 +134,11 @@ public class Raum_View extends JPanel implements MouseListener {
 	}
 
 	public void setBuchungNeu(Buchung buchung) {
-		this.buchungList.clear();
 		this.buchungList.add(buchung);
+	}
+
+	public void deleteBuchungList() {
+		this.buchungList.clear();
 	}
 
 	public int getRaumID() {
