@@ -365,6 +365,8 @@ public class Bestellformular_View extends JPanel {
 				// + " wurde reserviert!", "Der Raum: " + raumName
 				// + " wurde reserviert!", JOptionPane.OK_OPTION);
 
+				setBuchung();
+
 				getBestellformular().setVisible(false);
 				pane.setVisible(false);
 				frame.validate();
@@ -414,7 +416,7 @@ public class Bestellformular_View extends JPanel {
 		persField.setMaximum(max);
 	}
 
-	private boolean setBuchung() {
+	private void setBuchung() {
 		String telefon = telField.getText();
 		Date datum = new Date(dateChooser.getDate().getTime());
 		Time zeitVon = Time
@@ -429,7 +431,7 @@ public class Bestellformular_View extends JPanel {
 		// ArrayList<String> ausstattungList = null;
 		boolean externeTeilnehmer = externCheck.isSelected();
 
-		return SQL_Schnittstelle.insertBuchung(telefon, datum.toString(), zeitVon.toString(), zeitBis.toString(),
-				kommentar, bestuhlung, benutzerId, raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer);
+		SQL_Schnittstelle.insertBuchung(telefon, datum.toString(), zeitVon.toString(), zeitBis.toString(), kommentar,
+				bestuhlung, benutzerId, raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer);
 	}
 }
