@@ -13,8 +13,10 @@ import java.sql.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 import de.dhbw.java.Raum;
 
@@ -28,11 +30,11 @@ public class Raum_View extends JPanel implements MouseListener {
 	private Raum raum;
 	private ArrayList<Raum_View_Label> labelList;
 
-	public Raum_View(Raum raum, Bestellformular_View bv, Raumplaner_View frame) {
+	public Raum_View(Raum raum, Raumplaner_View frame) {
 		this.raum = raum;
 		this.raumName = raum.getName();
-		this.bv = bv;
 		this.frame = frame;
+		setBestellformularView();
 		labelList = new ArrayList<Raum_View_Label>();
 		buchungList = new ArrayList<Buchung>();
 		initView();
@@ -41,6 +43,15 @@ public class Raum_View extends JPanel implements MouseListener {
 	private void initView() {
 		this.setLayout(new GridLayout(1, 1));
 		this.add(raumzeitenPanel());
+	}
+
+	private void setBestellformularView() {
+		// Bestellformular view erstellen
+		bv = new Bestellformular_View(frame, Benutzer.getVorname(), Benutzer.getNachname());
+		bv.setRaumName(raumName);
+		frame.setBVList(bv);
+		frame.setBVPanel(bv);
+		bv.initView();
 	}
 
 	private JPanel raumzeitenPanel() {
@@ -93,7 +104,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		return raumLabel;
 	}
 
-	public void setBuchungen(Date today) {
+	public void setBuchungenInCalendar(Date today) {
 		labelLeeren();
 
 		for (Buchung buchung : buchungList) {
@@ -127,6 +138,10 @@ public class Raum_View extends JPanel implements MouseListener {
 		this.buchungList.add(buchung);
 	}
 
+	public int getRaumID() {
+		return raum.getRaumID();
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int i = 0;
@@ -142,7 +157,7 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setVisible(true);
 			bv.setScrollPane(frame.getformularScrollPane());
 			bv.setDate(frame.getCalendar());
-//			bv.setMaxPersonen(raum.getMaxPersonen());
+			bv.setMaxPersonen(raum.getAnzPersonen());
 			frame.getformularScrollPane().setVisible(true);
 
 			frame.validate();

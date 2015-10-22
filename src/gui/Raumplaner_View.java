@@ -40,6 +40,7 @@ import de.dhbw.java.Raum;
 public class Raumplaner_View extends JFrame {
 
 	private JCalendar calendar;
+	private JPanel bvPanel, onScrollPanel, port;
 	private JLabel nameLabel, bereichLabel, logoLabel, raumplanerLabel, raumLabel, benutzerLabel, ausstattungLabel;
 	private JButton logoutButton, raumAddButton, raumDeleteButton, benutzerAddButton, benutzerDeleteButton,
 			ausstattungAddButton, ausstattungDeleteButton;
@@ -56,6 +57,7 @@ public class Raumplaner_View extends JFrame {
 	}
 
 	public Raumplaner_View(ArrayList<Raum> raumList, ArrayList<Buchung> buchungList) {
+		this.bvPanel = new JPanel(new FlowLayout());
 		this.raumList = raumList;
 		this.buchungList = buchungList;
 		raumViewList = new ArrayList<Raum_View>();
@@ -68,7 +70,7 @@ public class Raumplaner_View extends JFrame {
 				// TODO Auto-generated method stub
 				if (new Date(calendar.getDate().getTime()) != choosenDate) {
 					for (Raum_View rv : raumViewList) {
-						rv.setBuchungen(new Date(calendar.getDate().getTime()));
+						rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 					}
 					windowAktualisieren();
 					choosenDate = new Date(calendar.getDate().getTime());
@@ -119,44 +121,62 @@ public class Raumplaner_View extends JFrame {
 	 * sichtbar, erst nach dem klicken auf dem gewï¿½nschten raum
 	 */
 	private JPanel scrollPanel() {
-		JPanel onScrollPanel = new JPanel();
+		onScrollPanel = new JPanel();
 		onScrollPanel.setLayout(new FlowLayout());
 
 		Zeit_View zv = new Zeit_View();
 
-		JPanel bvPanel = new JPanel(new FlowLayout());
-
-		JPanel port = new JPanel(new FlowLayout());
+		port = new JPanel(new FlowLayout());
 
 		bvList = new ArrayList<Bestellformular_View>();
 
+		setRaum();
+
+		scroller = new JScrollPane(onScrollPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroller.getVerticalScrollBar().setUnitIncrement(16);
+		scroller.setColumnHeaderView(port);
+		scroller.setRowHeaderView(zv);
+
+		setFormularScroller();
+		formularScroller.getViewport().add(bvPanel);
+
+		JPanel scrollPane = new JPanel(new BorderLayout());
+		scrollPane.add(formularScroller, BorderLayout.EAST);
+		scrollPane.add(scroller, BorderLayout.CENTER);
+
+		return scrollPane;
+	}
+
+	private void setFormularScroller() {
+		formularScroller = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		formularScroller.getVerticalScrollBar().setUnitIncrement(16);
+		formularScroller.setPreferredSize(new Dimension(350, formularScroller.getPreferredSize().height));
+		formularScroller.setVisible(false);
+	}
+
+	private void setRaum() {
 		try {
 			if (raumList.size() > 0) {
 				for (Raum raum : raumList) {
-					// Bestellformular view erstellen
-					Bestellformular_View bv = new Bestellformular_View(this, Benutzer.getVorname(),
-							Benutzer.getNachname());
 
 					// Rï¿½ume erstellen
-					rv = new Raum_View(raum, bv, this);
+					rv = new Raum_View(raum, this);
 					raumViewList.add(rv);
 
 					for (Buchung buchung : buchungList) {
 
 						if (buchung.getRaumID() == raum.getRaumID()) {
 							rv.getBuchung(buchung);
-							rv.setBuchungen(new Date(calendar.getDate().getTime()));
+							rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 						}
 					}
 					windowAktualisieren();
 
-					// Raumnamen uebergeben
-					bv.setRaumName(rv.getRaumName());
-					bv.initView();
-
 					// Panel hinzufï¿½gen
-					bvList.add(bv);
-					bvPanel.add(bv);
+					// bvList.add(bv);
+					// bvPanel.add(bv);
 					onScrollPanel.add(rv);
 
 					port.add(rv.getRaumLabel());
@@ -165,24 +185,6 @@ public class Raumplaner_View extends JFrame {
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e, "Raumplaner_View.gui");
 		}
-
-		scroller = new JScrollPane(onScrollPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scroller.getVerticalScrollBar().setUnitIncrement(16);
-		scroller.setColumnHeaderView(port);
-		scroller.setRowHeaderView(zv);
-
-		formularScroller = new JScrollPane(bvPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		formularScroller.getVerticalScrollBar().setUnitIncrement(16);
-		formularScroller.setPreferredSize(new Dimension(350, formularScroller.getPreferredSize().height));
-		formularScroller.setVisible(false);
-
-		JPanel scrollPane = new JPanel(new BorderLayout());
-		scrollPane.add(formularScroller, BorderLayout.EAST);
-		scrollPane.add(scroller, BorderLayout.CENTER);
-
-		return scrollPane;
 	}
 
 	private JPanel raumAddDelPanel() {
@@ -360,6 +362,17 @@ public class Raumplaner_View extends JFrame {
 		return mainPanel;
 	}
 
+	private void buchungenZuordnen() {
+		for (Raum_View rv : raumViewList) {
+			for (Buchung buchung : buchungList) {
+				if (buchung.getRaumID() == rv.getRaumID()) {
+					rv.setBuchungNeu(buchung);
+				}
+			}
+			rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
+		}
+	}
+
 	/*
 	 * Die Komponenten werden zurï¿½ckgegeben
 	 */
@@ -369,6 +382,14 @@ public class Raumplaner_View extends JFrame {
 
 	public JScrollPane getformularScrollPane() {
 		return formularScroller;
+	}
+
+	public JPanel getOnScrollPanel() {
+		return onScrollPanel;
+	}
+
+	public JPanel getPort() {
+		return port;
 	}
 
 	public JCalendar getCalendar() {
@@ -391,12 +412,37 @@ public class Raumplaner_View extends JFrame {
 		return bvList;
 	}
 
+	public void setBVList(Bestellformular_View bv) {
+		bvList.add(bv);
+	}
+
+	/*
+	 * Methoden werden aufgerufen, wenn die Buchungen bzw. sich die Räume ändern
+	 */
 	public void setRaumArray(ArrayList<Raum> raumList) {
+		this.raumList.clear();
 		this.raumList = raumList;
+		bvPanel.removeAll();
+		onScrollPanel.removeAll();
+		port.removeAll();
+		setRaum();
+		scroller.getViewport().add(onScrollPanel);
+		formularScroller.getViewport().add(bvPanel);
+		windowAktualisieren();
 	}
 
 	public void setBuchungArray(ArrayList<Buchung> buchungList) {
+		this.buchungList.clear();
 		this.buchungList = buchungList;
+		buchungenZuordnen();
+	}
+
+	public JPanel getBVPanel() {
+		return this.bvPanel;
+	}
+
+	public void setBVPanel(Bestellformular_View bv) {
+		this.bvPanel.add(bv);
 	}
 
 	public void windowAktualisieren() {
