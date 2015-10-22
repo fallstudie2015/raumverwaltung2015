@@ -224,7 +224,7 @@ public class Bestellformular_View extends JPanel {
 	}
 
 	private JPanel inExPanel() {
-		externCheck = new JCheckBox("mit Gästen/Externen");
+		externCheck = new JCheckBox("mit G\u00E4sten/Externen");
 
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panel.add(externCheck);
