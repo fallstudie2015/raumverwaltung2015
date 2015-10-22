@@ -74,13 +74,13 @@ public abstract class SQL_Schnittstelle {
 		}
 
 		try {
-			rowAffected = stmt.executeUpdate(abfrage);
+			rowAffected = stmt.executeUpdate(abfrage, Statement.RETURN_GENERATED_KEYS);
 			
 			rs = stmt.getGeneratedKeys();
 
 		    if (rs.next()) {
 		        autoIncKeyFromApi = rs.getInt(1);
-		        System.out.println( "Abfragen String "+autoIncKeyFromApi );
+		        System.out.println( "Buchung PK "+autoIncKeyFromApi );
 		    } 
 		    else {
 
@@ -193,7 +193,7 @@ public abstract class SQL_Schnittstelle {
 					"', " +
 					anzPersonen + ", '" + intExterneTeilnehmer
 					+ "')";
-
+			System.out.println( "updateString "+updateString );
 			int buchungId = SQL_Schnittstelle.sqlUpdate(updateString);
 			String ausstattung = null;
 			for (int i = 0; i < ausstattungList.size(); i++) {
