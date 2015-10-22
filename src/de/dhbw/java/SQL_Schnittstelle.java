@@ -60,6 +60,8 @@ public abstract class SQL_Schnittstelle {
 
 	public static int sqlUpdate(String abfrage) {
 		Statement stmt = null;
+		ResultSet rs = null;
+		int autoIncKeyFromApi = -1;
 		int rowAffected = 0;
 
 		try {
@@ -70,12 +72,24 @@ public abstract class SQL_Schnittstelle {
 
 		try {
 			rowAffected = stmt.executeUpdate(abfrage);
+			
+			rs = stmt.getGeneratedKeys();
+
+		    if (rs.next()) {
+		        autoIncKeyFromApi = rs.getInt(1);
+		        System.out.println( "Abfragen String "+autoIncKeyFromApi );
+		    } 
+		    else {
+
+		    	throw new EmptyStackException();
+		    }
+			
 		} catch (Exception e) {
 			System.out.println("Update/Insert/Delete " + e.toString());
 			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlUpdate");
 		}
 
-		return rowAffected;
+		return autoIncKeyFromApi; //Rueckgabe wert jetzt der generierte Schluessel
 	}
 
 	public static ArrayList<Raum> getRooms() {
