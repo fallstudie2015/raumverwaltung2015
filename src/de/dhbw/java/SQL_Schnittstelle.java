@@ -3,10 +3,12 @@ package de.dhbw.java;
 import gui.Error_Message_Box;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 
@@ -157,7 +159,8 @@ public abstract class SQL_Schnittstelle {
 	}
 
 	public static boolean insertBuchung(String telefon,
-			String datum, String zeitVon, String zeitBis, String kommentar,
+ Date datum,
+		Time zeitVon, Time zeitBis, String kommentar,
  String bestuhlung,
 		int benutzerId, int raumId, char status, int anzPersonen,
 		ArrayList<String> ausstattungList,
