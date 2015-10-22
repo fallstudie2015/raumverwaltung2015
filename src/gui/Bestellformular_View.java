@@ -431,7 +431,8 @@ public class Bestellformular_View extends JPanel {
 		// ArrayList<String> ausstattungList = null;
 		boolean externeTeilnehmer = externCheck.isSelected();
 
-		SQL_Schnittstelle.insertBuchung(telefon, datum.toString(), zeitVon.toString(), zeitBis.toString(), kommentar,
+		SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis,
+			kommentar,
 				bestuhlung, benutzerId, raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer);
 	}
 }

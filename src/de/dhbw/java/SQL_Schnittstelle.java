@@ -171,7 +171,7 @@ public abstract class SQL_Schnittstelle {
 				intExterneTeilnehmer = 1;
 			}
 			String updateString =
-				"INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status, anzPerson, externeTeilnehmer) VALUES('"
+				"INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status, anzPersonen, externeTeilnehmer) VALUES('"
 					+ telefon
 					+ "', '"
 					+ datum
@@ -190,7 +190,7 @@ public abstract class SQL_Schnittstelle {
 					+ ", '"
 					+ status
  +
-					", '" +
+					"', " +
 					anzPersonen + ", '" + intExterneTeilnehmer
 					+ "')";
 
