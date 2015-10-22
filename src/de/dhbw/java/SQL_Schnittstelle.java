@@ -160,6 +160,7 @@ public abstract class SQL_Schnittstelle {
 			String datum, String zeitVon, String zeitBis, String kommentar,
  String bestuhlung,
 		int benutzerId, int raumId, char status, int anzPersonen,
+		ArrayList<String> ausstattungList,
 		boolean externeTeilnehmer) {
 		int intExterneTeilnehmer = 0;
 		try {
@@ -191,13 +192,57 @@ public abstract class SQL_Schnittstelle {
 					+ "')";
 
 			int buchungId = SQL_Schnittstelle.sqlUpdate(updateString);
+			String ausstattung = null;
+			for (int i = 0; i < ausstattungList.size(); i++) {
+				ausstattung = ausstattungList.get(i);
+				int ausstattungId = getAusstatungsID(ausstattung);
+				insertBuchungAusstattung(buchungId, ausstattungId);
 
+			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.insertBuchung");
 			return false;
 		}
 		return true;
+	}
+
+	private static int getAusstatungsID(String ausstattung) {
+		// TODO Auto-generated method stub
+		int ausstattungid = 0;
+		try {
+			String abfrageString =
+				"SELECT ausstattungid FROM ausstattung a WHERE a.bezeichnung = '" +
+					ausstattung + "'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			if (rs.next()) {
+				ausstattungid = rs.getInt("ausstattungid");
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getAusstattungsID");
+		}
+		return ausstattungid;
+	}
+
+	public static void insertBuchungAusstattung(int buchungId,
+ int ausstattungId) {
+		// TODO Auto-generated method stub
+		try {
+
+			String updateString =
+				"INSERT INTO buchungAusstattung (buchungid, ausstattungid) VALUES ('" +
+					buchungId + "', '" + ausstattungId + "')";
+
+			SQL_Schnittstelle.sqlUpdate(updateString);
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.insertBuchungAusstattung");
+
+		}
+
 	}
 
 	public static boolean insertLogging(String klasse, String methode,
