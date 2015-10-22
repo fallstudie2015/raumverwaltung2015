@@ -156,12 +156,18 @@ public abstract class SQL_Schnittstelle {
 		return buchungListe;
 	}
 
-	public static boolean insertBuchung(int buchungId, String telefon,
+	public static boolean insertBuchung(String telefon,
 			String datum, String zeitVon, String zeitBis, String kommentar,
-			String bestuhlung, int benutzerId, int raumId, char status) {
-
+ String bestuhlung,
+		int benutzerId, int raumId, char status, int anzPersonen,
+		boolean externeTeilnehmer) {
+		int intExterneTeilnehmer = 0;
 		try {
-			String updateString = "INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status) VALUES('"
+			if (externeTeilnehmer == true) {
+				intExterneTeilnehmer = 1;
+			}
+			String updateString =
+				"INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status, anzPerson, externeTeilnehmer) VALUES('"
 					+ telefon
 					+ "', '"
 					+ datum
@@ -179,9 +185,12 @@ public abstract class SQL_Schnittstelle {
 					+ raumId
 					+ ", '"
 					+ status
+ +
+					", '" +
+					anzPersonen + ", '" + intExterneTeilnehmer
 					+ "')";
 
-			int rowAffected = SQL_Schnittstelle.sqlUpdate(updateString);
+			int buchungId = SQL_Schnittstelle.sqlUpdate(updateString);
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
