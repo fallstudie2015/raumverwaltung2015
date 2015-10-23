@@ -6,14 +6,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.sql.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import de.dhbw.java.Benutzer;
@@ -56,36 +54,41 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	private JPanel raumzeitenPanel() {
 		JPanel raumzeitenPanel = new JPanel();
-		raumzeitenPanel.setLayout(new GridLayout(45, 1));
+		raumzeitenPanel.setLayout(new GridLayout(23, 1));
 
 		for (int i = 8; i < 19; i++) {
-			Halbestunde_Panel panel = new Halbestunde_Panel(new Raum_View_Label(Time.valueOf("0" + i + ":00:00")),
-					false);
-			raumzeitenPanel.add(panel);
-			labelList.add(panel.getRaumViewLabel());
+			// Halbestunde_Panel panel = new Halbestunde_Panel(new
+			// Raum_View_Label(Time.valueOf("0" + i + ":00:00")));
+			// raumzeitenPanel.add(panel);
+			// labelList.add(panel.getRaumViewLabel());
 			for (int k = 15; k < 16; k += 15) {
-				Halbestunde_Panel panel2 = new Halbestunde_Panel(
-						new Raum_View_Label(Time.valueOf("0" + i + ":" + k + ":00")), false);
+				Halbestunde_Panel panel2 = new Halbestunde_Panel(new Raum_View_Label(Time.valueOf("0" + i + ":00:00")),
+						new Raum_View_Label(Time.valueOf("0" + i + ":" + k + ":00")));
 				raumzeitenPanel.add(panel2);
-				labelList.add(panel2.getRaumViewLabel());
+				labelList.add(panel2.getRaumViewLabelOben());
+				labelList.add(panel2.getRaumViewLabelUnten());
 				for (int j = 30; j < 31; j += 15) {
-					Halbestunde_Panel panel3 = new Halbestunde_Panel(
-							new Raum_View_Label(Time.valueOf("0" + i + ":" + j + ":00")), true);
-					raumzeitenPanel.add(panel3);
-					labelList.add(panel3.getRaumViewLabel());
+					// Halbestunde_Panel panel3 = new Halbestunde_Panel(
+					// , true);
+					// raumzeitenPanel.add(panel3);
+					// labelList.add(panel3.getRaumViewLabel());
 					for (int l = 45; l < 46; l += 15) {
 						Halbestunde_Panel panel4 = new Halbestunde_Panel(
-								new Raum_View_Label(Time.valueOf("0" + i + ":" + l + ":00")), true);
+								new Raum_View_Label(Time.valueOf("0" + i + ":" + j + ":00")),
+								new Raum_View_Label(Time.valueOf("0" + i + ":" + l + ":00")));
 						raumzeitenPanel.add(panel4);
-						labelList.add(panel4.getRaumViewLabel());
+						labelList.add(panel4.getRaumViewLabelOben());
+						labelList.add(panel4.getRaumViewLabelUnten());
 					}
 				}
 			}
 			if (i + 1 == 19) {
 				Halbestunde_Panel panel5 = new Halbestunde_Panel(
-						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00")), false);
+						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00")),
+						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":15:00")));
 				raumzeitenPanel.add(panel5);
-				labelList.add(panel5.getRaumViewLabel());
+				labelList.add(panel5.getRaumViewLabelOben());
+				labelList.add(panel5.getRaumViewLabelUnten());
 			}
 		}
 
@@ -111,7 +114,7 @@ public class Raum_View extends JPanel implements MouseListener {
 							|| (label.getTime().before(buchung.getZeitBis())
 									&& label.getTime().after(buchung.getZeitVon()))) {
 						label.setBackground(Color.RED);
-						// label.setBorder(BorderFactory.createEmptyBorder());
+						label.setBuchung(buchung);
 					}
 				}
 
@@ -121,8 +124,8 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	public void labelLeeren() {
 		for (Raum_View_Label label : labelList) {
-			label.setBackground(Color.WHITE);
-			// label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			label.setBackground(label.getParent().getBackground());
+			label.setMouseListener(this);
 		}
 	}
 
