@@ -393,7 +393,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 
 			rueckgabeBenutzerID = SQL_Schnittstelle
-					.sqlUpdate("INSERT INTO benutzer (benutzerid, nachname, vorname, email, passwort, rolle)"
+					.sqlInsert("INSERT INTO benutzer (benutzerid, nachname, vorname, email, passwort, rolle)"
 							+ " VALUES ('"
 							+ benutzerid
 							+ "', '"
@@ -421,7 +421,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 
 			SQL_Schnittstelle
-					.sqlUpdate("DELETE FROM benutzer WHERE email = '" + email
+					.sqlUpdateDelete("DELETE FROM benutzer WHERE email = '" + email
 							+ "' and vorname = '" + vorname
 							+ "' and nachname = '" + nachname + "'");
 			return true;
