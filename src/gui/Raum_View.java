@@ -19,7 +19,6 @@ import javax.swing.SwingConstants;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 import de.dhbw.java.Raum;
-import de.dhbw.java.SQL_Schnittstelle;
 
 public class Raum_View extends JPanel implements MouseListener {
 
@@ -60,30 +59,31 @@ public class Raum_View extends JPanel implements MouseListener {
 		raumzeitenPanel.setLayout(new GridLayout(45, 1));
 
 		for (int i = 8; i < 19; i++) {
-			Viertelstunde_Panel panel = new Viertelstunde_Panel(new Raum_View_Label(Time.valueOf("0" + i + ":00:00")));
+			Halbestunde_Panel panel = new Halbestunde_Panel(new Raum_View_Label(Time.valueOf("0" + i + ":00:00")),
+					false);
 			raumzeitenPanel.add(panel);
 			labelList.add(panel.getRaumViewLabel());
 			for (int k = 15; k < 16; k += 15) {
-				Viertelstunde_Panel panel2 = new Viertelstunde_Panel(
-						new Raum_View_Label(Time.valueOf("0" + i + ":" + k + ":00")));
+				Halbestunde_Panel panel2 = new Halbestunde_Panel(
+						new Raum_View_Label(Time.valueOf("0" + i + ":" + k + ":00")), false);
 				raumzeitenPanel.add(panel2);
 				labelList.add(panel2.getRaumViewLabel());
 				for (int j = 30; j < 31; j += 15) {
-					Viertelstunde_Panel panel3 = new Viertelstunde_Panel(
-							new Raum_View_Label(Time.valueOf("0" + i + ":" + j + ":00")));
+					Halbestunde_Panel panel3 = new Halbestunde_Panel(
+							new Raum_View_Label(Time.valueOf("0" + i + ":" + j + ":00")), true);
 					raumzeitenPanel.add(panel3);
 					labelList.add(panel3.getRaumViewLabel());
 					for (int l = 45; l < 46; l += 15) {
-						Viertelstunde_Panel panel4 = new Viertelstunde_Panel(
-								new Raum_View_Label(Time.valueOf("0" + i + ":" + l + ":00")));
+						Halbestunde_Panel panel4 = new Halbestunde_Panel(
+								new Raum_View_Label(Time.valueOf("0" + i + ":" + l + ":00")), true);
 						raumzeitenPanel.add(panel4);
 						labelList.add(panel4.getRaumViewLabel());
 					}
 				}
 			}
 			if (i + 1 == 19) {
-				Viertelstunde_Panel panel5 = new Viertelstunde_Panel(
-						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00")));
+				Halbestunde_Panel panel5 = new Halbestunde_Panel(
+						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00")), false);
 				raumzeitenPanel.add(panel5);
 				labelList.add(panel5.getRaumViewLabel());
 			}
