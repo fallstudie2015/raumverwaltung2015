@@ -427,6 +427,19 @@ public class Bestellformular_View extends JPanel {
 		persField.setMaximum(max);
 	}
 
+	public void setZeitCB(String hr, String min) {
+		zeitVonMinuteCB.setSelectedItem(min);
+		zeitVonStundeCB.setSelectedItem(hr);
+
+		if (min.equals("45")) {
+			zeitBisMinuteCB.setSelectedIndex(0);
+			zeitBisStundeCB.setSelectedIndex(zeitVonStundeCB.getSelectedIndex());
+		} else {
+			zeitBisMinuteCB.setSelectedIndex(zeitVonMinuteCB.getSelectedIndex() + 1);
+			zeitBisStundeCB.setSelectedItem(hr);
+		}
+	}
+
 	private void setBuchung() {
 		String telefon = telField.getText();
 		Date datum = new Date(dateChooser.getDate().getTime());

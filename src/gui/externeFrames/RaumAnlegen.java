@@ -30,8 +30,8 @@ import java.awt.Toolkit;
 public class RaumAnlegen extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_name;
-	private JTextField textField_personen;
+	private JTextField textField;
+	private JTextField textField_1;
 	private ArrayList<String> testArrayList = new ArrayList<String>();
 
 			
@@ -80,18 +80,18 @@ public class RaumAnlegen extends JFrame {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 		
-		JButton btnAnlegen = new JButton("Anlegen");
-		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		splitPane.setLeftComponent(btnAnlegen);
+		JButton btnNewButton = new JButton("Anlegen");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		splitPane.setLeftComponent(btnNewButton);
 		
-		JButton btnAbbrechen = new JButton("Abbrechen");
-		btnAbbrechen.addActionListener(new ActionListener() {
+		JButton btnNewButton_1 = new JButton("Abbrechen");
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		splitPane.setRightComponent(btnAbbrechen);
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		splitPane.setRightComponent(btnNewButton_1);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
@@ -125,26 +125,25 @@ public class RaumAnlegen extends JFrame {
 		panel_4.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
-		textField_name = new JTextField();
-		textField_name.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_5.add(textField_name, BorderLayout.CENTER);
-		textField_name.setColumns(10);
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_5.add(textField, BorderLayout.CENTER);
+		textField.setColumns(10);
 		
 		JPanel panel_6 = new JPanel();
 		panel_4.add(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
 		
-		textField_personen = new JTextField();
-		textField_personen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_6.add(textField_personen, BorderLayout.CENTER);
-		textField_personen.setColumns(10);
+		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_6.add(textField_1, BorderLayout.CENTER);
+		textField_1.setColumns(10);
 		
 		JPanel panel_7 = new JPanel();
 		panel_4.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
 		
-		String testArray [] = {ArrayToString()};
-		ArrayToString().toCharArray();
+		String testArray [] = {ArrayToString()}; 
 		System.out.println(testArray);
 		System.out.println(ArrayToString());
 		JComboBox comboBox_0 = new JComboBox(testArray);

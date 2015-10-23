@@ -78,18 +78,18 @@ public class AusstattungAnlegen extends JFrame {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 		
-		JButton btnAnlegen = new JButton("Anlegen");
-		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		splitPane.setLeftComponent(btnAnlegen);
+		JButton btnNewButton = new JButton("Anlegen");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		splitPane.setLeftComponent(btnNewButton);
 		
-		JButton btnAbbrechen = new JButton("Abbrechen");
-		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnAbbrechen.addActionListener(new ActionListener() {
+		JButton btnNewButton_1 = new JButton("Abbrechen");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		splitPane.setRightComponent(btnAbbrechen);
+		splitPane.setRightComponent(btnNewButton_1);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
