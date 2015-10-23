@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 import de.dhbw.java.Raum;
+import de.dhbw.java.SQL_Schnittstelle;
 
 public class Raum_View extends JPanel implements MouseListener {
 

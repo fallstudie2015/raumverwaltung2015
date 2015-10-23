@@ -12,6 +12,8 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 
+import com.mysql.jdbc.UpdatableResultSet;
+
 public abstract class SQL_Schnittstelle {
 
 	// methode coinncetionaufbauen
@@ -300,6 +302,53 @@ public abstract class SQL_Schnittstelle {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.rsAusgabe");
 
+		}
+	}
+	
+	public static boolean insertBenutzer(int benutzerid, String nachname,
+			String vorname, String email, String passwort, String rolle) {
+		boolean antwort = false;
+		int rueckgabeBenutzerID;
+		try {
+
+			rueckgabeBenutzerID = SQL_Schnittstelle
+					.sqlUpdate("INSERT INTO benutzer (benutzerid, nachname, vorname, email, passwort, rolle)"
+							+ " VALUES ('"
+							+ benutzerid
+							+ "', '"
+							+ nachname
+							+ "', '"
+							+ vorname
+							+ "', '"
+							+ email
+							+ "', '"
+							+ passwort + "', '" + rolle + "')");
+			if (rueckgabeBenutzerID != -1) {
+				antwort = true;
+			}
+
+		} catch (Exception e) {
+			antwort = false;
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.insertBenutyer");
+		}
+		return antwort;
+	}
+	
+	public static boolean deleteBenutzer(String email, String vorname,
+			String nachname) {
+		try {
+
+			SQL_Schnittstelle
+					.sqlUpdate("DELETE FROM benutzer WHERE email = '" + email
+							+ "' and vorname = '" + vorname
+							+ "' and nachname = '" + nachname + "'");
+			return true;
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.insertBenutyer");
+			return false;
 		}
 	}
 }

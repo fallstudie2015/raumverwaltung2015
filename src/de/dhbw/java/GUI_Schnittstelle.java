@@ -83,5 +83,6 @@ public abstract class GUI_Schnittstelle {
 					"de.dhbw.java.GUI_Schnittstelle.check");
 		}
 	}
+	
 
 }
