@@ -25,6 +25,7 @@ import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class RaumAnlegen extends JFrame {
 
@@ -54,6 +55,7 @@ public class RaumAnlegen extends JFrame {
 	 * Create the frame.
 	 */
 	public RaumAnlegen() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumAnlegen.class.getResource("/ressources/menu_raum_anlegen_transp.png")));
 		setResizable(false);
 		
 		ArrayFuellen();

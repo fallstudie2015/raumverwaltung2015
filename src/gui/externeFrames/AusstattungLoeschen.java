@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class AusstattungLoeschen extends JFrame {
 
@@ -49,6 +50,7 @@ public class AusstattungLoeschen extends JFrame {
 	 * Create the frame.
 	 */
 	public AusstattungLoeschen() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AusstattungLoeschen.class.getResource("/ressources/menu_ausstattung_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Ausstattung loeschen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

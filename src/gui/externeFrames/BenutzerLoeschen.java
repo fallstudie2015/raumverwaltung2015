@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import java.awt.Toolkit;
 
 public class BenutzerLoeschen extends JFrame {
 
@@ -56,6 +57,7 @@ public class BenutzerLoeschen extends JFrame {
 	 * Create the frame.
 	 */
 	public BenutzerLoeschen() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerLoeschen.class.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Benutzer loeschen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
