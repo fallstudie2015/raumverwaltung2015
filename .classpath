@@ -4,5 +4,7 @@
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.36-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/SCCplayer/Documents/Studium/1_Semester/Programmieren/workspace/raumverwaltung2015/lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="/Users/SCCplayer/Documents/Studium/1_Semester/Programmieren/workspace/raumverwaltung2015/lib/javax.mail-api-1.5.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
