@@ -386,24 +386,24 @@ public abstract class SQL_Schnittstelle {
 		}
 	}
 	
-	public static boolean insertBenutzer(int benutzerid, String nachname,
-			String vorname, String email, String passwort, String rolle) {
+	public static boolean insertBenutzer(String nachname, String vorname,
+			String email, String passwort, String rolle, String bereich) {
 		boolean antwort = false;
 		int rueckgabeBenutzerID;
 		try {
 
 			rueckgabeBenutzerID = SQL_Schnittstelle
-					.sqlInsert("INSERT INTO benutzer (benutzerid, nachname, vorname, email, passwort, rolle)"
+					.sqlInsert("INSERT INTO benutzer (nachname, vorname, email, passwort, rolle, bereich)"
 							+ " VALUES ('"
-							+ benutzerid
-							+ "', '"
 							+ nachname
 							+ "', '"
 							+ vorname
 							+ "', '"
 							+ email
 							+ "', '"
-							+ passwort + "', '" + rolle + "')");
+							+ passwort
+							+ "', '"
+							+ rolle + "', '" + bereich + "')");
 			if (rueckgabeBenutzerID != -1) {
 				antwort = true;
 			}
