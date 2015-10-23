@@ -168,9 +168,6 @@ public class Raumplaner_View extends JFrame {
 					}
 					windowAktualisieren();
 
-					// Panel hinzuf�gen
-					// bvList.add(bv);
-					// bvPanel.add(bv);
 					onScrollPanel.add(rv);
 
 					port.add(rv.getRaumLabel());
@@ -304,14 +301,15 @@ public class Raumplaner_View extends JFrame {
 	private JPanel leftPanel() {
 		calendar = new JCalendar();
 		// calendar.setTodayButtonVisible(true);
-		calendar.setPreferredSize(new Dimension(275, 300));
-		calendar.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+		calendar.setPreferredSize(new Dimension(350, 300));
+		calendar.setBorder(BorderFactory.createEmptyBorder(0, 0, -30, 0));
 
 		bvList = new ArrayList<Bestellformular_View>();
 
 		setRaum();
 		setFormularScroller();
 		formularScroller.getViewport().add(bvPanel);
+		bvPanel.setBorder(BorderFactory.createEmptyBorder(-27, 0, 0, 0));
 
 		nameLabel = new JLabel((Benutzer.getVorname() + " " + Benutzer.getNachname()));
 		// nameLabel.setPreferredSize(new Dimension(150, 100));
@@ -371,14 +369,14 @@ public class Raumplaner_View extends JFrame {
 
 		JPanel left = new JPanel(new BorderLayout());
 
-		left.add(logoPanel(), BorderLayout.NORTH);
+		// left.add(logoPanel(), BorderLayout.NORTH);
 		left.add(leftPanel(), BorderLayout.CENTER);
 
 		// mainPanel.add(logoPanel(), BorderLayout.NORTH);
 		mainPanel.add(left, BorderLayout.WEST);
 		mainPanel.add(scrollPanel(), BorderLayout.CENTER);
 
-		// mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
 		return mainPanel;
 	}

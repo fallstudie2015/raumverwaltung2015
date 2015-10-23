@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.sql.Date;
 import java.sql.Time;
 
 import javax.swing.BorderFactory;
