@@ -54,6 +54,7 @@ public class RaumAnlegen extends JFrame {
 	 * Create the frame.
 	 */
 	public RaumAnlegen() {
+		setResizable(false);
 		
 		ArrayFuellen();
 		ArrayToString();

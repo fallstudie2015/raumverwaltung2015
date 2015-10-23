@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
-public class BenutzerLoeschen extends JFrame {
+public class AusstattungAnlegen extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -43,7 +43,7 @@ public class BenutzerLoeschen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BenutzerLoeschen frame = new BenutzerLoeschen();
+					AusstattungLoeschen frame = new AusstattungLoeschen();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,9 +55,9 @@ public class BenutzerLoeschen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BenutzerLoeschen() {
+	public AusstattungAnlegen() {
 		setResizable(false);
-		setTitle("Benutzer loeschen");
+		setTitle("Ausstattung anlegen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
@@ -65,7 +65,7 @@ public class BenutzerLoeschen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblRaumAnlegen = new JLabel("Benutzer loeschen");
+		JLabel lblRaumAnlegen = new JLabel("Ausstattung anlegen");
 		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
@@ -76,7 +76,7 @@ public class BenutzerLoeschen extends JFrame {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 		
-		JButton btnNewButton = new JButton("Loeschen");
+		JButton btnNewButton = new JButton("Anlegen");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnNewButton);
 		
@@ -101,37 +101,37 @@ public class BenutzerLoeschen extends JFrame {
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
 		
-		JLabel lblBenutzer = new JLabel("Benutzer 1");
-		lblBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer);
+		JLabel lblAusstattung = new JLabel("Ausstattung 1");
+		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattung);
 		
-		JLabel lblBenutzer_1 = new JLabel("Benutzer 2");
-		lblBenutzer_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_1);
+		JLabel lblAusstattung_1 = new JLabel("Ausstattung 2");
+		lblAusstattung_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattung_1);
 		
-		JLabel lblBenutzer_2 = new JLabel("Benutzer 3");
-		lblBenutzer_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_2);
+		JLabel lblAusstattung_2 = new JLabel("Ausstattung 3");
+		lblAusstattung_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattung_2);
 		
-		JLabel lblBenutzer_3 = new JLabel("Benutzer 4");
-		lblBenutzer_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_3);
+		JLabel lblAusstattung_3 = new JLabel("Ausstattung 4");
+		lblAusstattung_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattung_3);
 		
-		JLabel lblBenutzer_4 = new JLabel("Benutzer 5");
-		lblBenutzer_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_4);
+		JLabel lblAusstattung_4 = new JLabel("Ausstattung 5");
+		lblAusstattung_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattung_4);
 		
-		JLabel lblBenutzer_5 = new JLabel("Benutzer 6");
-		lblBenutzer_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_5);
+		JLabel lblAusstattung_5 = new JLabel("Ausstattung 6");
+		lblAusstattung_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattung_5);
 		
-		JLabel lblBenutzer_6 = new JLabel("Benutzer 7");
-		lblBenutzer_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_6);
+		JLabel lblAusstattung_6 = new JLabel("Ausstattung 7");
+		lblAusstattung_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattung_6);
 		
-		JLabel lblBenutzer_7 = new JLabel("Benutzer 8");
-		lblBenutzer_7.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_7);
+		JLabel lblAusstattung_7 = new JLabel("Ausstattung 8");
+		lblAusstattung_7.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattung_7);
 		
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);

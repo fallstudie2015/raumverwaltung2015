@@ -49,6 +49,7 @@ public class AusstattungLoeschen extends JFrame {
 	 * Create the frame.
 	 */
 	public AusstattungLoeschen() {
+		setResizable(false);
 		setTitle("Ausstattung loeschen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 310, 365);
@@ -69,9 +70,11 @@ public class AusstattungLoeschen extends JFrame {
 		panel.add(splitPane);
 		
 		JButton btnNewButton = new JButton("Loeschen");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Abbrechen");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
