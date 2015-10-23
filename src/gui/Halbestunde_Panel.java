@@ -9,24 +9,34 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-public class Viertelstunde_Panel extends JPanel {
+public class Halbestunde_Panel extends JPanel {
 
 	private JPanel upperPanel, downerPanel;
 	private Raum_View_Label label;
 
-	public Viertelstunde_Panel(Raum_View_Label label) {
+	public Halbestunde_Panel(Raum_View_Label label, boolean farbe) {
 		this.label = label;
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setPreferredSize(new Dimension(200, 20));
-		initPanel();
+
+		initPanel(farbe);
 	}
 
-	private void initPanel() {
+	private void initPanel(boolean farbe) {
 		upperPanel = new JPanel();
+
 		// upperPanel.add(label);
 
 		downerPanel = new JPanel();
+
+		if (farbe) {
+			upperPanel.setBackground(Color.WHITE);
+			downerPanel.setBackground(Color.WHITE);
+		} else {
+			upperPanel.setBackground(Color.LIGHT_GRAY);
+			downerPanel.setBackground(Color.LIGHT_GRAY);
+		}
 
 		this.add(Box.createVerticalGlue());
 		this.add(upperPanel);
