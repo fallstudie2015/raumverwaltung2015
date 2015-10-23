@@ -57,39 +57,35 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	private JPanel raumzeitenPanel() {
 		JPanel raumzeitenPanel = new JPanel();
-		raumzeitenPanel.setLayout(new GridLayout(23, 1));
-
-		// raumzeitenPanel.add(getRaumLabel());
-
-		// for (int i = 0; i < 23; i++) {
-		// Raum_View_Label label = new Raum_View_Label();
-		// label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// label.setPreferredSize(new Dimension(200, 50));
-		// raumzeitenPanel.add(label);
-		// }
+		raumzeitenPanel.setLayout(new GridLayout(45, 1));
 
 		for (int i = 8; i < 19; i++) {
-			Raum_View_Label label = new Raum_View_Label(Time.valueOf("0" + i + ":00:00"));
-			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			label.setPreferredSize(new Dimension(200, 50));
-			label.setOpaque(true);
-			raumzeitenPanel.add(label);
-			labelList.add(label);
-			for (int j = 30; j < 31; j += 15) {
-				Raum_View_Label label2 = new Raum_View_Label(Time.valueOf("0" + i + ":" + j + ":00"));
-				label2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				label2.setPreferredSize(new Dimension(200, 50));
-				label2.setOpaque(true);
-				raumzeitenPanel.add(label2);
-				labelList.add(label2);
+			Viertelstunde_Panel panel = new Viertelstunde_Panel(new Raum_View_Label(Time.valueOf("0" + i + ":00:00")));
+			raumzeitenPanel.add(panel);
+			labelList.add(panel.getRaumViewLabel());
+			for (int k = 15; k < 16; k += 15) {
+				Viertelstunde_Panel panel2 = new Viertelstunde_Panel(
+						new Raum_View_Label(Time.valueOf("0" + i + ":" + k + ":00")));
+				raumzeitenPanel.add(panel2);
+				labelList.add(panel2.getRaumViewLabel());
+				for (int j = 30; j < 31; j += 15) {
+					Viertelstunde_Panel panel3 = new Viertelstunde_Panel(
+							new Raum_View_Label(Time.valueOf("0" + i + ":" + j + ":00")));
+					raumzeitenPanel.add(panel3);
+					labelList.add(panel3.getRaumViewLabel());
+					for (int l = 45; l < 46; l += 15) {
+						Viertelstunde_Panel panel4 = new Viertelstunde_Panel(
+								new Raum_View_Label(Time.valueOf("0" + i + ":" + l + ":00")));
+						raumzeitenPanel.add(panel4);
+						labelList.add(panel4.getRaumViewLabel());
+					}
+				}
 			}
 			if (i + 1 == 19) {
-				Raum_View_Label label3 = new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00"));
-				label3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-				label3.setPreferredSize(new Dimension(200, 50));
-				raumzeitenPanel.add(label3);
-				label3.setOpaque(true);
-				labelList.add(label3);
+				Viertelstunde_Panel panel5 = new Viertelstunde_Panel(
+						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00")));
+				raumzeitenPanel.add(panel5);
+				labelList.add(panel5.getRaumViewLabel());
 			}
 		}
 

@@ -278,6 +278,54 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	public static boolean insertRaum(String name, String strasse, String stock,
+		int maxAnzPersonen, ArrayList<String> grundAusstattungList) {
+
+		try {
+
+			String updateString =
+				"INSERT INTO raum (name, strasse, stock, anzPersonen) VALUES('" +
+					name +
+					"', '" +
+					stock +
+					"', '" +
+					stock +
+					"', '" +
+					maxAnzPersonen + "')";
+			System.out.println("updateString " + updateString);
+			int raumId = SQL_Schnittstelle.sqlUpdate(updateString);
+			String grundAusstattung = null;
+			for (int i = 0; i < grundAusstattungList.size(); i++) {
+				grundAusstattung = grundAusstattungList.get(i);
+				int grundAusstattungId = getAusstatungsID(grundAusstattung);
+				insertRaumAusstattung(raumId, grundAusstattungId);
+
+			}
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.insertRaum");
+			return false;
+		}
+		return true;
+
+	}
+
+	private static void insertRaumAusstattung(int raumId, int grundAusstattungId) {
+		// TODO Auto-generated method stub
+		try {
+
+			String updateString =
+				"INSERT INTO buchungAusstattung (buchungid, ausstattungid) VALUES ('" +
+					raumId + "', '" + grundAusstattungId + "')";
+
+			SQL_Schnittstelle.sqlUpdate(updateString);
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.insertRaumAusstattung");
+
+		}
+	}
+
 	public static void rsAusgabe(ResultSet rs) {
 		System.out.println();
 		System.out.print("zeile" + "\t");
