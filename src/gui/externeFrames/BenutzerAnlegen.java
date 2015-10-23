@@ -18,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class BenutzerAnlegen extends JFrame {
 
@@ -49,6 +50,7 @@ public class BenutzerAnlegen extends JFrame {
 	 * Create the frame.
 	 */
 	public BenutzerAnlegen() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerAnlegen.class.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
 		setTitle("Benutzer anlegen");
 		setResizable(false);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

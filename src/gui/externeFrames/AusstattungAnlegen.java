@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import java.awt.Toolkit;
 
 public class AusstattungAnlegen extends JFrame {
 
@@ -56,6 +57,7 @@ public class AusstattungAnlegen extends JFrame {
 	 * Create the frame.
 	 */
 	public AusstattungAnlegen() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AusstattungAnlegen.class.getResource("/ressources/menu_ausstattung_anlegen_transp.png")));
 		setResizable(false);
 		setTitle("Ausstattung anlegen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

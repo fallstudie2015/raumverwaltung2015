@@ -23,6 +23,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class RaumLoeschen extends JFrame {
 
@@ -56,6 +58,7 @@ public class RaumLoeschen extends JFrame {
 	 * Create the frame.
 	 */
 	public RaumLoeschen() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumLoeschen.class.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Raum loeschen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,6 +69,7 @@ public class RaumLoeschen extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblRaumAnlegen = new JLabel("Raum loeschen");
+		lblRaumAnlegen.setIcon(new ImageIcon(RaumLoeschen.class.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
