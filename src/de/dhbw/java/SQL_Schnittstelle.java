@@ -63,7 +63,7 @@ public abstract class SQL_Schnittstelle {
 		return rs;
 	}
 
-	public static int sqlUpdate(String abfrage) {
+	public static int sqlInsert(String abfrage) {
 		Statement stmt = null;
 		ResultSet rs = null;
 		int autoIncKeyFromApi = -1;
@@ -97,10 +97,29 @@ public abstract class SQL_Schnittstelle {
 		return autoIncKeyFromApi; //Rueckgabe wert jetzt der generierte Schluessel
 	}
 
+	public static int sqlUpdateDelete(String abfrage) {
+		Statement stmt = null;
+		int rowAffected = 0;
+
+		try {
+			stmt = con.createStatement();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		try {
+			rowAffected = stmt.executeUpdate(abfrage);
+		} catch (Exception e) {
+			System.out.println("Update/Insert/Delete " + e.toString());
+			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlUpdateDelete");
+		}
+
+		return rowAffected; // Rueckgabe wert jetzt der generierte Schluessel
+	}
+
 	public static ArrayList<Raum> getRooms() {
 		ArrayList<Raum> raumListe = new ArrayList<Raum>();
 		try {
-			String abfrageString = "SELECT * FROM raum";
+			String abfrageString = "SELECT * FROM raum where entfernt = 0";
 			ResultSet rs = sqlAbfrage(abfrageString);
 			rsAusgabe(rs);
 			while (rs.next()) {
@@ -196,7 +215,7 @@ public abstract class SQL_Schnittstelle {
 					anzPersonen + ", '" + intExterneTeilnehmer
 					+ "')";
 			System.out.println( "updateString "+updateString );
-			int buchungId = SQL_Schnittstelle.sqlUpdate(updateString);
+			int buchungId = SQL_Schnittstelle.sqlInsert(updateString);
 			String ausstattung = null;
 			for (int i = 0; i < ausstattungList.size(); i++) {
 				ausstattung = ausstattungList.get(i);
@@ -241,7 +260,7 @@ public abstract class SQL_Schnittstelle {
 				"INSERT INTO buchungAusstattung (buchungid, ausstattungid) VALUES ('" +
 					buchungId + "', '" + ausstattungId + "')";
 
-			SQL_Schnittstelle.sqlUpdate(updateString);
+			SQL_Schnittstelle.sqlInsert(updateString);
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 				"de.dhbw.java.SQL_Schnittstelle.insertBuchungAusstattung");
@@ -268,7 +287,7 @@ public abstract class SQL_Schnittstelle {
 					+ benutzerID
 					+ "')";
 
-			int rowAffected = SQL_Schnittstelle.sqlUpdate(updateString);
+			int rowAffected = SQL_Schnittstelle.sqlInsert(updateString);
 
 		} catch (Exception e) {
 			// Error_Message_Box.laufzeitfehler(e,
@@ -293,7 +312,7 @@ public abstract class SQL_Schnittstelle {
 					"', '" +
 					maxAnzPersonen + "')";
 			System.out.println("updateString " + updateString);
-			int raumId = SQL_Schnittstelle.sqlUpdate(updateString);
+			int raumId = SQL_Schnittstelle.sqlInsert(updateString);
 			String grundAusstattung = null;
 			for (int i = 0; i < grundAusstattungList.size(); i++) {
 				grundAusstattung = grundAusstattungList.get(i);
@@ -318,12 +337,26 @@ public abstract class SQL_Schnittstelle {
 				"INSERT INTO buchungAusstattung (buchungid, ausstattungid) VALUES ('" +
 					raumId + "', '" + grundAusstattungId + "')";
 
-			SQL_Schnittstelle.sqlUpdate(updateString);
+			SQL_Schnittstelle.sqlInsert(updateString);
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 				"de.dhbw.java.SQL_Schnittstelle.insertRaumAusstattung");
-
 		}
+	}
+
+	public static boolean setDeleteFlagRaum(String raumbezeichnung) {
+		try {
+
+			String updateString = "Update raum set entfernt = 1";
+			System.out.println("updateString " + updateString);
+			int raumId = SQL_Schnittstelle.sqlUpdateDelete(updateString);
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.setDeleteFlagRaum");
+			return false;
+		}
+		return true;
 	}
 
 	public static void rsAusgabe(ResultSet rs) {
