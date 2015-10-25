@@ -357,7 +357,7 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
-	public static boolean updateBuchungStatusVerwalter(Date datum,
+	public static boolean updateBuchungStatus(Date datum,
 		Time zeitVon, Time zeitBis, String raumbezeichnung, char status) {
 		try {
 
