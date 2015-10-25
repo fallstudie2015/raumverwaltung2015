@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -176,10 +177,18 @@ public class Raumplaner_View extends JFrame {
 		ausstattungDeleteButton.setPreferredSize(new Dimension(50, 50));
 		ausstattungDeleteButton.setToolTipText("Ausstattung löschen");
 
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+		ImageIcon iiLogout = new ImageIcon(getClass().getClassLoader()
+				.getResource("ressources/menu_ausstattung_loeschen_transp.png"));
+		ImageIcon imageIconLogout = new ImageIcon(iiLogout.getImage()
+				.getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+		logoutButton = new JButton("Log");
+		logoutButton.setPreferredSize(new Dimension(50, 50));
+		logoutButton.setToolTipText("Logout");
 
-		buttonPanel.add(Box.createHorizontalGlue());
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+
+		buttonPanel.add(logoutButton);
 		buttonPanel.add(benutzerAddButton);
 		buttonPanel.add(benutzerDeleteButton);
 		buttonPanel.add(raumAddButton);
@@ -559,6 +568,15 @@ public class Raumplaner_View extends JFrame {
 
 	public void windowAktualisieren() {
 		this.validate();
+	}
+
+	public void setBestellerView() {
+		this.raumAddButton.setVisible(false);
+		this.raumDeleteButton.setVisible(false);
+		this.benutzerAddButton.setVisible(false);
+		this.benutzerDeleteButton.setVisible(false);
+		this.ausstattungAddButton.setVisible(false);
+		this.ausstattungDeleteButton.setVisible(false);
 	}
 
 	/*
