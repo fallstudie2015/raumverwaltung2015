@@ -86,9 +86,9 @@ public abstract class SQL_Schnittstelle {
 		    } 
 		    else {
 
-		    	throw new EmptyStackException();
-		    }
-			
+				throw new EmptyStackException();
+			}
+
 		} catch (Exception e) {
 			System.out.println("Update/Insert/Delete " + e.toString());
 			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlUpdate");
