@@ -416,7 +416,7 @@ public abstract class SQL_Schnittstelle {
 			int benutzerId = Benutzer.getBenutzerID();
 			String updateString =
 				"Update benutzer set passwort = '" + neuesPasswort +
-					"' where datum = '" + benutzerId + "'";
+					"' where benutzerid = '" + benutzerId + "'";
 
 			System.out.println("updateString " + updateString);
 			SQL_Schnittstelle.sqlUpdateDelete(updateString);
