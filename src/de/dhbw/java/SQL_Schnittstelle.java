@@ -365,7 +365,7 @@ public abstract class SQL_Schnittstelle {
 			String updateString =
 				"Update Buchung set status = '" + status + "' where datum = '" +
 					datum + "'and zeitvon = '" + zeitVon + "' and zeitbis = '" +
-					zeitBis + "' and raumid = '" + raumId;
+					zeitBis + "' and raumid = '" + raumId + "'";
 
 			System.out.println("updateString " + updateString);
 			SQL_Schnittstelle.sqlUpdateDelete(updateString);
@@ -396,6 +396,58 @@ public abstract class SQL_Schnittstelle {
 				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
 		}
 		return raumId;
+	}
+
+	public static String passwortAendern(String aktuellesPasswort,
+		String neuesPasswort, String neuesPasswortWiederholt) {
+		try {
+			aktuellesPasswort = SHA512_Encrypt.encrypt(aktuellesPasswort);
+			neuesPasswort = SHA512_Encrypt.encrypt(neuesPasswort);
+			neuesPasswortWiederholt =
+				SHA512_Encrypt.encrypt(neuesPasswortWiederholt);
+
+			String aktuellesPasswortDB = getAktuellesPasswort();
+			if (aktuellesPasswort != aktuellesPasswortDB) {
+				return "Aktuelles Passwort wurde falsch eingegeben!";
+			}
+			if (neuesPasswort != neuesPasswortWiederholt) {
+				return "Das neue Passwort und dessen Wiederholung sind nicht identisch";
+			}
+			int benutzerId = Benutzer.getBenutzerID();
+			String updateString =
+				"Update benutzer set passwort = '" + neuesPasswort +
+					"' where datum = '" + benutzerId + "'";
+
+			System.out.println("updateString " + updateString);
+			SQL_Schnittstelle.sqlUpdateDelete(updateString);
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.passwortAendern");
+
+		}
+		return "Passwort wurde erfolgreich geandert!";
+	}
+
+	private static String getAktuellesPasswort() {
+		// TODO Auto-generated method stub
+		String aktuellesPasswort = null;
+		try {
+			String abfrageString =
+				"SELECT passwort FROM benutzer b WHERE b.benutzerid = '" +
+					Benutzer.getBenutzerID() + "'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			while (rs.next()) {
+				aktuellesPasswort = rs.getString("passwort");
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getAktuellesPasswort");
+		}
+		return aktuellesPasswort;
+
 	}
 
 	public static void rsAusgabe(ResultSet rs) {
