@@ -28,7 +28,7 @@ import java.awt.Toolkit;
 public class AusstattungLoeschen extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_name;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -71,18 +71,18 @@ public class AusstattungLoeschen extends JFrame {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 		
-		JButton btnLoeschen = new JButton("Loeschen");
-		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		splitPane.setLeftComponent(btnLoeschen);
+		JButton btnNewButton = new JButton("Loeschen");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		splitPane.setLeftComponent(btnNewButton);
 		
-		JButton btnAbbrechen = new JButton("Abbrechen");
-		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnAbbrechen.addActionListener(new ActionListener() {
+		JButton btnNewButton_1 = new JButton("Abbrechen");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		splitPane.setRightComponent(btnAbbrechen);
+		splitPane.setRightComponent(btnNewButton_1);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
@@ -108,10 +108,10 @@ public class AusstattungLoeschen extends JFrame {
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(9, 0, 0, 0));
 		
-		textField_name = new JTextField();
-		textField_name.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(textField_name);
-		textField_name.setColumns(10);
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(textField);
+		textField.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));

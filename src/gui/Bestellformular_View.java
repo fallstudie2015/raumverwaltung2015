@@ -34,22 +34,28 @@ import de.dhbw.java.SQL_Schnittstelle;
 
 public class Bestellformular_View extends JPanel {
 
-	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel, zeitVonLabel, zeitBisLabel, personenLabel,
-			technikLabel, ausstattungLabel, bestuhlungLabel;
+	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel,
+			zeitVonLabel, zeitBisLabel, personenLabel, technikLabel,
+			ausstattungLabel, bestuhlungLabel;
 	private JTextField telField;
 	private JSpinField persField;
 	private JDateChooser dateChooser;
-	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB, zeitBisStundeCB, zeitBisMinuteCB;
+	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB,
+			zeitBisStundeCB, zeitBisMinuteCB;
 	private JButton reservierenButton, abbrechenButton;
 	private JTextArea sonstigeArea;
 	private JCheckBox externCheck;
-	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
-	private final String stundeBis[] = { "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
+	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13",
+			"14", "15", "16", "17", "18" };
+	private final String stundeBis[] = { "08", "09", "10", "11", "12", "13",
+			"14", "15", "16", "17", "18", "19" };
 	private final String minute[] = { "00", "15", "30", "45" };
-	private final String ausstattung[] = { "Flipchart", "Metaplanwand", "Leinwand" };
-	private final String bestuhulung[] = { "", "U-Form", "Blockbildung", "Schulbanksystem/parlamentarische Bestuhlung",
-			"Sonderbestuhlung" };
-	private final String technik[] = { "Netzwerk (LAN)", "Beamer", "Moderatoren-Koffer", "Sonstige" };
+	private final String ausstattung[] = { "Flipchart", "Metaplanwand",
+			"Leinwand" };
+	private final String bestuhulung[] = { "", "U-Form", "Blockbildung",
+			"Schulbanksystem/parlamentarische Bestuhlung", "Sonderbestuhlung" };
+	private final String technik[] = { "Netzwerk (LAN)", "Beamer",
+			"Moderatoren-Koffer", "Sonstige" };
 	private String raumName;
 	private JScrollPane sonstigeScroller, pane;
 	private JFrame frame;
@@ -57,7 +63,8 @@ public class Bestellformular_View extends JPanel {
 	private int raumId;
 	private ArrayList<String> ausstattungList;
 
-	public Bestellformular_View(JFrame frame, String name, String nachname, int raumId) {
+	public Bestellformular_View(JFrame frame, String name, String nachname,
+			int raumId) {
 		// initView();
 		this.raumId = raumId;
 		this.nutzerVorname = name;
@@ -77,16 +84,24 @@ public class Bestellformular_View extends JPanel {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
 		mainPanel.add(Box.createVerticalGlue());
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(raumUndNamePanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(telPanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(datumPanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(zeitVonPanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(zeitBisPanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(personenPanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(inExPanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(technikPanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(ausstattungPanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(bestuhulungPanel());
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 50)));
 		mainPanel.add(buttonPanel());
@@ -110,7 +125,7 @@ public class Bestellformular_View extends JPanel {
 		JPanel namenPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		namenPanel.add(nameLabel);
 
-		JPanel bereichPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel bereichPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		bereichPanel.add(bereichLabel);
 
 		JPanel nameBereichPanel = new JPanel();
@@ -139,9 +154,16 @@ public class Bestellformular_View extends JPanel {
 		telPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		telPanel.add(telLabel);
-		telPanel.add(telField);
 
-		return telPanel;
+		JPanel feldPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+		feldPanel.add(telField);
+
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(telPanel, BorderLayout.WEST);
+		panel.add(feldPanel, BorderLayout.EAST);
+
+		return panel;
 	}
 
 	private JPanel datumPanel() {
@@ -151,12 +173,18 @@ public class Bestellformular_View extends JPanel {
 		dateChooser = new JDateChooser();
 		dateChooser.setPreferredSize(new Dimension(200, 30));
 
+		JPanel chooserPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		chooserPanel.add(dateChooser);
+
 		JPanel datumPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		datumPanel.add(datumLabel);
-		datumPanel.add(dateChooser);
 
-		return datumPanel;
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(datumPanel, BorderLayout.WEST);
+		panel.add(chooserPanel, BorderLayout.EAST);
+
+		return panel;
 	}
 
 	private JPanel zeitVonPanel() {
@@ -170,7 +198,7 @@ public class Bestellformular_View extends JPanel {
 		zeitVonMinuteCB.setPreferredSize(new Dimension(50, 25));
 
 		JPanel minUndStdPanel = new JPanel();
-		minUndStdPanel.setLayout(new FlowLayout());
+		minUndStdPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
 		minUndStdPanel.add(zeitVonStundeCB);
 		minUndStdPanel.add(zeitVonMinuteCB);
@@ -181,8 +209,8 @@ public class Bestellformular_View extends JPanel {
 		JPanel zeitVonPanel = new JPanel();
 		zeitVonPanel.setLayout(new BorderLayout());
 
-		zeitVonPanel.add(zeitLabelPanel, BorderLayout.NORTH);
-		zeitVonPanel.add(minUndStdPanel, BorderLayout.CENTER);
+		zeitVonPanel.add(zeitLabelPanel, BorderLayout.WEST);
+		zeitVonPanel.add(minUndStdPanel, BorderLayout.EAST);
 
 		return zeitVonPanel;
 	}
@@ -199,7 +227,7 @@ public class Bestellformular_View extends JPanel {
 		zeitBisMinuteCB.setEnabled(true);
 
 		JPanel minUndStdPanel = new JPanel();
-		minUndStdPanel.setLayout(new FlowLayout());
+		minUndStdPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
 		minUndStdPanel.add(zeitBisStundeCB);
 		minUndStdPanel.add(zeitBisMinuteCB);
@@ -210,8 +238,8 @@ public class Bestellformular_View extends JPanel {
 		JPanel zeitBisPanel = new JPanel();
 		zeitBisPanel.setLayout(new BorderLayout());
 
-		zeitBisPanel.add(zeitLabelPanel, BorderLayout.NORTH);
-		zeitBisPanel.add(minUndStdPanel, BorderLayout.CENTER);
+		zeitBisPanel.add(zeitLabelPanel, BorderLayout.WEST);
+		zeitBisPanel.add(minUndStdPanel, BorderLayout.EAST);
 
 		return zeitBisPanel;
 	}
@@ -222,20 +250,26 @@ public class Bestellformular_View extends JPanel {
 
 		persField = new JSpinField();
 		persField.setMinimum(0);
-		persField.setPreferredSize(new Dimension(100, 30));
+		persField.setPreferredSize(new Dimension(105, 30));
 
 		JPanel personenPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
 		personenPanel.add(personenLabel);
-		personenPanel.add(persField);
 
-		return personenPanel;
+		JPanel feldPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		feldPanel.add(persField);
+
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(personenPanel, BorderLayout.WEST);
+		panel.add(feldPanel, BorderLayout.EAST);
+
+		return panel;
 	}
 
 	private JPanel inExPanel() {
 		externCheck = new JCheckBox("mit G\u00E4sten/Externen");
+		externCheck.setPreferredSize(new Dimension(140, 30));
 
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		panel.add(externCheck);
 
 		return panel;
@@ -258,7 +292,8 @@ public class Bestellformular_View extends JPanel {
 
 		for (String string : technik) {
 			JCheckBox check = new JCheckBox(string);
-			check.setPreferredSize(new Dimension(100, 30));
+			check.setPreferredSize(new Dimension(140, 30));
+			check.setToolTipText(string);
 			check.addItemListener(new ItemListener() {
 
 				@Override
@@ -270,7 +305,7 @@ public class Bestellformular_View extends JPanel {
 						sonstigeArea.setVisible(true);
 						sonstigeScroller.setVisible(true);
 						frame.validate();
-					} else {
+					} else if (name == "Sonstige" && !check.isSelected()) {
 						sonstigeArea.setVisible(false);
 						sonstigeScroller.setVisible(false);
 						frame.validate();
@@ -291,8 +326,10 @@ public class Bestellformular_View extends JPanel {
 		sonstigeArea.setLineWrap(true);
 		sonstigeArea.setVisible(true);
 
-		sonstigeScroller = new JScrollPane(sonstigeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		sonstigeScroller = new JScrollPane(sonstigeArea,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		sonstigeScroller.setPreferredSize(new Dimension(200, 100));
 		sonstigeScroller.setVisible(false);
 
 		JPanel sonstigePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -300,9 +337,15 @@ public class Bestellformular_View extends JPanel {
 
 		checkPanel.setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
 
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		panel.add(checkPanel);
+
+		JPanel panel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		panel2.add(sonstigePanel);
+
 		technikPanel.add(labelPanel, BorderLayout.NORTH);
-		technikPanel.add(checkPanel, BorderLayout.CENTER);
-		technikPanel.add(sonstigePanel, BorderLayout.SOUTH);
+		technikPanel.add(panel, BorderLayout.CENTER);
+		technikPanel.add(panel2, BorderLayout.PAGE_END);
 
 		return technikPanel;
 	}
@@ -320,7 +363,8 @@ public class Bestellformular_View extends JPanel {
 
 		for (String string : ausstattung) {
 			JCheckBox check = new JCheckBox(string);
-			check.setPreferredSize(new Dimension(100, 30));
+			check.setPreferredSize(new Dimension(140, 30));
+			check.setToolTipText(string);
 			// check.addItemListener(new ItemListener() {
 			//
 			// @Override
@@ -340,8 +384,12 @@ public class Bestellformular_View extends JPanel {
 
 		checkPanel.setBorder(BorderFactory.createEmptyBorder(0, 110, 0, 0));
 
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+		panel.add(checkPanel);
+
 		ausstattungPanel.add(labelPanel, BorderLayout.NORTH);
-		ausstattungPanel.add(checkPanel, BorderLayout.CENTER);
+		ausstattungPanel.add(panel, BorderLayout.CENTER);
 
 		return ausstattungPanel;
 	}
@@ -359,12 +407,12 @@ public class Bestellformular_View extends JPanel {
 		bestuhlungCB = new JComboBox<>(bestuhulung);
 		bestuhlungCB.setPreferredSize(new Dimension(200, 30));
 
-		JPanel cbPanel = new JPanel(new FlowLayout());
+		JPanel cbPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		cbPanel.add(bestuhlungCB);
-		cbPanel.setBorder(BorderFactory.createEmptyBorder(0, 75, 0, 0));
+		// cbPanel.setBorder(BorderFactory.createEmptyBorder(0, 75, 0, 0));
 
-		bestuhlungPanel.add(labelPanel, BorderLayout.NORTH);
-		bestuhlungPanel.add(cbPanel, BorderLayout.CENTER);
+		bestuhlungPanel.add(labelPanel, BorderLayout.WEST);
+		bestuhlungPanel.add(cbPanel, BorderLayout.EAST);
 
 		return bestuhlungPanel;
 	}
@@ -427,20 +475,44 @@ public class Bestellformular_View extends JPanel {
 		persField.setMaximum(max);
 	}
 
+	public void setZeitCB(String hr, String min) {
+		zeitVonMinuteCB.setSelectedItem(min);
+		zeitVonStundeCB.setSelectedItem(hr);
+
+		if (hr.equals("19")) {
+			zeitVonMinuteCB.setSelectedItem("45");
+			zeitVonStundeCB.setSelectedItem("18");
+
+			zeitBisMinuteCB.setSelectedIndex(0);
+			zeitBisStundeCB.setSelectedItem(hr);
+		} else {
+			if (min.equals("45")) {
+				zeitBisMinuteCB.setSelectedIndex(0);
+				zeitBisStundeCB.setSelectedIndex(zeitVonStundeCB
+						.getSelectedIndex() + 1);
+			} else {
+				zeitBisMinuteCB.setSelectedIndex(zeitVonMinuteCB
+						.getSelectedIndex() + 1);
+				zeitBisStundeCB.setSelectedItem(hr);
+			}
+		}
+	}
+
 	private void setBuchung() {
 		String telefon = telField.getText();
 		Date datum = new Date(dateChooser.getDate().getTime());
-		Time zeitVon = Time
-				.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem() + ":00");
-		Time zeitBis = Time
-				.valueOf(zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00");
+		Time zeitVon = Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
+				+ zeitVonMinuteCB.getSelectedItem() + ":00");
+		Time zeitBis = Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
+				+ zeitBisMinuteCB.getSelectedItem() + ":00");
 		String kommentar = sonstigeArea.getText();
 		String bestuhlung = String.valueOf(bestuhlungCB.getSelectedItem());
 		int benutzerId = Benutzer.getBenutzerID();
 		int anzPersonen = persField.getValue();
 		boolean externeTeilnehmer = externCheck.isSelected();
 
-		SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis, kommentar, bestuhlung, benutzerId, raumId,
-				'v', anzPersonen, ausstattungList, externeTeilnehmer);
+		SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis,
+				kommentar, bestuhlung, benutzerId, raumId, 'v', anzPersonen,
+				ausstattungList, externeTeilnehmer);
 	}
 }

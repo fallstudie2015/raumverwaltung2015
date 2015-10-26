@@ -12,8 +12,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 
-import com.mysql.jdbc.UpdatableResultSet;
-
 public abstract class SQL_Schnittstelle {
 
 	// methode coinncetionaufbauen
@@ -357,6 +355,47 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 		return true;
+	}
+
+	public static boolean updateBuchungStatus(Date datum,
+		Time zeitVon, Time zeitBis, String raumbezeichnung, char status) {
+		try {
+
+			int raumId = getRaumID(raumbezeichnung);
+			String updateString =
+				"Update Buchung set status = '" + status + "' where datum = '" +
+					datum + "'and zeitvon = '" + zeitVon + "' and zeitbis = '" +
+					zeitBis + "' and raumid = '" + raumId;
+
+			System.out.println("updateString " + updateString);
+			SQL_Schnittstelle.sqlUpdateDelete(updateString);
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+			return false;
+		}
+		return true;
+	}
+
+	public static int getRaumID(String raumbezeichnung) {
+		// TODO Auto-generated method stub
+		int raumId = 0;
+		try {
+			String abfrageString =
+				"SELECT raumid FROM raum a WHERE a.name = '" + raumbezeichnung +
+					"'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			if (rs.next()) {
+				raumId = rs.getInt("ausstattungid");
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+		}
+		return raumId;
 	}
 
 	public static void rsAusgabe(ResultSet rs) {

@@ -69,6 +69,7 @@ public class RaumLoeschen extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblRaumAnlegen = new JLabel("Raum loeschen");
+		lblRaumAnlegen.setIcon(new ImageIcon(RaumLoeschen.class.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
@@ -79,18 +80,18 @@ public class RaumLoeschen extends JFrame {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 		
-		JButton btnLoeschen = new JButton("Loeschen");
-		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		splitPane.setLeftComponent(btnLoeschen);
+		JButton btnNewButton = new JButton("Loeschen");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		splitPane.setLeftComponent(btnNewButton);
 		
-		JButton btnAbbrechen = new JButton("Abbrechen");
-		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnAbbrechen.addActionListener(new ActionListener() {
+		JButton btnNewButton_1 = new JButton("Abbrechen");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		splitPane.setRightComponent(btnAbbrechen);
+		splitPane.setRightComponent(btnNewButton_1);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
@@ -99,7 +101,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		raumLabel = new JLabel(raumName, SwingConstants.CENTER);
 		raumLabel.setFont(new Font(raumName, 0, 18));
 		raumLabel.setPreferredSize(new Dimension(200, 50));
-		raumLabel.addMouseListener(this);
+		// raumLabel.addMouseListener(this);
 
 		return raumLabel;
 	}
@@ -147,6 +149,8 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		Raum_View_Label label = (Raum_View_Label) e.getSource();
+
 		int i = 0;
 		Bestellformular_View aktiv = null;
 		for (Bestellformular_View view : frame.getBVList()) {
@@ -161,6 +165,8 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setScrollPane(frame.getformularScrollPane());
 			bv.setDate(frame.getCalendar());
 			bv.setMaxPersonen(raum.getAnzPersonen());
+			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
+
 			frame.getformularScrollPane().setVisible(true);
 
 			frame.validate();
@@ -170,6 +176,7 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setVisible(true);
 			bv.setScrollPane(frame.getformularScrollPane());
 			bv.setDate(frame.getCalendar());
+			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 			frame.getformularScrollPane().setVisible(true);
 
 			frame.validate();
