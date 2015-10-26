@@ -8,3 +8,5 @@
 	<classpathentry kind="lib" path="lib/javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
+<?xml version="1.0" encoding="UTF-8"?>
+
