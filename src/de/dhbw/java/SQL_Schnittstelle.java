@@ -350,7 +350,7 @@ public abstract class SQL_Schnittstelle {
 			for (int i = 0; i < grundAusstattungList.size(); i++) {
 				grunAusstattungBezeichnung = grundAusstattungList.get(i);
 
-				insertRaumAusstattung(raumId, grunAusstattungBezeichnung);
+				insertRaumGrundAusstattung(raumId, grunAusstattungBezeichnung);
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -361,7 +361,7 @@ public abstract class SQL_Schnittstelle {
 
 	}
 
-	private static void insertRaumAusstattung(int raumId,
+	private static void insertRaumGrundAusstattung(int raumId,
 		String grundAusstattungBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
@@ -377,6 +377,20 @@ public abstract class SQL_Schnittstelle {
 		}
 	}
 
+	public static void insertAusstattungArt(String ausstattungsartBezeichnung) {
+		// TODO Auto-generated method stub
+		try {
+
+			String updateString =
+				"INSERT INTO AusstattungArten ( bezeichnung) VALUES ('" +
+					ausstattungsartBezeichnung + "')";
+
+			SQL_Schnittstelle.sqlInsert(updateString);
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.insertAusstattungArt");
+		}
+	}
 	public static boolean setDeleteFlagRaum(String raumbezeichnung) {
 		try {
 
