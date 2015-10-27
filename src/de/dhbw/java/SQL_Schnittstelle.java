@@ -691,4 +691,18 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 	}
+	
+	public static boolean deleteAusstattungArt(String bezeichnung) {
+		try {
+
+			SQL_Schnittstelle
+					.sqlUpdateDelete("DELETE FROM ausstattungArten WHERE bezeichnung = '" + bezeichnung + "'");
+			return true;
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.deleteAusstattungArt");
+			return false;
+		}
+	}
 }
