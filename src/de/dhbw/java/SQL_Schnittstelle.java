@@ -184,6 +184,7 @@ public abstract class SQL_Schnittstelle {
 		int benutzerId, int raumId, char status, int anzPersonen,
 		ArrayList<String> ausstattungList,
 		boolean externeTeilnehmer) {
+
 		int intExterneTeilnehmer = 0;
 		try {
 			if (externeTeilnehmer == true) {
@@ -388,7 +389,7 @@ public abstract class SQL_Schnittstelle {
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			if (rs.next()) {
-				raumId = rs.getInt("ausstattungid");
+				raumId = rs.getInt("raumid");
 			}
 
 		} catch (Exception e) {
@@ -448,6 +449,45 @@ public abstract class SQL_Schnittstelle {
 		}
 		return aktuellesPasswort;
 
+	}
+
+	public static int pruefeBuchungskonflikt(String raumbezeichnung,
+		Date datum, Time zeitVon, Time zeitBis) {
+		// TODO Auto-generated method stub
+		int raumId = 0;
+		try {
+			raumId = getRaumID(raumbezeichnung);
+			ArrayList<Buchung> buchungen = getBuchungAnTagX(datum, raumId);
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.pruefeBuchungskonflikt");
+		}
+		return raumId;
+	}
+
+	public static ArrayList<Buchung> getBuchungAnTagX(Date datum, int raumId) {
+		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
+		try {
+			String abfrageString =
+				"SELECT * FROM buchung b WHERE b.raumid = '" + raumId +
+					"' and datum = '" + datum + "'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			while (rs.next()) {
+				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
+					.getString("telefon"), rs.getDate("datum"), rs
+					.getTime("zeitvon"), rs.getTime("zeitbis"), rs
+					.getString("kommentar"), rs.getString("bestuhlung"), rs
+					.getInt("benutzerid"), rs.getInt("raumid"), rs
+					.getString("status")));
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getBuchungAnTagX");
+		}
+		return buchungListe;
 	}
 
 	public static void rsAusgabe(ResultSet rs) {
