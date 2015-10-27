@@ -81,7 +81,16 @@ public class RaumLoeschen extends JDialog {
 		JButton btnLoeschen = new JButton("Loeschen");
 		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				boolean feedback = SQL_Schnittstelle.setDeleteFlagRaum(textField_1.getText());
+				if (feedback == true)
+				{
+					setVisible();
+					Erfolg("Raum wurde gelöscht");
+				}
+				else
+				{
+					Erfolg("Raum konnte nicht gelöscht werden");
+				}
 			}
 		});
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));

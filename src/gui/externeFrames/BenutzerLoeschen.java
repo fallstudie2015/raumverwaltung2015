@@ -83,18 +83,14 @@ public class BenutzerLoeschen extends JDialog {
 		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean feedback = SQL_Schnittstelle.deleteBenutzer(textField_email.getText(), textField_Vorname.getText(), textField_nachname.getText());
-				if (feedback = true)
+				if (feedback == true)
 				{
 					setVisible();
-					Erfolg("Benutzer wurde erstellt");
+					Erfolg("Benutzer wurde gelöscht");
 				}
-				else if (feedback =false) 
+				else
 				{
-					Erfolg("Benutzer konnte nicht erstellt werden");
-				}
-				else 
-				{
-					Erfolg("Unbekannter Fehler");
+					Erfolg("Benutzer konnte nicht gelöscht werden");
 				}
 			}
 		});
