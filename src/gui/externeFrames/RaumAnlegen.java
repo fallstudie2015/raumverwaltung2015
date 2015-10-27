@@ -38,6 +38,16 @@ public class RaumAnlegen extends JDialog {
 	private JTextField textField_name;
 	private JTextField textField_personen;
 	private ArrayList<String> testArrayList = new ArrayList<String>();
+	private JTextField textField_strasse;
+	private JTextField textField_stock;
+	private JTextField textField_a1;
+	private JTextField textField_a2;
+	private JTextField textField_a3;
+	private JTextField textField_a4;
+	private JTextField textField_a5;
+	private JTextField textField_a6;
+	private JTextField textField_a7;
+	private JTextField textField_a8;
 
 	/**
 	 * Launch the application.
@@ -68,7 +78,7 @@ public class RaumAnlegen extends JDialog {
 
 		setTitle("Raum anlegen");
 		setLocationRelativeTo(this);
-		setBounds(100, 100, 310, 363);
+		setBounds(100, 100, 310, 410);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -88,7 +98,17 @@ public class RaumAnlegen extends JDialog {
 		JButton btnAnlegen = new JButton("Anlegen");
 		btnAnlegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			//	SQL_Schnittstelle.insertRaum(name, strasse, stock, maxAnzPersonen, grundAusstattungList)
+//			boolean feedback = SQL_Schnittstelle.insertRaum(textField_name.getText(), textField_strasse.getText(), textField_stock.getText(), textField_personen.getText(), grundAusstattungList)
+//			
+//				if (feedback == true)
+//				{
+//					setVisible();
+//					Erfolg("Benutzer wurde angelegt");
+//				}
+//				else
+//				{
+//					Erfolg("Raum konnte nicht angelegt werden");
+//				}
 			}
 		});
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -113,11 +133,19 @@ public class RaumAnlegen extends JDialog {
 
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
-		panel_3.setLayout(new GridLayout(10, 0, 0, 0));
+		panel_3.setLayout(new GridLayout(12, 0, 0, 0));
 
 		JLabel lblRaumname = new JLabel("Raumname");
 		lblRaumname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblRaumname);
+		
+		JLabel lblNewLabel = new JLabel("Straße");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Stockwerk");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblNewLabel_1);
 
 		JLabel lblAnzahlPersonen_1 = new JLabel("Anzahl Personen");
 		lblAnzahlPersonen_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -129,7 +157,7 @@ public class RaumAnlegen extends JDialog {
 
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
-		panel_4.setLayout(new GridLayout(10, 0, 0, 0));
+		panel_4.setLayout(new GridLayout(12, 0, 0, 0));
 
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
@@ -139,6 +167,24 @@ public class RaumAnlegen extends JDialog {
 		textField_name.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_5.add(textField_name, BorderLayout.CENTER);
 		textField_name.setColumns(10);
+		
+		JPanel panel_9 = new JPanel();
+		panel_4.add(panel_9);
+		panel_9.setLayout(new BorderLayout(0, 0));
+		
+		textField_strasse = new JTextField();
+		textField_strasse.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_9.add(textField_strasse, BorderLayout.CENTER);
+		textField_strasse.setColumns(10);
+		
+		JPanel panel_10 = new JPanel();
+		panel_4.add(panel_10);
+		panel_10.setLayout(new BorderLayout(0, 0));
+		
+		textField_stock = new JTextField();
+		textField_stock.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_10.add(textField_stock, BorderLayout.CENTER);
+		textField_stock.setColumns(10);
 
 		JPanel panel_6 = new JPanel();
 		panel_4.add(panel_6);
@@ -152,50 +198,69 @@ public class RaumAnlegen extends JDialog {
 		JPanel panel_7 = new JPanel();
 		panel_4.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
+		
+		textField_a1 = new JTextField();
+		textField_a1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField_a1.setColumns(10);
+		panel_7.add(textField_a1, BorderLayout.CENTER);
 
 		Object testArray[] = testArrayList.toArray();
-		JComboBox comboBox_0 = new JComboBox(testArray);
-		comboBox_0.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_7.add(comboBox_0, BorderLayout.CENTER);
 
 		JPanel panel_8 = new JPanel();
 		panel_4.add(panel_8);
 		panel_8.setLayout(new BorderLayout(0, 0));
-
-		JComboBox comboBox = new JComboBox(testArray);
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox.setEnabled(false);
-		panel_8.add(comboBox, BorderLayout.CENTER);
-
-		JComboBox comboBox_1 = new JComboBox(testArray);
-		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_1.setEnabled(false);
-		panel_4.add(comboBox_1);
-
-		JComboBox comboBox_2 = new JComboBox(testArray);
-		comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_2.setEnabled(false);
-		panel_4.add(comboBox_2);
-
-		JComboBox comboBox_3 = new JComboBox(testArray);
-		comboBox_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_3.setEnabled(false);
-		panel_4.add(comboBox_3);
-
-		JComboBox comboBox_4 = new JComboBox(testArray);
-		comboBox_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_4.setEnabled(false);
-		panel_4.add(comboBox_4);
-
-		JComboBox comboBox_5 = new JComboBox(testArray);
-		comboBox_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_5.setEnabled(false);
-		panel_4.add(comboBox_5);
-
-		JComboBox comboBox_6 = new JComboBox(testArray);
-		comboBox_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_6.setEnabled(false);
-		panel_4.add(comboBox_6);
+		
+		textField_a2 = new JTextField();
+		panel_8.add(textField_a2, BorderLayout.CENTER);
+		textField_a2.setColumns(10);
+		
+		JPanel panel_11 = new JPanel();
+		panel_4.add(panel_11);
+		panel_11.setLayout(new BorderLayout(0, 0));
+		
+		textField_a3 = new JTextField();
+		panel_11.add(textField_a3, BorderLayout.CENTER);
+		textField_a3.setColumns(10);
+		
+		JPanel panel_12 = new JPanel();
+		panel_4.add(panel_12);
+		panel_12.setLayout(new BorderLayout(0, 0));
+		
+		textField_a4 = new JTextField();
+		panel_12.add(textField_a4, BorderLayout.CENTER);
+		textField_a4.setColumns(10);
+		
+		JPanel panel_13 = new JPanel();
+		panel_4.add(panel_13);
+		panel_13.setLayout(new BorderLayout(0, 0));
+		
+		textField_a5 = new JTextField();
+		panel_13.add(textField_a5, BorderLayout.CENTER);
+		textField_a5.setColumns(10);
+		
+		JPanel panel_14 = new JPanel();
+		panel_4.add(panel_14);
+		panel_14.setLayout(new BorderLayout(0, 0));
+		
+		textField_a6 = new JTextField();
+		panel_14.add(textField_a6, BorderLayout.CENTER);
+		textField_a6.setColumns(10);
+		
+		JPanel panel_15 = new JPanel();
+		panel_4.add(panel_15);
+		panel_15.setLayout(new BorderLayout(0, 0));
+		
+		textField_a7 = new JTextField();
+		panel_15.add(textField_a7, BorderLayout.CENTER);
+		textField_a7.setColumns(10);
+		
+		JPanel panel_16 = new JPanel();
+		panel_4.add(panel_16);
+		panel_16.setLayout(new BorderLayout(0, 0));
+		
+		textField_a8 = new JTextField();
+		panel_16.add(textField_a8, BorderLayout.CENTER);
+		textField_a8.setColumns(10);
 
 	}
 

@@ -85,18 +85,14 @@ public class BenutzerAnlegen extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				boolean feedback = SQL_Schnittstelle.insertBenutzer(textField_Name.getText(), textField_Vorname.getText(),
 						textField_email.getText(), GetPasswort(), RadioZurueck(), textField_bereich.getText());
-				if (feedback = true)
+				if (feedback == true)
 				{
 					setVisible();
 					Erfolg("Benutzer wurde erstellt");
 				}
-				else if (feedback =false) 
+				else
 				{
 					Erfolg("Benutzer konnte nicht erstellt werden");
-				}
-				else 
-				{
-					Erfolg("Unbekannter Fehler");
 				}
 			}
 		});
@@ -176,24 +172,20 @@ public class BenutzerAnlegen extends JDialog {
 		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
 
 		rdbtnVerwalter = new JRadioButton("Verwalter");
-		rdbtnVerwalter.setSelected(true);
+		rdbtnVerwalter.setSelected(false);
 		panel_5.add(rdbtnVerwalter);
 		rdbtnVerwalter.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		group.add(rdbtnVerwalter);
 
 		rdbtnBenutzer = new JRadioButton("Benutzer");
 		rdbtnBenutzer.setSelected(true);
 		panel_5.add(rdbtnBenutzer);
 		rdbtnBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		group.add(rdbtnBenutzer);
+		
+		
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnBenutzer);
 		group.add(rdbtnVerwalter);
 
-		/*
-		 * if (rdbtnBenutzer.isSelected()) { } else{
-		 * if(rdbtnVerwalter.isSelected()) { } else() }
-		 */
 		textField_bereich = new JTextField();
 		textField_bereich.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(textField_bereich);
@@ -205,21 +197,16 @@ public class BenutzerAnlegen extends JDialog {
 									// zurück
 	{
 
+		String rueckgabe = null;
 		if (rdbtnBenutzer.isSelected()) { // entweder Benutzer
-			String benutzer = "Benutzer";
-			return benutzer;
+			 rueckgabe = "Benutzer";
 		}
 
 		else if (rdbtnBenutzer.isSelected()) // oder Verwalter
 		{
-			String verwalter = "Verwalter";
-			return verwalter;
+			rueckgabe = "Verwalter";
 		}
-		else
-		{
-		String fehler = "Keine Rolle ausgewählt";
-		return fehler;
-		}
+		return rueckgabe;
 	}
 
 	private String GetPasswort() // gibt den Wert des Passwortfeldes zurück
