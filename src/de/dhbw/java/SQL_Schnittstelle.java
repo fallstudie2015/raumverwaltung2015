@@ -344,13 +344,13 @@ public abstract class SQL_Schnittstelle {
 					"', '" +
 					maxAnzPersonen + "')";
 			System.out.println("updateString " + updateString);
+			String grunAusstattungBezeichnung = null;
 			int raumId = SQL_Schnittstelle.sqlInsert(updateString);
-			String grundAusstattung = null;
-			for (int i = 0; i < grundAusstattungList.size(); i++) {
-				grundAusstattung = grundAusstattungList.get(i);
-				int grundAusstattungId = getAusstatungsArtenID(grundAusstattung);
-				insertRaumAusstattung(raumId, grundAusstattungId);
 
+			for (int i = 0; i < grundAusstattungList.size(); i++) {
+				grunAusstattungBezeichnung = grundAusstattungList.get(i);
+
+				insertRaumAusstattung(raumId, grunAusstattungBezeichnung);
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -361,13 +361,14 @@ public abstract class SQL_Schnittstelle {
 
 	}
 
-	private static void insertRaumAusstattung(int raumId, int grundAusstattungId) {
+	private static void insertRaumAusstattung(int raumId,
+		String grundAusstattungBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
 
 			String updateString =
-				"INSERT INTO buchungAusstattung (buchungid, ausstattungid) VALUES ('" +
-					raumId + "', '" + grundAusstattungId + "')";
+				"INSERT INTO raumAusstattung (buchungid, bezeichnung) VALUES ('" +
+					raumId + "', '" + grundAusstattungBezeichnung + "')";
 
 			SQL_Schnittstelle.sqlInsert(updateString);
 		} catch (Exception e) {
