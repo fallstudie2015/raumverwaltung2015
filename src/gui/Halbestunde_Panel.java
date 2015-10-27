@@ -23,6 +23,9 @@ public class Halbestunde_Panel extends JPanel {
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setPreferredSize(new Dimension(200, 40));
 
+		label.setPanel(upperPanel);
+		label2.setPanel(downerPanel);
+
 		initPanel();
 	}
 
@@ -38,6 +41,7 @@ public class Halbestunde_Panel extends JPanel {
 		this.setPreferredSize(new Dimension(200, 40));
 		this.add(upperPanel);
 		this.add(downerPanel);
+		label.setPanel(upperPanel);
 	}
 
 	private void initPanel() {

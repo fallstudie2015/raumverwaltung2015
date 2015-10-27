@@ -4,14 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 import de.dhbw.java.Raum;
+import de.dhbw.java.SQL_Schnittstelle;
 
 public class Raum_View extends JPanel implements MouseListener {
 
@@ -109,14 +110,39 @@ public class Raum_View extends JPanel implements MouseListener {
 	public void setBuchungenInCalendar(Date today) {
 		labelLeeren();
 
+		Color farbe;
+
 		for (Buchung buchung : buchungList) {
+			if (buchung.getBenutzerID() == Benutzer.getBenutzerID()) {
+				farbe = Color.GREEN;
+			} else {
+				farbe = Color.RED;
+			}
 			if (today.toString().compareTo(buchung.getDatum().toString()) == 0) {
 				for (Raum_View_Label label : labelList) {
 					if (buchung.getZeitVon().equals(label.getTime()) || buchung.getZeitBis().equals(label.getTime())
 							|| (label.getTime().before(buchung.getZeitBis())
 									&& label.getTime().after(buchung.getZeitVon()))) {
-						label.setBackground(Color.RED);
-						label.setBuchung(buchung);
+						if (Benutzer.getBenutzertyp() == 'v') {
+							if (buchung.getZeitVon().equals(label.getTime())) {
+								label.setText(SQL_Schnittstelle.getBenutzerName(buchung.getBenutzerID()));
+								label.setHorizontalTextPosition(SwingConstants.CENTER);
+							}
+							label.setToolTipText(
+									"<html>" + raum.getName() + "<br>" + raum.getStrasse() + "<br>" + raum.getStock()
+											+ "<br>" + SQL_Schnittstelle.getBenutzerName(buchung.getBenutzerID())
+											+ "<br>" + buchung.getTelefon() + "<br>" + "</html>");
+						}
+						if (buchung.getStatus().equals("v")) {
+							ImageIcon ii = new ImageIcon(
+									getClass().getClassLoader().getResource("ressources/muster.jpg"));
+							ImageIcon imageIcon = new ImageIcon(
+									ii.getImage().getScaledInstance(200, 20, Image.SCALE_DEFAULT));
+							label.setIcon(imageIcon);
+						} else {
+							label.setBackground(farbe);
+							label.setBuchung(buchung);
+						}
 					}
 				}
 
@@ -126,6 +152,8 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	public void labelLeeren() {
 		for (Raum_View_Label label : labelList) {
+			label.setIcon(null);
+			label.setText(null);
 			label.setBackground(label.getParent().getBackground());
 			label.setMouseListener(this);
 		}
@@ -157,7 +185,6 @@ public class Raum_View extends JPanel implements MouseListener {
 			if (view.isVisible()) {
 				aktiv = view;
 				i++;
-
 			}
 		}
 		if (i == 0) {
@@ -167,6 +194,7 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setMaxPersonen(raum.getAnzPersonen());
 			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 
+			frame.getPanelBuchung().setVisible(false);
 			frame.getformularScrollPane().setVisible(true);
 
 			frame.validate();
@@ -178,7 +206,16 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setDate(frame.getCalendar());
 			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 			frame.getformularScrollPane().setVisible(true);
+			frame.getPanelBuchung().setVisible(false);
 
+			frame.validate();
+		}
+		for (Bestellformular_View view : frame.getBVList()) {
+			if (view.isVisible()) {
+				frame.getPanelBuchung().setVisible(false);
+			} else {
+				frame.getPanelBuchung().setVisible(true);
+			}
 			frame.validate();
 		}
 	}

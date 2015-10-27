@@ -79,7 +79,7 @@ public class AusstattungLoeschen extends JFrame {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible();
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -151,5 +151,10 @@ public class AusstattungLoeschen extends JFrame {
 		comboBox_7.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		comboBox_7.setEnabled(false);
 		panel_3.add(comboBox_7);
+	}
+	
+	private void setVisible()
+	{
+		this.setVisible(false);
 	}
 }

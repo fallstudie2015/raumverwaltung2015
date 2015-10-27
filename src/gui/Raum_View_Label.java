@@ -7,6 +7,7 @@ import java.sql.Time;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import de.dhbw.java.Buchung;
 
@@ -14,12 +15,21 @@ public class Raum_View_Label extends JLabel {
 
 	private Time time;
 	private Buchung buchung;
+	private JPanel parent;
 
 	public Raum_View_Label(Time time) {
 		this.time = time;
 		this.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		this.setPreferredSize(new Dimension(200, 20));
 		this.setOpaque(true);
+	}
+
+	public JPanel getPanel() {
+		return parent;
+	}
+
+	public void setPanel(JPanel panel) {
+		parent = panel;
 	}
 
 	public Time getTime() {

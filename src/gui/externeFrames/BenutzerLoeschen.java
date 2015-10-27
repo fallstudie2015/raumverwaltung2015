@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import de.dhbw.java.SQL_Schnittstelle;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
@@ -28,14 +31,9 @@ import java.awt.Toolkit;
 public class BenutzerLoeschen extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
+	private JTextField textField_Vorname;
+	private JTextField textField_nachname;
+	private JTextField textField_email;
 
 	/**
 	 * Launch the application.
@@ -79,6 +77,11 @@ public class BenutzerLoeschen extends JFrame {
 		panel.add(splitPane);
 		
 		JButton btnLoeschen = new JButton("Loeschen");
+		btnLoeschen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SQL_Schnittstelle.deleteBenutzer(textField_email.getText(), textField_Vorname.getText(), textField_nachname.getText());
+			}
+		});
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
 		
@@ -86,7 +89,7 @@ public class BenutzerLoeschen extends JFrame {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible();
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -101,75 +104,72 @@ public class BenutzerLoeschen extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
-		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
+		panel_3.setLayout(new GridLayout(5, 0, 0, 0));
 		
-		JLabel lblBenutzer = new JLabel("Benutzer 1");
+		JLabel lblBenutzer = new JLabel("Vorname:");
 		lblBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblBenutzer);
 		
-		JLabel lblBenutzer_1 = new JLabel("Benutzer 2");
+		JLabel lblBenutzer_1 = new JLabel("Nachname:");
 		lblBenutzer_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblBenutzer_1);
 		
-		JLabel lblBenutzer_2 = new JLabel("Benutzer 3");
+		JLabel lblBenutzer_2 = new JLabel("E-Mail - Adresse:");
 		lblBenutzer_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblBenutzer_2);
 		
-		JLabel lblBenutzer_3 = new JLabel("Benutzer 4");
-		lblBenutzer_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_3);
-		
-		JLabel lblBenutzer_4 = new JLabel("Benutzer 5");
-		lblBenutzer_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_4);
-		
-		JLabel lblBenutzer_5 = new JLabel("Benutzer 6");
-		lblBenutzer_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_5);
-		
-		JLabel lblBenutzer_6 = new JLabel("Benutzer 7");
-		lblBenutzer_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_6);
-		
-		JLabel lblBenutzer_7 = new JLabel("Benutzer 8");
-		lblBenutzer_7.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_7);
-		
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
-		panel_4.setLayout(new GridLayout(8, 0, 0, 0));
+		panel_4.setLayout(new GridLayout(5, 0, 0, 0));
 		
-		textField = new JTextField();
-		panel_4.add(textField);
-		textField.setColumns(10);
+		JPanel panel_5 = new JPanel();
+		panel_4.add(panel_5);
+		panel_5.setLayout(new BorderLayout(0, 0));
 		
-		textField_1 = new JTextField();
-		panel_4.add(textField_1);
-		textField_1.setColumns(10);
+		textField_Vorname = new JTextField();
+		textField_Vorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_5.add(textField_Vorname, BorderLayout.CENTER);
+		textField_Vorname.setColumns(10);
 		
-		textField_2 = new JTextField();
-		panel_4.add(textField_2);
-		textField_2.setColumns(10);
+		Component rigidArea = Box.createRigidArea(new Dimension(147, 11));
+		panel_5.add(rigidArea, BorderLayout.NORTH);
 		
-		textField_3 = new JTextField();
-		panel_4.add(textField_3);
-		textField_3.setColumns(10);
+		Component rigidArea_1 = Box.createRigidArea(new Dimension(147, 11));
+		panel_5.add(rigidArea_1, BorderLayout.SOUTH);
 		
-		textField_4 = new JTextField();
-		panel_4.add(textField_4);
-		textField_4.setColumns(10);
+		JPanel panel_6 = new JPanel();
+		panel_4.add(panel_6);
+		panel_6.setLayout(new BorderLayout(0, 0));
 		
-		textField_5 = new JTextField();
-		panel_4.add(textField_5);
-		textField_5.setColumns(10);
+		textField_nachname = new JTextField();
+		textField_nachname.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_6.add(textField_nachname, BorderLayout.CENTER);
+		textField_nachname.setColumns(10);
 		
-		textField_6 = new JTextField();
-		panel_4.add(textField_6);
-		textField_6.setColumns(10);
+		Component rigidArea_2 = Box.createRigidArea(new Dimension(147, 11));
+		panel_6.add(rigidArea_2, BorderLayout.NORTH);
 		
-		textField_7 = new JTextField();
-		panel_4.add(textField_7);
-		textField_7.setColumns(10);
+		Component rigidArea_3 = Box.createRigidArea(new Dimension(147, 11));
+		panel_6.add(rigidArea_3, BorderLayout.SOUTH);
+		
+		JPanel panel_7 = new JPanel();
+		panel_4.add(panel_7);
+		panel_7.setLayout(new BorderLayout(0, 0));
+		
+		textField_email = new JTextField();
+		textField_email.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_7.add(textField_email, BorderLayout.CENTER);
+		textField_email.setColumns(10);
+		
+		Component rigidArea_4 = Box.createRigidArea(new Dimension(147, 11));
+		panel_7.add(rigidArea_4, BorderLayout.NORTH);
+		
+		Component rigidArea_5 = Box.createRigidArea(new Dimension(147, 11));
+		panel_7.add(rigidArea_5, BorderLayout.SOUTH);
 	}
 
+	private void setVisible()
+	{
+		this.setVisible(false);
+	}
 }
