@@ -47,8 +47,8 @@ public class Bestellformular_View extends JPanel {
 	private JCheckBox externCheck;
 	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13",
 			"14", "15", "16", "17", "18" };
-	private final String stundeBis[] = { "08", "09", "10", "11", "12", "13",
-			"14", "15", "16", "17", "18", "19" };
+	private final String stundeBis[] = { "09", "10", "11", "12", "13", "14",
+			"15", "16", "17", "18", "19" };
 	private final String minute[] = { "00", "15", "30", "45" };
 	private final String ausstattung[] = { "Flipchart", "Metaplanwand",
 			"Leinwand" };
@@ -489,7 +489,7 @@ public class Bestellformular_View extends JPanel {
 			if (min.equals("45")) {
 				zeitBisMinuteCB.setSelectedIndex(0);
 				zeitBisStundeCB.setSelectedIndex(zeitVonStundeCB
-						.getSelectedIndex() + 1);
+						.getSelectedIndex());
 			} else {
 				zeitBisMinuteCB.setSelectedIndex(zeitVonMinuteCB
 						.getSelectedIndex() + 1);
