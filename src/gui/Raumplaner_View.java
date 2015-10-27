@@ -1,5 +1,13 @@
 package gui;
 
+import gui.externeFrames.AusstattungAnlegen;
+import gui.externeFrames.AusstattungLoeschen;
+import gui.externeFrames.BenutzerAnlegen;
+import gui.externeFrames.BenutzerLoeschen;
+import gui.externeFrames.PasswortAendern;
+import gui.externeFrames.RaumAnlegen;
+import gui.externeFrames.RaumLoeschen;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -28,13 +36,6 @@ import com.toedter.calendar.JCalendar;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 import de.dhbw.java.Raum;
-import gui.externeFrames.AusstattungAnlegen;
-import gui.externeFrames.AusstattungLoeschen;
-import gui.externeFrames.BenutzerAnlegen;
-import gui.externeFrames.BenutzerLoeschen;
-import gui.externeFrames.PasswortAendern;
-import gui.externeFrames.RaumAnlegen;
-import gui.externeFrames.RaumLoeschen;
 
 /**
  * @author Tim
