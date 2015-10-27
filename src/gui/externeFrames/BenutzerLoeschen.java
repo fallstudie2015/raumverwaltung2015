@@ -89,7 +89,7 @@ public class BenutzerLoeschen extends JFrame {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible();
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -168,4 +168,8 @@ public class BenutzerLoeschen extends JFrame {
 		panel_7.add(rigidArea_5, BorderLayout.SOUTH);
 	}
 
+	private void setVisible()
+	{
+		this.setVisible(false);
+	}
 }

@@ -83,13 +83,18 @@ public class RaumAnlegen extends JFrame {
 		panel.add(splitPane);
 
 		JButton btnAnlegen = new JButton("Anlegen");
+		btnAnlegen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			//	SQL_Schnittstelle.insertRaum(name, strasse, stock, maxAnzPersonen, grundAusstattungList)
+			}
+		});
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnAnlegen);
 
 		JButton btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible();
 			}
 		});
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -192,11 +197,17 @@ public class RaumAnlegen extends JFrame {
 	}
 
 	private void ArrayFuellen() {
+		testArrayList.add("");
 		testArrayList.add("Ausstattung 1");
 		testArrayList.add("Ausstattung 2");
 		testArrayList.add("Ausstattung 3");
 		testArrayList.add("Ausstattung 4");
 		testArrayList.add("Ausstattung 5");
 		
+	}
+	
+	private void setVisible()
+	{
+		this.setVisible(false);
 	}
 }

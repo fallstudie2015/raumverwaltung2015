@@ -77,6 +77,7 @@ public class AusstattungAnlegen extends JFrame {
 		JButton btnAnlegen = new JButton("Anlegen");
 		btnAnlegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -86,7 +87,7 @@ public class AusstattungAnlegen extends JFrame {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible();
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -122,5 +123,9 @@ public class AusstattungAnlegen extends JFrame {
 		panel_4.add(textField_1);
 		textField_1.setColumns(10);
 	}
-
+	
+	private void setVisible()
+	{
+		this.setVisible(false);
+	}
 }

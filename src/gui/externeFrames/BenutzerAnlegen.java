@@ -92,7 +92,7 @@ public class BenutzerAnlegen extends JFrame {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				setVisible();
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -213,5 +213,10 @@ public class BenutzerAnlegen extends JFrame {
 			pw += charArray[i];
 		}
 		return pw;
+	}
+	
+	private void setVisible()
+	{
+		this.setVisible(false);
 	}
 }

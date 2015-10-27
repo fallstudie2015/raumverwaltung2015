@@ -88,7 +88,7 @@ public class RaumLoeschen extends JFrame {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				setVisible();
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -124,5 +124,9 @@ public class RaumLoeschen extends JFrame {
 		textField_1.setColumns(10);
 		panel_4.add(textField_1);
 	}
-
+	
+	private void setVisible()
+	{
+		this.setVisible(false);
+	}
 }
