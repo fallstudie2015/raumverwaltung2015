@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
@@ -56,7 +57,7 @@ public class BenutzerAnlegen extends JDialog {
 	 * Create the frame.
 	 */
 	public BenutzerAnlegen() {
-		setModal(true);
+		setModal(false);
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(BenutzerAnlegen.class.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
 		setTitle("Benutzer anlegen");
@@ -82,9 +83,21 @@ public class BenutzerAnlegen extends JDialog {
 		JButton btnAnlegen = new JButton("Anlegen");
 		btnAnlegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SQL_Schnittstelle.insertBenutzer(textField_Name.getText(), textField_Vorname.getText(),
-						textField_email.getText(), GetPasswort(), RadioZurueck(),
-						textField_bereich.getText());
+				boolean feedback = SQL_Schnittstelle.insertBenutzer(textField_Name.getText(), textField_Vorname.getText(),
+						textField_email.getText(), GetPasswort(), RadioZurueck(), textField_bereich.getText());
+				if (feedback = true)
+				{
+					setVisible();
+					Erfolg("Benutzer wurde erstellt");
+				}
+				else if (feedback =false) 
+				{
+					Erfolg("Benutzer konnte nicht erstellt werden");
+				}
+				else 
+				{
+					Erfolg("Unbekannter Fehler");
+				}
 			}
 		});
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -188,37 +201,45 @@ public class BenutzerAnlegen extends JDialog {
 
 	}
 
-	private String RadioZurueck() //gibt den ausgewählten Wert der RadioButtons zurück
+	private String RadioZurueck() // gibt den ausgewählten Wert der RadioButtons
+									// zurück
 	{
-		
-		if (rdbtnBenutzer.isSelected()){ //entweder Benutzer
-				String benutzer = "Benutzer";
-				return benutzer;
+
+		if (rdbtnBenutzer.isSelected()) { // entweder Benutzer
+			String benutzer = "Benutzer";
+			return benutzer;
 		}
-		
-		else 
-			if (rdbtnBenutzer.isSelected()) //oder Verwalter
-			{
-				String verwalter = "Verwalter";			
-				return verwalter;
-			}
+
+		else if (rdbtnBenutzer.isSelected()) // oder Verwalter
+		{
+			String verwalter = "Verwalter";
+			return verwalter;
+		}
+		else
+		{
 		String fehler = "Keine Rolle ausgewählt";
 		return fehler;
+		}
 	}
 
-	private String GetPasswort() //gibt den Wert des Passwortfeldes zurück
+	private String GetPasswort() // gibt den Wert des Passwortfeldes zurück
 	{
 		String pw = "";
-		char[] charArray = passwordField.getPassword(); //wandelt char Array von passwordField in String um
-		for (int i = 0; i < charArray.length; i++) 
-		{
+		char[] charArray = passwordField.getPassword(); // wandelt char Array
+														// von passwordField in
+														// String um
+		for (int i = 0; i < charArray.length; i++) {
 			pw += charArray[i];
 		}
 		return pw;
 	}
-	
-	private void setVisible()
-	{
+
+	private void setVisible() {
 		this.setVisible(false);
+	}
+	
+	public static void Erfolg(String nachricht) {
+		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
 	}
 }

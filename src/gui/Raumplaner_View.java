@@ -1,13 +1,5 @@
 package gui;
 
-import gui.externeFrames.AusstattungAnlegen;
-import gui.externeFrames.AusstattungLoeschen;
-import gui.externeFrames.BenutzerAnlegen;
-import gui.externeFrames.BenutzerLoeschen;
-import gui.externeFrames.PasswortAendern;
-import gui.externeFrames.RaumAnlegen;
-import gui.externeFrames.RaumLoeschen;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -36,6 +28,13 @@ import com.toedter.calendar.JCalendar;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 import de.dhbw.java.Raum;
+import gui.externeFrames.AusstattungAnlegen;
+import gui.externeFrames.AusstattungLoeschen;
+import gui.externeFrames.BenutzerAnlegen;
+import gui.externeFrames.BenutzerLoeschen;
+import gui.externeFrames.PasswortAendern;
+import gui.externeFrames.RaumAnlegen;
+import gui.externeFrames.RaumLoeschen;
 
 /**
  * @author Tim
@@ -138,9 +137,10 @@ public class Raumplaner_View extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				BenutzerAnlegen ba = new BenutzerAnlegen();
 				ba.setVisible(true);
+
 			}
 		});
-		
+
 		ImageIcon iiDeleteButton = new ImageIcon(
 				getClass().getClassLoader().getResource("ressources/menu_benutzer_loeschen_transp.png"));
 		ImageIcon imageIconDeleteButton = new ImageIcon(
@@ -156,7 +156,7 @@ public class Raumplaner_View extends JFrame {
 				bl.setVisible(true);
 			}
 		});
-		
+
 		ImageIcon iiRaumButton = new ImageIcon(
 				getClass().getClassLoader().getResource("ressources/menu_raum_anlegen_transp.png"));
 		ImageIcon imageIconRaumButton = new ImageIcon(
@@ -204,7 +204,7 @@ public class Raumplaner_View extends JFrame {
 				aa.setVisible(true);
 			}
 		});
-		
+
 		ImageIcon iiAusDeleteButton = new ImageIcon(
 				getClass().getClassLoader().getResource("ressources/menu_ausstattung_loeschen_transp.png"));
 		ImageIcon imageIconAusDeleteButton = new ImageIcon(
@@ -220,7 +220,7 @@ public class Raumplaner_View extends JFrame {
 				al.setVisible(true);
 			}
 		});
-		
+
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -250,7 +250,7 @@ public class Raumplaner_View extends JFrame {
 				pa.setVisible(true);
 			}
 		});
-		
+
 		JPanel logoutPanel = new JPanel(new BorderLayout());
 
 		logoutPanel.add(logoutButton, BorderLayout.EAST);
@@ -450,7 +450,7 @@ public class Raumplaner_View extends JFrame {
 
 		panelBuchung = new PanelBuchung();
 		panelBuchung.setVisible(true);
-		
+
 		bvList = new ArrayList<Bestellformular_View>();
 
 		setRaum();

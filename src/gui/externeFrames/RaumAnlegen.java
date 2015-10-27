@@ -23,6 +23,7 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JCheckBox;
@@ -211,5 +212,10 @@ public class RaumAnlegen extends JDialog {
 	private void setVisible()
 	{
 		this.setVisible(false);
+	}
+	
+	public static void Erfolg(String nachricht) {
+		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
 	}
 }

@@ -7,6 +7,7 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
@@ -127,5 +128,9 @@ public class AusstattungAnlegen extends JFrame {
 	private void setVisible()
 	{
 		this.setVisible(false);
+	}
+	public static void Erfolg(String nachricht) {
+		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
 	}
 }
