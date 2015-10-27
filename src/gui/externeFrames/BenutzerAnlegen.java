@@ -57,7 +57,7 @@ public class BenutzerAnlegen extends JDialog {
 	 * Create the frame.
 	 */
 	public BenutzerAnlegen() {
-		setModal(false);
+		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(BenutzerAnlegen.class.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
 		setTitle("Benutzer anlegen");
@@ -198,11 +198,12 @@ public class BenutzerAnlegen extends JDialog {
 	{
 
 		String rueckgabe = null;
+		
 		if (rdbtnBenutzer.isSelected()) { // entweder Benutzer
 			 rueckgabe = "Benutzer";
 		}
 
-		else if (rdbtnBenutzer.isSelected()) // oder Verwalter
+		else if (rdbtnVerwalter.isSelected()) // oder Verwalter
 		{
 			rueckgabe = "Verwalter";
 		}

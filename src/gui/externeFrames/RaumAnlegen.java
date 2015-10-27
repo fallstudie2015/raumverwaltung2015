@@ -96,8 +96,8 @@ public class RaumAnlegen extends JDialog {
 		panel.add(splitPane);
 
 		JButton btnAnlegen = new JButton("Anlegen");
-		btnAnlegen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+//		btnAnlegen.addActionListener(new ActionListener() {
+//		public void actionPerformed(ActionEvent e) {
 //			boolean feedback = SQL_Schnittstelle.insertRaum(textField_name.getText(), textField_strasse.getText(), textField_stock.getText(), textField_personen.getText(), grundAusstattungList)
 //			
 //				if (feedback == true)
@@ -109,8 +109,8 @@ public class RaumAnlegen extends JDialog {
 //				{
 //					Erfolg("Raum konnte nicht angelegt werden");
 //				}
-			}
-		});
+//			}
+//		});
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnAnlegen);
 
