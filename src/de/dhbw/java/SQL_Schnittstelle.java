@@ -377,7 +377,7 @@ public abstract class SQL_Schnittstelle {
 		}
 	}
 
-	public static void insertAusstattungArt(String ausstattungsartBezeichnung) {
+	public static boolean insertAusstattungArt(String ausstattungsartBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
 
@@ -389,7 +389,9 @@ public abstract class SQL_Schnittstelle {
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 				"de.dhbw.java.SQL_Schnittstelle.insertAusstattungArt");
+			return false;
 		}
+		return true;
 	}
 	public static boolean setDeleteFlagRaum(String raumbezeichnung) {
 		try {
