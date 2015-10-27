@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -69,13 +70,23 @@ public class PanelBuchung extends JPanel {
 
 	}
 
-	public String getDatum() {
+	public Date getDatum() {
+		Date date = new Date();
 		System.out.println(tableBuchung.getValueAt(
 				tableBuchung.getSelectedRow(), 0));
-		String date = String.valueOf(tableBuchung.getValueAt(
-				tableBuchung.getSelectedRow(), 0));
-		jc.setDate(new Date(date));
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
+		try {
+			date = df.parse(String.valueOf(tableBuchung.getValueAt(
+					tableBuchung.getSelectedRow(), 0)));
+			System.out.println("erfolgreich");
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			System.out.println("nicht erfolgreich");
+			e.printStackTrace();
+		}
+
+		jc.setDate(date);
 		return date;
 	}
 }

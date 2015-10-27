@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import de.dhbw.java.SQL_Schnittstelle;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -29,7 +30,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.Toolkit;
 
-public class AusstattungAnlegen extends JFrame {
+public class AusstattungAnlegen extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textField_1;
@@ -54,6 +55,7 @@ public class AusstattungAnlegen extends JFrame {
 	 * Create the frame.
 	 */
 	public AusstattungAnlegen() {
+		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AusstattungAnlegen.class.getResource("/ressources/menu_ausstattung_anlegen_transp.png")));
 		setResizable(false);
 		setTitle("Ausstattung anlegen");
