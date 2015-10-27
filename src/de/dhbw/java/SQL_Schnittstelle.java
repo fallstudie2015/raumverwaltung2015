@@ -317,6 +317,15 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	/**
+	 * Fügt neuen Raum hinzu
+	 * @param name
+	 * @param strasse
+	 * @param stock
+	 * @param maxAnzPersonen
+	 * @param grundAusstattungList
+	 * @return
+	 */
 	public static boolean insertRaum(String name, String strasse, String stock,
 		int maxAnzPersonen, ArrayList<String> grundAusstattungList) {
 
