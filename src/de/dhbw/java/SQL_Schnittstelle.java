@@ -429,6 +429,48 @@ public abstract class SQL_Schnittstelle {
 		}
 		return raumId;
 	}
+	
+	public static String getRaumName(int raumID) {
+		// TODO Auto-generated method stub
+		String raumName = "";
+		try {
+			String abfrageString =
+				"SELECT name FROM raum a WHERE a.raumid = '" + raumID +
+					"'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			if (rs.next()) {
+				raumName = rs.getString("name");
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+		}
+		return raumName;
+	}
+	
+	public static String getBenutzerName(int benutzerID) {
+		// TODO Auto-generated method stub
+		String benutzerName = "";
+		try {
+			String abfrageString =
+				"SELECT vorname, nachname FROM benutzer b WHERE b.benutzerid = '" + benutzerID +
+					"'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			if (rs.next()) {
+				benutzerName = rs.getString("vorname");
+				benutzerName += " ";
+				benutzerName += rs.getString("nachname");
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+		}
+		return benutzerName;
+	}
 
 	public static String passwortAendern(String aktuellesPasswort,
 		String neuesPasswort, String neuesPasswortWiederholt) {
