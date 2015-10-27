@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import de.dhbw.java.SQL_Schnittstelle;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -23,12 +26,12 @@ import java.awt.Toolkit;
 public class BenutzerAnlegen extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textField_Name;
+	private JTextField textField_Vorname;
+	private JTextField textField_email;
 	private JPasswordField passwordField;
 	private ButtonGroup group;
-	private JTextField textField_3;
+	private JTextField textField_bereich;
 
 	/**
 	 * Launch the application.
@@ -71,18 +74,23 @@ public class BenutzerAnlegen extends JFrame {
 			JSplitPane splitPane = new JSplitPane();
 			panel.add(splitPane);
 			
-			JButton btnNewButton = new JButton("Anlegen");
-			btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			splitPane.setLeftComponent(btnNewButton);
+			JButton btnAnlegen = new JButton("Anlegen");
+			btnAnlegen.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					SQL_Schnittstelle.insertBenutzer(textField_Name, textField_Vorname, textField_email, passwordField, RadioZurueck(), textField_bereich);
+				}
+			});
+			btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			splitPane.setLeftComponent(btnAnlegen);
 			
-			JButton btnNewButton_1 = new JButton("Abbrechen");
-			btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			btnNewButton_1.addActionListener(new ActionListener() {
+			JButton btnAbbrechen = new JButton("Abbrechen");
+			btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			btnAbbrechen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					dispose();
 				}
 			});
-			splitPane.setRightComponent(btnNewButton_1);
+			splitPane.setRightComponent(btnAbbrechen);
 			
 			JPanel panel_1 = new JPanel();
 			contentPane.add(panel_1, BorderLayout.CENTER);
@@ -124,20 +132,20 @@ public class BenutzerAnlegen extends JFrame {
 			panel_2.add(panel_4);
 			panel_4.setLayout(new GridLayout(7, 0, 0, 0));
 			
-			textField = new JTextField();
-			textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_4.add(textField);
-			textField.setColumns(10);
+			textField_Name = new JTextField();
+			textField_Name.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			panel_4.add(textField_Name);
+			textField_Name.setColumns(10);
 			
-			textField_1 = new JTextField();
-			textField_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_4.add(textField_1);
-			textField_1.setColumns(10);
+			textField_Vorname = new JTextField();
+			textField_Vorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			panel_4.add(textField_Vorname);
+			textField_Vorname.setColumns(10);
 			
-			textField_2 = new JTextField();
-			textField_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_4.add(textField_2);
-			textField_2.setColumns(10);
+			textField_email = new JTextField();
+			textField_email.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			panel_4.add(textField_email);
+			textField_email.setColumns(10);
 			
 			passwordField = new JPasswordField();
 			passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -157,12 +165,36 @@ public class BenutzerAnlegen extends JFrame {
 			rdbtnBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			group.add(rdbtnBenutzer);
 			ButtonGroup group = new ButtonGroup();
+			group.add(rdbtnBenutzer);
+			group.add(rdbtnVerwalter);
 			
-			textField_3 = new JTextField();
-			textField_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_4.add(textField_3);
-			textField_3.setColumns(10);
+		/*	if (rdbtnBenutzer.isSelected())
+			{ 
+			}
+			else{
+				if(rdbtnVerwalter.isSelected())
+				{
+				}
+				else()
+				}
+			*/		
+			textField_bereich = new JTextField();
+			textField_bereich.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			panel_4.add(textField_bereich);
+			textField_bereich.setColumns(10);
 					
 	}
-
+	private String RadioZurueck()
+	{
+		
+		if (
+		String benutzer = "Benutzer";
+			return benutzer;
+		}
+		
+		else{
+			String verwalter = "Verwalter";			
+			return verwalter;
+		}
+	}
 }
