@@ -34,39 +34,34 @@ import de.dhbw.java.SQL_Schnittstelle;
 
 public class Bestellformular_View extends JPanel {
 
-	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel,
-			zeitVonLabel, zeitBisLabel, personenLabel, technikLabel,
-			ausstattungLabel, bestuhlungLabel;
+	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel, zeitVonLabel, zeitBisLabel, personenLabel,
+			technikLabel, ausstattungLabel, bestuhlungLabel;
 	private JTextField telField;
 	private JSpinField persField;
 	private JDateChooser dateChooser;
-	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB,
-			zeitBisStundeCB, zeitBisMinuteCB;
+	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB, zeitBisStundeCB, zeitBisMinuteCB;
 	private JButton reservierenButton, abbrechenButton;
 	private JTextArea sonstigeArea;
 	private JCheckBox externCheck;
-	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13",
-			"14", "15", "16", "17", "18" };
-	private final String stundeBis[] = { "09", "10", "11", "12", "13", "14",
-			"15", "16", "17", "18", "19" };
+	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
+	private final String stundeBis[] = { "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
 	private final String minute[] = { "00", "15", "30", "45" };
-	private final String ausstattung[] = { "Flipchart", "Metaplanwand",
-			"Leinwand" };
-	private final String bestuhulung[] = { "", "U-Form", "Blockbildung",
-			"Schulbanksystem/parlamentarische Bestuhlung", "Sonderbestuhlung" };
-	private final String technik[] = { "Netzwerk (LAN)", "Beamer",
-			"Moderatoren-Koffer", "Sonstige" };
+	private final String ausstattung[] = { "Flipchart", "Metaplanwand", "Leinwand" };
+	private final String bestuhulung[] = { "", "U-Form", "Blockbildung", "Schulbanksystem/parlamentarische Bestuhlung",
+			"Sonderbestuhlung" };
+	private final String technik[] = { "Netzwerk (LAN)", "Beamer", "Moderatoren-Koffer", "Sonstige" };
 	private String raumName;
 	private JScrollPane sonstigeScroller, pane;
 	private JFrame frame;
 	private String nutzerVorname, nutzerNachname;
 	private int raumId;
 	private ArrayList<String> ausstattungList;
+	private PanelBuchung panelBuchung;
 
-	public Bestellformular_View(JFrame frame, String name, String nachname,
-			int raumId) {
+	public Bestellformular_View(JFrame frame, String name, String nachname, int raumId, PanelBuchung panel) {
 		// initView();
 		this.raumId = raumId;
+		this.panelBuchung = panel;
 		this.nutzerVorname = name;
 		this.nutzerNachname = nachname;
 		this.frame = frame;
@@ -326,8 +321,7 @@ public class Bestellformular_View extends JPanel {
 		sonstigeArea.setLineWrap(true);
 		sonstigeArea.setVisible(true);
 
-		sonstigeScroller = new JScrollPane(sonstigeArea,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		sonstigeScroller = new JScrollPane(sonstigeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		sonstigeScroller.setPreferredSize(new Dimension(200, 100));
 		sonstigeScroller.setVisible(false);
@@ -440,6 +434,7 @@ public class Bestellformular_View extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				getBestellformular().setVisible(false);
 				pane.setVisible(false);
+				panelBuchung.setVisible(true);
 				frame.validate();
 			}
 		});
@@ -488,11 +483,9 @@ public class Bestellformular_View extends JPanel {
 		} else {
 			if (min.equals("45")) {
 				zeitBisMinuteCB.setSelectedIndex(0);
-				zeitBisStundeCB.setSelectedIndex(zeitVonStundeCB
-						.getSelectedIndex());
+				zeitBisStundeCB.setSelectedIndex(zeitVonStundeCB.getSelectedIndex());
 			} else {
-				zeitBisMinuteCB.setSelectedIndex(zeitVonMinuteCB
-						.getSelectedIndex() + 1);
+				zeitBisMinuteCB.setSelectedIndex(zeitVonMinuteCB.getSelectedIndex() + 1);
 				zeitBisStundeCB.setSelectedItem(hr);
 			}
 		}
@@ -501,18 +494,17 @@ public class Bestellformular_View extends JPanel {
 	private void setBuchung() {
 		String telefon = telField.getText();
 		Date datum = new Date(dateChooser.getDate().getTime());
-		Time zeitVon = Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
-				+ zeitVonMinuteCB.getSelectedItem() + ":00");
-		Time zeitBis = Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
-				+ zeitBisMinuteCB.getSelectedItem() + ":00");
+		Time zeitVon = Time
+				.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem() + ":00");
+		Time zeitBis = Time
+				.valueOf(zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00");
 		String kommentar = sonstigeArea.getText();
 		String bestuhlung = String.valueOf(bestuhlungCB.getSelectedItem());
 		int benutzerId = Benutzer.getBenutzerID();
 		int anzPersonen = persField.getValue();
 		boolean externeTeilnehmer = externCheck.isSelected();
 
-		SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis,
-				kommentar, bestuhlung, benutzerId, raumId, 'v', anzPersonen,
-				ausstattungList, externeTeilnehmer);
+		SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis, kommentar, bestuhlung, benutzerId, raumId,
+				'v', anzPersonen, ausstattungList, externeTeilnehmer);
 	}
 }

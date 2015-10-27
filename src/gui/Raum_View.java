@@ -48,7 +48,8 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	private void setBestellformularView() {
 		// Bestellformular view erstellen
-		bv = new Bestellformular_View(frame, Benutzer.getVorname(), Benutzer.getNachname(), raum.getRaumID());
+		bv = new Bestellformular_View(frame, Benutzer.getVorname(), Benutzer.getNachname(), raum.getRaumID(),
+				frame.getPanelBuchung());
 		bv.setRaumName(raumName);
 		frame.setBVList(bv);
 		frame.setBVPanel(bv);
@@ -175,10 +176,14 @@ public class Raum_View extends JPanel implements MouseListener {
 		return raum.getRaumID();
 	}
 
+	public JPanel getPanelBuchung() {
+		return frame.getPanelBuchung();
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Raum_View_Label label = (Raum_View_Label) e.getSource();
-
+		frame.getPanelBuchung().setVisible(false);
 		int i = 0;
 		Bestellformular_View aktiv = null;
 		for (Bestellformular_View view : frame.getBVList()) {
@@ -194,7 +199,7 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setMaxPersonen(raum.getAnzPersonen());
 			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 
-			frame.getPanelBuchung().setVisible(false);
+			// frame.getPanelBuchung().setVisible(false);
 			frame.getformularScrollPane().setVisible(true);
 
 			frame.validate();
@@ -206,16 +211,8 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setDate(frame.getCalendar());
 			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 			frame.getformularScrollPane().setVisible(true);
-			frame.getPanelBuchung().setVisible(false);
+			// frame.getPanelBuchung().setVisible(false);
 
-			frame.validate();
-		}
-		for (Bestellformular_View view : frame.getBVList()) {
-			if (view.isVisible()) {
-				frame.getPanelBuchung().setVisible(false);
-			} else {
-				frame.getPanelBuchung().setVisible(true);
-			}
 			frame.validate();
 		}
 	}

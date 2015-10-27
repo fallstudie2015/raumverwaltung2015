@@ -12,7 +12,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.beans.PropertyChangeEvent;
@@ -132,16 +131,7 @@ public class Raumplaner_View extends JFrame {
 		benutzerAddButton = new JButton(imageIconAddButton);
 		benutzerAddButton.setPreferredSize(new Dimension(50, 50));
 		benutzerAddButton.setToolTipText("Benutzer anlegen");
-		benutzerAddButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				BenutzerAnlegen ba = new BenutzerAnlegen();
-				ba.setVisible(true);
-				System.out.println("David");
-			}
-		});
-		
 		ImageIcon iiDeleteButton = new ImageIcon(
 				getClass().getClassLoader().getResource("ressources/menu_benutzer_loeschen_transp.png"));
 		ImageIcon imageIconDeleteButton = new ImageIcon(
@@ -149,15 +139,7 @@ public class Raumplaner_View extends JFrame {
 		benutzerDeleteButton = new JButton(imageIconDeleteButton);
 		benutzerDeleteButton.setPreferredSize(new Dimension(50, 50));
 		benutzerDeleteButton.setToolTipText("Benutzer löschen");
-		benutzerDeleteButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				BenutzerLoeschen bl = new BenutzerLoeschen();
-				bl.setVisible(true);
-			}
-		});
-		
 		ImageIcon iiRaumButton = new ImageIcon(
 				getClass().getClassLoader().getResource("ressources/menu_raum_anlegen_transp.png"));
 		ImageIcon imageIconRaumButton = new ImageIcon(
@@ -165,14 +147,6 @@ public class Raumplaner_View extends JFrame {
 		raumAddButton = new JButton(imageIconRaumButton);
 		raumAddButton.setPreferredSize(new Dimension(50, 50));
 		raumAddButton.setToolTipText("Raum anlegen");
-		raumAddButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				RaumAnlegen ra = new RaumAnlegen();
-				ra.setVisible(true);
-			}
-		});
 
 		ImageIcon iiRaumDeleteButton = new ImageIcon(
 				getClass().getClassLoader().getResource("ressources/menu_raum_loeschen_transp.png"));
@@ -181,14 +155,6 @@ public class Raumplaner_View extends JFrame {
 		raumDeleteButton = new JButton(imageIconRaumDeleteButton);
 		raumDeleteButton.setPreferredSize(new Dimension(50, 50));
 		raumDeleteButton.setToolTipText("Raum löschen");
-		raumDeleteButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				RaumLoeschen rl = new RaumLoeschen();
-				rl.setVisible(true);
-			}
-		});
 
 		ImageIcon iiAusButton = new ImageIcon(
 				getClass().getClassLoader().getResource("ressources/menu_ausstattung_anlegen_transp.png"));
@@ -197,15 +163,7 @@ public class Raumplaner_View extends JFrame {
 		ausstattungAddButton = new JButton(imageIconAusButton);
 		ausstattungAddButton.setPreferredSize(new Dimension(50, 50));
 		ausstattungAddButton.setToolTipText("Ausstattung anlegen");
-		ausstattungAddButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				AusstattungAnlegen aa = new AusstattungAnlegen();
-				aa.setVisible(true);
-			}
-		});
-		
 		ImageIcon iiAusDeleteButton = new ImageIcon(
 				getClass().getClassLoader().getResource("ressources/menu_ausstattung_loeschen_transp.png"));
 		ImageIcon imageIconAusDeleteButton = new ImageIcon(
@@ -213,15 +171,7 @@ public class Raumplaner_View extends JFrame {
 		ausstattungDeleteButton = new JButton(imageIconAusDeleteButton);
 		ausstattungDeleteButton.setPreferredSize(new Dimension(50, 50));
 		ausstattungDeleteButton.setToolTipText("Ausstattung löschen");
-		ausstattungDeleteButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				AusstattungLoeschen al = new AusstattungLoeschen();
-				al.setVisible(true);
-			}
-		});
-		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -243,15 +193,7 @@ public class Raumplaner_View extends JFrame {
 		passwortChangeButton = new JButton("Passwort ändern");
 		passwortChangeButton.setToolTipText("Passwort ändern");
 		passwortChangeButton.setPreferredSize(new Dimension(150, 30));
-		passwortChangeButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				PasswortAendern pa = new PasswortAendern();
-				pa.setVisible(true);
-			}
-		});
-		
 		JPanel logoutPanel = new JPanel(new BorderLayout());
 
 		logoutPanel.add(logoutButton, BorderLayout.EAST);
@@ -451,7 +393,7 @@ public class Raumplaner_View extends JFrame {
 
 		panelBuchung = new PanelBuchung();
 		panelBuchung.setVisible(true);
-
+		
 		bvList = new ArrayList<Bestellformular_View>();
 
 		setRaum();
