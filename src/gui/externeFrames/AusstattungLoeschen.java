@@ -30,7 +30,6 @@ import java.awt.Toolkit;
 public class AusstattungLoeschen extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField_name;
 
 	/**
 	 * Launch the application.
@@ -99,10 +98,6 @@ public class AusstattungLoeschen extends JDialog {
 		panel_2.add(panel_4);
 		panel_4.setLayout(new GridLayout(9, 0, 0, 0));
 		
-		JLabel lblRaumname = new JLabel("Raumname");
-		lblRaumname.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_4.add(lblRaumname);
-		
 		JLabel lblAusstattung = new JLabel("Ausstattung");
 		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(lblAusstattung);
@@ -110,11 +105,6 @@ public class AusstattungLoeschen extends JDialog {
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(9, 0, 0, 0));
-		
-		textField_name = new JTextField();
-		textField_name.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(textField_name);
-		textField_name.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));

@@ -57,7 +57,7 @@ public class AusstattungAnlegen extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AusstattungAnlegen.class.getResource("/ressources/menu_ausstattung_anlegen_transp.png")));
 		setResizable(false);
 		setTitle("Ausstattung anlegen");
-		setLocationRelativeTo(this);
+		setLocationRelativeTo(null);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
