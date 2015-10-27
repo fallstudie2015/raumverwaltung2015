@@ -526,19 +526,31 @@ public abstract class SQL_Schnittstelle {
 
 	}
 
-	public static int pruefeBuchungskonflikt(String raumbezeichnung,
+	public static boolean pruefeBuchungskonflikt(String raumbezeichnung,
 		Date datum, Time zeitVon, Time zeitBis) {
 		// TODO Auto-generated method stub
 		int raumId = 0;
 		try {
 			raumId = getRaumID(raumbezeichnung);
 			ArrayList<Buchung> buchungen = getBuchungAnTagX(datum, raumId);
+			for (int i = 0; i < buchungen.size(); i++) {
+				Time zeitVonDb = buchungen.get(i).getZeitVon();
+				Time zeitBisDb = buchungen.get(i).getZeitVon();
 
+				if (zeitBis.after(zeitVonDb) && zeitVon.before(zeitBisDb)) {
+					return false;
+				}
+
+				if (zeitVon.equals(zeitVonDb) || zeitBis.equals(zeitBis)) {
+					return false;
+				}
+			}
+			return true;
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 				"de.dhbw.java.SQL_Schnittstelle.pruefeBuchungskonflikt");
 		}
-		return raumId;
+		return true;
 	}
 
 	public static ArrayList<Buchung> getBuchungAnTagX(Date datum, int raumId) {
