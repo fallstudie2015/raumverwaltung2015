@@ -185,7 +185,6 @@ public class Raum_View extends JPanel implements MouseListener {
 			if (view.isVisible()) {
 				aktiv = view;
 				i++;
-
 			}
 		}
 		if (i == 0) {
@@ -195,6 +194,7 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setMaxPersonen(raum.getAnzPersonen());
 			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 
+			frame.getPanelBuchung().setVisible(false);
 			frame.getformularScrollPane().setVisible(true);
 
 			frame.validate();
@@ -206,7 +206,16 @@ public class Raum_View extends JPanel implements MouseListener {
 			bv.setDate(frame.getCalendar());
 			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 			frame.getformularScrollPane().setVisible(true);
+			frame.getPanelBuchung().setVisible(false);
 
+			frame.validate();
+		}
+		for (Bestellformular_View view : frame.getBVList()) {
+			if (view.isVisible()) {
+				frame.getPanelBuchung().setVisible(false);
+			} else {
+				frame.getPanelBuchung().setVisible(true);
+			}
 			frame.validate();
 		}
 	}

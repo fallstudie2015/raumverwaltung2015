@@ -49,6 +49,7 @@ public class Raumplaner_View extends JFrame {
 	private ArrayList<Buchung> buchungList;
 	private ArrayList<Raum_View> raumViewList;
 	private Date choosenDate;
+	private PanelBuchung panelBuchung;
 
 	public Raumplaner_View() {
 		initView();
@@ -382,6 +383,9 @@ public class Raumplaner_View extends JFrame {
 		calendar.setPreferredSize(new Dimension(350, 250));
 		calendar.setBorder(BorderFactory.createEmptyBorder(0, 0, -30, 0));
 
+		panelBuchung = new PanelBuchung();
+		panelBuchung.setVisible(true);
+
 		bvList = new ArrayList<Bestellformular_View>();
 
 		setRaum();
@@ -422,21 +426,8 @@ public class Raumplaner_View extends JFrame {
 		leftPanel.add(oben, BorderLayout.NORTH);
 		// calendarPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 		leftPanel.add(formularScroller, BorderLayout.CENTER);
+		leftPanel.add(panelBuchung, BorderLayout.WEST);
 		// calendarPanel.add(raumAddDelPanel());
-
-		// JPanel infoPanel = new JPanel();
-		// infoPanel.setLayout(new GridLayout(4, 1));
-		//
-		// infoPanel.add(antragPanel());
-		// infoPanel.add(namenPanel);
-		// infoPanel.add(bereichPanel);
-		// infoPanel.add(logoutPanel);
-
-		// JPanel leftPanel = new JPanel();
-		// leftPanel.setLayout(new BorderLayout());
-		//
-		// leftPanel.add(calendarPanel, BorderLayout.NORTH);
-		// leftPanel.add(infoPanel, BorderLayout.SOUTH);
 
 		return leftPanel;
 	}
@@ -521,6 +512,10 @@ public class Raumplaner_View extends JFrame {
 
 	public void setBVList(Bestellformular_View bv) {
 		bvList.add(bv);
+	}
+
+	public PanelBuchung getPanelBuchung() {
+		return panelBuchung;
 	}
 
 	/*
