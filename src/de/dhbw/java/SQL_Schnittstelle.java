@@ -218,7 +218,7 @@ public abstract class SQL_Schnittstelle {
 			String ausstattung = null;
 			for (int i = 0; i < ausstattungList.size(); i++) {
 				ausstattung = ausstattungList.get(i);
-				int ausstattungId = getAusstatungsID(ausstattung);
+				int ausstattungId = getAusstatungsArtenID(ausstattung);
 				insertBuchungAusstattung(buchungId, ausstattungId);
 
 			}
@@ -252,17 +252,19 @@ public abstract class SQL_Schnittstelle {
 		return buchungListe;
 	}
 
-	private static int getAusstatungsID(String ausstattung) {
+	private static int getAusstatungsArtenID(String ausstattung) {
 		// TODO Auto-generated method stub
 		int ausstattungid = 0;
 		try {
 			String abfrageString =
-				"SELECT ausstattungid FROM ausstattung a WHERE a.bezeichnung = '" +
+				"SELECT ausstattungsArtenid FROM ausstattungsArten a WHERE a.bezeichnung = '" +
 					ausstattung + "'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			if (rs.next()) {
-				ausstattungid = rs.getInt("ausstattungid");
+				ausstattungid = rs.getInt("ausstattungsArtenid");
+				
+				System.out.println("ausstattungid " + ausstattungid);
 			}
 
 		} catch (Exception e) {
@@ -346,7 +348,7 @@ public abstract class SQL_Schnittstelle {
 			String grundAusstattung = null;
 			for (int i = 0; i < grundAusstattungList.size(); i++) {
 				grundAusstattung = grundAusstattungList.get(i);
-				int grundAusstattungId = getAusstatungsID(grundAusstattung);
+				int grundAusstattungId = getAusstatungsArtenID(grundAusstattung);
 				insertRaumAusstattung(raumId, grundAusstattungId);
 
 			}
