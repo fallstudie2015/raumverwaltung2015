@@ -7,6 +7,7 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
@@ -81,7 +82,20 @@ public class BenutzerLoeschen extends JDialog {
 		JButton btnLoeschen = new JButton("Loeschen");
 		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SQL_Schnittstelle.deleteBenutzer(textField_email.getText(), textField_Vorname.getText(), textField_nachname.getText());
+				boolean feedback = SQL_Schnittstelle.deleteBenutzer(textField_email.getText(), textField_Vorname.getText(), textField_nachname.getText());
+				if (feedback = true)
+				{
+					setVisible();
+					Erfolg("Benutzer wurde erstellt");
+				}
+				else if (feedback =false) 
+				{
+					Erfolg("Benutzer konnte nicht erstellt werden");
+				}
+				else 
+				{
+					Erfolg("Unbekannter Fehler");
+				}
 			}
 		});
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -173,5 +187,10 @@ public class BenutzerLoeschen extends JDialog {
 	private void setVisible()
 	{
 		this.setVisible(false);
+	}
+	
+	public static void Erfolg(String nachricht) {
+		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
 	}
 }
