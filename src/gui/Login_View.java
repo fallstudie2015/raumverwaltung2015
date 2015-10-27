@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -24,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import gui.externeFrames.AusstattungAnlegen;
 
 public class Login_View extends JFrame {
 
@@ -60,6 +63,8 @@ public class Login_View extends JFrame {
 	 * Aufl�sung: 786 * 500 als feste und unver�nderbare Gr��e
 	 */
 	private void initLogin() {
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(Login_View.class.getResource("/ressources/Desktop_Statusbar_icon.png")));
 		setLayout(new BorderLayout());
 		getContentPane().add(loginPanel(), BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,8 +101,7 @@ public class Login_View extends JFrame {
 	 * Panel f�r das Label, welches erscheint, wenn die Daten falsch sind
 	 */
 	private JPanel labelPanel() {
-		loginWrongLabel = new JLabel(
-				"Benutzerdaten sind nicht korrekt angegeben!");
+		loginWrongLabel = new JLabel("Benutzerdaten sind nicht korrekt angegeben!");
 		loginWrongLabel.setForeground(Color.RED);
 		loginWrongLabel.setBorder(BorderFactory.createEmptyBorder(40, 5, 5, 5));
 		loginWrongLabel.setVisible(false);
@@ -217,10 +221,8 @@ public class Login_View extends JFrame {
 	 * Panel enth�lt ein Firmenlogo o.�.
 	 */
 	private JPanel logoPanel() {
-		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource(
-				"ressources/logo_2.png"));
-		ImageIcon imageIcon = new ImageIcon(ii1.getImage().getScaledInstance(
-				300, 150, Image.SCALE_DEFAULT));
+		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource("ressources/logo_2.png"));
+		ImageIcon imageIcon = new ImageIcon(ii1.getImage().getScaledInstance(300, 150, Image.SCALE_DEFAULT));
 		logoLabel = new JLabel(imageIcon, SwingConstants.CENTER);
 		logoLabel.setPreferredSize(new Dimension(300, 150));
 
