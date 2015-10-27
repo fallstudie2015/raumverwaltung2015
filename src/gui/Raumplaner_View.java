@@ -448,7 +448,7 @@ public class Raumplaner_View extends JFrame {
 		calendar.setPreferredSize(new Dimension(350, 250));
 		calendar.setBorder(BorderFactory.createEmptyBorder(0, 0, -30, 0));
 
-		panelBuchung = new PanelBuchung();
+		panelBuchung = new PanelBuchung(calendar);
 		panelBuchung.setVisible(true);
 
 		bvList = new ArrayList<Bestellformular_View>();
