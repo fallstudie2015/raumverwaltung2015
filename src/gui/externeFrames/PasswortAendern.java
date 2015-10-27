@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
@@ -23,6 +24,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JPasswordField;
+import java.awt.Window.Type;
+import java.awt.Color;
 
 public class PasswortAendern extends JFrame {
 
@@ -51,9 +54,9 @@ public class PasswortAendern extends JFrame {
 	 * Create the frame.
 	 */
 	public PasswortAendern() {
+		setType(Type.UTILITY);
 		setTitle("Passwort aendern");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,7 +77,8 @@ public class PasswortAendern extends JFrame {
 		JButton btnNewButton = new JButton("Aendern");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SQL_Schnittstelle.passwortAendern(GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());
+				String feedback = SQL_Schnittstelle.passwortAendern(GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());
+				PwGeaendert(feedback);
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -194,5 +198,10 @@ public class PasswortAendern extends JFrame {
 	{
 		this.setVisible(false);
 	}
-	
+
+	public static void PwGeaendert(String nachricht)
+    {
+	 JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+	 
+    }
 }
