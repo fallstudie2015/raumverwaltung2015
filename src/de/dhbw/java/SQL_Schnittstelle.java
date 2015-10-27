@@ -132,30 +132,30 @@ public abstract class SQL_Schnittstelle {
 		return raumListe;
 	}
 
-	public static ArrayList<Buchung> getBestellerBuchung() {
-		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
-		try {
-			String abfrageString = "SELECT * FROM buchung b WHERE b.benutzerid = "
-					+ Benutzer.getBenutzerID();
-			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+	// public static ArrayList<Buchung> getBestellerBuchung() {
+	// ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
+	// try {
+	// String abfrageString = "SELECT * FROM buchung b WHERE b.benutzerid = "
+	// + Benutzer.getBenutzerID();
+	// ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+	//
+	// while (rs.next()) {
+	// buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
+	// .getString("telefon"), rs.getDate("datum"), rs
+	// .getTime("zeitvon"), rs.getTime("zeitbis"), rs
+	// .getString("kommentar"), rs.getString("bestuhlung"), rs
+	// .getInt("benutzerid"), rs.getInt("raumid"), rs
+	// .getString("status")));
+	// }
+	//
+	// } catch (Exception e) {
+	// Error_Message_Box.laufzeitfehler(e,
+	// "de.dhbw.java.SQL_Schnittstelle.getBestellerBuchung");
+	// }
+	// return buchungListe;
+	// }
 
-			while (rs.next()) {
-				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
-						.getString("telefon"), rs.getDate("datum"), rs
-						.getTime("zeitvon"), rs.getTime("zeitbis"), rs
-						.getString("kommentar"), rs.getString("bestuhlung"), rs
-						.getInt("benutzerid"), rs.getInt("raumid"), rs
-						.getString("status")));
-			}
-
-		} catch (Exception e) {
-			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.getBestellerBuchung");
-		}
-		return buchungListe;
-	}
-
-	public static ArrayList<Buchung> getVerwaltungBuchung() {
+	public static ArrayList<Buchung> getBuchung() {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
 			String abfrageString = "SELECT * FROM buchung";
