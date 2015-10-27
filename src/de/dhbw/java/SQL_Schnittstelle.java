@@ -529,8 +529,13 @@ public abstract class SQL_Schnittstelle {
 		// TODO Auto-generated method stub
 		int raumId = 0;
 		try {
+
 			raumId = getRaumID(raumbezeichnung);
 			ArrayList<Buchung> buchungen = getBuchungAnTagX(datum, raumId);
+			if (!buchungen.isEmpty() &&
+				(raumbezeichnung == "Gewölbekeller" || raumbezeichnung == "Kegelbahn")) {
+				return false;
+			}
 			for (int i = 0; i < buchungen.size(); i++) {
 				Time zeitVonDb = buchungen.get(i).getZeitVon();
 				Time zeitBisDb = buchungen.get(i).getZeitVon();
