@@ -263,6 +263,8 @@ public abstract class SQL_Schnittstelle {
 
 			if (rs.next()) {
 				ausstattungid = rs.getInt("ausstattungsArtenid");
+				
+				System.out.println("ausstattungid " + ausstattungid);
 			}
 
 		} catch (Exception e) {
