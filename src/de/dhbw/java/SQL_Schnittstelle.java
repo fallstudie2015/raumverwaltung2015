@@ -184,6 +184,7 @@ public abstract class SQL_Schnittstelle {
 		int benutzerId, int raumId, char status, int anzPersonen,
 		ArrayList<String> ausstattungList,
 		boolean externeTeilnehmer) {
+
 		int intExterneTeilnehmer = 0;
 		try {
 			if (externeTeilnehmer == true) {
@@ -317,6 +318,15 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	/**
+	 * Fügt neuen Raum hinzu
+	 * @param name
+	 * @param strasse
+	 * @param stock
+	 * @param maxAnzPersonen
+	 * @param grundAusstattungList
+	 * @return
+	 */
 	public static boolean insertRaum(String name, String strasse, String stock,
 		int maxAnzPersonen, ArrayList<String> grundAusstattungList) {
 
@@ -410,7 +420,7 @@ public abstract class SQL_Schnittstelle {
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			if (rs.next()) {
-				raumId = rs.getInt("ausstattungid");
+				raumId = rs.getInt("raumid");
 			}
 
 		} catch (Exception e) {
@@ -418,6 +428,48 @@ public abstract class SQL_Schnittstelle {
 				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
 		}
 		return raumId;
+	}
+	
+	public static String getRaumName(int raumID) {
+		// TODO Auto-generated method stub
+		String raumName = "";
+		try {
+			String abfrageString =
+				"SELECT name FROM raum a WHERE a.raumid = '" + raumID +
+					"'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			if (rs.next()) {
+				raumName = rs.getString("name");
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+		}
+		return raumName;
+	}
+	
+	public static String getBenutzerName(int benutzerID) {
+		// TODO Auto-generated method stub
+		String benutzerName = "";
+		try {
+			String abfrageString =
+				"SELECT vorname, nachname FROM benutzer b WHERE b.benutzerid = '" + benutzerID +
+					"'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			if (rs.next()) {
+				benutzerName = rs.getString("vorname");
+				benutzerName += " ";
+				benutzerName += rs.getString("nachname");
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+		}
+		return benutzerName;
 	}
 
 	public static String passwortAendern(String aktuellesPasswort,
@@ -470,6 +522,45 @@ public abstract class SQL_Schnittstelle {
 		}
 		return aktuellesPasswort;
 
+	}
+
+	public static int pruefeBuchungskonflikt(String raumbezeichnung,
+		Date datum, Time zeitVon, Time zeitBis) {
+		// TODO Auto-generated method stub
+		int raumId = 0;
+		try {
+			raumId = getRaumID(raumbezeichnung);
+			ArrayList<Buchung> buchungen = getBuchungAnTagX(datum, raumId);
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.pruefeBuchungskonflikt");
+		}
+		return raumId;
+	}
+
+	public static ArrayList<Buchung> getBuchungAnTagX(Date datum, int raumId) {
+		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
+		try {
+			String abfrageString =
+				"SELECT * FROM buchung b WHERE b.raumid = '" + raumId +
+					"' and datum = '" + datum + "'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			while (rs.next()) {
+				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
+					.getString("telefon"), rs.getDate("datum"), rs
+					.getTime("zeitvon"), rs.getTime("zeitbis"), rs
+					.getString("kommentar"), rs.getString("bestuhlung"), rs
+					.getInt("benutzerid"), rs.getInt("raumid"), rs
+					.getString("status")));
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getBuchungAnTagX");
+		}
+		return buchungListe;
 	}
 
 	public static void rsAusgabe(ResultSet rs) {
