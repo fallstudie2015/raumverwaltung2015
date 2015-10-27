@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import de.dhbw.java.SQL_Schnittstelle;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -29,7 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 
-public class RaumLoeschen extends JFrame {
+public class RaumLoeschen extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textField_1;
@@ -54,10 +55,11 @@ public class RaumLoeschen extends JFrame {
 	 * Create the frame.
 	 */
 	public RaumLoeschen() {
+		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumLoeschen.class.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Raum loeschen");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

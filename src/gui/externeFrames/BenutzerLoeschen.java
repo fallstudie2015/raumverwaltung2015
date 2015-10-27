@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import de.dhbw.java.SQL_Schnittstelle;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -28,7 +29,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.Toolkit;
 
-public class BenutzerLoeschen extends JFrame {
+public class BenutzerLoeschen extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textField_Vorname;
@@ -55,10 +56,11 @@ public class BenutzerLoeschen extends JFrame {
 	 * Create the frame.
 	 */
 	public BenutzerLoeschen() {
+		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerLoeschen.class.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Benutzer loeschen");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

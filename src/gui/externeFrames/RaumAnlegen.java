@@ -24,13 +24,14 @@ import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JList;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
-public class RaumAnlegen extends JFrame {
+public class RaumAnlegen extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textField_name;
@@ -57,6 +58,7 @@ public class RaumAnlegen extends JFrame {
 	 * Create the frame.
 	 */
 	public RaumAnlegen() {
+		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(RaumAnlegen.class.getResource("/ressources/menu_raum_anlegen_transp.png")));
 		setResizable(false);
@@ -64,7 +66,7 @@ public class RaumAnlegen extends JFrame {
 		ArrayFuellen(); //Bestehende Ausstattung wird in Array geladen
 
 		setTitle("Raum anlegen");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 363);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

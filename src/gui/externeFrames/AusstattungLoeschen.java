@@ -19,13 +19,14 @@ import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.Insets;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
-public class AusstattungLoeschen extends JFrame {
+public class AusstattungLoeschen extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textField_name;
@@ -50,10 +51,11 @@ public class AusstattungLoeschen extends JFrame {
 	 * Create the frame.
 	 */
 	public AusstattungLoeschen() {
+		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AusstattungLoeschen.class.getResource("/ressources/menu_ausstattung_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Ausstattung loeschen");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

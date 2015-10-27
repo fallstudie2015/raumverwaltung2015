@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
-public class BenutzerAnlegen extends JFrame {
+public class BenutzerAnlegen extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textField_Name;
@@ -55,11 +56,12 @@ public class BenutzerAnlegen extends JFrame {
 	 * Create the frame.
 	 */
 	public BenutzerAnlegen() {
+		setModal(true);
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(BenutzerAnlegen.class.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
 		setTitle("Benutzer anlegen");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
