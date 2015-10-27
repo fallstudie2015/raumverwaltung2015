@@ -501,10 +501,10 @@ public abstract class SQL_Schnittstelle {
 				SHA512_Encrypt.encrypt(neuesPasswortWiederholt);
 
 			String aktuellesPasswortDB = getAktuellesPasswort();
-			if (aktuellesPasswort != aktuellesPasswortDB) {
+			if (!aktuellesPasswort.equals(aktuellesPasswortDB)) {
 				return "Aktuelles Passwort wurde falsch eingegeben!";
 			}
-			if (neuesPasswort != neuesPasswortWiederholt) {
+			if (!neuesPasswort.equals(neuesPasswortWiederholt)) {
 				return "Das neue Passwort und dessen Wiederholung sind nicht identisch";
 			}
 			int benutzerId = Benutzer.getBenutzerID();
@@ -553,7 +553,8 @@ public abstract class SQL_Schnittstelle {
 			raumId = getRaumID(raumbezeichnung);
 			ArrayList<Buchung> buchungen = getBuchungAnTagX(datum, raumId);
 			if (!buchungen.isEmpty() &&
-				(raumbezeichnung == "Gewölbekeller" || raumbezeichnung == "Kegelbahn")) {
+				(raumbezeichnung.equals("Gewölbekeller") || raumbezeichnung
+					.equals("Kegelbahn"))) {
 				return false;
 			}
 			for (int i = 0; i < buchungen.size(); i++) {
