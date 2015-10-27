@@ -228,6 +228,28 @@ public abstract class SQL_Schnittstelle {
 		}
 		return true;
 	}
+	
+	public static ArrayList<Buchung> getAlleVorgemerktenBuchungen() {
+		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
+		try {
+			String abfrageString = "SELECT * FROM buchung b WHERE b.status = 'v'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			while (rs.next()) {
+				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
+						.getString("telefon"), rs.getDate("datum"), rs
+						.getTime("zeitvon"), rs.getTime("zeitbis"), rs
+						.getString("kommentar"), rs.getString("bestuhlung"), rs
+						.getInt("benutzerid"), rs.getInt("raumid"), rs
+						.getString("status")));
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getBestellerBuchung");
+		}
+		return buchungListe;
+	}
 
 	private static int getAusstatungsID(String ausstattung) {
 		// TODO Auto-generated method stub
