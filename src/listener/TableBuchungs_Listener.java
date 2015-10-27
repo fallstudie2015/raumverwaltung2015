@@ -14,6 +14,9 @@ public class TableBuchungs_Listener implements ListSelectionListener {
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		pb.getDatum();
+		if (e.getValueIsAdjusting() == true) {
+			pb.getDatum();
+		}
+
 	}
 }

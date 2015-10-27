@@ -16,7 +16,6 @@ public class TestPanelBuchung {
 		test.getContentPane().add(new PanelBuchung(), BorderLayout.CENTER);
 		test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		test.setSize(500, 500);
-
 		test.setVisible(true);
 
 	}
