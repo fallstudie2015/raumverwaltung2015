@@ -471,6 +471,24 @@ public abstract class SQL_Schnittstelle {
 		}
 		return benutzerName;
 	}
+	
+	public static ArrayList<Ausstattung> getAusstattungArten() {
+		ArrayList<Ausstattung> ausstattungListe = new ArrayList<Ausstattung>();
+		try {
+			String abfrageString = "SELECT * FROM ausstattungArten";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			while (rs.next()) {
+				ausstattungListe.add(new Ausstattung(rs.getInt("ausstattungArtenid"), rs
+						.getString("bezeichnung")));
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getAusstattungArten");
+		}
+		return ausstattungListe;
+	}
 
 	public static String passwortAendern(String aktuellesPasswort,
 		String neuesPasswort, String neuesPasswortWiederholt) {
