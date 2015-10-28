@@ -23,8 +23,7 @@ import de.dhbw.java.SQL_Schnittstelle;
 import de.dhbw.java.TableBuchung;
 
 public class PanelBuchung extends JPanel {
-	private String[] tableHeader = new String[] { "ID", "Datum", "Raum",
-			"Besteller" };
+	private String[] tableHeader = getStringTableHeader();
 	private String[][] dataBuchung = buchungBestellerListeToTableStringArray();
 	private DefaultTableModel buchungBestellerModel = new DefaultTableModel(
 			dataBuchung, tableHeader);
@@ -48,6 +47,30 @@ public class PanelBuchung extends JPanel {
 		add(lblHeader, BorderLayout.NORTH);
 		add(new JScrollPane(tableBuchung), BorderLayout.CENTER);
 		setBorder(BorderFactory.createLineBorder(Color.black));
+	}
+
+	private String[] getStringTableHeader() {
+		ResultSet rs = null;
+		rs = SQL_Schnittstelle.getBuchungenZuGenehmigung();
+		int anzahlSpalten = 0;
+		try {
+			anzahlSpalten = rs.getMetaData().getColumnCount();
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"gui.PanelBuchung.getStringTableHeader");
+		}
+
+		String[] stringTableHeader = new String[anzahlSpalten];
+		try {
+			for (int i = 1; i < anzahlSpalten + 1; i++) {
+				stringTableHeader[i - 1] = rs.getMetaData().getColumnLabel(i);
+			}
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"gui.PanelBuchung.getStringTableHeader");
+		}
+
+		return stringTableHeader;
 	}
 
 	private String[][] buchungBestellerListeToTableStringArray() {
