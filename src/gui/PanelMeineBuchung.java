@@ -34,7 +34,7 @@ public class PanelMeineBuchung extends JPanel {
 
 	private JScrollPane scrollPane;;
 
-	private JLabel lblHeader = new JLabel("Unbestätigte Buchungen",
+	private JLabel lblHeader = new JLabel("Meine Buchung",
 			SwingConstants.CENTER);
 	private JCalendar jc;
 
