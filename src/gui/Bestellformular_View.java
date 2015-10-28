@@ -22,6 +22,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -61,11 +62,13 @@ public class Bestellformular_View extends JPanel {
 	private int raumId;
 	private ArrayList<String> ausstattungList;
 	private PanelBuchung panelBuchung;
+	private Raum_View raum;
 
 	public Bestellformular_View(JFrame frame, String name, String nachname, int raumId, PanelBuchung panel,
-			String bereich) {
+			String bereich, Raum_View rv) {
 		// initView();
 		this.raumId = raumId;
+		this.raum = rv;
 		this.panelBuchung = panel;
 		this.nutzerVorname = name;
 		this.nutzerNachname = nachname;
@@ -447,10 +450,15 @@ public class Bestellformular_View extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setBuchung();
+				if (setBuchung()) {
+					raum.setBuchungArray(SQL_Schnittstelle.getBuchung());
+				} else {
+					JOptionPane.showMessageDialog(null, "Es ist ein Fehler bei der Reservierung aufgerteten!");
+				}
 				ausstattungList.clear();
 				getBestellformular().setVisible(false);
 				pane.setVisible(false);
+
 				frame.validate();
 			}
 		});
@@ -538,7 +546,7 @@ public class Bestellformular_View extends JPanel {
 		ausstattung = list.toArray(ausstattung);
 	}
 
-	private void setBuchung() {
+	private boolean setBuchung() {
 		String telefon = telField.getText();
 		Date datum = new Date(dateChooser.getDate().getTime());
 		Time zeitVon = Time
@@ -551,8 +559,8 @@ public class Bestellformular_View extends JPanel {
 		int anzPersonen = persField.getValue();
 		boolean externeTeilnehmer = externCheck.isSelected();
 
-		SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis, kommentar, bestuhlung, benutzerId, raumId,
-				'v', anzPersonen, ausstattungList, externeTeilnehmer);
+		return SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis, kommentar, bestuhlung, benutzerId,
+				raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer);
 	}
 
 	private void setChooser() {
