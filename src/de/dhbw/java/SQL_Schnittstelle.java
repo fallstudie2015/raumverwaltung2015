@@ -531,6 +531,13 @@ public abstract class SQL_Schnittstelle {
 		return grundAusstattungListe;
 	}
 
+	/**
+	 * Methode zum ändern des Passwortes.
+	 * @param aktuellesPasswort
+	 * @param neuesPasswort
+	 * @param neuesPasswortWiederholt
+	 * @return Ausgabesatz (String), dass das Passwort geändert wurde.
+	 */
 	public static String passwortAendern(String aktuellesPasswort,
 			String neuesPasswort, String neuesPasswortWiederholt) {
 		try {
@@ -562,6 +569,10 @@ public abstract class SQL_Schnittstelle {
 		return "Passwort wurde erfolgreich geandert!";
 	}
 
+	/**
+	 * Gibt das aktuelle Passwort aus.
+	 * @return Aktuelles Passwort.
+	 */
 	private static String getAktuellesPasswort() {
 		// TODO Auto-generated method stub
 		String aktuellesPasswort = null;
@@ -582,6 +593,14 @@ public abstract class SQL_Schnittstelle {
 
 	}
 
+	/**
+	 * Prüft, ob die Buchung sich mit anderen Buchungen überschneidet.
+	 * @param raumbezeichnung
+	 * @param datum
+	 * @param zeitVon
+	 * @param zeitBis
+	 * @return true, wenn es keine Überschneidung gibt; false, wenn es eine oder mehrere Überschneidungen gibt.
+	 */
 	public static boolean pruefeBuchungskonflikt(String raumbezeichnung,
 			Date datum, Time zeitVon, Time zeitBis) {
 		// TODO Auto-generated method stub
@@ -614,6 +633,12 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	/**
+	 * Gibt alle Buchungen am übergebenen Tag als Array aus.
+	 * @param datum
+	 * @param raumId
+	 * @return ArrayList(Buchung)
+	 */
 	public static ArrayList<Buchung> getBuchungAnTagX(Date datum, int raumId) {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
@@ -637,6 +662,10 @@ public abstract class SQL_Schnittstelle {
 		return buchungListe;
 	}
 
+	/**
+	 * Gibt das Resultset Zeile für Zeile in der Konsole aus.
+	 * @param rs
+	 */
 	public static void rsAusgabe(ResultSet rs) {
 		System.out.println();
 		System.out.print("zeile" + "\t");
