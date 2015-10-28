@@ -20,6 +20,13 @@ public abstract class SQL_Schnittstelle {
 	// methode einzelne query
 	static Connection con; // Verbindung zur Datenbank
 
+	
+	////////////////////////////////////////////////////////////////////
+	// ACHTUNG: Datenbank-Zugriffsdaten sind hart eingeschrieben.
+	// Müssen also bei Änderung auch hier im Quellcode angepasst werden!
+	/**
+	 * Stellt eine Verbindung zur Datenbank her.
+	 */
 	public static void createConnection() {
 		try {
 			// Datenbanktreiber fuer MySQL laden
@@ -41,6 +48,11 @@ public abstract class SQL_Schnittstelle {
 		}
 	}
 
+	/**
+	 * Arbeitet die übergebene Abfrage ab und übergibt das Resultset.
+	 * @param abfrage
+	 * @return
+	 */
 	public static ResultSet sqlAbfrage(String abfrage) {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -60,7 +72,12 @@ public abstract class SQL_Schnittstelle {
 
 		return rs;
 	}
-
+	
+	/**
+	 * Fügt der Datenbank einen neuen Satz hinzu.
+	 * @param abfrage
+	 * @return
+	 */
 	public static int sqlInsert(String abfrage) {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -96,6 +113,11 @@ public abstract class SQL_Schnittstelle {
 									// Schluessel
 	}
 
+	/**
+	 * Bearbeitet einen Satz in der Datenbank; Löschen oder bearbeiten.
+	 * @param abfrage
+	 * @return
+	 */
 	public static int sqlUpdateDelete(String abfrage) {
 		Statement stmt = null;
 		int rowAffected = 0;
