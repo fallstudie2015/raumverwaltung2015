@@ -33,7 +33,8 @@ import java.awt.Toolkit;
 public class AusstattungAnlegen extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
+	private JTextField textField_aName;
+	private JLabel lblAusstattungsname;
 
 	/**
 	 * Launch the application.
@@ -55,7 +56,7 @@ public class AusstattungAnlegen extends JDialog {
 	 * Create the frame.
 	 */
 	public AusstattungAnlegen() {
-		setModal(true); 					//Fenster wird aufgebaut
+		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(AusstattungAnlegen.class.getResource(
 						"/ressources/menu_ausstattung_anlegen_transp.png")));
@@ -79,17 +80,31 @@ public class AusstattungAnlegen extends JDialog {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 
-		JButton btnAnlegen = new JButton("Anlegen"); 
-		btnAnlegen.addActionListener(new ActionListener() { //Aktion Listener und Anbindung Methode für Ausstattung Anlegen
+		JButton btnAnlegen = new JButton("Anlegen");
+		btnAnlegen.addActionListener(new ActionListener() { // Aktion Listener
+															// und Anbindung
+															// Methode für
+															// Ausstattung
+															// Anlegen
 			public void actionPerformed(ActionEvent e) {
-				boolean feedback = SQL_Schnittstelle
-						.insertAusstattungArt(textField_1.getText());
+				boolean pflicht = PflichtfelderPruefen();
 
-				if (feedback == true) {						//Rückgabewert der Methode Ausstattung anlegen
-					setInvisible();
-					Erfolg("Ausstattung wurde erstellt!");
+				if (pflicht) {
+					boolean feedback = SQL_Schnittstelle
+							.insertAusstattungArt(textField_aName.getText());
+
+					if (feedback == true) { // Rückgabewert der Methode
+											// Ausstattung
+											// anlegen
+						setInvisible();
+						Erfolg("Ausstattung wurde erstellt!");
+					} else {
+						Erfolg("Ausstattung konnte nicht erstellt werden!");
+					}
 				} else {
-					Erfolg("Ausstattung konnte nicht erstellt werden!");
+					JOptionPane.showMessageDialog(null,
+							" Bitte fuellen Sie das Pflichtfeld aus",
+							"Achtung!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -100,7 +115,8 @@ public class AusstattungAnlegen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
+								// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -117,13 +133,12 @@ public class AusstattungAnlegen extends JDialog {
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
 
-		JLabel lblAusstattung = new JLabel("");
-		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblAusstattung);
+		JPanel panel_6 = new JPanel();
+		panel_3.add(panel_6);
 
-		JLabel lblAusstattung_1 = new JLabel("Ausstattungsname:");
-		lblAusstattung_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblAusstattung_1);
+		lblAusstattungsname = new JLabel("Ausstattungsname:");
+		lblAusstattungsname.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattungsname);
 
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
@@ -132,16 +147,31 @@ public class AusstattungAnlegen extends JDialog {
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
 
-		textField_1 = new JTextField();
-		panel_4.add(textField_1);
-		textField_1.setColumns(10);
+		textField_aName = new JTextField();
+		panel_4.add(textField_aName);
+		textField_aName.setColumns(10);
 	}
 
-	private void setInvisible() { //Fenster unsichtbar machen 
+	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
+	// sind
+	{
+		boolean gefuellt = true;
+
+		if (textField_aName.getText().isEmpty()) {
+			lblAusstattungsname.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblAusstattungsname.setForeground(Color.black);
+		}
+
+		return gefuellt;
+	}
+
+	private void setInvisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
 	}
 
-	public static void Erfolg(String nachricht) { //MessageBox für Rückgabewert
+	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 

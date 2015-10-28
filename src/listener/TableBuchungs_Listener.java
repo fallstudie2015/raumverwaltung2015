@@ -15,7 +15,7 @@ public class TableBuchungs_Listener implements ListSelectionListener {
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == true) {
-			pb.auswahlAnzeigen();
+			pb.auswahlAnzeigenImRaumplaner_View();
 		}
 
 	}
