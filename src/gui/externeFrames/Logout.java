@@ -22,7 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
 
-public class PasswortAendern extends JDialog {
+public class Logout extends JDialog {
 
 	private JPanel contentPane;
 	private JPasswordField passwordFieldAlt;
@@ -48,10 +48,11 @@ public class PasswortAendern extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public PasswortAendern() {
-		setModal(true);					//Fenster wird aufgebaut
+	public Logout() {
+		// setAlwaysOnTop(true);
+		setModal(true);
 		setType(Type.UTILITY);
-		setTitle("Passwort aendern");
+		setTitle("Wirklich ausloggen?");
 		setResizable(false);
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
@@ -60,10 +61,10 @@ public class PasswortAendern extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblPasswortAendern = new JLabel("Passwort aendern");
-		lblPasswortAendern.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblPasswortAendern.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblPasswortAendern, BorderLayout.NORTH);
+		JLabel lblAusloggen = new JLabel("Ausloggen");
+		lblAusloggen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblAusloggen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblAusloggen, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
@@ -71,29 +72,23 @@ public class PasswortAendern extends JDialog {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 
-		JButton btnNewButton = new JButton("Aendern");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnAusloggen = new JButton("Ausloggen");
+		btnAusloggen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String feedback = SQL_Schnittstelle.passwortAendern(
-						GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());
-				PwGeaendert(feedback);//Rückgabewert der Methode Ausstattung anlegen
-				if (feedback == "Passwort wurde erfolgreich geandert!")
-				{
-					setVisible();
-				}
+				System.exit(0);
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		splitPane.setLeftComponent(btnNewButton);
+		btnAusloggen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		splitPane.setLeftComponent(btnAusloggen);
 
-		JButton btnNewButton_1 = new JButton("Abbrechen");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnAbbrechen = new JButton("Abbrechen");
+		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setVisible();
 			}
 		});
-		splitPane.setRightComponent(btnNewButton_1);
+		splitPane.setRightComponent(btnAbbrechen);
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
@@ -201,13 +196,12 @@ public class PasswortAendern extends JDialog {
 		return pw;
 	}
 
-	private void setVisible() {		//Fenster unsichtbar machen 
+	private void setVisible() {
 		this.setVisible(false);
 	}
 
-	public static void PwGeaendert(String nachricht) {		//MessageBox für Rückgabewert
-		JOptionPane.showMessageDialog(null, nachricht, "Information",
-				JOptionPane.INFORMATION_MESSAGE);
+	public static void PwGeaendert(String nachricht) {
+		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
 
 	}
 }

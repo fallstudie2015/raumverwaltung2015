@@ -33,6 +33,7 @@ import gui.externeFrames.AusstattungAnlegen;
 import gui.externeFrames.AusstattungLoeschen;
 import gui.externeFrames.BenutzerAnlegen;
 import gui.externeFrames.BenutzerLoeschen;
+import gui.externeFrames.Logout;
 import gui.externeFrames.PasswortAendern;
 import gui.externeFrames.RaumAnlegen;
 import gui.externeFrames.RaumLoeschen;
@@ -246,7 +247,8 @@ public class Raumplaner_View extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				Logout lo = new Logout();
+				lo.setVisible(true);
 			}
 		});
 
