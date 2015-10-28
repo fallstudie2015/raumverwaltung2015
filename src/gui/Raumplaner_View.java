@@ -242,6 +242,13 @@ public class Raumplaner_View extends JFrame {
 		logoutButton = new JButton("Logout");
 		logoutButton.setToolTipText("Logout");
 		logoutButton.setPreferredSize(new Dimension(150, 30));
+		logoutButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 
 		passwortChangeButton = new JButton("Passwort ändern");
 		passwortChangeButton.setToolTipText("Passwort ändern");

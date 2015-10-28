@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class Bestellformular_View extends JPanel {
 	private JTextField telField;
 	private JSpinField persField;
 	private JDateChooser dateChooser;
+	private java.util.Date oldDate;
 	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB, zeitBisStundeCB, zeitBisMinuteCB;
 	private JButton reservierenButton, abbrechenButton;
 	private JTextArea sonstigeArea;
@@ -54,17 +57,19 @@ public class Bestellformular_View extends JPanel {
 	private String raumName;
 	private JScrollPane sonstigeScroller, pane;
 	private JFrame frame;
-	private String nutzerVorname, nutzerNachname;
+	private String nutzerVorname, nutzerNachname, nutzerBereich;
 	private int raumId;
 	private ArrayList<String> ausstattungList;
 	private PanelBuchung panelBuchung;
 
-	public Bestellformular_View(JFrame frame, String name, String nachname, int raumId, PanelBuchung panel) {
+	public Bestellformular_View(JFrame frame, String name, String nachname, int raumId, PanelBuchung panel,
+			String bereich) {
 		// initView();
 		this.raumId = raumId;
 		this.panelBuchung = panel;
 		this.nutzerVorname = name;
 		this.nutzerNachname = nachname;
+		this.nutzerBereich = bereich;
 		this.frame = frame;
 		ausstattungList = new ArrayList<String>();
 		this.setVisible(false);
@@ -73,6 +78,7 @@ public class Bestellformular_View extends JPanel {
 	public void initView() {
 		this.setLayout(new GridLayout(1, 1));
 		this.add(mainPanel());
+		setChooser();
 	}
 
 	private JPanel mainPanel() {
@@ -112,7 +118,7 @@ public class Bestellformular_View extends JPanel {
 		nameLabel = new JLabel(nutzerVorname + " " + nutzerNachname);
 		nameLabel.setPreferredSize(new Dimension(125, 30));
 
-		bereichLabel = new JLabel("Bereich");
+		bereichLabel = new JLabel(nutzerBereich);
 		bereichLabel.setPreferredSize(new Dimension(50, 30));
 
 		JPanel raumPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -187,11 +193,29 @@ public class Bestellformular_View extends JPanel {
 		zeitVonLabel = new JLabel("Zeit von:");
 		zeitVonLabel.setPreferredSize(new Dimension(100, 30));
 
+		ItemListener il = new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (!SQL_Schnittstelle.pruefeBuchungskonflikt(raumName, new Date(dateChooser.getDate().getTime()),
+						Time.valueOf(
+								zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem() + ":00"),
+						Time.valueOf(
+								zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00"))) {
+					reservierenButton.setEnabled(false);
+				} else {
+					reservierenButton.setEnabled(true);
+				}
+			}
+		};
+
 		zeitVonStundeCB = new JComboBox<String>(stundeVon);
 		zeitVonStundeCB.setPreferredSize(new Dimension(50, 25));
+		zeitVonStundeCB.addItemListener(il);
 
 		zeitVonMinuteCB = new JComboBox<String>(minute);
 		zeitVonMinuteCB.setPreferredSize(new Dimension(50, 25));
+		zeitVonMinuteCB.addItemListener(il);
 
 		JPanel minUndStdPanel = new JPanel();
 		minUndStdPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -215,12 +239,29 @@ public class Bestellformular_View extends JPanel {
 		zeitBisLabel = new JLabel("bis:");
 		zeitBisLabel.setPreferredSize(new Dimension(100, 30));
 
+		ItemListener il = new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (!SQL_Schnittstelle.pruefeBuchungskonflikt(raumName, new Date(dateChooser.getDate().getTime()),
+						Time.valueOf(
+								zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem() + ":00"),
+						Time.valueOf(
+								zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00"))) {
+					reservierenButton.setEnabled(false);
+				} else {
+					reservierenButton.setEnabled(true);
+				}
+			}
+		};
+
 		zeitBisStundeCB = new JComboBox<String>(stundeBis);
 		zeitBisStundeCB.setPreferredSize(new Dimension(50, 25));
+		zeitBisStundeCB.addItemListener(il);
 
 		zeitBisMinuteCB = new JComboBox<String>(minute);
 		zeitBisMinuteCB.setPreferredSize(new Dimension(50, 25));
-		zeitBisMinuteCB.setEnabled(true);
+		zeitBisMinuteCB.addItemListener(il);
 
 		JPanel minUndStdPanel = new JPanel();
 		minUndStdPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -458,6 +499,7 @@ public class Bestellformular_View extends JPanel {
 
 	public void setDate(JCalendar cal) {
 		dateChooser.setDate(cal.getDate());
+		oldDate = dateChooser.getDate();
 	}
 
 	public void setMaxPersonen(int max) {
@@ -511,5 +553,27 @@ public class Bestellformular_View extends JPanel {
 
 		SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis, kommentar, bestuhlung, benutzerId, raumId,
 				'v', anzPersonen, ausstattungList, externeTeilnehmer);
+	}
+
+	private void setChooser() {
+		PropertyChangeListener pc = new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (oldDate != dateChooser.getDate()) {
+					if (!SQL_Schnittstelle.pruefeBuchungskonflikt(raumName, new Date(dateChooser.getDate().getTime()),
+							Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem()
+									+ ":00"),
+							Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem()
+									+ ":00"))) {
+						reservierenButton.setEnabled(false);
+					} else {
+						reservierenButton.setEnabled(true);
+					}
+				}
+			}
+		};
+
+		dateChooser.addPropertyChangeListener(pc);
 	}
 }

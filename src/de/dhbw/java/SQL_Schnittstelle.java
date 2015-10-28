@@ -259,18 +259,14 @@ public abstract class SQL_Schnittstelle {
 					+ "FROM buchung b JOIN benutzer u ON u.benutzerid = b.benutzerid "
 					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' ORDER BY b.datum ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
-
-			/*while (rs.next()) {
-				buchungListe.add(new Buchung(rs.getInt("buchungid"),
-						 rs.getDate("datum"), rs.getString("benutzerName"), 
-						 rs.getString("nameName")));
-			}*/
-			//rs wird zurueck geliefert, extra Klasse für diese eine Funktion nicht erforderlich
+			rs.last();
+			System.out.println("getBuchungenZuGenehmigung "+rs.getRow());
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.getBuchungenZuGenehmigung");
 		}
+		
 		return rs;
 	}
 
@@ -357,14 +353,14 @@ public abstract class SQL_Schnittstelle {
 		try {
 
 			String updateString =
-				"INSERT INTO raum (name, strasse, stock, anzPersonen) VALUES('" +
+				"INSERT INTO raum (name, strasse, stock, maxAnzPersonen, entfernt) VALUES('" +
 					name +
 					"', '" +
 					stock +
 					"', '" +
 					stock +
 					"', '" +
-					maxAnzPersonen + "')";
+					maxAnzPersonen + "', '0')";
 			System.out.println("updateString " + updateString);
 			String grunAusstattungBezeichnung = null;
 			int raumId = SQL_Schnittstelle.sqlInsert(updateString);
@@ -389,7 +385,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 
 			String updateString =
-				"INSERT INTO raumAusstattung (buchungid, bezeichnung) VALUES ('" +
+				"INSERT INTO raumAusstattung (raumid, bezeichnung) VALUES ('" +
 					raumId + "', '" + grundAusstattungBezeichnung + "')";
 
 			SQL_Schnittstelle.sqlInsert(updateString);
@@ -418,7 +414,9 @@ public abstract class SQL_Schnittstelle {
 	public static boolean setDeleteFlagRaum(String raumbezeichnung) {
 		try {
 
-			String updateString = "Update raum set entfernt = 1";
+			String updateString =
+				"Update raum set entfernt = 1 where name = " + raumbezeichnung +
+					"'";
 			System.out.println("updateString " + updateString);
 			int raumId = SQL_Schnittstelle.sqlUpdateDelete(updateString);
 
@@ -692,7 +690,7 @@ public abstract class SQL_Schnittstelle {
 		boolean antwort = false;
 		int rueckgabeBenutzerID;
 		try {
-
+			passwort = EncryptPassword.SHA512(passwort);
 			rueckgabeBenutzerID = SQL_Schnittstelle
 					.sqlInsert("INSERT INTO benutzer (nachname, vorname, email, passwort, rolle, bereich)"
 							+ " VALUES ('"
