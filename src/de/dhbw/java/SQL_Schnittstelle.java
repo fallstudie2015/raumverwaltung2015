@@ -276,7 +276,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT b.buchungid, CONCAT(vorname ,' ', nachname) AS benutzerName, r.name AS raumName, b.datum "
 					+ "FROM buchung b JOIN benutzer u ON u.benutzerid = b.benutzerid "
-					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' AND b.datum >= DAY(NOW()) ORDER BY b.datum ";
+					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' AND b.datum >= DATE(NOW()) ORDER BY b.datum ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 			rs.last();
 
@@ -496,6 +496,7 @@ public abstract class SQL_Schnittstelle {
 		}
 		return true;
 	}
+
 
 	public static int getRaumID(String raumbezeichnung) {
 		// TODO Auto-generated method stub
