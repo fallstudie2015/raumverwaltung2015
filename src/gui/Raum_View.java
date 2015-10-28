@@ -53,6 +53,8 @@ public class Raum_View extends JPanel implements MouseListener {
 		bv.setRaumName(raumName);
 		frame.setBVList(bv);
 		frame.setBVPanel(bv);
+		bv.setTechnik(SQL_Schnittstelle.getAusstattungArten());
+		bv.setGrundausstattung(SQL_Schnittstelle.getGrundAusstattungRaum(raum.getRaumID()));
 		bv.initView();
 	}
 
@@ -140,6 +142,7 @@ public class Raum_View extends JPanel implements MouseListener {
 							ImageIcon imageIcon = new ImageIcon(
 									ii.getImage().getScaledInstance(200, 20, Image.SCALE_DEFAULT));
 							label.setIcon(imageIcon);
+							label.setBuchung(buchung);
 						} else {
 							label.setBackground(farbe);
 							label.setBuchung(buchung);
