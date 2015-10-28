@@ -49,7 +49,7 @@ public class Raum_View extends JPanel implements MouseListener {
 	private void setBestellformularView() {
 		// Bestellformular view erstellen
 		bv = new Bestellformular_View(frame, Benutzer.getVorname(), Benutzer.getNachname(), raum.getRaumID(),
-				frame.getPanelBuchung(), "Bereich");
+				frame.getPanelBuchung(), "Bereich", this);
 		bv.setRaumName(raumName);
 		frame.setBVList(bv);
 		frame.setBVPanel(bv);
@@ -181,6 +181,10 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	public JPanel getPanelBuchung() {
 		return frame.getPanelBuchung();
+	}
+
+	public void setBuchungArray(ArrayList<Buchung> list) {
+		frame.setBuchungArray(list);
 	}
 
 	@Override

@@ -46,6 +46,7 @@ import gui.externeFrames.RaumLoeschen;
  *
  */
 public class Raumplaner_View extends JFrame {
+	Raumplaner_View diese = this;
 
 	private JCalendar calendar;
 	private JPanel bvPanel, onScrollPanel, port;
@@ -247,7 +248,7 @@ public class Raumplaner_View extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Logout lo = new Logout();
+				Logout lo = new Logout(diese);
 				lo.setVisible(true);
 			}
 		});

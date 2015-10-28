@@ -596,7 +596,7 @@ public abstract class SQL_Schnittstelle {
 			}
 			for (int i = 0; i < buchungen.size(); i++) {
 				Time zeitVonDb = buchungen.get(i).getZeitVon();
-				Time zeitBisDb = buchungen.get(i).getZeitVon();
+				Time zeitBisDb = buchungen.get(i).getZeitBis();
 
 				if (zeitBis.after(zeitVonDb) && zeitVon.before(zeitBisDb)) {
 					return false;
