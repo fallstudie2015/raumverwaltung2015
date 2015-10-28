@@ -28,6 +28,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class RaumAnlegen extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textField_name;
-	private JTextField textField_personen;
+	private JFormattedTextField textField_personen;
 	private ArrayList<String> ausstattungsList = new ArrayList<String>();
 	private JTextField textField_strasse;
 	private JTextField textField_stock;
@@ -107,7 +108,8 @@ public class RaumAnlegen extends JDialog {
 
 				boolean pflicht = PflichtfelderPruefen();
 
-				if (pflicht) {
+				if (pflicht) {				
+						
 					boolean feedback = SQL_Schnittstelle.insertRaum( // Aufruf
 																		// RaumAnlegen
 																		// Methode
@@ -216,7 +218,7 @@ public class RaumAnlegen extends JDialog {
 		panel_4.add(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
 
-		textField_personen = new JTextField();
+		textField_personen = new JFormattedTextField();
 		textField_personen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_6.add(textField_personen, BorderLayout.CENTER);
 		textField_personen.setColumns(10);
@@ -377,4 +379,5 @@ public class RaumAnlegen extends JDialog {
 				JOptionPane.INFORMATION_MESSAGE);
 
 	}
+
 }
