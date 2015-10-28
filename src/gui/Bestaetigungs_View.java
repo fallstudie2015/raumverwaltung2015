@@ -61,7 +61,7 @@ public class Bestaetigungs_View extends JFrame {
 
 		this.setSize(500, 500);
 		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 	}
 
