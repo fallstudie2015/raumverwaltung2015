@@ -29,6 +29,7 @@ import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.components.JSpinField;
 
+import de.dhbw.java.Ausstattung;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.SQL_Schnittstelle;
 
@@ -46,10 +47,10 @@ public class Bestellformular_View extends JPanel {
 	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
 	private final String stundeBis[] = { "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
 	private final String minute[] = { "00", "15", "30", "45" };
-	private final String ausstattung[] = { "Flipchart", "Metaplanwand", "Leinwand" };
+	private Ausstattung ausstattung[];
 	private final String bestuhulung[] = { "", "U-Form", "Blockbildung", "Schulbanksystem/parlamentarische Bestuhlung",
 			"Sonderbestuhlung" };
-	private final String technik[] = { "Netzwerk (LAN)", "Beamer", "Moderatoren-Koffer", "Sonstige" };
+	private Ausstattung technik[];
 	private String raumName;
 	private JScrollPane sonstigeScroller, pane;
 	private JFrame frame;
@@ -93,9 +94,9 @@ public class Bestellformular_View extends JPanel {
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(inExPanel());
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-		mainPanel.add(technikPanel());
-		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(ausstattungPanel());
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+		mainPanel.add(technikPanel());
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		mainPanel.add(bestuhulungPanel());
 		mainPanel.add(Box.createRigidArea(new Dimension(0, 50)));
@@ -281,14 +282,14 @@ public class Bestellformular_View extends JPanel {
 
 		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-		technikLabel = new JLabel("Technik: ");
-		technikLabel.setPreferredSize(new Dimension(100, 30));
+		technikLabel = new JLabel("Zusatzausstattung: ");
+		technikLabel.setPreferredSize(new Dimension(150, 30));
 		labelPanel.add(technikLabel);
 
-		for (String string : technik) {
-			JCheckBox check = new JCheckBox(string);
+		for (Ausstattung string : technik) {
+			JCheckBox check = new JCheckBox(string.getBezeichnung());
 			check.setPreferredSize(new Dimension(140, 30));
-			check.setToolTipText(string);
+			check.setToolTipText(string.getBezeichnung());
 			check.addItemListener(new ItemListener() {
 
 				@Override
@@ -351,28 +352,15 @@ public class Bestellformular_View extends JPanel {
 
 		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-		ausstattungLabel = new JLabel("Grundausstattung:");
+		ausstattungLabel = new JLabel("Raumausstattung:");
 		ausstattungLabel.setPreferredSize(new Dimension(110, 30));
 		labelPanel.add(ausstattungLabel);
 
-		for (String string : ausstattung) {
-			JCheckBox check = new JCheckBox(string);
+		for (Ausstattung string : ausstattung) {
+			JCheckBox check = new JCheckBox(string.getBezeichnung(), true);
 			check.setPreferredSize(new Dimension(140, 30));
-			check.setToolTipText(string);
-			// check.addItemListener(new ItemListener() {
-			//
-			// @Override
-			// public void itemStateChanged(ItemEvent e) {
-			// JCheckBox check = (JCheckBox) e.getSource();
-			// String name = check.getText();
-			//
-			// if (check.isSelected()) {
-			// ausstattungList.add(name);
-			// } else {
-			// ausstattungList.remove(name);
-			// }
-			// }
-			// });
+			check.setEnabled(false);
+			check.setToolTipText(string.getBezeichnung());
 			checkPanel.add(check);
 		}
 
@@ -426,6 +414,9 @@ public class Bestellformular_View extends JPanel {
 			}
 		});
 
+		JPanel rbPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		rbPanel.add(reservierenButton);
+
 		abbrechenButton = new JButton("abbrechen");
 		abbrechenButton.setPreferredSize(new Dimension(100, 30));
 		abbrechenButton.addActionListener(new ActionListener() {
@@ -439,13 +430,14 @@ public class Bestellformular_View extends JPanel {
 			}
 		});
 
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+		JPanel abPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		abPanel.add(abbrechenButton);
 
-		buttonPanel.add(Box.createHorizontalGlue());
-		buttonPanel.add(reservierenButton);
-		buttonPanel.add(Box.createRigidArea(new Dimension(100, 0)));
-		buttonPanel.add(abbrechenButton);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BorderLayout());
+
+		buttonPanel.add(rbPanel, BorderLayout.WEST);
+		buttonPanel.add(abPanel, BorderLayout.EAST);
 
 		return buttonPanel;
 	}
@@ -489,6 +481,17 @@ public class Bestellformular_View extends JPanel {
 				zeitBisStundeCB.setSelectedItem(hr);
 			}
 		}
+	}
+
+	public void setTechnik(ArrayList<Ausstattung> list) {
+		list.add(new Ausstattung(100, "Sonstige"));
+		technik = new Ausstattung[list.size()];
+		technik = list.toArray(technik);
+	}
+
+	public void setGrundausstattung(ArrayList<Ausstattung> list) {
+		ausstattung = new Ausstattung[list.size()];
+		ausstattung = list.toArray(ausstattung);
 	}
 
 	private void setBuchung() {

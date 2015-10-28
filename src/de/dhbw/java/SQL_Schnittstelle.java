@@ -531,6 +531,26 @@ public abstract class SQL_Schnittstelle {
 		return ausstattungListe;
 	}
 
+	public static ArrayList<Ausstattung> getGrundAusstattungRaum(int raumId) {
+		ArrayList<Ausstattung> grundAusstattungListe =
+			new ArrayList<Ausstattung>();
+		try {
+			String abfrageString =
+				"SELECT * FROM raumAusstattung where raumid = '" + raumId + "'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			while (rs.next()) {
+				grundAusstattungListe.add(new Ausstattung(rs
+					.getInt("raumAusstattungid"), rs.getString("bezeichnung")));
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getGrundAusstattungRaum");
+		}
+		return grundAusstattungListe;
+	}
+
 	public static String passwortAendern(String aktuellesPasswort,
 		String neuesPasswort, String neuesPasswortWiederholt) {
 		try {
@@ -701,30 +721,38 @@ public abstract class SQL_Schnittstelle {
 			String nachname) {
 		try {
 
-			SQL_Schnittstelle
+			int rowAffected =
+				SQL_Schnittstelle
 					.sqlUpdateDelete("DELETE FROM benutzer WHERE email = '" + email
 							+ "' and vorname = '" + vorname
 							+ "' and nachname = '" + nachname + "'");
-			return true;
+			if (rowAffected == 0) {
+				return false;
+			}
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.insertBenutyer");
-			return false;
+
 		}
+		return true;
 	}
 	
 	public static boolean deleteAusstattungArt(String bezeichnung) {
 		try {
 
-			SQL_Schnittstelle
+			int rowAffected =
+				SQL_Schnittstelle
 					.sqlUpdateDelete("DELETE FROM ausstattungArten WHERE bezeichnung = '" + bezeichnung + "'");
-			return true;
 
+			if (rowAffected == 0) {
+				return false;
+			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.deleteAusstattungArt");
-			return false;
+
 		}
+		return true;
 	}
 }
