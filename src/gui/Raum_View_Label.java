@@ -27,6 +27,7 @@ public class Raum_View_Label extends JLabel {
 		this.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		this.setPreferredSize(new Dimension(200, 20));
 		this.setOpaque(true);
+		this.setEnabled(true);
 
 		this.addMouseListener(new MouseAdapter() {
 
