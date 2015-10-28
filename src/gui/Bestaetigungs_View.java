@@ -193,7 +193,7 @@ public class Bestaetigungs_View extends JFrame {
 			} else if (e.getSource() == btnAblehnen) {
 
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
-						's');
+						'a');
 				mbv.getRaumView()
 						.setBuchungArray(SQL_Schnittstelle.getBuchung());
 				mbv.dispose();
