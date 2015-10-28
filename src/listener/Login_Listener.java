@@ -15,7 +15,10 @@ public class Login_Listener implements ActionListener {
 		loginView = lf;
 	}
 
-	@Override
+	/*
+	 * ActionListener um das Einloggen auszulösen. Wenn das Einloggen nicht
+	 * funktioniert wird dies ausgegeben
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		try {
 			GUI_Schnittstelle.loginCheck(loginView);
@@ -23,7 +26,7 @@ public class Login_Listener implements ActionListener {
 			Error_Message_Box.laufzeitfehler(e,
 					"gui.Error_Message_Box.Login_Listener.actionPerformed");
 		}
-		// TODO Auto-generated method stub
+
 	}
 
 }
