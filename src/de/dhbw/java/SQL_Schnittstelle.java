@@ -346,7 +346,7 @@ public abstract class SQL_Schnittstelle {
 	public static ResultSet getMyBuchungen(int benutzerid) {
 		ResultSet rs = null;
 		try {
-			String abfrageString = "SELECT buchungid, datum ,r.name ,zeitvon, zeitbis, datum "
+			String abfrageString = "SELECT buchungid as 'Buchungs-ID', r.name as Raumbezeichnung, datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis'"
 					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
 					+ "WHERE benutzerid = " + benutzerid + "; ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);

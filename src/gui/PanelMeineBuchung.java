@@ -138,12 +138,12 @@ public class PanelMeineBuchung extends JPanel {
 	public void auswahlAnzeigenImRaumplaner_View() {
 		Date date = new Date();
 		System.out.println(tableBuchung.getValueAt(
-				tableBuchung.getSelectedRow(), 3));
+				tableBuchung.getSelectedRow(), 2));
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
 			date = df.parse(String.valueOf(tableBuchung.getValueAt(
-					tableBuchung.getSelectedRow(), 3)));
+					tableBuchung.getSelectedRow(), 2)));
 			System.out.println("erfolgreich");
 		} catch (java.text.ParseException e) {
 			// TODO Auto-generated catch block
