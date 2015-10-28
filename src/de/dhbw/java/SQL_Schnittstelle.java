@@ -509,6 +509,26 @@ public abstract class SQL_Schnittstelle {
 		return ausstattungListe;
 	}
 
+	public static ArrayList<Ausstattung> getGrundAusstattungRaum(int raumId) {
+		ArrayList<Ausstattung> grundAusstattungListe =
+			new ArrayList<Ausstattung>();
+		try {
+			String abfrageString =
+				"SELECT * FROM raumAusstattung where raumid = '" + raumId + "'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			while (rs.next()) {
+				grundAusstattungListe.add(new Ausstattung(rs
+					.getInt("raumAusstattungid"), rs.getString("bezeichnung")));
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+				"de.dhbw.java.SQL_Schnittstelle.getGrundAusstattungRaum");
+		}
+		return grundAusstattungListe;
+	}
+
 	public static String passwortAendern(String aktuellesPasswort,
 		String neuesPasswort, String neuesPasswortWiederholt) {
 		try {
