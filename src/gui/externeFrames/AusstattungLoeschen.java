@@ -33,7 +33,8 @@ import java.awt.Toolkit;
 public class AusstattungLoeschen extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textField_Ausstattung;
+	private JLabel lblAusstattung;
 
 	/**
 	 * Launch the application.
@@ -55,7 +56,7 @@ public class AusstattungLoeschen extends JDialog {
 	 * Create the frame.
 	 */
 	public AusstattungLoeschen() {
-		setModal(true);					//Fenster wird aufgebaut
+		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(AusstattungLoeschen.class.getResource(
 						"/ressources/menu_ausstattung_loeschen_transp.png")));
@@ -82,14 +83,24 @@ public class AusstattungLoeschen extends JDialog {
 		JButton btnLoeschen = new JButton("Loeschen");
 		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean feedback = SQL_Schnittstelle
-						.deleteAusstattungArt(textField.getText());
 
-				if (feedback == true) {		//Rückgabewert der Methode Ausstattung anlegen
-					setInvisible();
-					Erfolg("Ausstattung wurde gelöscht!");
+				boolean pflicht = PflichtfelderPruefen();
+
+				if (pflicht) {
+					boolean feedback = SQL_Schnittstelle.deleteAusstattungArt(
+							textField_Ausstattung.getText());
+
+					if (feedback == true) { // Rückgabewert der Methode
+											// Ausstattung anlegen
+						setInvisible();
+						Erfolg("Ausstattung wurde gelöscht!");
+					} else {
+						Erfolg("Ausstattung konnte nicht gelöscht werden!");
+					}
 				} else {
-					Erfolg("Ausstattung konnte nicht gelöscht werden!");
+					JOptionPane.showMessageDialog(null,
+							" Bitte fuellen Sie das Pflichtfeld aus",
+							"Achtung!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -100,7 +111,8 @@ public class AusstattungLoeschen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
+								// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -120,7 +132,7 @@ public class AusstattungLoeschen extends JDialog {
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
 
-		JLabel lblAusstattung = new JLabel("Ausstattungsname:");
+		lblAusstattung = new JLabel("Ausstattungsname:");
 		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(lblAusstattung);
 
@@ -131,17 +143,32 @@ public class AusstattungLoeschen extends JDialog {
 		JPanel panel_6 = new JPanel();
 		panel_3.add(panel_6);
 
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(textField);
-		textField.setColumns(10);
+		textField_Ausstattung = new JTextField();
+		textField_Ausstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(textField_Ausstattung);
+		textField_Ausstattung.setColumns(10);
 	}
 
-	private void setInvisible() {	//Fenster unsichtbar machen 
+	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
+	// sind
+	{
+		boolean gefuellt = true;
+
+		if (textField_Ausstattung.getText().isEmpty()) {
+			lblAusstattung.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblAusstattung.setForeground(Color.black);
+		}
+
+		return gefuellt;
+	}
+
+	private void setInvisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
 	}
 
-	public static void Erfolg(String nachricht) {//MessageBox für Rückgabewert
+	public static void Erfolg(String nachricht) {// MessageBox für Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 

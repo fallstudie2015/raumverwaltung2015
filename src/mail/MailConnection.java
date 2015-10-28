@@ -16,6 +16,11 @@ public class MailConnection {
 	public void sendMail(String empfaengerAdresse, String betreff,
 			String text) {
 
+		/*
+		 * Anlegen der Daten für den Mail-Account über den die E-Mails gesendet
+		 * werden
+		 */
+
 		String username = new String("fallstudie2015@gmx.de");
 		String password = new String("fallstudie2015");
 		String senderAddress = new String("fallstudie2015@gmx.de");
@@ -23,11 +28,6 @@ public class MailConnection {
 		MailAuthenticator auth = new MailAuthenticator(username, password);
 
 		Properties properties = new Properties();
-
-		// Den Properties wird die ServerAdresse hinzugefügt
-		// properties.put("mail.smtp.host", smtpHost);
-
-		// properties.put("mail.smtp.port", "587");
 
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.host", "smtp.gmx.de");

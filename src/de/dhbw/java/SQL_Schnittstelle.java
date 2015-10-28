@@ -20,8 +20,7 @@ public abstract class SQL_Schnittstelle {
 	// methode einzelne query
 	static Connection con; // Verbindung zur Datenbank
 
-	
-	////////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
 	// ACHTUNG: Datenbank-Zugriffsdaten sind hart eingeschrieben.
 	// Müssen also bei Änderung auch hier im Quellcode angepasst werden!
 	/**
@@ -50,6 +49,7 @@ public abstract class SQL_Schnittstelle {
 
 	/**
 	 * Arbeitet die übergebene Abfrage ab und übergibt das Resultset.
+	 * 
 	 * @param abfrage
 	 * @return
 	 */
@@ -72,9 +72,10 @@ public abstract class SQL_Schnittstelle {
 
 		return rs;
 	}
-	
+
 	/**
 	 * Fügt der Datenbank einen neuen Satz hinzu.
+	 * 
 	 * @param abfrage
 	 * @return
 	 */
@@ -115,6 +116,7 @@ public abstract class SQL_Schnittstelle {
 
 	/**
 	 * Bearbeitet einen Satz in der Datenbank; Löschen oder bearbeiten.
+	 * 
 	 * @param abfrage
 	 * @return
 	 */
@@ -146,7 +148,7 @@ public abstract class SQL_Schnittstelle {
 			// holt alle nicht "gelöschten" räume aus der Datenbank
 			String abfrageString = "SELECT * FROM raum where entfernt = 0";
 			ResultSet rs = sqlAbfrage(abfrageString);
-			//TODO rsAusgabe wird nicht benoetigt
+			// TODO rsAusgabe wird nicht benoetigt
 			rsAusgabe(rs);
 			while (rs.next()) {
 				raumListe.add(new Raum(rs.getInt("raumid"), rs
@@ -169,7 +171,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT * FROM buchung";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
-			//TODO rsAusgabe noetig??
+			// TODO rsAusgabe noetig??
 			rsAusgabe(rs);
 			while (rs.next()) {
 				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
@@ -280,7 +282,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT b.buchungid, CONCAT(vorname ,' ', nachname) AS benutzerName, r.name AS raumName, b.datum "
 					+ "FROM buchung b JOIN benutzer u ON u.benutzerid = b.benutzerid "
-					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' AND b.datum >= NOW() ORDER BY b.datum ";
+					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' AND b.datum >= DATE(NOW()) ORDER BY b.datum ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 			rs.last();
 
@@ -301,7 +303,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT buchungid, datum ,r.name ,zeitvon, zeitbis, datum "
 					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
-					+ "WHERE benutzerid = "+benutzerid+"; ";
+					+ "WHERE benutzerid = " + benutzerid + "; ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 		} catch (Exception e) {
@@ -311,6 +313,7 @@ public abstract class SQL_Schnittstelle {
 
 		return rs;
 	}
+
 	/**
 	 * Liest AusstattungsartID aus der Datenbank anhand der Ausstattungsbezeichnung
 	 * @param ausstattung 	Die Ausstattungsbezeichnung der gewollten ID
@@ -529,6 +532,7 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+
 	/**
 	 * 
 	 * @param datum
@@ -564,6 +568,30 @@ public abstract class SQL_Schnittstelle {
 	 * @param raumbezeichnung
 	 * @return gibt die RaumID aus der Datenbank zurück
 	 */
+
+	public static boolean updateBuchungStatus(Date datum, Time zeitVon,
+			Time zeitBis, String raumbezeichnung, char status) {
+		try {
+
+			int raumId = getRaumID(raumbezeichnung);
+			String updateString = "Update buchung set status = '" + status
+					+ "' where datum = '" + datum + "'and zeitvon = '"
+					+ zeitVon + "' and zeitbis = '" + zeitBis
+					+ "' and raumid = '" + raumId + "'";
+
+			System.out.println("updateString " + updateString);
+			SQL_Schnittstelle.sqlUpdateDelete(updateString);
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+			return false;
+		}
+		return true;
+	}
+
+
+
 	public static int getRaumID(String raumbezeichnung) {
 		// TODO Auto-generated method stub
 		int raumId = 0;

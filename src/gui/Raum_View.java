@@ -30,7 +30,6 @@ public class Raum_View extends JPanel implements MouseListener {
 	private ArrayList<Buchung> buchungList;
 	private Raum raum;
 	private ArrayList<Raum_View_Label> labelList;
-	private Bestaetigungs_View beV;
 
 	public Raum_View(Raum raum, Raumplaner_View frame) {
 		this.raum = raum;
@@ -99,6 +98,8 @@ public class Raum_View extends JPanel implements MouseListener {
 			}
 		}
 
+		labelLeeren();
+
 		return raumzeitenPanel;
 	}
 
@@ -128,7 +129,7 @@ public class Raum_View extends JPanel implements MouseListener {
 						label.removeBuchung();
 						label.setToolTipText(null);
 					} else {
-						if (buchung.getZeitVon().equals(label.getTime()) || buchung.getZeitBis().equals(label.getTime())
+						if (buchung.getZeitVon().equals(label.getTime())
 								|| (label.getTime().before(buchung.getZeitBis())
 										&& label.getTime().after(buchung.getZeitVon()))) {
 							if (Benutzer.getBenutzertyp() == 'v') {
@@ -196,41 +197,45 @@ public class Raum_View extends JPanel implements MouseListener {
 		frame.setBuchungArray(list);
 	}
 
+	public ArrayList<Raum_View_Label> getLabelList() {
+		return labelList;
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Raum_View_Label label = (Raum_View_Label) e.getSource();
 
-		frame.getPanelBuchung().setVisible(false);
-		int i = 0;
-		Bestellformular_View aktiv = null;
-		for (Bestellformular_View view : frame.getBVList()) {
-			if (view.isVisible()) {
-				aktiv = view;
-				i++;
+		if (!label.buchungGesetzt) {
+			frame.getPanelBuchung().setVisible(false);
+			int i = 0;
+			Bestellformular_View aktiv = null;
+			for (Bestellformular_View view : frame.getBVList()) {
+				if (view.isVisible()) {
+					aktiv = view;
+					i++;
+				}
 			}
-		}
-		if (i == 0) {
-			bv.setVisible(true);
-			bv.setScrollPane(frame.getformularScrollPane());
-			bv.setDate(frame.getCalendar());
-			bv.setMaxPersonen(raum.getAnzPersonen());
-			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
+			if (i == 0) {
+				bv.setVisible(true);
+				bv.setScrollPane(frame.getformularScrollPane());
+				bv.setDate(frame.getCalendar());
+				bv.setMaxPersonen(raum.getAnzPersonen());
+				bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 
-			// frame.getPanelBuchung().setVisible(false);
-			frame.getformularScrollPane().setVisible(true);
+				frame.getformularScrollPane().setVisible(true);
 
-			frame.validate();
-		} else {
-			aktiv.setVisible(false);
-			i = 0;
-			bv.setVisible(true);
-			bv.setScrollPane(frame.getformularScrollPane());
-			bv.setDate(frame.getCalendar());
-			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
-			frame.getformularScrollPane().setVisible(true);
-			// frame.getPanelBuchung().setVisible(false);
+				frame.validate();
+			} else {
+				aktiv.setVisible(false);
+				i = 0;
+				bv.setVisible(true);
+				bv.setScrollPane(frame.getformularScrollPane());
+				bv.setDate(frame.getCalendar());
+				bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
+				frame.getformularScrollPane().setVisible(true);
 
-			frame.validate();
+				frame.validate();
+			}
 		}
 
 	}

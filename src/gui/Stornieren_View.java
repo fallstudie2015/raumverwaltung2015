@@ -17,7 +17,7 @@ import de.dhbw.java.SQL_Schnittstelle;
 import mail.MailConnection;
 import mail.MailTexte;
 
-public class Bestaetigungs_View extends JFrame {
+public class Stornieren_View extends JFrame {
 
 	private Buchung buchung;
 
@@ -42,15 +42,14 @@ public class Bestaetigungs_View extends JFrame {
 	private JTextField txtKommentar;
 	private JTextField txtAusstattung;
 
-	private JButton btnBestaetigen;
-	private JButton btnAblehnen;
+	private JButton btnStornieren;
 	private JButton btnAbbrechen;
 
-	private bestaetigungsViewListener meinBVL;
+	private stornierenViewListener meinBVL;
 
 	private Raumplaner_View mutterFenster;
 
-	public Bestaetigungs_View(Raumplaner_View mutterView,
+	public Stornieren_View(Raumplaner_View mutterView,
 			Buchung uebergabeBuchung) {
 
 		mutterFenster = mutterView;
@@ -74,17 +73,14 @@ public class Bestaetigungs_View extends JFrame {
 		try {
 
 			buttonPanel.setLayout(new FlowLayout());
-			btnBestaetigen = new JButton("Genehmigen");
-			btnAblehnen = new JButton("Ablehnen");
+			btnStornieren = new JButton("Stornieren");
 			btnAbbrechen = new JButton("Abbrechen");
 
-			meinBVL = new bestaetigungsViewListener(this);
+			meinBVL = new stornierenViewListener(this);
 
-			btnBestaetigen.addActionListener(meinBVL);
-			btnAblehnen.addActionListener(meinBVL);
+			btnStornieren.addActionListener(meinBVL);
 			btnAbbrechen.addActionListener(meinBVL);
-			buttonPanel.add(btnBestaetigen);
-			buttonPanel.add(btnAblehnen);
+			buttonPanel.add(btnStornieren);
 			buttonPanel.add(btnAbbrechen);
 		} catch (Exception ex) {
 			Error_Message_Box.laufzeitfehler(ex,
@@ -196,44 +192,27 @@ public class Bestaetigungs_View extends JFrame {
 		return buchung;
 	}
 
-	class bestaetigungsViewListener implements ActionListener {
+	class stornierenViewListener implements ActionListener {
 
-		Bestaetigungs_View mbv;
+		Stornieren_View mbv;
 
-		public bestaetigungsViewListener(
-				Bestaetigungs_View meineBestaetigungsView) {
-			mbv = meineBestaetigungsView;
+		public stornierenViewListener(Stornieren_View meineStornierungsView) {
+			mbv = meineStornierungsView;
 		}
 
 		public void actionPerformed(ActionEvent e) {
 
-			if (e.getSource() == btnBestaetigen) {
+			if (e.getSource() == btnStornieren) {
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
-						'g');
+						's');
 
 				mbv.getRaumView()
 						.setBuchungArray(SQL_Schnittstelle.getBuchung());
 				MailConnection mail = new MailConnection();
-				mail.sendMail(
-						SQL_Schnittstelle.getBenutzerEmail(
-								mbv.getBuchung().getBenutzerID()),
-						MailTexte.getBetreffBestaetigen(mbv.getBuchung()),
-						MailTexte.getTextBestaetigen(mbv.getBuchung()));
-				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
-				mbv.dispose();
+				mail.sendMail(MailTexte.verwalterPostfach,
+						MailTexte.getBetreffStornierung(mbv.getBuchung()),
+						MailTexte.getTextStornierung(mbv.getBuchung()));
 
-			} else if (e.getSource() == btnAblehnen) {
-
-				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
-						'a');
-				mbv.getRaumView()
-						.setBuchungArray(SQL_Schnittstelle.getBuchung());
-				MailConnection mail = new MailConnection();
-				mail.sendMail(
-						SQL_Schnittstelle.getBenutzerEmail(
-								mbv.getBuchung().getBenutzerID()),
-						MailTexte.getBetreffAbgelehnt(mbv.getBuchung()),
-						MailTexte.getTextAbgelehnt(mbv.getBuchung()));
 				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
 				mbv.dispose();
 

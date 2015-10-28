@@ -1,12 +1,14 @@
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -34,6 +36,11 @@ public class BenutzerAnlegen extends JDialog {
 	private JTextField textField_bereich;
 	private JRadioButton rdbtnBenutzer;
 	private JRadioButton rdbtnVerwalter;
+	private JLabel lblName;
+	private JLabel lblVorname;
+	private JLabel lblBereich;
+	private JLabel lblEmailAdresse;
+	private JLabel lblPasswort;
 
 	/**
 	 * Launch the application.
@@ -55,7 +62,7 @@ public class BenutzerAnlegen extends JDialog {
 	 * Create the frame.
 	 */
 	public BenutzerAnlegen() {
-		setModal(true);					//Fenster wird aufgebaut
+		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerAnlegen.class
 				.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
 		setTitle("Benutzer anlegen");
@@ -81,15 +88,27 @@ public class BenutzerAnlegen extends JDialog {
 		JButton btnAnlegen = new JButton("Anlegen");
 		btnAnlegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean feedback = SQL_Schnittstelle.insertBenutzer(
-						textField_Name.getText(), textField_Vorname.getText(),
-						textField_email.getText(), GetPasswort(),
-						RadioZurueck(), textField_bereich.getText());
-				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
-					setInvisible();
-					Erfolg("Benutzer wurde erstellt!");
+
+				boolean pflicht = PflichtfelderPruefen();
+
+				if (pflicht) {
+					boolean feedback = SQL_Schnittstelle.insertBenutzer(
+							textField_Name.getText(),
+							textField_Vorname.getText(),
+							textField_email.getText(), GetPasswort(),
+							RadioZurueck(), textField_bereich.getText());
+					if (feedback == true) {// Rückgabewert der Methode
+											// Ausstattung
+											// anlegen
+						setInvisible();
+						Erfolg("Benutzer wurde erstellt!");
+					} else {
+						Erfolg("Benutzer konnte nicht erstellt werden!");
+					}
 				} else {
-					Erfolg("Benutzer konnte nicht erstellt werden!");
+					JOptionPane.showMessageDialog(null,
+							" Bitte fuellen Sie die Pflichtfelder aus",
+							"Achtung!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -100,7 +119,8 @@ public class BenutzerAnlegen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
+								// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -117,19 +137,19 @@ public class BenutzerAnlegen extends JDialog {
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(7, 0, 0, 0));
 
-		JLabel lblName = new JLabel("Name");
+		lblName = new JLabel("Name");
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblName);
 
-		JLabel lblVorname = new JLabel("Vorname");
+		lblVorname = new JLabel("Vorname");
 		lblVorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblVorname);
 
-		JLabel lblEmailAdresse = new JLabel("E-Mail - Adresse");
+		lblEmailAdresse = new JLabel("E-Mail - Adresse");
 		lblEmailAdresse.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblEmailAdresse);
 
-		JLabel lblPasswort = new JLabel("Passwort");
+		lblPasswort = new JLabel("Passwort");
 		lblPasswort.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblPasswort);
 
@@ -137,7 +157,7 @@ public class BenutzerAnlegen extends JDialog {
 		lblRolle.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblRolle);
 
-		JLabel lblBereich = new JLabel("Bereich:");
+		lblBereich = new JLabel("Bereich:");
 		lblBereich.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblBereich);
 
@@ -189,6 +209,49 @@ public class BenutzerAnlegen extends JDialog {
 
 	}
 
+	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
+	// sind
+	{
+		boolean gefuellt = true;
+
+		if (textField_Name.getText().isEmpty()) {
+			lblName.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblName.setForeground(Color.black);
+		}
+
+		if (textField_Vorname.getText().isEmpty()) {
+			lblVorname.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblVorname.setForeground(Color.black);
+		}
+
+		if (textField_email.getText().isEmpty()) {
+			lblEmailAdresse.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblEmailAdresse.setForeground(Color.black);
+		}
+
+		if (passwordField.getText().isEmpty()) {
+			lblPasswort.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblPasswort.setForeground(Color.black);
+		}
+
+		if (textField_bereich.getText().isEmpty()) {
+			lblBereich.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblBereich.setForeground(Color.black);
+		}
+
+		return gefuellt;
+	}
+
 	private String RadioZurueck() // gibt den ausgewählten Wert der RadioButtons
 									// zurück
 	{
@@ -218,11 +281,11 @@ public class BenutzerAnlegen extends JDialog {
 		return pw;
 	}
 
-	private void setInvisible() {		//Fenster unsichtbar machen 
+	private void setInvisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
 	}
 
-	public static void Erfolg(String nachricht) {	// MessageBox für Rückgabewert
+	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 
