@@ -50,6 +50,10 @@ public class Bestaetigungs_View extends JFrame {
 
 	private Raumplaner_View mutterFenster;
 
+	/*
+	 * Konstruktor zum Erzeugen der Bestätigungs_View mit Einstellungen zu
+	 * Größe, Formatierung und Lage
+	 */
 	public Bestaetigungs_View(Raumplaner_View mutterView,
 			Buchung uebergabeBuchung) {
 
@@ -68,6 +72,7 @@ public class Bestaetigungs_View extends JFrame {
 
 	}
 
+	/* Panel mit den Button für den unteren Teil der Oberfläche erstellen. */
 	private JPanel createButtonPanel() {
 
 		JPanel buttonPanel = new JPanel();
@@ -94,6 +99,10 @@ public class Bestaetigungs_View extends JFrame {
 		return buttonPanel;
 	}
 
+	/*
+	 * Erzeugung eines kleinen Panels für die Zeitangabe erstellen, da dies eine
+	 * andere Formatierung besitzt.
+	 */
 	private JPanel createZeitPanel() {
 
 		JPanel zeitPanel = new JPanel();
@@ -116,6 +125,10 @@ public class Bestaetigungs_View extends JFrame {
 		return zeitPanel;
 	}
 
+	/*
+	 * Hauptpanel anlegen mit Labeln und Textfeldern. Hier wird auch das
+	 * Zeitpanel eingefügt
+	 */
 	private JPanel createMainPanel() {
 		JPanel mainPanel = new JPanel();
 		try {
@@ -166,6 +179,10 @@ public class Bestaetigungs_View extends JFrame {
 		return mainPanel;
 	}
 
+	/*
+	 * Daten werden aus der Buchungsinstanz ausgelesen und in die Textfelder
+	 * geschrieben
+	 */
 	private void befuelleMainPanel() {
 		try {
 			txtBuchungsID = new JTextField("" + buchung.getBuchungsID());
@@ -197,6 +214,7 @@ public class Bestaetigungs_View extends JFrame {
 		return buchung;
 	}
 
+	/* Listener für die drei Button erstellen */
 	class bestaetigungsViewListener implements ActionListener {
 
 		Bestaetigungs_View mbv;
@@ -208,6 +226,11 @@ public class Bestaetigungs_View extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 
+			/*
+			 * Die Buchung bekommt das Flag 'g' für genehmigt, eine Mail wird an
+			 * den Ersteller gesendet und die Tabelle mit den Anträgen wird neu
+			 * geladen.
+			 */
 			if (e.getSource() == btnBestaetigen) {
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						'g');
@@ -223,7 +246,14 @@ public class Bestaetigungs_View extends JFrame {
 				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
 				mbv.dispose();
 
-			} else if (e.getSource() == btnAblehnen) {
+			}
+
+			/*
+			 * Die Buchung bekommt das Flag 'a' für abgelehnt, eine Mail wird an
+			 * den Ersteller gesendet und die Tabelle mit den Anträgen wird neu
+			 * geladen.
+			 */
+			else if (e.getSource() == btnAblehnen) {
 
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						'a');
