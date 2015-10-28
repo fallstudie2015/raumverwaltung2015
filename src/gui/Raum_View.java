@@ -124,7 +124,10 @@ public class Raum_View extends JPanel implements MouseListener {
 			}
 			if (today.toString().compareTo(buchung.getDatum().toString()) == 0) {
 				for (Raum_View_Label label : labelList) {
-					if (!buchung.getStatus().equals("a")) {
+					if (buchung.getStatus().equalsIgnoreCase("a") || buchung.getStatus().equalsIgnoreCase("s")) {
+						label.removeBuchung();
+						label.setToolTipText(null);
+					} else {
 						if (buchung.getZeitVon().equals(label.getTime()) || buchung.getZeitBis().equals(label.getTime())
 								|| (label.getTime().before(buchung.getZeitBis())
 										&& label.getTime().after(buchung.getZeitVon()))) {
@@ -153,6 +156,7 @@ public class Raum_View extends JPanel implements MouseListener {
 							}
 						}
 					}
+
 				}
 
 			}
