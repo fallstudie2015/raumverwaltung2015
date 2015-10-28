@@ -77,6 +77,10 @@ public class PasswortAendern extends JDialog {
 				String feedback = SQL_Schnittstelle.passwortAendern(
 						GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());
 				PwGeaendert(feedback);//Rückgabewert der Methode Ausstattung anlegen
+				if (feedback == "Passwort wurde erfolgreich geandert!")
+				{
+					setVisible();
+				}
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
