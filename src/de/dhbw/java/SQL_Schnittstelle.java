@@ -671,8 +671,9 @@ public abstract class SQL_Schnittstelle {
 		// TODO Auto-generated method stub
 		String benutzerName = "";
 		try {
-			String abfrageString = "SELECT vorname, nachname FROM benutzer b WHERE b.benutzerid = '"
-					+ benutzerID + "'";
+			String abfrageString =
+				"SELECT vorname, nachname FROM benutzer b WHERE b.benutzerid = '" +
+					benutzerID + "'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			if (rs.next()) {
@@ -683,7 +684,7 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
 		}
 		return benutzerName;
 	}
