@@ -142,6 +142,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT * FROM raum where entfernt = 0";
 			ResultSet rs = sqlAbfrage(abfrageString);
+			//TODO rsAusgabe wird nicht benoetigt
 			rsAusgabe(rs);
 			while (rs.next()) {
 				raumListe.add(new Raum(rs.getInt("raumid"), rs
@@ -183,6 +184,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT * FROM buchung";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+			//TODO rsAusgabe noetig??
 			rsAusgabe(rs);
 			while (rs.next()) {
 				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
@@ -229,7 +231,6 @@ public abstract class SQL_Schnittstelle {
 					+ ", '"
 					+ status
 					+ "', " + anzPersonen + ", '" + intExterneTeilnehmer + "')";
-			System.out.println("updateString " + updateString);
 			int buchungId = SQL_Schnittstelle.sqlInsert(updateString);
 			String ausstattung = null;
 			for (int i = 0; i < ausstattungList.size(); i++) {
@@ -273,10 +274,9 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT b.buchungid, CONCAT(vorname ,' ', nachname) AS benutzerName, r.name AS raumName, b.datum "
 					+ "FROM buchung b JOIN benutzer u ON u.benutzerid = b.benutzerid "
-					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' ORDER BY b.datum ";
+					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' AND b.datum >= NOW() ORDER BY b.datum ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 			rs.last();
-			System.out.println("getBuchungenZuGenehmigung " + rs.getRow());
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -286,6 +286,22 @@ public abstract class SQL_Schnittstelle {
 		return rs;
 	}
 
+	public static ResultSet getMyBuchungen(int benutzerid) {
+		ResultSet rs = null;
+		try {
+			String abfrageString = "SELECT buchungid, datum ,r.name ,zeitvon, zeitbis, datum "
+					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
+					+ "WHERE benutzerid = "+benutzerid+"; ";
+			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getMyBuchungen");
+		}
+
+		return rs;
+	}
+	
 	private static int getAusstatungsArtenID(String ausstattung) {
 		// TODO Auto-generated method stub
 		int ausstattungid = 0;
@@ -374,7 +390,6 @@ public abstract class SQL_Schnittstelle {
 					+ stock
 					+ "', '"
 					+ maxAnzPersonen + "', '0')";
-			System.out.println("updateString " + updateString);
 			String grunAusstattungBezeichnung = null;
 			int raumId = SQL_Schnittstelle.sqlInsert(updateString);
 
@@ -754,7 +769,6 @@ public abstract class SQL_Schnittstelle {
 				for (int i = 1; i < rs.getMetaData().getColumnCount() + 1; i++) {
 					System.out.print(rs.getString(i) + "\t");
 				}
-				System.out.println("");
 				zeile++;
 			}
 			rs.beforeFirst();
