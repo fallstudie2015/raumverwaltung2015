@@ -357,14 +357,14 @@ public abstract class SQL_Schnittstelle {
 		try {
 
 			String updateString =
-				"INSERT INTO raum (name, strasse, stock, anzPersonen) VALUES('" +
+				"INSERT INTO raum (name, strasse, stock, maxAnzPersonen, entfernt) VALUES('" +
 					name +
 					"', '" +
 					stock +
 					"', '" +
 					stock +
 					"', '" +
-					maxAnzPersonen + "')";
+					maxAnzPersonen + "', '0')";
 			System.out.println("updateString " + updateString);
 			String grunAusstattungBezeichnung = null;
 			int raumId = SQL_Schnittstelle.sqlInsert(updateString);
@@ -389,7 +389,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 
 			String updateString =
-				"INSERT INTO raumAusstattung (buchungid, bezeichnung) VALUES ('" +
+				"INSERT INTO raumAusstattung (raumid, bezeichnung) VALUES ('" +
 					raumId + "', '" + grundAusstattungBezeichnung + "')";
 
 			SQL_Schnittstelle.sqlInsert(updateString);
