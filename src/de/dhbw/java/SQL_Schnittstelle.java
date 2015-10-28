@@ -325,21 +325,9 @@ public abstract class SQL_Schnittstelle {
 
 		try {
 
-<<<<<<< HEAD
-			String updateString = "INSERT INTO raum (name, strasse, stock, anzPersonen) VALUES('"
+			String updateString = "INSERT INTO raum (name, strasse, stock, maxAnzPersonen, entfernt) VALUES('"
 					+ name + "', '" + stock + "', '" + stock + "', '"
-					+ maxAnzPersonen + "')";
-=======
-			String updateString =
-				"INSERT INTO raum (name, strasse, stock, maxAnzPersonen, entfernt) VALUES('" +
-					name +
-					"', '" +
-					stock +
-					"', '" +
-					stock +
-					"', '" +
-					maxAnzPersonen + "', '0')";
->>>>>>> branch 'Speicherpunkt' of https://github.com/fallstudie2015/raumverwaltung2015.git
+					+ maxAnzPersonen + "', '0')";
 			System.out.println("updateString " + updateString);
 			String grunAusstattungBezeichnung = null;
 			int raumId = SQL_Schnittstelle.sqlInsert(updateString);
