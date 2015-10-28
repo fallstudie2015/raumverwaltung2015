@@ -37,6 +37,7 @@ import gui.externeFrames.Logout;
 import gui.externeFrames.PasswortAendern;
 import gui.externeFrames.RaumAnlegen;
 import gui.externeFrames.RaumLoeschen;
+import javafx.scene.layout.Border;
 
 /**
  * @author Tim
@@ -60,6 +61,7 @@ public class Raumplaner_View extends JFrame {
 	private ArrayList<Raum_View> raumViewList;
 	private Date choosenDate;
 	private PanelBuchung panelBuchung;
+	private PanelMeineBuchung meineBuchung;
 
 	public Raumplaner_View() {
 		initView();
@@ -461,6 +463,9 @@ public class Raumplaner_View extends JFrame {
 		panelBuchung = new PanelBuchung(calendar);
 		panelBuchung.setVisible(true);
 
+		meineBuchung = new PanelMeineBuchung(calendar);
+		meineBuchung.setVisible(false);
+
 		bvList = new ArrayList<Bestellformular_View>();
 
 		setRaum();
@@ -500,6 +505,7 @@ public class Raumplaner_View extends JFrame {
 		// calendarPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 		leftPanel.add(formularScroller, BorderLayout.CENTER);
 		leftPanel.add(panelBuchung, BorderLayout.WEST);
+		leftPanel.add(meineBuchung, BorderLayout.EAST);
 		// calendarPanel.add(raumAddDelPanel());
 
 		return leftPanel;
@@ -598,6 +604,10 @@ public class Raumplaner_View extends JFrame {
 		return this;
 	}
 
+	public PanelMeineBuchung getMeineBuchung() {
+		return meineBuchung;
+	}
+
 	/*
 	 * Methoden werden aufgerufen, wenn die Buchungen bzw. sich die R�ume �ndern
 	 */
@@ -645,6 +655,7 @@ public class Raumplaner_View extends JFrame {
 			ausstattungDeleteButton.setVisible(false);
 
 			panelBuchung.setVisible(false);
+			meineBuchung.setVisible(true);
 		}
 	}
 
