@@ -69,9 +69,9 @@ public class RaumAnlegen extends JDialog {
 	 * Create the frame.
 	 */
 	public RaumAnlegen() {
-		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(RaumAnlegen.class.getResource("/ressources/menu_raum_anlegen_transp.png")));
+		setModal(true); // Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumAnlegen.class
+				.getResource("/ressources/menu_raum_anlegen_transp.png")));
 		setResizable(false);
 
 		setTitle("Raum anlegen");
@@ -95,16 +95,20 @@ public class RaumAnlegen extends JDialog {
 
 		JButton btnAnlegen = new JButton("Anlegen");
 		btnAnlegen.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			boolean feedback = SQL_Schnittstelle.insertRaum(textField_name.getText(), textField_strasse.getText(), textField_stock.getText(), Integer.parseInt(textField_personen.getText()), Ausstattung());
-			
-				if (feedback == true)
-				{
+			public void actionPerformed(ActionEvent e) { // Action Listener und
+														
+				boolean feedback = SQL_Schnittstelle.insertRaum( // Aufruf
+																// RaumAnlegen
+																// Methode
+						textField_name.getText(), textField_strasse.getText(),
+						textField_stock.getText(),
+						Integer.parseInt(textField_personen.getText()),
+						Ausstattung());
+
+				if (feedback == true) {		//Rückgabewert der Methode Ausstattung anlegen
 					setVisible();
 					Erfolg("Raum wurde angelegt");
-				}
-				else
-				{
+				} else {
 					Erfolg("Raum konnte nicht angelegt werden");
 				}
 			}
@@ -115,7 +119,7 @@ public class RaumAnlegen extends JDialog {
 		JButton btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible();
+				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -136,11 +140,11 @@ public class RaumAnlegen extends JDialog {
 		JLabel lblRaumname = new JLabel("Raumname");
 		lblRaumname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblRaumname);
-		
+
 		JLabel lblNewLabel = new JLabel("Straße");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Stockwerk");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblNewLabel_1);
@@ -165,20 +169,20 @@ public class RaumAnlegen extends JDialog {
 		textField_name.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_5.add(textField_name, BorderLayout.CENTER);
 		textField_name.setColumns(10);
-		
+
 		JPanel panel_9 = new JPanel();
 		panel_4.add(panel_9);
 		panel_9.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_strasse = new JTextField();
 		textField_strasse.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_9.add(textField_strasse, BorderLayout.CENTER);
 		textField_strasse.setColumns(10);
-		
+
 		JPanel panel_10 = new JPanel();
 		panel_4.add(panel_10);
 		panel_10.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_stock = new JTextField();
 		textField_stock.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_10.add(textField_stock, BorderLayout.CENTER);
@@ -196,7 +200,7 @@ public class RaumAnlegen extends JDialog {
 		JPanel panel_7 = new JPanel();
 		panel_4.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_a1 = new JTextField();
 		textField_a1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textField_a1.setColumns(10);
@@ -205,104 +209,112 @@ public class RaumAnlegen extends JDialog {
 		JPanel panel_8 = new JPanel();
 		panel_4.add(panel_8);
 		panel_8.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_a2 = new JTextField();
 		textField_a2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_8.add(textField_a2, BorderLayout.CENTER);
 		textField_a2.setColumns(10);
-		
+
 		JPanel panel_11 = new JPanel();
 		panel_4.add(panel_11);
 		panel_11.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_a3 = new JTextField();
 		textField_a3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_11.add(textField_a3, BorderLayout.CENTER);
 		textField_a3.setColumns(10);
-		
+
 		JPanel panel_12 = new JPanel();
 		panel_4.add(panel_12);
 		panel_12.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_a4 = new JTextField();
 		textField_a4.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_12.add(textField_a4, BorderLayout.CENTER);
 		textField_a4.setColumns(10);
-		
+
 		JPanel panel_13 = new JPanel();
 		panel_4.add(panel_13);
 		panel_13.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_a5 = new JTextField();
 		textField_a5.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_13.add(textField_a5, BorderLayout.CENTER);
 		textField_a5.setColumns(10);
-		
+
 		JPanel panel_14 = new JPanel();
 		panel_4.add(panel_14);
 		panel_14.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_a6 = new JTextField();
 		textField_a6.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_14.add(textField_a6, BorderLayout.CENTER);
 		textField_a6.setColumns(10);
-		
+
 		JPanel panel_15 = new JPanel();
 		panel_4.add(panel_15);
 		panel_15.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_a7 = new JTextField();
 		textField_a7.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_15.add(textField_a7, BorderLayout.CENTER);
 		textField_a7.setColumns(10);
-		
+
 		JPanel panel_16 = new JPanel();
 		panel_4.add(panel_16);
 		panel_16.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_a8 = new JTextField();
 		textField_a8.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_16.add(textField_a8, BorderLayout.CENTER);
 		textField_a8.setColumns(10);
 
 	}
-	
-	private ArrayList<String> Ausstattung()
-	{		
-		if (!textField_a1.getText().isEmpty())
-		{	ausstattungsList.add(textField_a1.getText()); }
-		
-		if (!textField_a2.getText().isEmpty())
-		{	ausstattungsList.add(textField_a2.getText()); }
-		
-		if (!textField_a3.getText().isEmpty())
-		{	ausstattungsList.add(textField_a3.getText()); }
-		
-		if (!textField_a4.getText().isEmpty())
-		{	ausstattungsList.add(textField_a4.getText()); }
-		
-		if (!textField_a5.getText().isEmpty())
-		{	ausstattungsList.add(textField_a5.getText()); }
-		
-		if (!textField_a6.getText().isEmpty())
-		{	ausstattungsList.add(textField_a6.getText()); }
-		
-		if (!textField_a7.getText().isEmpty())
-		{	ausstattungsList.add(textField_a7.getText()); }
-		
-		if (!textField_a8.getText().isEmpty())
-		{	ausstattungsList.add(textField_a8.getText()); }
-		
+
+	private ArrayList<String> Ausstattung() { // eingegebene Ausstattung in
+												// Array List laden, und
+		if (!textField_a1.getText().isEmpty()) {
+			ausstattungsList.add(textField_a1.getText());
+		}
+
+		if (!textField_a2.getText().isEmpty()) {
+			ausstattungsList.add(textField_a2.getText());
+		}
+
+		if (!textField_a3.getText().isEmpty()) {
+			ausstattungsList.add(textField_a3.getText());
+		}
+
+		if (!textField_a4.getText().isEmpty()) {
+			ausstattungsList.add(textField_a4.getText());
+		}
+
+		if (!textField_a5.getText().isEmpty()) {
+			ausstattungsList.add(textField_a5.getText());
+		}
+
+		if (!textField_a6.getText().isEmpty()) {
+			ausstattungsList.add(textField_a6.getText());
+		}
+
+		if (!textField_a7.getText().isEmpty()) {
+			ausstattungsList.add(textField_a7.getText());
+		}
+
+		if (!textField_a8.getText().isEmpty()) {
+			ausstattungsList.add(textField_a8.getText());
+		}
+
 		return ausstattungsList;
 	}
-	
-	private void setVisible()
-	{
+
+	private void setVisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
 	}
-	
-	public static void Erfolg(String nachricht) {
-		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 }

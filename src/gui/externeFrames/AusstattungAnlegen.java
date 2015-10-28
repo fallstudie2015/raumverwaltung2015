@@ -55,8 +55,10 @@ public class AusstattungAnlegen extends JDialog {
 	 * Create the frame.
 	 */
 	public AusstattungAnlegen() {
-		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AusstattungAnlegen.class.getResource("/ressources/menu_ausstattung_anlegen_transp.png")));
+		setModal(true); 					//Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(AusstattungAnlegen.class.getResource(
+						"/ressources/menu_ausstattung_anlegen_transp.png")));
 		setResizable(false);
 		setTitle("Ausstattung anlegen");
 		setLocationRelativeTo(null);
@@ -65,84 +67,83 @@ public class AusstattungAnlegen extends JDialog {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblRaumAnlegen = new JLabel("Ausstattung anlegen");
-		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
-		
+
+		JLabel lblAusstattungAnlegen = new JLabel("Ausstattung anlegen");
+		lblAusstattungAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblAusstattungAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblAusstattungAnlegen, BorderLayout.NORTH);
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
-		
+
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
-		
-		JButton btnAnlegen = new JButton("Anlegen");
-		btnAnlegen.addActionListener(new ActionListener() {
+
+		JButton btnAnlegen = new JButton("Anlegen"); 
+		btnAnlegen.addActionListener(new ActionListener() { //Aktion Listener und Anbindung Methode für Ausstattung Anlegen
 			public void actionPerformed(ActionEvent e) {
-				boolean feedback = 	SQL_Schnittstelle.insertAusstattungArt(textField_1.getText());
-				
-				if (feedback == true)
-				{
+				boolean feedback = SQL_Schnittstelle
+						.insertAusstattungArt(textField_1.getText());
+
+				if (feedback == true) {						//Rückgabewert der Methode Ausstattung anlegen
 					setVisible();
 					Erfolg("Ausstattung wurde erstellt!");
-				}
-				else
-				{
+				} else {
 					Erfolg("Ausstattung konnte nicht erstellt werden!");
 				}
 			}
 		});
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnAnlegen);
-		
+
 		JButton btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible();
+				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
-		
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
 		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
-		
+
 		JLabel lblAusstattung = new JLabel("");
 		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblAusstattung);
-		
+
 		JLabel lblAusstattung_1 = new JLabel("Ausstattungsname:");
 		lblAusstattung_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblAusstattung_1);
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
 		panel_4.setLayout(new GridLayout(8, 0, 0, 0));
-		
+
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
-		
+
 		textField_1 = new JTextField();
 		panel_4.add(textField_1);
 		textField_1.setColumns(10);
 	}
-	
-	private void setVisible()
-	{
+
+	private void setVisible() { //Fenster unsichtbar machen 
 		this.setVisible(false);
 	}
-	public static void Erfolg(String nachricht) {
-		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+	public static void Erfolg(String nachricht) { //MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 }

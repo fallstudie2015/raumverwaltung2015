@@ -57,8 +57,9 @@ public class BenutzerLoeschen extends JDialog {
 	 * Create the frame.
 	 */
 	public BenutzerLoeschen() {
-		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerLoeschen.class.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
+		setModal(true);					//Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerLoeschen.class
+				.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Benutzer loeschen");
 		setLocationRelativeTo(this);
@@ -67,36 +68,35 @@ public class BenutzerLoeschen extends JDialog {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblRaumAnlegen = new JLabel("Benutzer loeschen");
-		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
-		
+
+		JLabel lblBenutzerLoeschen = new JLabel("Benutzer loeschen");
+		lblBenutzerLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblBenutzerLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblBenutzerLoeschen, BorderLayout.NORTH);
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
-		
+
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
-		
+
 		JButton btnLoeschen = new JButton("Loeschen");
 		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean feedback = SQL_Schnittstelle.deleteBenutzer(textField_email.getText(), textField_Vorname.getText(), textField_nachname.getText());
-				if (feedback == true)
-				{
-					setVisible();
+				boolean feedback = SQL_Schnittstelle.deleteBenutzer(
+						textField_email.getText(), textField_Vorname.getText(),
+						textField_nachname.getText());
+				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
+					setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 					Erfolg("Benutzer wurde gelöscht!");
-				}
-				else
-				{
+				} else {
 					Erfolg("Benutzer konnte nicht gelöscht werden!");
 				}
 			}
 		});
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
-		
+
 		JButton btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
@@ -105,88 +105,88 @@ public class BenutzerLoeschen extends JDialog {
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
-		
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
 		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(5, 0, 0, 0));
-		
+
 		JLabel lblBenutzer = new JLabel("Vorname:");
 		lblBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblBenutzer);
-		
+
 		JLabel lblBenutzer_1 = new JLabel("Nachname:");
 		lblBenutzer_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblBenutzer_1);
-		
+
 		JLabel lblBenutzer_2 = new JLabel("E-Mail - Adresse:");
 		lblBenutzer_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblBenutzer_2);
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
 		panel_4.setLayout(new GridLayout(5, 0, 0, 0));
-		
+
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
 		panel_5.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_Vorname = new JTextField();
 		textField_Vorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_5.add(textField_Vorname, BorderLayout.CENTER);
 		textField_Vorname.setColumns(10);
-		
+
 		Component rigidArea = Box.createRigidArea(new Dimension(147, 11));
 		panel_5.add(rigidArea, BorderLayout.NORTH);
-		
+
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(147, 11));
 		panel_5.add(rigidArea_1, BorderLayout.SOUTH);
-		
+
 		JPanel panel_6 = new JPanel();
 		panel_4.add(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_nachname = new JTextField();
 		textField_nachname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_6.add(textField_nachname, BorderLayout.CENTER);
 		textField_nachname.setColumns(10);
-		
+
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(147, 11));
 		panel_6.add(rigidArea_2, BorderLayout.NORTH);
-		
+
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(147, 11));
 		panel_6.add(rigidArea_3, BorderLayout.SOUTH);
-		
+
 		JPanel panel_7 = new JPanel();
 		panel_4.add(panel_7);
 		panel_7.setLayout(new BorderLayout(0, 0));
-		
+
 		textField_email = new JTextField();
 		textField_email.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_7.add(textField_email, BorderLayout.CENTER);
 		textField_email.setColumns(10);
-		
+
 		Component rigidArea_4 = Box.createRigidArea(new Dimension(147, 11));
 		panel_7.add(rigidArea_4, BorderLayout.NORTH);
-		
+
 		Component rigidArea_5 = Box.createRigidArea(new Dimension(147, 11));
 		panel_7.add(rigidArea_5, BorderLayout.SOUTH);
 	}
 
-	private void setVisible()
-	{
+	private void setVisible() {		//Fenster unsichtbar machen 
 		this.setVisible(false);
 	}
-	
-	public static void Erfolg(String nachricht) {
-		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+	public static void Erfolg(String nachricht) {		//MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 }

@@ -55,8 +55,10 @@ public class AusstattungLoeschen extends JDialog {
 	 * Create the frame.
 	 */
 	public AusstattungLoeschen() {
-		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AusstattungLoeschen.class.getResource("/ressources/menu_ausstattung_loeschen_transp.png")));
+		setModal(true);					//Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(AusstattungLoeschen.class.getResource(
+						"/ressources/menu_ausstattung_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Ausstattung loeschen");
 		setLocationRelativeTo(this);
@@ -65,84 +67,83 @@ public class AusstattungLoeschen extends JDialog {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblRaumAnlegen = new JLabel("Ausstattung loeschen");
-		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
-		
+
+		JLabel lblAusstattungLoeschen = new JLabel("Ausstattung loeschen");
+		lblAusstattungLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblAusstattungLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblAusstattungLoeschen, BorderLayout.NORTH);
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
-		
+
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
-		
+
 		JButton btnLoeschen = new JButton("Loeschen");
 		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean feedback = SQL_Schnittstelle.deleteAusstattungArt(textField.getText());
-				
-				if (feedback == true)
-				{
+				boolean feedback = SQL_Schnittstelle
+						.deleteAusstattungArt(textField.getText());
+
+				if (feedback == true) {		//Rückgabewert der Methode Ausstattung anlegen
 					setVisible();
 					Erfolg("Ausstattung wurde gelöscht!");
-				}
-				else
-				{
+				} else {
 					Erfolg("Ausstattung konnte nicht gelöscht werden!");
 				}
 			}
 		});
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
-		
+
 		JButton btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible();
+				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
-		
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
 		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
 		panel_4.setLayout(new GridLayout(8, 0, 0, 0));
-		
+
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
-		
+
 		JLabel lblAusstattung = new JLabel("Ausstattungsname:");
 		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(lblAusstattung);
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
-		
+
 		JPanel panel_6 = new JPanel();
 		panel_3.add(panel_6);
-		
+
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(textField);
 		textField.setColumns(10);
 	}
-	
-	private void setVisible()
-	{
+
+	private void setVisible() {	//Fenster unsichtbar machen 
 		this.setVisible(false);
 	}
-	public static void Erfolg(String nachricht) {
-		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+	public static void Erfolg(String nachricht) {//MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 }

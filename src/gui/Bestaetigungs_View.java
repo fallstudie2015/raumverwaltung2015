@@ -44,6 +44,8 @@ public class Bestaetigungs_View extends JFrame {
 	private JButton btnAblehnen;
 	private JButton btnAbbrechen;
 
+	private bestaetigungsViewListener meinBVL;
+
 	public Bestaetigungs_View(Buchung uebergabeBuchung) {
 
 		buchung = uebergabeBuchung;
@@ -64,10 +66,15 @@ public class Bestaetigungs_View extends JFrame {
 		JPanel buttonPanel = new JPanel();
 
 		buttonPanel.setLayout(new FlowLayout());
-		btnBestaetigen = new JButton("Bestätigen");
+		btnBestaetigen = new JButton("Genehmigen");
 		btnAblehnen = new JButton("Ablehnen");
 		btnAbbrechen = new JButton("Abbrechen");
 
+		meinBVL = new bestaetigungsViewListener(this);
+
+		btnBestaetigen.addActionListener(meinBVL);
+		btnAblehnen.addActionListener(meinBVL);
+		btnAbbrechen.addActionListener(meinBVL);
 		buttonPanel.add(btnBestaetigen);
 		buttonPanel.add(btnAblehnen);
 		buttonPanel.add(btnAbbrechen);
@@ -166,11 +173,15 @@ public class Bestaetigungs_View extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == btnBestaetigen) {
+				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
+						'g');
+				System.out.println("Bestätigt");
 
 			} else if (e.getSource() == btnAblehnen) {
 
-				// SQL_Schnittstelle.updateBuchungStatus(datum, zeitVon,
-				// zeitBis, raumbezeichnung, status)
+				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
+						's');
+				System.out.println("Abgelehnt");
 
 			} else if (e.getSource() == btnAbbrechen) {
 				mbv.dispose();
