@@ -49,7 +49,7 @@ public class Bestellformular_View extends JPanel {
 	private JTextArea sonstigeArea;
 	private JCheckBox externCheck;
 	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
-	private final String stundeBis[] = { "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
+	private final String stundeBis[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
 	private final String minute[] = { "00", "15", "30", "45" };
 	private Ausstattung ausstattung[];
 	private final String bestuhulung[] = { "", "U-Form", "Blockbildung", "Schulbanksystem/parlamentarische Bestuhlung",
@@ -527,7 +527,7 @@ public class Bestellformular_View extends JPanel {
 		} else {
 			if (min.equals("45")) {
 				zeitBisMinuteCB.setSelectedIndex(0);
-				zeitBisStundeCB.setSelectedIndex(zeitVonStundeCB.getSelectedIndex());
+				zeitBisStundeCB.setSelectedIndex(zeitVonStundeCB.getSelectedIndex() + 1);
 			} else {
 				zeitBisMinuteCB.setSelectedIndex(zeitVonMinuteCB.getSelectedIndex() + 1);
 				zeitBisStundeCB.setSelectedItem(hr);

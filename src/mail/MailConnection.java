@@ -13,17 +13,13 @@ import javax.mail.internet.MimeMessage;
 
 public class MailConnection {
 
-	public void sendMail( String senderAddress,
-			String recipientsAddress, String subject, String text) {
+	public void sendMail(String empfaengerAdresse, String betreff,
+			String text) {
 
-		mail.sendMail("fallstudie2015@gmx.de", "fallstudie2015",
-				"fallstudie2015@gmx.de", "fallstudie2015@gmx.de",
-				"Erste Nachricht", "Das ist der Text");
 		String username = new String("fallstudie2015@gmx.de");
 		String password = new String("fallstudie2015");
 		String senderAddress = new String("fallstudie2015@gmx.de");
-		
-		
+
 		MailAuthenticator auth = new MailAuthenticator(username, password);
 
 		Properties properties = new Properties();
@@ -59,10 +55,10 @@ public class MailConnection {
 			// Hier werden die Absender- und Empfängeradressen gesetzt
 			msg.setFrom(new InternetAddress(senderAddress));
 			msg.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(recipientsAddress, false));
+					InternetAddress.parse(empfaengerAdresse, false));
 
 			// Der Betreff und Body der Message werden gesetzt
-			msg.setSubject(subject);
+			msg.setSubject(betreff);
 			msg.setText(text);
 
 			// Hier lassen sich HEADER-Informationen hinzufügen
