@@ -72,7 +72,7 @@ public class PanelBuchung extends JPanel {
 		buchungBestellerModel.fireTableDataChanged();
 	}
 
-	public void getDatum() {
+	public void auswahlAnzeigen() {
 		Date date = new Date();
 		System.out.println(tableBuchung.getValueAt(
 				tableBuchung.getSelectedRow(), 0));
