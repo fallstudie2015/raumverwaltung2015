@@ -273,7 +273,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT b.buchungid, CONCAT(vorname ,' ', nachname) AS benutzerName, r.name AS raumName, b.datum "
 					+ "FROM buchung b JOIN benutzer u ON u.benutzerid = b.benutzerid "
-					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' ORDER BY b.datum ";
+					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' AND b.datum >= NOW() ORDER BY b.datum ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 			rs.last();
 			System.out.println("getBuchungenZuGenehmigung " + rs.getRow());
@@ -286,6 +286,22 @@ public abstract class SQL_Schnittstelle {
 		return rs;
 	}
 
+	public static ResultSet getMyBuchungen(int benutzerid) {
+		ResultSet rs = null;
+		try {
+			String abfrageString = "SELECT buchungid, datum ,r.name ,zeitvon, zeitbis, datum "
+					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
+					+ "WHERE benutzerid = "+benutzerid+"; ";
+			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getMyBuchungen");
+		}
+
+		return rs;
+	}
+	
 	private static int getAusstatungsArtenID(String ausstattung) {
 		// TODO Auto-generated method stub
 		int ausstattungid = 0;
