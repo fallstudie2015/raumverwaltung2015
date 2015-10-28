@@ -36,6 +36,9 @@ public class Raum_View_Label extends JLabel {
 				super.mousePressed(e);
 				if (Benutzer.getBenutzertyp() == 'v' && buchung != null) {
 					Bestaetigungs_View beV = new Bestaetigungs_View(frame, buchung);
+				} else if (Benutzer.getBenutzertyp() == 'b' && buchung != null
+						&& Benutzer.getBenutzerID() == buchung.getBenutzerID()) {
+					Stornieren_View sv = new Stornieren_View(frame, buchung);
 				}
 			}
 		});
@@ -74,5 +77,6 @@ public class Raum_View_Label extends JLabel {
 
 	public void removeBuchung() {
 		buchung = null;
+		buchungGesetzt = false;
 	}
 }

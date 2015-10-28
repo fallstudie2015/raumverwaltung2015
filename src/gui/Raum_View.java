@@ -128,18 +128,20 @@ public class Raum_View extends JPanel implements MouseListener {
 					if (buchung.getStatus().equalsIgnoreCase("a") || buchung.getStatus().equalsIgnoreCase("s")) {
 						label.removeBuchung();
 						label.setToolTipText(null);
-					} else {
+											} else {
 						if (buchung.getZeitVon().equals(label.getTime())
 								|| (label.getTime().before(buchung.getZeitBis())
 										&& label.getTime().after(buchung.getZeitVon()))) {
 							if (Benutzer.getBenutzertyp() == 'v') {
 								if (buchung.getZeitVon().equals(label.getTime())) {
 									label.setText(buchung.getBenutzerName());
+									label.setFont(new Font(buchung.getBenutzerName(), Font.BOLD, 16));
 									label.setHorizontalTextPosition(SwingConstants.CENTER);
 								}
 								label.setToolTipText("<html>" + raum.getName() + "<br>" + raum.getStrasse() + "<br>"
 										+ raum.getStock() + "<br>" + buchung.getBenutzerName() + "<br>"
-										+ buchung.getTelefon() + "<br>" + "</html>");
+										+ buchung.getTelefon() + "<br>" + buchung.getZeitVon() + " Uhr - "
+										+ buchung.getZeitBis() + " Uhr" + "<br>" + "</html>");
 							}
 							if (buchung.getStatus().equals("v")) {
 								ImageIcon ii = new ImageIcon(
