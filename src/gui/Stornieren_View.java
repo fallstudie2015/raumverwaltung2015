@@ -208,7 +208,7 @@ public class Stornieren_View extends JFrame {
 						's');
 
 				mbv.getRaumView()
-						.setBuchungArray(SQL_Schnittstelle.getBuchung());
+						.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
 				mail.sendMail(MailTexte.verwalterPostfach,
 						MailTexte.getBetreffStornierung(mbv.getBuchung()),

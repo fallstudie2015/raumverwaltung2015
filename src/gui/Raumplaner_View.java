@@ -28,7 +28,9 @@ import com.toedter.calendar.JCalendar;
 
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
+import de.dhbw.java.BuchungPlus;
 import de.dhbw.java.Raum;
+import de.dhbw.java.SQL_Schnittstelle;
 import gui.externeFrames.AusstattungAnlegen;
 import gui.externeFrames.AusstattungLoeschen;
 import gui.externeFrames.BenutzerAnlegen;
@@ -37,7 +39,6 @@ import gui.externeFrames.Logout;
 import gui.externeFrames.PasswortAendern;
 import gui.externeFrames.RaumAnlegen;
 import gui.externeFrames.RaumLoeschen;
-import javafx.scene.layout.Border;
 
 /**
  * @author Tim
@@ -57,7 +58,7 @@ public class Raumplaner_View extends JFrame {
 	private JScrollPane scroller, formularScroller;
 	private ArrayList<Bestellformular_View> bvList;
 	private ArrayList<Raum> raumList;
-	private ArrayList<Buchung> buchungList;
+	private ArrayList<BuchungPlus> buchungList;
 	private ArrayList<Raum_View> raumViewList;
 	private Date choosenDate;
 	private PanelBuchung panelBuchung;
@@ -74,7 +75,7 @@ public class Raumplaner_View extends JFrame {
 		this.onScrollPanel = new JPanel(new FlowLayout());
 		this.port = new JPanel(new FlowLayout());
 		this.raumList = raumList;
-		this.buchungList = buchungList;
+		this.buchungList = SQL_Schnittstelle.getBuchungPlus();
 		raumViewList = new ArrayList<Raum_View>();
 		initView();
 		this.choosenDate = new Date(calendar.getDate().getTime());
@@ -315,7 +316,7 @@ public class Raumplaner_View extends JFrame {
 					Raum_View rv = new Raum_View(raum, this);
 					raumViewList.add(rv);
 
-					for (Buchung buchung : buchungList) {
+					for (BuchungPlus buchung : buchungList) {
 
 						if (buchung.getRaumID() == raum.getRaumID()) {
 							rv.getBuchung(buchung);
@@ -533,7 +534,7 @@ public class Raumplaner_View extends JFrame {
 	private void buchungenZuordnen() {
 		for (Raum_View rv : raumViewList) {
 			rv.deleteBuchungList();
-			for (Buchung buchung : buchungList) {
+			for (BuchungPlus buchung : buchungList) {
 				if (buchung.getRaumID() == rv.getRaumID()) {
 					rv.setBuchungNeu(buchung);
 					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
@@ -544,7 +545,7 @@ public class Raumplaner_View extends JFrame {
 
 	private void buchungenZuordnenRaum() {
 		for (Raum_View rv : raumViewList) {
-			for (Buchung buchung : buchungList) {
+			for (BuchungPlus buchung : buchungList) {
 				if (buchung.getRaumID() == rv.getRaumID()) {
 					rv.setBuchungNeu(buchung);
 					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
@@ -628,7 +629,7 @@ public class Raumplaner_View extends JFrame {
 		windowAktualisieren();
 	}
 
-	public void setBuchungArray(ArrayList<Buchung> buchungList) {
+	public void setBuchungArray(ArrayList<BuchungPlus> buchungList) {
 		this.buchungList.clear();
 		this.buchungList = buchungList;
 		buchungenZuordnen();

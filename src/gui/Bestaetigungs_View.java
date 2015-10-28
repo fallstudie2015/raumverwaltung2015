@@ -236,7 +236,7 @@ public class Bestaetigungs_View extends JFrame {
 						'g');
 
 				mbv.getRaumView()
-						.setBuchungArray(SQL_Schnittstelle.getBuchung());
+						.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
 				mail.sendMail(
 						SQL_Schnittstelle.getBenutzerEmail(
@@ -258,7 +258,7 @@ public class Bestaetigungs_View extends JFrame {
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						'a');
 				mbv.getRaumView()
-						.setBuchungArray(SQL_Schnittstelle.getBuchung());
+						.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
 				mail.sendMail(
 						SQL_Schnittstelle.getBenutzerEmail(

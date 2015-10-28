@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
+import de.dhbw.java.BuchungPlus;
 import de.dhbw.java.Raum;
 import de.dhbw.java.SQL_Schnittstelle;
 
@@ -27,7 +28,7 @@ public class Raum_View extends JPanel implements MouseListener {
 	private String raumName;
 	private Bestellformular_View bv;
 	private Raumplaner_View frame;
-	private ArrayList<Buchung> buchungList;
+	private ArrayList<BuchungPlus> buchungList;
 	private Raum raum;
 	private ArrayList<Raum_View_Label> labelList;
 
@@ -37,7 +38,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		this.frame = frame;
 		setBestellformularView();
 		labelList = new ArrayList<Raum_View_Label>();
-		buchungList = new ArrayList<Buchung>();
+		buchungList = new ArrayList<BuchungPlus>();
 		initView();
 	}
 
@@ -117,7 +118,7 @@ public class Raum_View extends JPanel implements MouseListener {
 
 		Color farbe;
 
-		for (Buchung buchung : buchungList) {
+		for (BuchungPlus buchung : buchungList) {
 			if (buchung.getBenutzerID() == Benutzer.getBenutzerID()) {
 				farbe = Color.GREEN;
 			} else {
@@ -134,12 +135,11 @@ public class Raum_View extends JPanel implements MouseListener {
 										&& label.getTime().after(buchung.getZeitVon()))) {
 							if (Benutzer.getBenutzertyp() == 'v') {
 								if (buchung.getZeitVon().equals(label.getTime())) {
-									label.setText(SQL_Schnittstelle.getBenutzerName(buchung.getBenutzerID()));
+									label.setText(buchung.getBenutzerName());
 									label.setHorizontalTextPosition(SwingConstants.CENTER);
 								}
 								label.setToolTipText("<html>" + raum.getName() + "<br>" + raum.getStrasse() + "<br>"
-										+ raum.getStock() + "<br>"
-										+ SQL_Schnittstelle.getBenutzerName(buchung.getBenutzerID()) + "<br>"
+										+ raum.getStock() + "<br>" + buchung.getBenutzerName() + "<br>"
 										+ buchung.getTelefon() + "<br>" + "</html>");
 							}
 							if (buchung.getStatus().equals("v")) {
@@ -173,11 +173,11 @@ public class Raum_View extends JPanel implements MouseListener {
 		}
 	}
 
-	public void getBuchung(Buchung buchung) {
+	public void getBuchung(BuchungPlus buchung) {
 		this.buchungList.add(buchung);
 	}
 
-	public void setBuchungNeu(Buchung buchung) {
+	public void setBuchungNeu(BuchungPlus buchung) {
 		this.buchungList.add(buchung);
 	}
 
@@ -193,7 +193,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		return frame.getPanelBuchung();
 	}
 
-	public void setBuchungArray(ArrayList<Buchung> list) {
+	public void setBuchungArray(ArrayList<BuchungPlus> list) {
 		frame.setBuchungArray(list);
 	}
 

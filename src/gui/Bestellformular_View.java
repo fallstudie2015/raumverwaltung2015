@@ -455,7 +455,7 @@ public class Bestellformular_View extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (setBuchung()) {
-					raum.setBuchungArray(SQL_Schnittstelle.getBuchung());
+					raum.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 					MailConnection mail = new MailConnection();
 					Date datum = new Date(dateChooser.getDate().getTime());
 					mail.sendMail(MailTexte.verwalterPostfach, MailTexte.getBetreffNeueReservierung(),
