@@ -1,16 +1,13 @@
 package de.dhbw.java;
 
-
 public abstract class Benutzer {
 
-	
-	
 	private static String email;
 	private static int benutzerID;
 	private static String Vorname;
 	private static String Nachname;
 	private static char benutzertyp;
-	
+
 	/**
 	 * @param email
 	 * @param benutzerID
@@ -47,7 +44,6 @@ public abstract class Benutzer {
 		benutzerID = id;
 	}
 
-
 	public static String getVorname() {
 		return Vorname;
 	}
@@ -74,8 +70,9 @@ public abstract class Benutzer {
 
 	private static String bereich;
 
+	/* Anlegen des Benutzers mit Benutzer-Attributen */
 	public static void setBenutzerGesamt(int benutzerId, String email,
-		String vorname, String nachname, char benutzertyp, String bereich) {
+			String vorname, String nachname, char benutzertyp, String bereich) {
 		Benutzer.benutzerID = benutzerId;
 		Benutzer.email = email;
 		Benutzer.Vorname = vorname;
@@ -83,7 +80,5 @@ public abstract class Benutzer {
 		Benutzer.benutzertyp = benutzertyp;
 		Benutzer.bereich = bereich;
 	}
-	
-
 
 }
