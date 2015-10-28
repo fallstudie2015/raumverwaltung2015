@@ -35,30 +35,31 @@ import java.awt.Toolkit;
 public class RaumLoeschen extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
+	private JTextField textField_Name;
 	private Raumplaner_View rv;
+	private JLabel label_Name;
 
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					RaumLoeschen frame = new RaumLoeschen();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	// public static void main(String[] args) {
+	// EventQueue.invokeLater(new Runnable() {
+	// public void run() {
+	// try {
+	// RaumLoeschen frame = new RaumLoeschen();
+	// frame.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// });
+	// }
 
 	/**
 	 * Create the frame.
 	 */
 	public RaumLoeschen(Raumplaner_View rv) {
-		setModal(true);					//Fenster wird aufgebaut
+		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumLoeschen.class
 				.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		setResizable(false);
@@ -85,14 +86,25 @@ public class RaumLoeschen extends JDialog {
 		JButton btnLoeschen = new JButton("Loeschen");
 		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean feedback = SQL_Schnittstelle
-						.setDeleteFlagRaum(textField_1.getText());
-				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
-					setInvisible();
-					Erfolg("Raum wurde gelöscht!");
-					rv.setRaumArray(SQL_Schnittstelle.getRooms()); //aktualisiert die Räume
+				boolean pflicht = PflichtfelderPruefen();
+
+				if (pflicht) {
+					boolean feedback = SQL_Schnittstelle
+							.setDeleteFlagRaum(textField_Name.getText());
+					if (feedback == true) {// Rückgabewert der Methode
+											// Ausstattung anlegen
+						setInvisible();
+						Erfolg("Raum wurde gelöscht!");
+						rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
+																		// die
+																		// Räume
+					} else {
+						Erfolg("Raum konnte nicht gelöscht werden!");
+					}
 				} else {
-					Erfolg("Raum konnte nicht gelöscht werden!");
+					JOptionPane.showMessageDialog(null,
+							" Bitte fuellen Sie das Pflichtfeld aus",
+							"Achtung!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -103,7 +115,8 @@ public class RaumLoeschen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInvisible(); //Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible(); // Beim Klicken auf Abbrechen wird Fenster
+								// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -120,13 +133,12 @@ public class RaumLoeschen extends JDialog {
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
 
-		JLabel label = new JLabel("");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(label);
+		JPanel panel_6 = new JPanel();
+		panel_3.add(panel_6);
 
-		JLabel label_1 = new JLabel("Raumname:");
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(label_1);
+		label_Name = new JLabel("Raumname:");
+		label_Name.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(label_Name);
 
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
@@ -135,9 +147,24 @@ public class RaumLoeschen extends JDialog {
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		panel_4.add(textField_1);
+		textField_Name = new JTextField();
+		textField_Name.setColumns(10);
+		panel_4.add(textField_Name);
+	}
+
+	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
+	// sind
+	{
+		boolean gefuellt = true;
+
+		if (textField_Name.getText().isEmpty()) {
+			label_Name.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			label_Name.setForeground(Color.black);
+		}
+
+		return gefuellt;
 	}
 
 	private void setInvisible() // Fenster unsichtbar machen
