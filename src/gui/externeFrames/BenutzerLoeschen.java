@@ -86,11 +86,11 @@ public class BenutzerLoeschen extends JDialog {
 				if (feedback == true)
 				{
 					setVisible();
-					Erfolg("Benutzer wurde gelöscht");
+					Erfolg("Benutzer wurde gelöscht!");
 				}
 				else
 				{
-					Erfolg("Benutzer konnte nicht gelöscht werden");
+					Erfolg("Benutzer konnte nicht gelöscht werden!");
 				}
 			}
 		});

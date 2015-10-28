@@ -80,7 +80,17 @@ public class AusstattungAnlegen extends JDialog {
 		JButton btnAnlegen = new JButton("Anlegen");
 		btnAnlegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean feedback = 	SQL_Schnittstelle.insertAusstattungArt(textField_1.getText());
 				
+				if (feedback == true)
+				{
+					setVisible();
+					Erfolg("Ausstattung wurde erstellt!");
+				}
+				else
+				{
+					Erfolg("Ausstattung konnte nicht erstellt werden!");
+				}
 			}
 		});
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));

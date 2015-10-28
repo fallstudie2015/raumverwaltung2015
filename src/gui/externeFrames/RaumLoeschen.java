@@ -39,18 +39,18 @@ public class RaumLoeschen extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					RaumLoeschen frame = new RaumLoeschen();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RaumLoeschen frame = new RaumLoeschen();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
@@ -85,11 +85,11 @@ public class RaumLoeschen extends JDialog {
 				if (feedback == true)
 				{
 					setVisible();
-					Erfolg("Raum wurde gelöscht");
+					Erfolg("Raum wurde gelöscht!");
 				}
 				else
 				{
-					Erfolg("Raum konnte nicht gelöscht werden");
+					Erfolg("Raum konnte nicht gelöscht werden!");
 				}
 			}
 		});

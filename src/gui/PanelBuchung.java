@@ -3,6 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,19 +52,29 @@ public class PanelBuchung extends JPanel {
 		setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 
-	private String[][] buchungBestellerListeToTableStringArray() {
-		ArrayList<Buchung> al = SQL_Schnittstelle
-				.getAlleVorgemerktenBuchungen();
-
-		String[][] tableData = new String[al.size()][3];
-		for (int i = 0; i < al.size(); i++) {
-			tableData[i][0] = al.get(i).getDatum().toString();
-			tableData[i][1] = String.valueOf(SQL_Schnittstelle.getRaumName(al
-					.get(i).getRaumID()));
-			tableData[i][2] = String.valueOf(SQL_Schnittstelle
-					.getBenutzerName(al.get(i).getBenutzerID()));
+	private String[][] buchungBestellerListeToTableStringArray()  {
+		ResultSet rs = null;
+		rs = SQL_Schnittstelle.getBuchungenZuGenehmigung();
+		System.out.println("buchungBestellerListeToTableStringArray ");
+		String[][] tableData = null;
+		try {
+			rs.last(); 
+			System.out.println("buchungBestellerListeToTableStringArray "+ rs.getRow());
+			tableData = new String[rs.getRow()][3];
+			rs.beforeFirst();
+			int i = 0;
+			
+			while (rs.next()) {
+				tableData[i][0] = rs.getDate("datum").toString();
+				tableData[i][1] = rs.getString("raumName");
+				tableData[i][2] = rs.getString("benutzerName");
+				i++;
+			}
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"gui.PanelBuchung.buchungBestellerListeToTableStringArray");
 		}
-
+		
 		return tableData;
 
 	}
@@ -72,7 +84,7 @@ public class PanelBuchung extends JPanel {
 		buchungBestellerModel.fireTableDataChanged();
 	}
 
-	public void getDatum() {
+	public void auswahlAnzeigen() {
 		Date date = new Date();
 		System.out.println(tableBuchung.getValueAt(
 				tableBuchung.getSelectedRow(), 0));

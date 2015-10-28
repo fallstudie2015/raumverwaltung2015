@@ -86,11 +86,11 @@ public class BenutzerAnlegen extends JDialog {
 				if (feedback == true)
 				{
 					setVisible();
-					Erfolg("Benutzer wurde erstellt");
+					Erfolg("Benutzer wurde erstellt!");
 				}
 				else
 				{
-					Erfolg("Benutzer konnte nicht erstellt werden");
+					Erfolg("Benutzer konnte nicht erstellt werden!");
 				}
 			}
 		});
