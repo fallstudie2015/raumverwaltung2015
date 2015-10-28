@@ -692,7 +692,7 @@ public abstract class SQL_Schnittstelle {
 		boolean antwort = false;
 		int rueckgabeBenutzerID;
 		try {
-
+			passwort = EncryptPassword.SHA512(passwort);
 			rueckgabeBenutzerID = SQL_Schnittstelle
 					.sqlInsert("INSERT INTO benutzer (nachname, vorname, email, passwort, rolle, bereich)"
 							+ " VALUES ('"
