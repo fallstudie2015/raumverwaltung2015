@@ -531,6 +531,13 @@ public abstract class SQL_Schnittstelle {
 		return grundAusstattungListe;
 	}
 
+	/**
+	 * Methode zum ändern des Passwortes.
+	 * @param aktuellesPasswort
+	 * @param neuesPasswort
+	 * @param neuesPasswortWiederholt
+	 * @return Ausgabesatz (String), dass das Passwort geändert wurde.
+	 */
 	public static String passwortAendern(String aktuellesPasswort,
 			String neuesPasswort, String neuesPasswortWiederholt) {
 		try {
@@ -562,6 +569,10 @@ public abstract class SQL_Schnittstelle {
 		return "Passwort wurde erfolgreich geandert!";
 	}
 
+	/**
+	 * Gibt das aktuelle Passwort aus.
+	 * @return Aktuelles Passwort.
+	 */
 	private static String getAktuellesPasswort() {
 		// TODO Auto-generated method stub
 		String aktuellesPasswort = null;
@@ -582,6 +593,14 @@ public abstract class SQL_Schnittstelle {
 
 	}
 
+	/**
+	 * Prüft, ob die Buchung sich mit anderen Buchungen überschneidet.
+	 * @param raumbezeichnung
+	 * @param datum
+	 * @param zeitVon
+	 * @param zeitBis
+	 * @return true, wenn es keine Überschneidung gibt; false, wenn es eine oder mehrere Überschneidungen gibt.
+	 */
 	public static boolean pruefeBuchungskonflikt(String raumbezeichnung,
 			Date datum, Time zeitVon, Time zeitBis) {
 		// TODO Auto-generated method stub
@@ -596,7 +615,7 @@ public abstract class SQL_Schnittstelle {
 			}
 			for (int i = 0; i < buchungen.size(); i++) {
 				Time zeitVonDb = buchungen.get(i).getZeitVon();
-				Time zeitBisDb = buchungen.get(i).getZeitVon();
+				Time zeitBisDb = buchungen.get(i).getZeitBis();
 
 				if (zeitBis.after(zeitVonDb) && zeitVon.before(zeitBisDb)) {
 					return false;
@@ -614,6 +633,12 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	/**
+	 * Gibt alle Buchungen am übergebenen Tag als Array aus.
+	 * @param datum
+	 * @param raumId
+	 * @return ArrayList(Buchung)
+	 */
 	public static ArrayList<Buchung> getBuchungAnTagX(Date datum, int raumId) {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
@@ -637,6 +662,10 @@ public abstract class SQL_Schnittstelle {
 		return buchungListe;
 	}
 
+	/**
+	 * Gibt das Resultset Zeile für Zeile in der Konsole aus.
+	 * @param rs
+	 */
 	public static void rsAusgabe(ResultSet rs) {
 		System.out.println();
 		System.out.print("zeile" + "\t");
@@ -665,6 +694,16 @@ public abstract class SQL_Schnittstelle {
 		}
 	}
 
+	/**
+	 * Fügt einen neuen Benutzer in die Datenbank ein.
+	 * @param nachname
+	 * @param vorname
+	 * @param email
+	 * @param passwort
+	 * @param rolle
+	 * @param bereich
+	 * @return true, wenn der Benutzer angelegt werden konnte; false, wenn eine Exception auftrat.
+	 */
 	public static boolean insertBenutzer(String nachname, String vorname,
 			String email, String passwort, String rolle, String bereich) {
 		boolean antwort = false;
@@ -688,6 +727,13 @@ public abstract class SQL_Schnittstelle {
 		return antwort;
 	}
 
+	/**
+	 * Löscht den übergebenen Benutzer aus der Datenbank.
+	 * @param email
+	 * @param vorname
+	 * @param nachname
+	 * @return true, wenn es funktioniert hat; false, wenn der Benutzer nicht in der Datenbank vorhanden war.
+	 */
 	public static boolean deleteBenutzer(String email, String vorname,
 			String nachname) {
 		try {
@@ -708,6 +754,11 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	/**
+	 * Löscht den übergebene Ausstattungstyp aus der Datenbank.
+	 * @param bezeichnung
+	 * @return true, wenn es funktioniert hat; false, wenn der Typ nicht in der Datenbank vorhanden war.
+	 */
 	public static boolean deleteAusstattungArt(String bezeichnung) {
 		try {
 
