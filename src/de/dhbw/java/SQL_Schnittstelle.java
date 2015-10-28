@@ -699,16 +699,19 @@ public abstract class SQL_Schnittstelle {
 			String nachname) {
 		try {
 
-			SQL_Schnittstelle
+			int rowAffected =
+				SQL_Schnittstelle
 					.sqlUpdateDelete("DELETE FROM benutzer WHERE email = '" + email
 							+ "' and vorname = '" + vorname
 							+ "' and nachname = '" + nachname + "'");
-
+			if (rowAffected == 0) {
+				return false;
+			}
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.insertBenutyer");
-			return false;
+
 		}
 		return true;
 	}
@@ -716,14 +719,17 @@ public abstract class SQL_Schnittstelle {
 	public static boolean deleteAusstattungArt(String bezeichnung) {
 		try {
 
-			SQL_Schnittstelle
+			int rowAffected =
+				SQL_Schnittstelle
 					.sqlUpdateDelete("DELETE FROM ausstattungArten WHERE bezeichnung = '" + bezeichnung + "'");
 
-
+			if (rowAffected == 0) {
+				return false;
+			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.deleteAusstattungArt");
-			return false;
+
 		}
 		return true;
 	}
