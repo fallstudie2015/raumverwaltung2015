@@ -425,7 +425,9 @@ public class Bestellformular_View extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				getBestellformular().setVisible(false);
 				pane.setVisible(false);
-				panelBuchung.setVisible(true);
+				if (Benutzer.getBenutzertyp() == 'v') {
+					panelBuchung.setVisible(true);
+				}
 				frame.validate();
 			}
 		});
