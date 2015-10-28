@@ -7,30 +7,41 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.NumberFormatter;
 
 import de.dhbw.java.SQL_Schnittstelle;
 import gui.Raumplaner_View;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
+
 import javax.swing.JSplitPane;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
+
 import javax.swing.JTextField;
+
 import java.awt.Component;
+
 import javax.swing.Box;
+
 import java.awt.Dimension;
+
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JCheckBox;
+
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
@@ -218,7 +229,14 @@ public class RaumAnlegen extends JDialog {
 		panel_4.add(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
 
-		textField_personen = new JFormattedTextField();
+		NumberFormat format = NumberFormat.getInstance();
+        format.setGroupingUsed(false);
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setAllowsInvalid(false);
+        textField_personen = new JFormattedTextField(formatter);
+
+		
+		
 		textField_personen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_6.add(textField_personen, BorderLayout.CENTER);
 		textField_personen.setColumns(10);

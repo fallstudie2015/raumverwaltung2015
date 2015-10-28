@@ -497,6 +497,7 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+
 	public static int getRaumID(String raumbezeichnung) {
 		// TODO Auto-generated method stub
 		int raumId = 0;
