@@ -138,10 +138,12 @@ public abstract class SQL_Schnittstelle {
 
 		return rowAffected; // Wieviel Zeilen wurden verändert
 	}
-/**
- * Liest alle Räume aus der Datenbank aus
- * @return ArrayList mit Raumobjekten
- */
+
+	/**
+	 * Liest alle Räume aus der Datenbank aus
+	 * 
+	 * @return ArrayList mit Raumobjekten
+	 */
 	public static ArrayList<Raum> getRooms() {
 		ArrayList<Raum> raumListe = new ArrayList<Raum>();
 		try {
@@ -162,10 +164,11 @@ public abstract class SQL_Schnittstelle {
 		return raumListe;
 	}
 
-/**
- * Liest alle Buchungen aus der Datenbank
- * @return ArrayList mit Buchungsobjekten
- */
+	/**
+	 * Liest alle Buchungen aus der Datenbank
+	 * 
+	 * @return ArrayList mit Buchungsobjekten
+	 */
 	public static ArrayList<Buchung> getBuchung() {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
@@ -188,22 +191,60 @@ public abstract class SQL_Schnittstelle {
 		}
 		return buchungListe;
 	}
-/**
- * Legt eine neue Buchung in der Datenbank an
- * @param telefon			Telefonnummer des bestellers
- * @param datum				Datum der Buchung
- * @param zeitVon			Zeit ab wann die Buchung gilt
- * @param zeitBis			Zeit bis wann die Buchung gilt
- * @param kommentar			Zusätzlicher Kommentar wird an Hausmeister weiter gegeben
- * @param bestuhlung		Bestuhlungsart 
- * @param benutzerId		Benutzerkennung
- * @param raumId			Raum in dem gebucht wird
- * @param status			Status der Bestellung (unbestätigt/bestätigt/stoniert)
- * @param anzPersonen		maximale Anzahl an Personen die im Raum platz haben
- * @param ausstattungList	Welche Ausstattung wird bei der Buchung zusätzlich benötigt
- * @param externeTeilnehmer	Sind externe Teilnehmer dabei (true/false)
- * @return
- */
+
+	public static ArrayList<BuchungPlus> getBuchungPlus() {
+		ArrayList<BuchungPlus> buchungListe = new ArrayList<BuchungPlus>();
+		try {
+			String abfrageString = "select buchungid, telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, buchung.benutzerid, raumid, status, vorname, nachname from buchung, benutzer where buchung.benutzerid = benutzer.benutzerid;";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+			// TODO rsAusgabe noetig??
+			rsAusgabe(rs);
+
+			while (rs.next()) {
+				buchungListe.add(new BuchungPlus(rs.getInt("buchungid"), rs
+						.getString("telefon"), rs.getDate("datum"), rs
+						.getTime("zeitvon"), rs.getTime("zeitbis"), rs
+						.getString("kommentar"), rs.getString("bestuhlung"), rs
+						.getInt("benutzerid"), rs.getInt("raumid"), rs
+						.getString("status"), rs.getString("vorname") + " "
+						+ rs.getString("nachname")));
+			}
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getVerwaltungBuchung");
+		}
+		return buchungListe;
+	}
+
+	/**
+	 * Legt eine neue Buchung in der Datenbank an
+	 * 
+	 * @param telefon
+	 *            Telefonnummer des bestellers
+	 * @param datum
+	 *            Datum der Buchung
+	 * @param zeitVon
+	 *            Zeit ab wann die Buchung gilt
+	 * @param zeitBis
+	 *            Zeit bis wann die Buchung gilt
+	 * @param kommentar
+	 *            Zusätzlicher Kommentar wird an Hausmeister weiter gegeben
+	 * @param bestuhlung
+	 *            Bestuhlungsart
+	 * @param benutzerId
+	 *            Benutzerkennung
+	 * @param raumId
+	 *            Raum in dem gebucht wird
+	 * @param status
+	 *            Status der Bestellung (unbestätigt/bestätigt/stoniert)
+	 * @param anzPersonen
+	 *            maximale Anzahl an Personen die im Raum platz haben
+	 * @param ausstattungList
+	 *            Welche Ausstattung wird bei der Buchung zusätzlich benötigt
+	 * @param externeTeilnehmer
+	 *            Sind externe Teilnehmer dabei (true/false)
+	 * @return
+	 */
 	public static boolean insertBuchung(String telefon, Date datum,
 			Time zeitVon, Time zeitBis, String kommentar, String bestuhlung,
 			int benutzerId, int raumId, char status, int anzPersonen,
@@ -248,10 +289,12 @@ public abstract class SQL_Schnittstelle {
 		}
 		return true;
 	}
-/**
- * Liest alle unbestätigten bzw. vorgemerkten Buchungen aus der Datenbank
- * @return ArrayList mit allen Buchungen die noch nicht bestätigt wurden
- */
+
+	/**
+	 * Liest alle unbestätigten bzw. vorgemerkten Buchungen aus der Datenbank
+	 * 
+	 * @return ArrayList mit allen Buchungen die noch nicht bestätigt wurden
+	 */
 	public static ArrayList<Buchung> getAlleVorgemerktenBuchungen() {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
@@ -273,10 +316,11 @@ public abstract class SQL_Schnittstelle {
 		}
 		return buchungListe;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public static ResultSet getBuchungenZuGenehmigung() {
 		ResultSet rs = null;
 		try {
@@ -293,11 +337,12 @@ public abstract class SQL_Schnittstelle {
 
 		return rs;
 	}
-/**
- * 
- * @param benutzerid
- * @return
- */
+
+	/**
+	 * 
+	 * @param benutzerid
+	 * @return
+	 */
 	public static ResultSet getMyBuchungen(int benutzerid) {
 		ResultSet rs = null;
 		try {
@@ -315,16 +360,18 @@ public abstract class SQL_Schnittstelle {
 	}
 
 	/**
-	 * Liest AusstattungsartID aus der Datenbank anhand der Ausstattungsbezeichnung
-	 * @param ausstattung 	Die Ausstattungsbezeichnung der gewollten ID
+	 * Liest AusstattungsartID aus der Datenbank anhand der
+	 * Ausstattungsbezeichnung
+	 * 
+	 * @param ausstattung
+	 *            Die Ausstattungsbezeichnung der gewollten ID
 	 * @return gibt die AusstattungsID zurück
 	 */
 	private static int getAusstatungsArtenID(String ausstattung) {
 		// TODO Auto-generated method stub
 		int ausstattungid = 0;
 		try {
-			String abfrageString =
-				"SELECT ausstattungArtenid FROM ausstattungsArten a WHERE a.bezeichnung = '"
+			String abfrageString = "SELECT ausstattungArtenid FROM ausstattungsArten a WHERE a.bezeichnung = '"
 					+ ausstattung + "'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
@@ -340,12 +387,16 @@ public abstract class SQL_Schnittstelle {
 		}
 		return ausstattungid;
 	}
-/**
- * Läd jede Zusatzaussattung die bei einer Buchung ausgewählt wurde in die Datenbank
- * und weißt sie einer Buchung zu
- * @param buchungId		ID der zugehörigen Buchung
- * @param ausstattungId	ID der zugehörigen Ausstattung
- */
+
+	/**
+	 * Läd jede Zusatzaussattung die bei einer Buchung ausgewählt wurde in die
+	 * Datenbank und weißt sie einer Buchung zu
+	 * 
+	 * @param buchungId
+	 *            ID der zugehörigen Buchung
+	 * @param ausstattungId
+	 *            ID der zugehörigen Ausstattung
+	 */
 	public static void insertBuchungAusstattung(int buchungId, int ausstattungId) {
 		// TODO Auto-generated method stub
 		try {
@@ -361,16 +412,25 @@ public abstract class SQL_Schnittstelle {
 		}
 
 	}
-/**
- * Läd auftretende Fehlermeldung in die Datenbank mit ensprechenden Informationen
- * @param klasse	Klasse in der die Fehlermedung aufgetreten ist
- * @param methode	Methode in der die Fehlermeldung aufgetreten ist
- * @param localMessage	Fehlermeldung
- * @param message		Fehlermeldung
- * @param type			Typ des Fehlers z.b. Laufzeitfehler
- * @param benutzerID	Bei welchem Benutzer ist die Fehlermeldung aufgetreten
- * @return				Hat der Datenbankeintrag funktioniert (true/false)
- */
+
+	/**
+	 * Läd auftretende Fehlermeldung in die Datenbank mit ensprechenden
+	 * Informationen
+	 * 
+	 * @param klasse
+	 *            Klasse in der die Fehlermedung aufgetreten ist
+	 * @param methode
+	 *            Methode in der die Fehlermeldung aufgetreten ist
+	 * @param localMessage
+	 *            Fehlermeldung
+	 * @param message
+	 *            Fehlermeldung
+	 * @param type
+	 *            Typ des Fehlers z.b. Laufzeitfehler
+	 * @param benutzerID
+	 *            Bei welchem Benutzer ist die Fehlermeldung aufgetreten
+	 * @return Hat der Datenbankeintrag funktioniert (true/false)
+	 */
 	public static boolean insertLogging(String klasse, String methode,
 			String localMessage, String message, String type, int benutzerID) {
 
@@ -402,11 +462,16 @@ public abstract class SQL_Schnittstelle {
 	/**
 	 * Läd neuen Raum in die Datenbank
 	 * 
-	 * @param name			Bezeichnung des Raums
-	 * @param strasse		In welcher Straße befindet sich der Raum
-	 * @param stock			In welchem Stock befindet sich der Raum
-	 * @param maxAnzPersonen	Maximale Anzahl der Personen die in den Raum pasen
-	 * @param grundAusstattungList	Welche Grundausstattung ist in dem Raumvorhanden
+	 * @param name
+	 *            Bezeichnung des Raums
+	 * @param strasse
+	 *            In welcher Straße befindet sich der Raum
+	 * @param stock
+	 *            In welchem Stock befindet sich der Raum
+	 * @param maxAnzPersonen
+	 *            Maximale Anzahl der Personen die in den Raum pasen
+	 * @param grundAusstattungList
+	 *            Welche Grundausstattung ist in dem Raumvorhanden
 	 * @return ob der Eintrag funktioniert hat oder nicht (true/false)
 	 */
 	public static boolean insertRaum(String name, String strasse, String stock,
@@ -438,11 +503,15 @@ public abstract class SQL_Schnittstelle {
 		return true;
 
 	}
-/**
- * Läd jede Grundausstattung für einen speziellen Raum in die Datenbank
- * @param raumId		In welchen Raum wird die Grundausstattung gespeichert
- * @param grundAusstattungBezeichnung	Bezeichnung der Grundausstattung
- */
+
+	/**
+	 * Läd jede Grundausstattung für einen speziellen Raum in die Datenbank
+	 * 
+	 * @param raumId
+	 *            In welchen Raum wird die Grundausstattung gespeichert
+	 * @param grundAusstattungBezeichnung
+	 *            Bezeichnung der Grundausstattung
+	 */
 	private static void insertRaumGrundAusstattung(int raumId,
 			String grundAusstattungBezeichnung) {
 		// TODO Auto-generated method stub
@@ -457,11 +526,14 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.insertRaumAusstattung");
 		}
 	}
-/**
- * Läd einen neue Zusatzausstattungsart in die Datenbank
- * @param ausstattungsartBezeichnung 	Name der Ausstattungsart
- * @return	wurde erfolgreich in die Datenbank eingetragen oder nicht
- */
+
+	/**
+	 * Läd einen neue Zusatzausstattungsart in die Datenbank
+	 * 
+	 * @param ausstattungsartBezeichnung
+	 *            Name der Ausstattungsart
+	 * @return wurde erfolgreich in die Datenbank eingetragen oder nicht
+	 */
 	public static boolean insertAusstattungArt(String ausstattungsartBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
@@ -532,7 +604,6 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
-
 	/**
 	 * 
 	 * @param datum
@@ -589,8 +660,6 @@ public abstract class SQL_Schnittstelle {
 		}
 		return true;
 	}
-
-
 
 	public static int getRaumID(String raumbezeichnung) {
 		// TODO Auto-generated method stub
@@ -671,9 +740,8 @@ public abstract class SQL_Schnittstelle {
 		// TODO Auto-generated method stub
 		String benutzerName = "";
 		try {
-			String abfrageString =
-				"SELECT vorname, nachname FROM benutzer b WHERE b.benutzerid = '" +
-					benutzerID + "'";
+			String abfrageString = "SELECT vorname, nachname FROM benutzer b WHERE b.benutzerid = '"
+					+ benutzerID + "'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			if (rs.next()) {
@@ -684,7 +752,7 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-				"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+					"de.dhbw.java.SQL_Schnittstelle.getRaumID");
 		}
 		return benutzerName;
 	}
@@ -873,8 +941,8 @@ public abstract class SQL_Schnittstelle {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
 			String abfrageString = "SELECT * FROM buchung b WHERE b.raumid = '"
- + raumId +
-					"' and datum = '" + datum + "' and status <> 'a'";
+					+ raumId + "' and datum = '" + datum
+					+ "' and status <> 'a'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
