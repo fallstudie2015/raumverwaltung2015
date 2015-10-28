@@ -56,8 +56,9 @@ public class RaumLoeschen extends JDialog {
 	 * Create the frame.
 	 */
 	public RaumLoeschen() {
-		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumLoeschen.class.getResource("/ressources/menu_raum_loeschen_transp.png")));
+		setModal(true);					//Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumLoeschen.class
+				.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Raum loeschen");
 		setLocationRelativeTo(this);
@@ -66,84 +67,83 @@ public class RaumLoeschen extends JDialog {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblRaumAnlegen = new JLabel("Raum loeschen");
-		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
-		
+
+		JLabel lblRaumLoeschen = new JLabel("Raum loeschen");
+		lblRaumLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblRaumLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblRaumLoeschen, BorderLayout.NORTH);
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
-		
+
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
-		
+
 		JButton btnLoeschen = new JButton("Loeschen");
 		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean feedback = SQL_Schnittstelle.setDeleteFlagRaum(textField_1.getText());
-				if (feedback == true)
-				{
+				boolean feedback = SQL_Schnittstelle
+						.setDeleteFlagRaum(textField_1.getText());
+				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
 					setVisible();
 					Erfolg("Raum wurde gelöscht!");
-				}
-				else
-				{
+				} else {
 					Erfolg("Raum konnte nicht gelöscht werden!");
 				}
 			}
 		});
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
-		
+
 		JButton btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible();
+				setVisible(); //Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
-		
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
 		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
-		
+
 		JLabel label = new JLabel("");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(label);
-		
+
 		JLabel label_1 = new JLabel("Raumname:");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(label_1);
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
 		panel_4.setLayout(new GridLayout(8, 0, 0, 0));
-		
+
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
-		
+
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		panel_4.add(textField_1);
 	}
-	
-	private void setVisible()
+
+	private void setVisible() // Fenster unsichtbar machen
 	{
 		this.setVisible(false);
 	}
-	
-	public static void Erfolg(String nachricht) {
-		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 }

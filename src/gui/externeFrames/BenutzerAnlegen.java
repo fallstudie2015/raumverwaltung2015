@@ -55,9 +55,9 @@ public class BenutzerAnlegen extends JDialog {
 	 * Create the frame.
 	 */
 	public BenutzerAnlegen() {
-		setModal(true);
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(BenutzerAnlegen.class.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
+		setModal(true);					//Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerAnlegen.class
+				.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
 		setTitle("Benutzer anlegen");
 		setResizable(false);
 		setLocationRelativeTo(this);
@@ -67,10 +67,10 @@ public class BenutzerAnlegen extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblRaumAnlegen = new JLabel("Benutzer anlegen");
-		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
+		JLabel lblBenutzerAnlegen = new JLabel("Benutzer anlegen");
+		lblBenutzerAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblBenutzerAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblBenutzerAnlegen, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
@@ -81,15 +81,14 @@ public class BenutzerAnlegen extends JDialog {
 		JButton btnAnlegen = new JButton("Anlegen");
 		btnAnlegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean feedback = SQL_Schnittstelle.insertBenutzer(textField_Name.getText(), textField_Vorname.getText(),
-						textField_email.getText(), GetPasswort(), RadioZurueck(), textField_bereich.getText());
-				if (feedback == true)
-				{
+				boolean feedback = SQL_Schnittstelle.insertBenutzer(
+						textField_Name.getText(), textField_Vorname.getText(),
+						textField_email.getText(), GetPasswort(),
+						RadioZurueck(), textField_bereich.getText());
+				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
 					setVisible();
 					Erfolg("Benutzer wurde erstellt!");
-				}
-				else
-				{
+				} else {
 					Erfolg("Benutzer konnte nicht erstellt werden!");
 				}
 			}
@@ -101,7 +100,7 @@ public class BenutzerAnlegen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setVisible();
+				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -178,8 +177,7 @@ public class BenutzerAnlegen extends JDialog {
 		rdbtnBenutzer.setSelected(true);
 		panel_5.add(rdbtnBenutzer);
 		rdbtnBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		
-		
+
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnBenutzer);
 		group.add(rdbtnVerwalter);
@@ -196,7 +194,7 @@ public class BenutzerAnlegen extends JDialog {
 	{
 
 		String benutzerRolle = null;
-		
+
 		if (rdbtnBenutzer.isSelected()) { // entweder Benutzer
 			benutzerRolle = "b";
 		}
@@ -220,12 +218,13 @@ public class BenutzerAnlegen extends JDialog {
 		return pw;
 	}
 
-	private void setVisible() {
+	private void setVisible() {		//Fenster unsichtbar machen 
 		this.setVisible(false);
 	}
-	
-	public static void Erfolg(String nachricht) {
-		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+	public static void Erfolg(String nachricht) {	// MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 }

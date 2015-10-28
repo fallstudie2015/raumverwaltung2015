@@ -16,6 +16,7 @@ public class Raum_View_Label extends JLabel {
 	private Time time;
 	private Buchung buchung;
 	private JPanel parent;
+	public boolean buchungGesetzt = false;
 
 	public Raum_View_Label(Time time) {
 		this.time = time;
@@ -38,6 +39,9 @@ public class Raum_View_Label extends JLabel {
 
 	public void setBuchung(Buchung buchung) {
 		this.buchung = buchung;
+		if (this.buchung != null) {
+			buchungGesetzt = true;
+		}
 	}
 
 	public Buchung getBuchung() {
