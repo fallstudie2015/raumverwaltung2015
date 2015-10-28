@@ -46,8 +46,12 @@ public class Bestaetigungs_View extends JFrame {
 
 	private bestaetigungsViewListener meinBVL;
 
-	public Bestaetigungs_View(Buchung uebergabeBuchung) {
+	private Raumplaner_View mutterFenster;
 
+	public Bestaetigungs_View(Raumplaner_View mutterView,
+			Buchung uebergabeBuchung) {
+
+		mutterFenster = mutterView;
 		buchung = uebergabeBuchung;
 		this.setLayout(new BorderLayout());
 		this.add(this.createButtonPanel(), BorderLayout.SOUTH);
@@ -162,11 +166,17 @@ public class Bestaetigungs_View extends JFrame {
 
 	}
 
+	public Raumplaner_View getRaumView() {
+
+		return mutterFenster;
+	}
+
 	class bestaetigungsViewListener implements ActionListener {
 
-		JFrame mbv;
+		Bestaetigungs_View mbv;
 
-		public bestaetigungsViewListener(JFrame meineBestaetigungsView) {
+		public bestaetigungsViewListener(
+				Bestaetigungs_View meineBestaetigungsView) {
 			mbv = meineBestaetigungsView;
 		}
 
@@ -175,13 +185,18 @@ public class Bestaetigungs_View extends JFrame {
 			if (e.getSource() == btnBestaetigen) {
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						'g');
-				System.out.println("Bestätigt");
+				mbv.getRaumView();
+				mbv.getRaumView()
+						.setBuchungArray(SQL_Schnittstelle.getBuchung());
+				mbv.dispose();
 
 			} else if (e.getSource() == btnAblehnen) {
 
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						's');
-				System.out.println("Abgelehnt");
+				mbv.getRaumView()
+						.setBuchungArray(SQL_Schnittstelle.getBuchung());
+				mbv.dispose();
 
 			} else if (e.getSource() == btnAbbrechen) {
 				mbv.dispose();
