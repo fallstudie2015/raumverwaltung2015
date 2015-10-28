@@ -196,6 +196,7 @@ public class Bestaetigungs_View extends JFrame {
 						'a');
 				mbv.getRaumView()
 						.setBuchungArray(SQL_Schnittstelle.getBuchung());
+
 				mbv.dispose();
 
 			} else if (e.getSource() == btnAbbrechen) {
