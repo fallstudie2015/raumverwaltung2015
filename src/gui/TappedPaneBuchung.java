@@ -21,7 +21,7 @@ public class TappedPaneBuchung extends JTabbedPane {
 		}
 	}
 
-	public void reloadTappedPane() {
+	public void reloadTableBuchung() {
 		pmb.reloadTableBuchung();
 		if (Benutzer.getBenutzertyp() == 'v') {
 			pb.reloadTableBuchung();

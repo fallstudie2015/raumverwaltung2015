@@ -47,7 +47,7 @@ public class PanelMeineBuchung extends JPanel {
 		tableBuchung.setAutoCreateRowSorter(true);
 		setLayout(new BorderLayout());
 		lblHeader.setFont(new Font("header", 0, 20));
-		add(lblHeader, BorderLayout.NORTH);
+		// add(lblHeader, BorderLayout.NORTH);
 		scrollPane = new JScrollPane(tableBuchung);
 		add(scrollPane, BorderLayout.CENTER);
 		setBorder(BorderFactory.createLineBorder(Color.black));

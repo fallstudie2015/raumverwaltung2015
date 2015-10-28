@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import de.dhbw.java.Benutzer;
-import de.dhbw.java.Buchung;
 import de.dhbw.java.BuchungPlus;
 import de.dhbw.java.Raum;
 import de.dhbw.java.SQL_Schnittstelle;
@@ -49,13 +48,16 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	private void setBestellformularView() {
 		// Bestellformular view erstellen
-		bv = new Bestellformular_View(frame, Benutzer.getVorname(), Benutzer.getNachname(), raum.getRaumID(),
-				frame.getPanelBuchung(), Benutzer.getBereich(), this, frame.getMeineBuchung());
+		bv = new Bestellformular_View(frame, Benutzer.getVorname(),
+				Benutzer.getNachname(), raum.getRaumID(),
+				frame.getPanelBuchung(), Benutzer.getBereich(), this,
+				frame.getMeineBuchung());
 		bv.setRaumName(raumName);
 		frame.setBVList(bv);
 		frame.setBVPanel(bv);
 		bv.setTechnik(SQL_Schnittstelle.getAusstattungArten());
-		bv.setGrundausstattung(SQL_Schnittstelle.getGrundAusstattungRaum(raum.getRaumID()));
+		bv.setGrundausstattung(SQL_Schnittstelle.getGrundAusstattungRaum(raum
+				.getRaumID()));
 		bv.initView();
 	}
 
@@ -69,8 +71,10 @@ public class Raum_View extends JPanel implements MouseListener {
 			// raumzeitenPanel.add(panel);
 			// labelList.add(panel.getRaumViewLabel());
 			for (int k = 15; k < 16; k += 15) {
-				Halbestunde_Panel panel2 = new Halbestunde_Panel(new Raum_View_Label(Time.valueOf("0" + i + ":00:00")),
-						new Raum_View_Label(Time.valueOf("0" + i + ":" + k + ":00")));
+				Halbestunde_Panel panel2 = new Halbestunde_Panel(
+						new Raum_View_Label(Time.valueOf("0" + i + ":00:00")),
+						new Raum_View_Label(Time.valueOf("0" + i + ":" + k
+								+ ":00")));
 				raumzeitenPanel.add(panel2);
 				labelList.add(panel2.getRaumViewLabelOben());
 				labelList.add(panel2.getRaumViewLabelUnten());
@@ -81,8 +85,10 @@ public class Raum_View extends JPanel implements MouseListener {
 					// labelList.add(panel3.getRaumViewLabel());
 					for (int l = 45; l < 46; l += 15) {
 						Halbestunde_Panel panel4 = new Halbestunde_Panel(
-								new Raum_View_Label(Time.valueOf("0" + i + ":" + j + ":00")),
-								new Raum_View_Label(Time.valueOf("0" + i + ":" + l + ":00")));
+								new Raum_View_Label(Time.valueOf("0" + i + ":"
+										+ j + ":00")),
+								new Raum_View_Label(Time.valueOf("0" + i + ":"
+										+ l + ":00")));
 						raumzeitenPanel.add(panel4);
 						labelList.add(panel4.getRaumViewLabelOben());
 						labelList.add(panel4.getRaumViewLabelUnten());
@@ -91,8 +97,9 @@ public class Raum_View extends JPanel implements MouseListener {
 			}
 			if (i + 1 == 19) {
 				Halbestunde_Panel panel5 = new Halbestunde_Panel(
-						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00")),
-						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":15:00")));
+						new Raum_View_Label(Time.valueOf("0" + (i + 1)
+								+ ":00:00")), new Raum_View_Label(
+								Time.valueOf("0" + (i + 1) + ":15:00")));
 				raumzeitenPanel.add(panel5);
 				labelList.add(panel5.getRaumViewLabelOben());
 				labelList.add(panel5.getRaumViewLabelUnten());
@@ -126,27 +133,35 @@ public class Raum_View extends JPanel implements MouseListener {
 			}
 			if (today.toString().compareTo(buchung.getDatum().toString()) == 0) {
 				for (Raum_View_Label label : labelList) {
-					if (buchung.getStatus().equalsIgnoreCase("a") || buchung.getStatus().equalsIgnoreCase("s")) {
+					if (buchung.getStatus().equalsIgnoreCase("a")
+							|| buchung.getStatus().equalsIgnoreCase("s")) {
 						label.removeBuchung();
 						label.setToolTipText(null);
 					} else {
 						if (buchung.getZeitVon().equals(label.getTime())
-								|| (label.getTime().before(buchung.getZeitBis())
-										&& label.getTime().after(buchung.getZeitVon()))) {
+								|| (label.getTime()
+										.before(buchung.getZeitBis()) && label
+										.getTime().after(buchung.getZeitVon()))) {
 							if (Benutzer.getBenutzertyp() == 'v') {
-								if (buchung.getZeitVon().equals(label.getTime())) {
+								if (buchung.getZeitVon()
+										.equals(label.getTime())) {
 									label.setText(buchung.getBenutzerName());
 									label.setHorizontalTextPosition(SwingConstants.CENTER);
 								}
-								label.setToolTipText("<html>" + raum.getName() + "<br>" + raum.getStrasse() + "<br>"
-										+ raum.getStock() + "<br>" + buchung.getBenutzerName() + "<br>"
-										+ buchung.getTelefon() + "<br>" + "</html>");
+								label.setToolTipText("<html>" + raum.getName()
+										+ "<br>" + raum.getStrasse() + "<br>"
+										+ raum.getStock() + "<br>"
+										+ buchung.getBenutzerName() + "<br>"
+										+ buchung.getTelefon() + "<br>"
+										+ "</html>");
 							}
 							if (buchung.getStatus().equals("v")) {
-								ImageIcon ii = new ImageIcon(
-										getClass().getClassLoader().getResource("ressources/muster.jpg"));
-								ImageIcon imageIcon = new ImageIcon(
-										ii.getImage().getScaledInstance(200, 20, Image.SCALE_DEFAULT));
+								ImageIcon ii = new ImageIcon(getClass()
+										.getClassLoader().getResource(
+												"ressources/muster.jpg"));
+								ImageIcon imageIcon = new ImageIcon(ii
+										.getImage().getScaledInstance(200, 20,
+												Image.SCALE_DEFAULT));
 								label.setIcon(imageIcon);
 								label.setBuchung(buchung);
 								label.setFrame(frame);
@@ -189,7 +204,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		return raum.getRaumID();
 	}
 
-	public JPanel getPanelBuchung() {
+	public TappedPaneBuchung getPanelBuchung() {
 		return frame.getPanelBuchung();
 	}
 
@@ -221,7 +236,8 @@ public class Raum_View extends JPanel implements MouseListener {
 				bv.setScrollPane(frame.getformularScrollPane());
 				bv.setDate(frame.getCalendar());
 				bv.setMaxPersonen(raum.getAnzPersonen());
-				bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
+				bv.setZeitCB(label.getTime().toString().substring(0, 2), label
+						.getTime().toString().substring(3, 5));
 
 				frame.getformularScrollPane().setVisible(true);
 
@@ -232,7 +248,8 @@ public class Raum_View extends JPanel implements MouseListener {
 				bv.setVisible(true);
 				bv.setScrollPane(frame.getformularScrollPane());
 				bv.setDate(frame.getCalendar());
-				bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
+				bv.setZeitCB(label.getTime().toString().substring(0, 2), label
+						.getTime().toString().substring(3, 5));
 				frame.getformularScrollPane().setVisible(true);
 
 				frame.validate();
