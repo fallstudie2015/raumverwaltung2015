@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -64,30 +65,32 @@ public class Raumplaner_View extends JFrame {
 	}
 
 	public Raumplaner_View(ArrayList<Raum> raumList, ArrayList<Buchung> buchungList) {
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(Raumplaner_View.class.getResource("/ressources/Desktop_Statusbar_icon.png")));
 		this.bvPanel = new JPanel(new FlowLayout());
 		this.raumList = raumList;
 		this.buchungList = buchungList;
 		raumViewList = new ArrayList<Raum_View>();
 		initView();
 		this.choosenDate = new Date(calendar.getDate().getTime());
+		calendar.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				lookAfterCalendar();
+			}
+		});
 		calendar.addPropertyChangeListener("calendar", new PropertyChangeListener() {
 
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				// TODO Auto-generated method stub
-				if (new Date(calendar.getDate().getTime()) != choosenDate) {
-					for (Raum_View rv : raumViewList) {
-						rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
-					}
-					windowAktualisieren();
-					choosenDate = new Date(calendar.getDate().getTime());
-				}
+				lookAfterCalendar();
 			}
 		});
 	}
 
 	/*
-	 * Gr��e der Ansicht wird festgelegt und alle erforderlichen Panels werden
+	 * Größe der Ansicht wird festgelegt und alle erforderlichen Panels werden
 	 * geladen
 	 */
 	private void initView() {
@@ -462,18 +465,12 @@ public class Raumplaner_View extends JFrame {
 
 		bereichLabel = new JLabel("Bereich");
 
-		logoutButton = new JButton("Logout");
-		logoutButton.setPreferredSize(new Dimension(275, 30));
-
 		JPanel namenPanel = new JPanel();
 		namenPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		namenPanel.add(nameLabel);
 
 		JPanel bereichPanel = new JPanel();
 		bereichPanel.add(bereichLabel);
-
-		JPanel logoutPanel = new JPanel();
-		logoutPanel.add(logoutButton);
 
 		JPanel oben = new JPanel();
 		oben.setLayout(new BoxLayout(oben, BoxLayout.PAGE_AXIS));
@@ -482,13 +479,17 @@ public class Raumplaner_View extends JFrame {
 		oben.add(calendar);
 		oben.add(buttonPanel());
 
+		JPanel neuOben = new JPanel(new BorderLayout());
+		neuOben.add(logoutPanel(), BorderLayout.SOUTH);
+		neuOben.add(oben, BorderLayout.CENTER);
+
 		oben.setBorder(BorderFactory.createEmptyBorder(0, 0, 8, 0));
 
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(new BorderLayout());
 
 		// calendarPanel.add(Box.createVerticalGlue());
-		leftPanel.add(oben, BorderLayout.NORTH);
+		leftPanel.add(neuOben, BorderLayout.NORTH);
 		// calendarPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 		leftPanel.add(formularScroller, BorderLayout.CENTER);
 		leftPanel.add(panelBuchung, BorderLayout.WEST);
@@ -504,18 +505,10 @@ public class Raumplaner_View extends JFrame {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 
-		// JScrollPane scrollPane = new JScrollPane(leftPanel(),
-		// JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-		// JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		// scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-
 		JPanel left = new JPanel(new BorderLayout());
 
-		// left.add(logoPanel(), BorderLayout.NORTH);
 		left.add(leftPanel(), BorderLayout.CENTER);
-		left.add(logoutPanel(), BorderLayout.SOUTH);
 
-		// mainPanel.add(logoPanel(), BorderLayout.NORTH);
 		mainPanel.add(left, BorderLayout.WEST);
 		mainPanel.add(scrollPanel(), BorderLayout.CENTER);
 
@@ -604,6 +597,16 @@ public class Raumplaner_View extends JFrame {
 		this.buchungList = buchungList;
 		buchungenZuordnen();
 		windowAktualisieren();
+	}
+
+	private void lookAfterCalendar() {
+		if (new Date(calendar.getDate().getTime()) != choosenDate) {
+			for (Raum_View rv : raumViewList) {
+				rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
+			}
+			windowAktualisieren();
+			choosenDate = new Date(calendar.getDate().getTime());
+		}
 	}
 
 	public JPanel getBVPanel() {

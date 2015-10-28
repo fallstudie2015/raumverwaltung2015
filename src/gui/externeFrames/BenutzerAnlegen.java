@@ -4,26 +4,24 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
-
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
 
 public class BenutzerAnlegen extends JDialog {
 
@@ -197,17 +195,17 @@ public class BenutzerAnlegen extends JDialog {
 									// zurück
 	{
 
-		String rueckgabe = null;
+		String benutzerRolle = null;
 		
 		if (rdbtnBenutzer.isSelected()) { // entweder Benutzer
-			 rueckgabe = "Benutzer";
+			benutzerRolle = "b";
 		}
 
 		else if (rdbtnVerwalter.isSelected()) // oder Verwalter
 		{
-			rueckgabe = "Verwalter";
+			benutzerRolle = "v";
 		}
-		return rueckgabe;
+		return benutzerRolle;
 	}
 
 	private String GetPasswort() // gibt den Wert des Passwortfeldes zurück

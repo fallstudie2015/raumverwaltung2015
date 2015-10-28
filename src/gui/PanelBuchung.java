@@ -42,6 +42,7 @@ public class PanelBuchung extends JPanel {
 		tableBuchung.getSelectionModel().setSelectionMode(
 				ListSelectionModel.SINGLE_SELECTION);
 		tableBuchung.getSelectionModel().addListSelectionListener(tbl);
+		tableBuchung.setAutoCreateRowSorter(true);
 		setLayout(new BorderLayout());
 		lblHeader.setFont(new Font("header", 0, 20));
 		add(lblHeader, BorderLayout.NORTH);
@@ -67,10 +68,11 @@ public class PanelBuchung extends JPanel {
 	}
 
 	public void reloadTableBuchung() {
-
+		dataBuchung = buchungBestellerListeToTableStringArray();
+		buchungBestellerModel.fireTableDataChanged();
 	}
 
-	public Date getDatum() {
+	public void auswahlAnzeigen() {
 		Date date = new Date();
 		System.out.println(tableBuchung.getValueAt(
 				tableBuchung.getSelectedRow(), 0));
@@ -87,6 +89,5 @@ public class PanelBuchung extends JPanel {
 		}
 
 		jc.setDate(date);
-		return date;
 	}
 }

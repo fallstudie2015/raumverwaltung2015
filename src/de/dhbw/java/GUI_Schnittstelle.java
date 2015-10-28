@@ -64,7 +64,7 @@ public abstract class GUI_Schnittstelle {
 				loginView.setVisible(false);
 				raumplanerView = new Raumplaner_View(
 						SQL_Schnittstelle.getRooms(),
-						SQL_Schnittstelle.getVerwaltungBuchung());
+						SQL_Schnittstelle.getBuchung());
 				/*
 				 * 
 				 * Hier müssen die Buchungen benutzerspezifisch geladen werden
