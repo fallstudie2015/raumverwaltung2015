@@ -286,6 +286,22 @@ public abstract class SQL_Schnittstelle {
 		return rs;
 	}
 
+	public static ResultSet getMyBuchungen(int benutzerid) {
+		ResultSet rs = null;
+		try {
+			String abfrageString = "SELECT buchungid, datum ,r.name ,zeitvon, zeitbis, datum "
+					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
+					+ "WHERE benutzerid = "+benutzerid+"; ";
+			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getMyBuchungen");
+		}
+
+		return rs;
+	}
+	
 	private static int getAusstatungsArtenID(String ausstattung) {
 		// TODO Auto-generated method stub
 		int ausstattungid = 0;
