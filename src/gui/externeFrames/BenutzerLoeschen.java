@@ -36,6 +36,10 @@ public class BenutzerLoeschen extends JDialog {
 	private JTextField textField_Vorname;
 	private JTextField textField_nachname;
 	private JTextField textField_email;
+	private JLabel lblBenutzer_Vorname;
+	private JLabel lblBenutzer_Nachname;
+	private JLabel lblBenutzer_email;
+	
 
 	/**
 	 * Launch the application.
@@ -83,6 +87,10 @@ public class BenutzerLoeschen extends JDialog {
 		JButton btnLoeschen = new JButton("Loeschen");
 		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				boolean pflicht = PflichtfelderPruefen();
+
+				if (pflicht) {
 				boolean feedback = SQL_Schnittstelle.deleteBenutzer(
 						textField_email.getText(), textField_Vorname.getText(),
 						textField_nachname.getText());
@@ -91,6 +99,11 @@ public class BenutzerLoeschen extends JDialog {
 					Erfolg("Benutzer wurde gelöscht!");
 				} else {
 					Erfolg("Benutzer konnte nicht gelöscht werden!");
+				}
+				} else {
+					JOptionPane.showMessageDialog(null,
+							" Bitte fuellen Sie die Pflichtfelder aus",
+							"Achtung!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -118,17 +131,17 @@ public class BenutzerLoeschen extends JDialog {
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(5, 0, 0, 0));
 
-		JLabel lblBenutzer = new JLabel("Vorname:");
-		lblBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer);
+		lblBenutzer_Vorname = new JLabel("Vorname:");
+		lblBenutzer_Vorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblBenutzer_Vorname);
 
-		JLabel lblBenutzer_1 = new JLabel("Nachname:");
-		lblBenutzer_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_1);
+		lblBenutzer_Nachname = new JLabel("Nachname:");
+		lblBenutzer_Nachname.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblBenutzer_Nachname);
 
-		JLabel lblBenutzer_2 = new JLabel("E-Mail - Adresse:");
-		lblBenutzer_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblBenutzer_2);
+		lblBenutzer_email = new JLabel("E-Mail - Adresse:");
+		lblBenutzer_email.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblBenutzer_email);
 
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
@@ -178,6 +191,36 @@ public class BenutzerLoeschen extends JDialog {
 
 		Component rigidArea_5 = Box.createRigidArea(new Dimension(147, 11));
 		panel_7.add(rigidArea_5, BorderLayout.SOUTH);
+	}
+	
+	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
+	// sind
+	{
+		boolean gefuellt = true;
+
+		if (textField_Vorname.getText().isEmpty()) {
+			lblBenutzer_Vorname.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblBenutzer_Vorname.setForeground(Color.black);
+		}
+
+		if (textField_nachname.getText().isEmpty()) {
+			lblBenutzer_Nachname.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblBenutzer_Nachname.setForeground(Color.black);
+		}
+
+		if (textField_email.getText().isEmpty()) {
+			lblBenutzer_email.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblBenutzer_email.setForeground(Color.black);
+		}
+
+
+		return gefuellt;
 	}
 
 	private void setInvisible() {		//Fenster unsichtbar machen 

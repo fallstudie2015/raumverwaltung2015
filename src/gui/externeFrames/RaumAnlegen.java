@@ -1,6 +1,7 @@
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -49,23 +50,28 @@ public class RaumAnlegen extends JDialog {
 	private JTextField textField_a6;
 	private JTextField textField_a7;
 	private JTextField textField_a8;
+	private JLabel lblRaumname;
+	private JLabel lblStrasse;
+	private JLabel lblStockwerk;
+	private JLabel lblAnzahlPersonen;
+	private JLabel lblAusstattung;
 	private Raumplaner_View rv;
 
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					RaumAnlegen frame = new RaumAnlegen();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	// public static void main(String[] args) {
+	// EventQueue.invokeLater(new Runnable() {
+	// public void run() {
+	// try {
+	// RaumAnlegen frame = new RaumAnlegen();
+	// frame.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// });
+	// }
 
 	/**
 	 * Create the frame.
@@ -75,7 +81,7 @@ public class RaumAnlegen extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumAnlegen.class
 				.getResource("/ressources/menu_raum_anlegen_transp.png")));
 		setResizable(false);
-		this.rv = rv; 
+		this.rv = rv;
 		setTitle("Raum anlegen");
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 410);
@@ -98,22 +104,36 @@ public class RaumAnlegen extends JDialog {
 		JButton btnAnlegen = new JButton("Anlegen");
 		btnAnlegen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { // Action Listener und
-														
-				boolean feedback = SQL_Schnittstelle.insertRaum( // Aufruf
-																// RaumAnlegen
-																// Methode
-						textField_name.getText(), textField_strasse.getText(),
-						textField_stock.getText(),
-						Integer.parseInt(textField_personen.getText()),
-						Ausstattung());
 
-				if (feedback == true) {		//Rückgabewert der Methode Ausstattung anlegen
-					setInvisible();
-					Erfolg("Raum wurde angelegt");
-					rv.setRaumArray(SQL_Schnittstelle.getRooms()); //aktualisiert die Räume
+				boolean pflicht = PflichtfelderPruefen();
+
+				if (pflicht) {
+					boolean feedback = SQL_Schnittstelle.insertRaum( // Aufruf
+																		// RaumAnlegen
+																		// Methode
+							textField_name.getText(),
+							textField_strasse.getText(),
+							textField_stock.getText(),
+							Integer.parseInt(textField_personen.getText()),
+							Ausstattung());
+
+					if (feedback == true) // Rückgabewert der Methode
+											// Ausstattung anlegen
+					{
+						setInvisible();
+						Erfolg("Raum wurde angelegt");
+						rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
+																		// die
+																		// Räume
+					} else {
+						Erfolg("Raum konnte nicht angelegt werden");
+					}
 				} else {
-					Erfolg("Raum konnte nicht angelegt werden");
+					JOptionPane.showMessageDialog(null,
+							" Bitte fuellen Sie die Pflichtfelder aus",
+							"Achtung!", JOptionPane.ERROR_MESSAGE);
 				}
+
 			}
 		});
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -122,7 +142,8 @@ public class RaumAnlegen extends JDialog {
 		JButton btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
+								// unsichtbar
 			}
 		});
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -140,25 +161,25 @@ public class RaumAnlegen extends JDialog {
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(12, 0, 0, 0));
 
-		JLabel lblRaumname = new JLabel("Raumname");
+		lblRaumname = new JLabel("Raumname");
 		lblRaumname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblRaumname);
 
-		JLabel lblNewLabel = new JLabel("Straße");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblNewLabel);
+		lblStrasse = new JLabel("Straße");
+		lblStrasse.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblStrasse);
 
-		JLabel lblNewLabel_1 = new JLabel("Stockwerk");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblNewLabel_1);
+		lblStockwerk = new JLabel("Stockwerk");
+		lblStockwerk.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblStockwerk);
 
-		JLabel lblAnzahlPersonen_1 = new JLabel("Max. Anzahl Personen");
-		lblAnzahlPersonen_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblAnzahlPersonen_1);
-
-		JLabel lblAnzahlPersonen = new JLabel("Ausstattung");
+		lblAnzahlPersonen = new JLabel("Max. Anzahl Personen");
 		lblAnzahlPersonen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(lblAnzahlPersonen);
+
+		lblAusstattung = new JLabel("Ausstattung");
+		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblAusstattung);
 
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
@@ -272,6 +293,42 @@ public class RaumAnlegen extends JDialog {
 		panel_16.add(textField_a8, BorderLayout.CENTER);
 		textField_a8.setColumns(10);
 
+	}
+
+	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
+											// sind
+	{
+		boolean gefuellt = true;
+
+		if (textField_name.getText().isEmpty()) {
+			lblRaumname.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblRaumname.setForeground(Color.black);
+		}
+
+		if (textField_personen.getText().isEmpty()) {
+			lblAnzahlPersonen.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblAnzahlPersonen.setForeground(Color.black);
+		}
+
+		if (textField_stock.getText().isEmpty()) {
+			lblStockwerk.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblStockwerk.setForeground(Color.black);
+		}
+
+		if (textField_strasse.getText().isEmpty()) {
+			lblStrasse.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblStrasse.setForeground(Color.black);
+		}
+
+		return gefuellt;
 	}
 
 	private ArrayList<String> Ausstattung() { // eingegebene Ausstattung in
