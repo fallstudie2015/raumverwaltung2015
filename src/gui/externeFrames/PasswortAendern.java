@@ -49,8 +49,7 @@ public class PasswortAendern extends JDialog {
 	 * Create the frame.
 	 */
 	public PasswortAendern() {
-		// setAlwaysOnTop(true);
-		setModal(true);
+		setModal(true);					//Fenster wird aufgebaut
 		setType(Type.UTILITY);
 		setTitle("Passwort aendern");
 		setResizable(false);
@@ -61,10 +60,10 @@ public class PasswortAendern extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblRaumAnlegen = new JLabel("Passwort aendern");
-		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
+		JLabel lblPasswortAendern = new JLabel("Passwort aendern");
+		lblPasswortAendern.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPasswortAendern.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblPasswortAendern, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
@@ -75,9 +74,9 @@ public class PasswortAendern extends JDialog {
 		JButton btnNewButton = new JButton("Aendern");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String feedback = SQL_Schnittstelle.passwortAendern(GetPasswortAlt(), GetPasswortNeu1(),
-						GetPasswortNeu2());
-				PwGeaendert(feedback);
+				String feedback = SQL_Schnittstelle.passwortAendern(
+						GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());
+				PwGeaendert(feedback);//Rückgabewert der Methode Ausstattung anlegen
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -87,7 +86,7 @@ public class PasswortAendern extends JDialog {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setVisible();
+				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnNewButton_1);
@@ -198,12 +197,13 @@ public class PasswortAendern extends JDialog {
 		return pw;
 	}
 
-	private void setVisible() {
+	private void setVisible() {		//Fenster unsichtbar machen 
 		this.setVisible(false);
 	}
 
-	public static void PwGeaendert(String nachricht) {
-		JOptionPane.showMessageDialog(null, nachricht, "Information", JOptionPane.INFORMATION_MESSAGE);
+	public static void PwGeaendert(String nachricht) {		//MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
 
 	}
 }
