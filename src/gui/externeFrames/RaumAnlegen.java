@@ -269,28 +269,28 @@ public class RaumAnlegen extends JDialog {
 	
 	private ArrayList<String> Ausstattung()
 	{		
-		if (textField_a1.getText().isEmpty())
+		if (!textField_a1.getText().isEmpty())
 		{	ausstattungsList.add(textField_a1.getText()); }
 		
-		if (textField_a2.getText().isEmpty())
+		if (!textField_a2.getText().isEmpty())
 		{	ausstattungsList.add(textField_a2.getText()); }
 		
-		if (textField_a3.getText().isEmpty())
+		if (!textField_a3.getText().isEmpty())
 		{	ausstattungsList.add(textField_a3.getText()); }
 		
-		if (textField_a4.getText().isEmpty())
+		if (!textField_a4.getText().isEmpty())
 		{	ausstattungsList.add(textField_a4.getText()); }
 		
-		if (textField_a5.getText().isEmpty())
+		if (!textField_a5.getText().isEmpty())
 		{	ausstattungsList.add(textField_a5.getText()); }
 		
-		if (textField_a6.getText().isEmpty())
+		if (!textField_a6.getText().isEmpty())
 		{	ausstattungsList.add(textField_a6.getText()); }
 		
-		if (textField_a7.getText().isEmpty())
+		if (!textField_a7.getText().isEmpty())
 		{	ausstattungsList.add(textField_a7.getText()); }
 		
-		if (textField_a8.getText().isEmpty())
+		if (!textField_a8.getText().isEmpty())
 		{	ausstattungsList.add(textField_a8.getText()); }
 		
 		return ausstattungsList;
