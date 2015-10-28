@@ -210,7 +210,7 @@ public class Bestaetigungs_View extends JFrame {
 			if (e.getSource() == btnBestaetigen) {
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						'g');
-				mbv.getRaumView();
+
 				mbv.getRaumView()
 						.setBuchungArray(SQL_Schnittstelle.getBuchung());
 				MailConnection mail = new MailConnection();
@@ -219,6 +219,7 @@ public class Bestaetigungs_View extends JFrame {
 								mbv.getBuchung().getBenutzerID()),
 						MailTexte.getBetreffBestaetigen(mbv.getBuchung()),
 						MailTexte.getTextBestaetigen(mbv.getBuchung()));
+				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
 				mbv.dispose();
 
 			} else if (e.getSource() == btnAblehnen) {
@@ -233,7 +234,7 @@ public class Bestaetigungs_View extends JFrame {
 								mbv.getBuchung().getBenutzerID()),
 						MailTexte.getBetreffAbgelehnt(mbv.getBuchung()),
 						MailTexte.getTextAbgelehnt(mbv.getBuchung()));
-
+				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
 				mbv.dispose();
 
 			} else if (e.getSource() == btnAbbrechen) {
