@@ -665,6 +665,16 @@ public abstract class SQL_Schnittstelle {
 		}
 	}
 
+	/**
+	 * Fügt einen neuen Benutzer in die Datenbank ein.
+	 * @param nachname
+	 * @param vorname
+	 * @param email
+	 * @param passwort
+	 * @param rolle
+	 * @param bereich
+	 * @return true, wenn der Benutzer angelegt werden konnte; false, wenn eine Exception auftrat.
+	 */
 	public static boolean insertBenutzer(String nachname, String vorname,
 			String email, String passwort, String rolle, String bereich) {
 		boolean antwort = false;
@@ -688,6 +698,13 @@ public abstract class SQL_Schnittstelle {
 		return antwort;
 	}
 
+	/**
+	 * Löscht den übergebenen Benutzer aus der Datenbank.
+	 * @param email
+	 * @param vorname
+	 * @param nachname
+	 * @return true, wenn es funktioniert hat; false, wenn der Benutzer nicht in der Datenbank vorhanden war.
+	 */
 	public static boolean deleteBenutzer(String email, String vorname,
 			String nachname) {
 		try {
@@ -708,6 +725,11 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	/**
+	 * Löscht den übergebene Ausstattungstyp aus der Datenbank.
+	 * @param bezeichnung
+	 * @return true, wenn es funktioniert hat; false, wenn der Typ nicht in der Datenbank vorhanden war.
+	 */
 	public static boolean deleteAusstattungArt(String bezeichnung) {
 		try {
 
