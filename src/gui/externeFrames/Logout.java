@@ -21,9 +21,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.Raumplaner_View;
+import startpunkt.Start;
 
 public class Logout extends JDialog {
 
+	private Raumplaner_View rv;
 	private JPanel contentPane;
 
 	/**
@@ -45,7 +48,8 @@ public class Logout extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public Logout() {
+	public Logout(Raumplaner_View rv) {
+		this.rv = rv;
 		setModal(true);
 		setType(Type.UTILITY);
 		setTitle("Wirklich ausloggen?");
@@ -66,7 +70,10 @@ public class Logout extends JDialog {
 		JButton btnAusloggen = new JButton("Logout");
 		btnAusloggen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				rv.dispose();
+				gui.Login_View lv = new gui.Login_View();
+				lv.setVisible(true);
+				dispose();
 			}
 		});
 		btnAusloggen.setFont(new Font("Tahoma", Font.PLAIN, 15));
