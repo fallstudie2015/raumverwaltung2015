@@ -366,7 +366,8 @@ public abstract class SQL_Schnittstelle {
 		// TODO Auto-generated method stub
 		try {
 
-			String updateString = "INSERT INTO AusstattungArten ( bezeichnung) VALUES ('"
+			String updateString =
+				"INSERT INTO ausstattungArten ( bezeichnung) VALUES ('"
 					+ ausstattungsartBezeichnung + "')";
 
 			SQL_Schnittstelle.sqlInsert(updateString);
@@ -381,15 +382,17 @@ public abstract class SQL_Schnittstelle {
 	public static boolean setDeleteFlagRaum(String raumbezeichnung) {
 		try {
 
-			String updateString = "Update raum set entfernt = 1 where name = "
+			String updateString =
+				"Update raum set entfernt = 1 where name = '"
 					+ raumbezeichnung + "'";
 			System.out.println("updateString " + updateString);
-			int raumId = SQL_Schnittstelle.sqlUpdateDelete(updateString);
-
+			int rowsAffacted = SQL_Schnittstelle.sqlUpdateDelete(updateString);
+			if (rowsAffacted == 0) {
+				return false;
+			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.setDeleteFlagRaum");
-			return false;
 		}
 		return true;
 	}
