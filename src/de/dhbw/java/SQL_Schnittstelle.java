@@ -831,6 +831,7 @@ public abstract class SQL_Schnittstelle {
 			// prüft ob es eine Buchung in den räumen gewölbekeller und
 			// Kegelbahn gibt
 			// falls gibt die Methode ein Buchungskonflikt also false zurück
+			System.out.println("Anzahl an buchungen: " + buchungen.size());
 			if (!buchungen.isEmpty()
 					&& (raumbezeichnung.equals("Gewölbekeller") || raumbezeichnung
 							.equals("Kegelbahn"))) {
@@ -872,7 +873,8 @@ public abstract class SQL_Schnittstelle {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
 			String abfrageString = "SELECT * FROM buchung b WHERE b.raumid = '"
-					+ raumId + "' and datum = '" + datum + "'";
+ + raumId +
+					"' and datum = '" + datum + "' and status <> 'a'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
