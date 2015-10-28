@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import de.dhbw.java.SQL_Schnittstelle;
+
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
@@ -30,6 +33,7 @@ import java.awt.Toolkit;
 public class AusstattungLoeschen extends JDialog {
 
 	private JPanel contentPane;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -74,6 +78,21 @@ public class AusstattungLoeschen extends JDialog {
 		panel.add(splitPane);
 		
 		JButton btnLoeschen = new JButton("Loeschen");
+		btnLoeschen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean feedback = SQL_Schnittstelle.deleteAusstattungArt(textField.getText());
+				
+				if (feedback == true)
+				{
+					setVisible();
+					Erfolg("Ausstattung wurde gelöscht!");
+				}
+				else
+				{
+					Erfolg("Ausstattung konnte nicht gelöscht werden!");
+				}
+			}
+		});
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
 		
@@ -96,54 +115,26 @@ public class AusstattungLoeschen extends JDialog {
 		
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
-		panel_4.setLayout(new GridLayout(9, 0, 0, 0));
+		panel_4.setLayout(new GridLayout(8, 0, 0, 0));
 		
-		JLabel lblAusstattung = new JLabel("Ausstattung");
+		JPanel panel_5 = new JPanel();
+		panel_4.add(panel_5);
+		
+		JLabel lblAusstattung = new JLabel("Ausstattungsname:");
 		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(lblAusstattung);
 		
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
-		panel_3.setLayout(new GridLayout(9, 0, 0, 0));
+		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(comboBox);
+		JPanel panel_6 = new JPanel();
+		panel_3.add(panel_6);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_1.setEnabled(false);
-		panel_3.add(comboBox_1);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_2.setEnabled(false);
-		panel_3.add(comboBox_2);
-		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_3.setEnabled(false);
-		panel_3.add(comboBox_3);
-		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_4.setEnabled(false);
-		panel_3.add(comboBox_4);
-		
-		JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_5.setEnabled(false);
-		panel_3.add(comboBox_5);
-		
-		JComboBox comboBox_6 = new JComboBox();
-		comboBox_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_6.setEnabled(false);
-		panel_3.add(comboBox_6);
-		
-		JComboBox comboBox_7 = new JComboBox();
-		comboBox_7.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_7.setEnabled(false);
-		panel_3.add(comboBox_7);
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(textField);
+		textField.setColumns(10);
 	}
 	
 	private void setVisible()

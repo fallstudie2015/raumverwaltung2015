@@ -37,7 +37,8 @@ public abstract class GUI_Schnittstelle {
 				Benutzer.setBenutzerGesamt(rs.getInt("benutzerid"),
 						rs.getString("email"), rs.getString("vorname"),
 						rs.getString("nachname"),
-						rs.getString("rolle").charAt(0));
+ rs.getString("rolle").charAt(0), rs
+					.getString("bereich"));
 			} else {
 				Benutzer.setBenutzerID(-1);
 			}

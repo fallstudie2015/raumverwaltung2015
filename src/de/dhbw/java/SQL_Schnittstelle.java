@@ -414,7 +414,9 @@ public abstract class SQL_Schnittstelle {
 	public static boolean setDeleteFlagRaum(String raumbezeichnung) {
 		try {
 
-			String updateString = "Update raum set entfernt = 1";
+			String updateString =
+				"Update raum set entfernt = 1 where name = " + raumbezeichnung +
+					"'";
 			System.out.println("updateString " + updateString);
 			int raumId = SQL_Schnittstelle.sqlUpdateDelete(updateString);
 
@@ -688,7 +690,7 @@ public abstract class SQL_Schnittstelle {
 		boolean antwort = false;
 		int rueckgabeBenutzerID;
 		try {
-
+			passwort = EncryptPassword.SHA512(passwort);
 			rueckgabeBenutzerID = SQL_Schnittstelle
 					.sqlInsert("INSERT INTO benutzer (nachname, vorname, email, passwort, rolle, bereich)"
 							+ " VALUES ('"

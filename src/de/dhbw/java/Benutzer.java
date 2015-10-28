@@ -64,18 +64,26 @@ public abstract class Benutzer {
 		return benutzerID;
 	}
 
+	public static String getBereich() {
+		return bereich;
+	}
+
+	public static void setBereich(String bereich) {
+		Benutzer.bereich = bereich;
+	}
+
+	private static String bereich;
+
 	public static void setBenutzerGesamt(int benutzerId, String email,
-		String vorname, String nachname, char benutzertyp) {
+		String vorname, String nachname, char benutzertyp, String bereich) {
 		Benutzer.benutzerID = benutzerId;
 		Benutzer.email = email;
 		Benutzer.Vorname = vorname;
 		Benutzer.Nachname = nachname;
 		Benutzer.benutzertyp = benutzertyp;
+		Benutzer.bereich = bereich;
 	}
 	
 
-	public static boolean ausloggen() {
-		
-		return true;
-	}
+
 }

@@ -101,6 +101,7 @@ public class Raumplaner_View extends JFrame {
 		setMinimumSize(new Dimension(1024, 786));
 		setMaximumSize(new Dimension(1920, 1080));
 		setExtendedState(MAXIMIZED_BOTH);
+		setBestellerView();
 	}
 
 	/*
@@ -606,6 +607,19 @@ public class Raumplaner_View extends JFrame {
 			}
 			windowAktualisieren();
 			choosenDate = new Date(calendar.getDate().getTime());
+		}
+	}
+
+	private void setBestellerView() {
+		if (Benutzer.getBenutzertyp() != 'v') {
+			raumAddButton.setVisible(false);
+			raumDeleteButton.setVisible(false);
+			benutzerAddButton.setVisible(false);
+			benutzerDeleteButton.setVisible(false);
+			ausstattungAddButton.setVisible(false);
+			ausstattungDeleteButton.setVisible(false);
+
+			panelBuchung.setVisible(false);
 		}
 	}
 
