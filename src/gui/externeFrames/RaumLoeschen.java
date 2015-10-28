@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.Raumplaner_View;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -35,31 +36,33 @@ public class RaumLoeschen extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textField_1;
+	private Raumplaner_View rv;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RaumLoeschen frame = new RaumLoeschen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					RaumLoeschen frame = new RaumLoeschen();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public RaumLoeschen() {
+	public RaumLoeschen(Raumplaner_View rv) {
 		setModal(true);					//Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumLoeschen.class
 				.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		setResizable(false);
+		this.rv = rv;
 		setTitle("Raum loeschen");
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
@@ -87,6 +90,7 @@ public class RaumLoeschen extends JDialog {
 				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
 					setInvisible();
 					Erfolg("Raum wurde gelöscht!");
+					rv.setRaumArray(SQL_Schnittstelle.getRooms()); //aktualisiert die Räume
 				} else {
 					Erfolg("Raum konnte nicht gelöscht werden!");
 				}

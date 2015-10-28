@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.Raumplaner_View;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -48,32 +49,33 @@ public class RaumAnlegen extends JDialog {
 	private JTextField textField_a6;
 	private JTextField textField_a7;
 	private JTextField textField_a8;
+	private Raumplaner_View rv;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RaumAnlegen frame = new RaumAnlegen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					RaumAnlegen frame = new RaumAnlegen();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public RaumAnlegen() {
+	public RaumAnlegen(Raumplaner_View rv) {
 		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumAnlegen.class
 				.getResource("/ressources/menu_raum_anlegen_transp.png")));
 		setResizable(false);
-
+		this.rv = rv; 
 		setTitle("Raum anlegen");
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 410);
@@ -108,6 +110,7 @@ public class RaumAnlegen extends JDialog {
 				if (feedback == true) {		//Rückgabewert der Methode Ausstattung anlegen
 					setInvisible();
 					Erfolg("Raum wurde angelegt");
+					rv.setRaumArray(SQL_Schnittstelle.getRooms()); //aktualisiert die Räume
 				} else {
 					Erfolg("Raum konnte nicht angelegt werden");
 				}
