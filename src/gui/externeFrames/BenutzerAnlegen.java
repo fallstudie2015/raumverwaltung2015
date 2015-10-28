@@ -86,7 +86,7 @@ public class BenutzerAnlegen extends JDialog {
 						textField_email.getText(), GetPasswort(),
 						RadioZurueck(), textField_bereich.getText());
 				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
-					setVisible();
+					setInvisible();
 					Erfolg("Benutzer wurde erstellt!");
 				} else {
 					Erfolg("Benutzer konnte nicht erstellt werden!");
@@ -100,7 +100,7 @@ public class BenutzerAnlegen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -218,7 +218,7 @@ public class BenutzerAnlegen extends JDialog {
 		return pw;
 	}
 
-	private void setVisible() {		//Fenster unsichtbar machen 
+	private void setInvisible() {		//Fenster unsichtbar machen 
 		this.setVisible(false);
 	}
 

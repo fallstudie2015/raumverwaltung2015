@@ -85,7 +85,7 @@ public class RaumLoeschen extends JDialog {
 				boolean feedback = SQL_Schnittstelle
 						.setDeleteFlagRaum(textField_1.getText());
 				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
-					setVisible();
+					setInvisible();
 					Erfolg("Raum wurde gelöscht!");
 				} else {
 					Erfolg("Raum konnte nicht gelöscht werden!");
@@ -99,7 +99,7 @@ public class RaumLoeschen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(); //Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible(); //Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -136,7 +136,7 @@ public class RaumLoeschen extends JDialog {
 		panel_4.add(textField_1);
 	}
 
-	private void setVisible() // Fenster unsichtbar machen
+	private void setInvisible() // Fenster unsichtbar machen
 	{
 		this.setVisible(false);
 	}

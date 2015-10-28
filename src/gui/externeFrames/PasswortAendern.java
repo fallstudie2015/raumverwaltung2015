@@ -77,6 +77,10 @@ public class PasswortAendern extends JDialog {
 				String feedback = SQL_Schnittstelle.passwortAendern(
 						GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());
 				PwGeaendert(feedback);//Rückgabewert der Methode Ausstattung anlegen
+				if (feedback == "Passwort wurde erfolgreich geandert!")
+				{
+					setInvisible();
+				}
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -86,7 +90,7 @@ public class PasswortAendern extends JDialog {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnNewButton_1);
@@ -197,7 +201,7 @@ public class PasswortAendern extends JDialog {
 		return pw;
 	}
 
-	private void setVisible() {		//Fenster unsichtbar machen 
+	private void setInvisible() {		//Fenster unsichtbar machen 
 		this.setVisible(false);
 	}
 

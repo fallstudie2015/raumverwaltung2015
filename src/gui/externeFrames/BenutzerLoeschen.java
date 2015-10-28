@@ -87,7 +87,7 @@ public class BenutzerLoeschen extends JDialog {
 						textField_email.getText(), textField_Vorname.getText(),
 						textField_nachname.getText());
 				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
-					setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+					setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 					Erfolg("Benutzer wurde gelöscht!");
 				} else {
 					Erfolg("Benutzer konnte nicht gelöscht werden!");
@@ -101,7 +101,7 @@ public class BenutzerLoeschen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible();
+				setInvisible();
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -180,7 +180,7 @@ public class BenutzerLoeschen extends JDialog {
 		panel_7.add(rigidArea_5, BorderLayout.SOUTH);
 	}
 
-	private void setVisible() {		//Fenster unsichtbar machen 
+	private void setInvisible() {		//Fenster unsichtbar machen 
 		this.setVisible(false);
 	}
 

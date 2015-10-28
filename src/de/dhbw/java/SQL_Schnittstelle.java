@@ -1,5 +1,7 @@
 package de.dhbw.java;
 
+import gui.Error_Message_Box;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -9,8 +11,6 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-
-import gui.Error_Message_Box;
 
 public abstract class SQL_Schnittstelle {
 
@@ -602,7 +602,7 @@ public abstract class SQL_Schnittstelle {
 					return false;
 				}
 
-				if (zeitVon.equals(zeitVonDb) || zeitBis.equals(zeitBis)) {
+				if (zeitVon.equals(zeitVonDb) || zeitBis.equals(zeitBisDb)) {
 					return false;
 				}
 			}

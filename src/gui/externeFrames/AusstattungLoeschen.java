@@ -86,7 +86,7 @@ public class AusstattungLoeschen extends JDialog {
 						.deleteAusstattungArt(textField.getText());
 
 				if (feedback == true) {		//Rückgabewert der Methode Ausstattung anlegen
-					setVisible();
+					setInvisible();
 					Erfolg("Ausstattung wurde gelöscht!");
 				} else {
 					Erfolg("Ausstattung konnte nicht gelöscht werden!");
@@ -100,7 +100,7 @@ public class AusstattungLoeschen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -137,7 +137,7 @@ public class AusstattungLoeschen extends JDialog {
 		textField.setColumns(10);
 	}
 
-	private void setVisible() {	//Fenster unsichtbar machen 
+	private void setInvisible() {	//Fenster unsichtbar machen 
 		this.setVisible(false);
 	}
 

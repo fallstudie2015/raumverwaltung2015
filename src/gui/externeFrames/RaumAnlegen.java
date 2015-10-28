@@ -106,7 +106,7 @@ public class RaumAnlegen extends JDialog {
 						Ausstattung());
 
 				if (feedback == true) {		//Rückgabewert der Methode Ausstattung anlegen
-					setVisible();
+					setInvisible();
 					Erfolg("Raum wurde angelegt");
 				} else {
 					Erfolg("Raum konnte nicht angelegt werden");
@@ -119,7 +119,7 @@ public class RaumAnlegen extends JDialog {
 		JButton btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
 			}
 		});
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -308,7 +308,7 @@ public class RaumAnlegen extends JDialog {
 		return ausstattungsList;
 	}
 
-	private void setVisible() { // Fenster unsichtbar machen
+	private void setInvisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
 	}
 
