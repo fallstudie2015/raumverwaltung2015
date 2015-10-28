@@ -54,7 +54,6 @@ public class Raumplaner_View extends JFrame {
 	private JButton logoutButton, passwortChangeButton, raumAddButton, raumDeleteButton, benutzerAddButton,
 			benutzerDeleteButton, ausstattungAddButton, ausstattungDeleteButton, antragsButton;
 	private JScrollPane scroller, formularScroller;
-	private Raum_View rv;
 	private ArrayList<Bestellformular_View> bvList;
 	private ArrayList<Raum> raumList;
 	private ArrayList<Buchung> buchungList;
@@ -70,6 +69,8 @@ public class Raumplaner_View extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(Raumplaner_View.class.getResource("/ressources/Desktop_Statusbar_icon.png")));
 		this.bvPanel = new JPanel(new FlowLayout());
+		this.onScrollPanel = new JPanel(new FlowLayout());
+		this.port = new JPanel(new FlowLayout());
 		this.raumList = raumList;
 		this.buchungList = buchungList;
 		raumViewList = new ArrayList<Raum_View>();
@@ -304,17 +305,12 @@ public class Raumplaner_View extends JFrame {
 	}
 
 	private void setRaum() {
-		onScrollPanel = new JPanel();
-		onScrollPanel.setLayout(new FlowLayout());
-
-		port = new JPanel(new FlowLayout());
-
 		try {
 			if (raumList.size() > 0) {
 				for (Raum raum : raumList) {
 
 					// R�ume erstellen
-					rv = new Raum_View(raum, this);
+					Raum_View rv = new Raum_View(raum, this);
 					raumViewList.add(rv);
 
 					for (Buchung buchung : buchungList) {
@@ -329,7 +325,6 @@ public class Raumplaner_View extends JFrame {
 					onScrollPanel.add(rv);
 
 					port.add(rv.getRaumLabel());
-					System.out.println(rv.getRaumLabel());
 				}
 			}
 		} catch (Exception e) {
@@ -541,6 +536,17 @@ public class Raumplaner_View extends JFrame {
 		}
 	}
 
+	private void buchungenZuordnenRaum() {
+		for (Raum_View rv : raumViewList) {
+			for (Buchung buchung : buchungList) {
+				if (buchung.getRaumID() == rv.getRaumID()) {
+					rv.setBuchungNeu(buchung);
+					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
+				}
+			}
+		}
+	}
+
 	/*
 	 * Die Komponenten werden zur�ckgegeben
 	 */
@@ -596,16 +602,19 @@ public class Raumplaner_View extends JFrame {
 	 * Methoden werden aufgerufen, wenn die Buchungen bzw. sich die R�ume �ndern
 	 */
 	public void setRaumArray(ArrayList<Raum> raumList) {
+		scroller.getViewport().remove(onScrollPanel);
+		formularScroller.getViewport().remove(bvPanel);
 		this.raumList.clear();
-		this.raumList = raumList;
 		raumViewList.clear();
 		bvPanel.removeAll();
 		onScrollPanel.removeAll();
 		port.removeAll();
+		this.raumList = raumList;
 		setRaum();
 		scroller.setColumnHeaderView(port);
 		scroller.getViewport().add(onScrollPanel);
 		formularScroller.getViewport().add(bvPanel);
+		buchungenZuordnenRaum();
 		windowAktualisieren();
 	}
 
@@ -648,7 +657,7 @@ public class Raumplaner_View extends JFrame {
 	}
 
 	public void windowAktualisieren() {
-		this.validate();
+		this.revalidate();
 	}
 
 	/*

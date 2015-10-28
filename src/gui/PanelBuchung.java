@@ -31,6 +31,8 @@ public class PanelBuchung extends JPanel {
 	private TableBuchung tableBuchung = new TableBuchung(buchungBestellerModel);
 	private TableBuchungs_Listener tbl;
 
+	private JScrollPane scrollPane;;
+
 	private JLabel lblHeader = new JLabel("Unbestätigte Buchungen",
 			SwingConstants.CENTER);
 	private JCalendar jc;
@@ -45,7 +47,8 @@ public class PanelBuchung extends JPanel {
 		setLayout(new BorderLayout());
 		lblHeader.setFont(new Font("header", 0, 20));
 		add(lblHeader, BorderLayout.NORTH);
-		add(new JScrollPane(tableBuchung), BorderLayout.CENTER);
+		scrollPane = new JScrollPane(tableBuchung);
+		add(scrollPane, BorderLayout.CENTER);
 		setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 
@@ -117,9 +120,18 @@ public class PanelBuchung extends JPanel {
 
 	public void reloadTableBuchung() {
 		tableBuchung.getSelectionModel().removeListSelectionListener(tbl);
+		remove(scrollPane);
 		dataBuchung = buchungBestellerListeToTableStringArray();
+
+		buchungBestellerModel = new DefaultTableModel(dataBuchung, tableHeader);
+		tableBuchung = new TableBuchung(buchungBestellerModel);
+
 		buchungBestellerModel.fireTableDataChanged();
 		tableBuchung.getSelectionModel().addListSelectionListener(tbl);
+		scrollPane = new JScrollPane(tableBuchung);
+		add(scrollPane);
+		validate();
+		repaint();
 	}
 
 	public void auswahlAnzeigenImRaumplaner_View() {
