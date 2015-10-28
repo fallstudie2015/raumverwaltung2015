@@ -174,7 +174,7 @@ public class Raumplaner_View extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RaumAnlegen ra = new RaumAnlegen();
+				RaumAnlegen ra = new RaumAnlegen(getRV());
 				ra.setVisible(true);
 			}
 		});
@@ -190,7 +190,7 @@ public class Raumplaner_View extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RaumLoeschen rl = new RaumLoeschen();
+				RaumLoeschen rl = new RaumLoeschen(getRV());
 				rl.setVisible(true);
 			}
 		});
@@ -329,6 +329,7 @@ public class Raumplaner_View extends JFrame {
 					onScrollPanel.add(rv);
 
 					port.add(rv.getRaumLabel());
+					System.out.println(rv.getRaumLabel());
 				}
 			}
 		} catch (Exception e) {
@@ -587,6 +588,10 @@ public class Raumplaner_View extends JFrame {
 		return panelBuchung;
 	}
 
+	private Raumplaner_View getRV() {
+		return this;
+	}
+
 	/*
 	 * Methoden werden aufgerufen, wenn die Buchungen bzw. sich die R�ume �ndern
 	 */
@@ -598,6 +603,7 @@ public class Raumplaner_View extends JFrame {
 		onScrollPanel.removeAll();
 		port.removeAll();
 		setRaum();
+		scroller.setColumnHeaderView(port);
 		scroller.getViewport().add(onScrollPanel);
 		formularScroller.getViewport().add(bvPanel);
 		windowAktualisieren();

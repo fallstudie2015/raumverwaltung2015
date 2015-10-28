@@ -33,7 +33,7 @@ public class Raum_View_Label extends JLabel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				super.mousePressed(e);
-				if (Benutzer.getBenutzertyp() == 'v') {
+				if (Benutzer.getBenutzertyp() == 'v' && buchung != null) {
 					Bestaetigungs_View beV = new Bestaetigungs_View(frame, buchung);
 				}
 			}
@@ -69,5 +69,9 @@ public class Raum_View_Label extends JLabel {
 
 	public void setMouseListener(MouseListener ml) {
 		this.addMouseListener(ml);
+	}
+
+	public void removeBuchung() {
+		buchung = null;
 	}
 }

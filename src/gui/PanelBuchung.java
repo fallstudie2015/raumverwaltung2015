@@ -55,11 +55,9 @@ public class PanelBuchung extends JPanel {
 	private String[][] buchungBestellerListeToTableStringArray()  {
 		ResultSet rs = null;
 		rs = SQL_Schnittstelle.getBuchungenZuGenehmigung();
-		System.out.println("buchungBestellerListeToTableStringArray ");
 		String[][] tableData = null;
 		try {
 			rs.last(); 
-			System.out.println("buchungBestellerListeToTableStringArray "+ rs.getRow());
 			tableData = new String[rs.getRow()][3];
 			rs.beforeFirst();
 			int i = 0;

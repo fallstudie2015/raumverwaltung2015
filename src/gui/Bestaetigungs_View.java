@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 
 import de.dhbw.java.Buchung;
 import de.dhbw.java.SQL_Schnittstelle;
+import mail.MailConnection;
+import mail.MailTexte;
 
 public class Bestaetigungs_View extends JFrame {
 
@@ -69,106 +71,129 @@ public class Bestaetigungs_View extends JFrame {
 
 		JPanel buttonPanel = new JPanel();
 
-		buttonPanel.setLayout(new FlowLayout());
-		btnBestaetigen = new JButton("Genehmigen");
-		btnAblehnen = new JButton("Ablehnen");
-		btnAbbrechen = new JButton("Abbrechen");
+		try {
 
-		meinBVL = new bestaetigungsViewListener(this);
+			buttonPanel.setLayout(new FlowLayout());
+			btnBestaetigen = new JButton("Genehmigen");
+			btnAblehnen = new JButton("Ablehnen");
+			btnAbbrechen = new JButton("Abbrechen");
 
-		btnBestaetigen.addActionListener(meinBVL);
-		btnAblehnen.addActionListener(meinBVL);
-		btnAbbrechen.addActionListener(meinBVL);
-		buttonPanel.add(btnBestaetigen);
-		buttonPanel.add(btnAblehnen);
-		buttonPanel.add(btnAbbrechen);
+			meinBVL = new bestaetigungsViewListener(this);
 
+			btnBestaetigen.addActionListener(meinBVL);
+			btnAblehnen.addActionListener(meinBVL);
+			btnAbbrechen.addActionListener(meinBVL);
+			buttonPanel.add(btnBestaetigen);
+			buttonPanel.add(btnAblehnen);
+			buttonPanel.add(btnAbbrechen);
+		} catch (Exception ex) {
+			Error_Message_Box.laufzeitfehler(ex,
+					"gui.Bestaetigungs_View.createButtonPanel");
+		}
 		return buttonPanel;
 	}
 
 	private JPanel createZeitPanel() {
 
 		JPanel zeitPanel = new JPanel();
-		zeitPanel.setLayout(new FlowLayout());
+		try {
+			zeitPanel.setLayout(new FlowLayout());
 
-		txtZeitVon = new JTextField("" + buchung.getZeitVon() + "");
-		txtZeitBis = new JTextField("" + buchung.getZeitBis() + "");
+			txtZeitVon = new JTextField("" + buchung.getZeitVon() + "");
+			txtZeitBis = new JTextField("" + buchung.getZeitBis() + "");
 
-		zeitPanel.add(txtZeitVon);
-		txtZeitVon.setEditable(false);
-		zeitPanel.add(new JLabel(" - "));
-		zeitPanel.add(txtZeitBis);
-		txtZeitBis.setEditable(false);
+			zeitPanel.add(txtZeitVon);
+			txtZeitVon.setEditable(false);
+			zeitPanel.add(new JLabel(" - "));
+			zeitPanel.add(txtZeitBis);
+			txtZeitBis.setEditable(false);
+		} catch (Exception ex) {
+			Error_Message_Box.laufzeitfehler(ex,
+					"gui.Bestaetigungs_View.createZeitPanel()");
+		}
 
 		return zeitPanel;
 	}
 
 	private JPanel createMainPanel() {
-
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new GridLayout(9, 2));
+		try {
 
-		buchungsID = new JLabel("Buchungs-ID");
-		raum = new JLabel("Raum");
-		benutzer = new JLabel("Benutzer");
-		telefon = new JLabel("Telefonnummer");
-		datum = new JLabel("Datum");
-		zeit = new JLabel("Zeit");
-		bestuhlung = new JLabel("Bestuhlung");
-		kommentar = new JLabel("Kommentar");
-		ausstattung = new JLabel("Ausstattung");
+			mainPanel.setLayout(new GridLayout(9, 2));
 
-		mainPanel.add(buchungsID);
-		mainPanel.add(txtBuchungsID);
-		txtBuchungsID.setEditable(false);
-		mainPanel.add(raum);
-		mainPanel.add(txtRaum);
-		txtRaum.setEditable(false);
-		mainPanel.add(benutzer);
-		mainPanel.add(txtBenutzer);
-		txtBenutzer.setEditable(false);
-		mainPanel.add(telefon);
-		mainPanel.add(txtTelefon);
-		txtTelefon.setEditable(false);
-		mainPanel.add(datum);
-		mainPanel.add(txtDatum);
-		txtDatum.setEditable(false);
-		mainPanel.add(zeit);
-		mainPanel.add(createZeitPanel());
-		mainPanel.add(bestuhlung);
-		mainPanel.add(txtBestuhlung);
-		txtBestuhlung.setEditable(false);
-		mainPanel.add(kommentar);
-		mainPanel.add(txtKommentar);
-		txtKommentar.setEditable(false);
-		mainPanel.add(ausstattung);
-		mainPanel.add(txtAusstattung);
-		txtAusstattung.setEditable(false);
+			buchungsID = new JLabel("Buchungs-ID");
+			raum = new JLabel("Raum");
+			benutzer = new JLabel("Benutzer");
+			telefon = new JLabel("Telefonnummer");
+			datum = new JLabel("Datum");
+			zeit = new JLabel("Zeit");
+			bestuhlung = new JLabel("Bestuhlung");
+			kommentar = new JLabel("Kommentar");
+			ausstattung = new JLabel("Ausstattung");
 
+			mainPanel.add(buchungsID);
+			mainPanel.add(txtBuchungsID);
+			txtBuchungsID.setEditable(false);
+			mainPanel.add(raum);
+			mainPanel.add(txtRaum);
+			txtRaum.setEditable(false);
+			mainPanel.add(benutzer);
+			mainPanel.add(txtBenutzer);
+			txtBenutzer.setEditable(false);
+			mainPanel.add(telefon);
+			mainPanel.add(txtTelefon);
+			txtTelefon.setEditable(false);
+			mainPanel.add(datum);
+			mainPanel.add(txtDatum);
+			txtDatum.setEditable(false);
+			mainPanel.add(zeit);
+			mainPanel.add(createZeitPanel());
+			mainPanel.add(bestuhlung);
+			mainPanel.add(txtBestuhlung);
+			txtBestuhlung.setEditable(false);
+			mainPanel.add(kommentar);
+			mainPanel.add(txtKommentar);
+			txtKommentar.setEditable(false);
+			mainPanel.add(ausstattung);
+			mainPanel.add(txtAusstattung);
+			txtAusstattung.setEditable(false);
+
+		} catch (Exception ex) {
+			Error_Message_Box.laufzeitfehler(ex,
+					"gui.Bestaetigungs_View.createMainPanel");
+		}
 		return mainPanel;
-
 	}
 
 	private void befuelleMainPanel() {
-
-		txtBuchungsID = new JTextField("" + buchung.getBuchungsID());
-		txtRaum = new JTextField(
-				"" + SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
-		txtBenutzer = new JTextField(""
-				+ SQL_Schnittstelle.getBenutzerName(buchung.getBenutzerID()));
-		txtTelefon = new JTextField("" + buchung.getTelefon());
-		txtDatum = new JTextField("" + buchung.getDatum());
-		txtZeitVon = new JTextField("" + buchung.getZeitVon());
-		txtZeitBis = new JTextField("" + buchung.getZeitBis());
-		txtBestuhlung = new JTextField("" + buchung.getBestuhlung());
-		txtKommentar = new JTextField("" + buchung.getKommentar());
-		txtAusstattung = new JTextField("Hier fehlt die Ausstattung");
+		try {
+			txtBuchungsID = new JTextField("" + buchung.getBuchungsID());
+			txtRaum = new JTextField(
+					"" + SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+			txtBenutzer = new JTextField("" + SQL_Schnittstelle
+					.getBenutzerName(buchung.getBenutzerID()));
+			txtTelefon = new JTextField("" + buchung.getTelefon());
+			txtDatum = new JTextField("" + buchung.getDatum());
+			txtZeitVon = new JTextField("" + buchung.getZeitVon());
+			txtZeitBis = new JTextField("" + buchung.getZeitBis());
+			txtBestuhlung = new JTextField("" + buchung.getBestuhlung());
+			txtKommentar = new JTextField("" + buchung.getKommentar());
+			txtAusstattung = new JTextField("Hier fehlt die Ausstattung");
+		} catch (Exception ex) {
+			Error_Message_Box.laufzeitfehler(ex,
+					"gui.Bestaetigungs_View.befuelleMainPanel");
+		}
 
 	}
 
 	public Raumplaner_View getRaumView() {
 
 		return mutterFenster;
+	}
+
+	public Buchung getBuchung() {
+
+		return buchung;
 	}
 
 	class bestaetigungsViewListener implements ActionListener {
@@ -188,6 +213,12 @@ public class Bestaetigungs_View extends JFrame {
 				mbv.getRaumView();
 				mbv.getRaumView()
 						.setBuchungArray(SQL_Schnittstelle.getBuchung());
+				MailConnection mail = new MailConnection();
+				mail.sendMail(
+						SQL_Schnittstelle.getBenutzerEmail(
+								mbv.getBuchung().getBenutzerID()),
+						MailTexte.getBetreffBestaetigen(mbv.getBuchung()),
+						MailTexte.getTextBestaetigen(mbv.getBuchung()));
 				mbv.dispose();
 
 			} else if (e.getSource() == btnAblehnen) {
@@ -196,6 +227,13 @@ public class Bestaetigungs_View extends JFrame {
 						'a');
 				mbv.getRaumView()
 						.setBuchungArray(SQL_Schnittstelle.getBuchung());
+				MailConnection mail = new MailConnection();
+				mail.sendMail(
+						SQL_Schnittstelle.getBenutzerEmail(
+								mbv.getBuchung().getBenutzerID()),
+						MailTexte.getBetreffAbgelehnt(mbv.getBuchung()),
+						MailTexte.getTextAbgelehnt(mbv.getBuchung()));
+
 				mbv.dispose();
 
 			} else if (e.getSource() == btnAbbrechen) {
