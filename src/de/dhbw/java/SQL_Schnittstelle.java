@@ -346,9 +346,11 @@ public abstract class SQL_Schnittstelle {
 	public static ResultSet getMyBuchungen(int benutzerid) {
 		ResultSet rs = null;
 		try {
-			String abfrageString = "SELECT buchungid as 'Buchungs-ID', r.name as 'Raumbez.', datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis'"
+			String abfrageString = "SELECT buchungid as 'Buchungs-ID', r.name as 'Raumbez.', datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis', status AS Status "
 					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
-					+ "WHERE benutzerid = " + benutzerid + "; ";
+					+ "WHERE benutzerid = "
+					+ benutzerid
+					+ " AND b.datum >= DATE(NOW()) ORDER BY b.datum; ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 		} catch (Exception e) {
@@ -838,13 +840,10 @@ public abstract class SQL_Schnittstelle {
 				return "Das neue Passwort und dessen Wiederholung sind nicht identisch";
 			}
 			int benutzerId = Benutzer.getBenutzerID();
-			
-
 
 			String updateString = "Update benutzer set passwort = '"
 					+ neuesPasswort + "' where benutzerid = '" + benutzerId
 					+ "'";
-
 
 			System.out.println("updateString " + updateString);
 			SQL_Schnittstelle.sqlUpdateDelete(updateString);
