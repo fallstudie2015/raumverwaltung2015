@@ -67,7 +67,7 @@ public class RaumAnlegen extends JDialog {
 	private JLabel lblStockwerk;
 	private JLabel lblAnzahlPersonen;
 	private JLabel lblAusstattung;
-	private Raumplaner_View rv;
+	public Raumplaner_View rv;
 
 	/**
 	 * Launch the application.
@@ -88,7 +88,7 @@ public class RaumAnlegen extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public RaumAnlegen(Raumplaner_View rv) {
+	public RaumAnlegen(final Raumplaner_View rv) {
 		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumAnlegen.class
 				.getResource("/ressources/menu_raum_anlegen_transp.png")));
@@ -134,12 +134,14 @@ public class RaumAnlegen extends JDialog {
 											// Ausstattung anlegen
 					{
 						setInvisible();
-						Erfolg("Raum wurde angelegt");
+						erfolg("Raum wurde angelegt");
+						System.out.println("Raum wurde angelegt");
 						rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
 																		// die
 																		// Räume
 					} else {
-						Erfolg("Raum konnte nicht angelegt werden");
+						erfolg("Raum konnte nicht angelegt werden");
+						System.out.println("Raum konnte nicht angelegt werden");
 					}
 				} else {
 					JOptionPane.showMessageDialog(null,
@@ -392,7 +394,7 @@ public class RaumAnlegen extends JDialog {
 		this.setVisible(false);
 	}
 
-	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
+	public static void erfolg(String nachricht) { // MessageBox für Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 

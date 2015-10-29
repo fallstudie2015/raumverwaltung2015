@@ -74,7 +74,7 @@ public abstract class SQL_Schnittstelle {
 	}
 
 	/**
-	 * Fügt der Datenbank einen neuen Satz hinzu.
+	 * Fügt der Datenbank einen neuen Satz hinzu und gibt die ID der entsprechenden neuen Zeile aus.
 	 * 
 	 * @param abfrage
 	 * @return
@@ -107,7 +107,7 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			System.out.println("Update/Insert/Delete " + e.toString());
-			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlUpdate");
+			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlInsert");
 		}
 
 		return autoIncKeyFromApi; // Rueckgabe wert jetzt der generierte
@@ -517,7 +517,7 @@ public abstract class SQL_Schnittstelle {
 		// TODO Auto-generated method stub
 		try {
 
-			String updateString = "INSERT INTO raumAusstattung (buchungid, bezeichnung) VALUES ('"
+			String updateString = "INSERT INTO raumAusstattung (raumid, bezeichnung) VALUES ('"
 					+ raumId + "', '" + grundAusstattungBezeichnung + "')";
 
 			SQL_Schnittstelle.sqlInsert(updateString);
