@@ -37,7 +37,8 @@ public abstract class GUI_Schnittstelle {
 				Benutzer.setBenutzerGesamt(rs.getInt("benutzerid"),
 						rs.getString("email"), rs.getString("vorname"),
 						rs.getString("nachname"),
-						rs.getString("rolle").charAt(0));
+ rs.getString("rolle").charAt(0), rs
+					.getString("bereich"));
 			} else {
 				Benutzer.setBenutzerID(-1);
 			}
@@ -64,7 +65,7 @@ public abstract class GUI_Schnittstelle {
 				loginView.setVisible(false);
 				raumplanerView = new Raumplaner_View(
 						SQL_Schnittstelle.getRooms(),
-						SQL_Schnittstelle.getVerwaltungBuchung());
+						SQL_Schnittstelle.getBuchung());
 				/*
 				 * 
 				 * Hier müssen die Buchungen benutzerspezifisch geladen werden

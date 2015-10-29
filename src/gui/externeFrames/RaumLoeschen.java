@@ -7,11 +7,17 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import de.dhbw.java.SQL_Schnittstelle;
+import gui.Raumplaner_View;
+
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -26,152 +32,149 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 
-public class RaumLoeschen extends JFrame {
+public class RaumLoeschen extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
+	private JTextField textField_Name;
+	private Raumplaner_View rv;
+	private JLabel label_Name;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RaumLoeschen frame = new RaumLoeschen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	// public static void main(String[] args) {
+	// EventQueue.invokeLater(new Runnable() {
+	// public void run() {
+	// try {
+	// RaumLoeschen frame = new RaumLoeschen();
+	// frame.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// });
+	// }
 
 	/**
 	 * Create the frame.
 	 */
-	public RaumLoeschen() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumLoeschen.class.getResource("/ressources/menu_raum_loeschen_transp.png")));
+	public RaumLoeschen(Raumplaner_View rv) {
+		setModal(true); // Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumLoeschen.class
+				.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		setResizable(false);
+		this.rv = rv;
 		setTitle("Raum loeschen");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblRaumAnlegen = new JLabel("Raum loeschen");
-		lblRaumAnlegen.setIcon(new ImageIcon(RaumLoeschen.class.getResource("/ressources/menu_raum_loeschen_transp.png")));
-		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
-		
+
+		JLabel lblRaumLoeschen = new JLabel("Raum loeschen");
+		lblRaumLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblRaumLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblRaumLoeschen, BorderLayout.NORTH);
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
-		
+
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
-		
-		JButton btnNewButton = new JButton("Loeschen");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		splitPane.setLeftComponent(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Abbrechen");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton_1.addActionListener(new ActionListener() {
+
+		JButton btnLoeschen = new JButton("Loeschen");
+		btnLoeschen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				boolean pflicht = PflichtfelderPruefen();
+
+				if (pflicht) {
+					boolean feedback = SQL_Schnittstelle
+							.setDeleteFlagRaum(textField_Name.getText());
+					if (feedback == true) {// Rückgabewert der Methode
+											// Ausstattung anlegen
+						setInvisible();
+						Erfolg("Raum wurde gelöscht!");
+						rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
+																		// die
+																		// Räume
+					} else {
+						Erfolg("Raum konnte nicht gelöscht werden!");
+					}
+				} else {
+					JOptionPane.showMessageDialog(null,
+							" Bitte fuellen Sie das Pflichtfeld aus",
+							"Achtung!", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
-		splitPane.setRightComponent(btnNewButton_1);
-		
+		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		splitPane.setLeftComponent(btnLoeschen);
+
+		JButton btnAbbrechen = new JButton("Abbrechen");
+		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnAbbrechen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setInvisible(); // Beim Klicken auf Abbrechen wird Fenster
+								// unsichtbar
+			}
+		});
+		splitPane.setRightComponent(btnAbbrechen);
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
 		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
 		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
-		
-		JLabel lblRaum = new JLabel("Raum 1");
-		lblRaum.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblRaum);
-		
-		JLabel lblRaum_1 = new JLabel("Raum 2");
-		lblRaum_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblRaum_1);
-		
-		JLabel lblRaum_2 = new JLabel("Raum 3");
-		lblRaum_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblRaum_2);
-		
-		JLabel lblRaum_3 = new JLabel("Raum 4");
-		lblRaum_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblRaum_3);
-		
-		JLabel lblRaum_4 = new JLabel("Raum 5");
-		lblRaum_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblRaum_4);
-		
-		JLabel lblRaum_5 = new JLabel("Raum 6");
-		lblRaum_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblRaum_5);
-		
-		JLabel lblRaum_6 = new JLabel("Raum 7");
-		lblRaum_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblRaum_6);
-		
-		JLabel lblRaum_7 = new JLabel("Raum 8");
-		lblRaum_7.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(lblRaum_7);
-		
+
+		JPanel panel_6 = new JPanel();
+		panel_3.add(panel_6);
+
+		label_Name = new JLabel("Raumname:");
+		label_Name.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(label_Name);
+
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
 		panel_4.setLayout(new GridLayout(8, 0, 0, 0));
-		
-		textField = new JTextField();
-		panel_4.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		panel_4.add(textField_1);
-		textField_1.setColumns(10);
-		
-		textField_2 = new JTextField();
-		panel_4.add(textField_2);
-		textField_2.setColumns(10);
-		
-		textField_3 = new JTextField();
-		panel_4.add(textField_3);
-		textField_3.setColumns(10);
-		
-		textField_4 = new JTextField();
-		panel_4.add(textField_4);
-		textField_4.setColumns(10);
-		
-		textField_5 = new JTextField();
-		panel_4.add(textField_5);
-		textField_5.setColumns(10);
-		
-		textField_6 = new JTextField();
-		panel_4.add(textField_6);
-		textField_6.setColumns(10);
-		
-		textField_7 = new JTextField();
-		panel_4.add(textField_7);
-		textField_7.setColumns(10);
+
+		JPanel panel_5 = new JPanel();
+		panel_4.add(panel_5);
+
+		textField_Name = new JTextField();
+		textField_Name.setColumns(10);
+		panel_4.add(textField_Name);
 	}
 
+	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
+	// sind
+	{
+		boolean gefuellt = true;
+
+		if (textField_Name.getText().isEmpty()) {
+			label_Name.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			label_Name.setForeground(Color.black);
+		}
+
+		return gefuellt;
+	}
+
+	private void setInvisible() // Fenster unsichtbar machen
+	{
+		this.setVisible(false);
+	}
+
+	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
+
+	}
 }

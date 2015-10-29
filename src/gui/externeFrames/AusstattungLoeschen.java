@@ -7,10 +7,14 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import de.dhbw.java.SQL_Schnittstelle;
+
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
@@ -19,16 +23,18 @@ import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.Insets;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
-public class AusstattungLoeschen extends JFrame {
+public class AusstattungLoeschen extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textField_Ausstattung;
+	private JLabel lblAusstattung;
 
 	/**
 	 * Launch the application.
@@ -50,106 +56,121 @@ public class AusstattungLoeschen extends JFrame {
 	 * Create the frame.
 	 */
 	public AusstattungLoeschen() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AusstattungLoeschen.class.getResource("/ressources/menu_ausstattung_loeschen_transp.png")));
+		setModal(true); // Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(AusstattungLoeschen.class.getResource(
+						"/ressources/menu_ausstattung_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Ausstattung loeschen");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblRaumAnlegen = new JLabel("Ausstattung loeschen");
-		lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
-		
+
+		JLabel lblAusstattungLoeschen = new JLabel("Ausstattung loeschen");
+		lblAusstattungLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblAusstattungLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblAusstattungLoeschen, BorderLayout.NORTH);
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
-		
+
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
-		
-		JButton btnNewButton = new JButton("Loeschen");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		splitPane.setLeftComponent(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Abbrechen");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
+
+		JButton btnLoeschen = new JButton("Loeschen");
+		btnLoeschen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				boolean pflicht = PflichtfelderPruefen();
+
+				if (pflicht) {
+					boolean feedback = SQL_Schnittstelle.deleteAusstattungArt(
+							textField_Ausstattung.getText());
+
+					if (feedback == true) { // Rückgabewert der Methode
+											// Ausstattung anlegen
+						setInvisible();
+						Erfolg("Ausstattung wurde gelöscht!");
+					} else {
+						Erfolg("Ausstattung konnte nicht gelöscht werden!");
+					}
+				} else {
+					JOptionPane.showMessageDialog(null,
+							" Bitte fuellen Sie das Pflichtfeld aus",
+							"Achtung!", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
-		splitPane.setRightComponent(btnNewButton_1);
-		
+		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		splitPane.setLeftComponent(btnLoeschen);
+
+		JButton btnAbbrechen = new JButton("Abbrechen");
+		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnAbbrechen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
+								// unsichtbar
+			}
+		});
+		splitPane.setRightComponent(btnAbbrechen);
+
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
 		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
-		
+
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4);
-		panel_4.setLayout(new GridLayout(9, 0, 0, 0));
-		
-		JLabel lblRaumname = new JLabel("Raumname");
-		lblRaumname.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_4.add(lblRaumname);
-		
-		JLabel lblAusstattung = new JLabel("Ausstattung");
+		panel_4.setLayout(new GridLayout(8, 0, 0, 0));
+
+		JPanel panel_5 = new JPanel();
+		panel_4.add(panel_5);
+
+		lblAusstattung = new JLabel("Ausstattungsname:");
 		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(lblAusstattung);
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3);
-		panel_3.setLayout(new GridLayout(9, 0, 0, 0));
-		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(textField);
-		textField.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(comboBox);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_1.setEnabled(false);
-		panel_3.add(comboBox_1);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_2.setEnabled(false);
-		panel_3.add(comboBox_2);
-		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_3.setEnabled(false);
-		panel_3.add(comboBox_3);
-		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_4.setEnabled(false);
-		panel_3.add(comboBox_4);
-		
-		JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_5.setEnabled(false);
-		panel_3.add(comboBox_5);
-		
-		JComboBox comboBox_6 = new JComboBox();
-		comboBox_6.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_6.setEnabled(false);
-		panel_3.add(comboBox_6);
-		
-		JComboBox comboBox_7 = new JComboBox();
-		comboBox_7.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_7.setEnabled(false);
-		panel_3.add(comboBox_7);
+		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
+
+		JPanel panel_6 = new JPanel();
+		panel_3.add(panel_6);
+
+		textField_Ausstattung = new JTextField();
+		textField_Ausstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(textField_Ausstattung);
+		textField_Ausstattung.setColumns(10);
+	}
+
+	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
+	// sind
+	{
+		boolean gefuellt = true;
+
+		if (textField_Ausstattung.getText().isEmpty()) {
+			lblAusstattung.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblAusstattung.setForeground(Color.black);
+		}
+
+		return gefuellt;
+	}
+
+	private void setInvisible() { // Fenster unsichtbar machen
+		this.setVisible(false);
+	}
+
+	public static void Erfolg(String nachricht) {// MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
+
 	}
 }

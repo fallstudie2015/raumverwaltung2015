@@ -4,21 +4,22 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import de.dhbw.java.Benutzer;
-import de.dhbw.java.Buchung;
+import de.dhbw.java.BuchungPlus;
 import de.dhbw.java.Raum;
+import de.dhbw.java.SQL_Schnittstelle;
 
 public class Raum_View extends JPanel implements MouseListener {
 
@@ -26,7 +27,7 @@ public class Raum_View extends JPanel implements MouseListener {
 	private String raumName;
 	private Bestellformular_View bv;
 	private Raumplaner_View frame;
-	private ArrayList<Buchung> buchungList;
+	private ArrayList<BuchungPlus> buchungList;
 	private Raum raum;
 	private ArrayList<Raum_View_Label> labelList;
 
@@ -36,7 +37,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		this.frame = frame;
 		setBestellformularView();
 		labelList = new ArrayList<Raum_View_Label>();
-		buchungList = new ArrayList<Buchung>();
+		buchungList = new ArrayList<BuchungPlus>();
 		initView();
 	}
 
@@ -47,10 +48,13 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	private void setBestellformularView() {
 		// Bestellformular view erstellen
-		bv = new Bestellformular_View(frame, Benutzer.getVorname(), Benutzer.getNachname(), raum.getRaumID());
+		bv = new Bestellformular_View(frame, Benutzer.getVorname(), Benutzer.getNachname(), raum.getRaumID(),
+				frame.getPanelBuchung(), Benutzer.getBereich(), this);
 		bv.setRaumName(raumName);
 		frame.setBVList(bv);
 		frame.setBVPanel(bv);
+		bv.setTechnik(SQL_Schnittstelle.getAusstattungArten());
+		bv.setGrundausstattung(SQL_Schnittstelle.getGrundAusstattungRaum(raum.getRaumID()));
 		bv.initView();
 	}
 
@@ -94,6 +98,8 @@ public class Raum_View extends JPanel implements MouseListener {
 			}
 		}
 
+		labelLeeren();
+
 		return raumzeitenPanel;
 	}
 
@@ -109,15 +115,50 @@ public class Raum_View extends JPanel implements MouseListener {
 	public void setBuchungenInCalendar(Date today) {
 		labelLeeren();
 
-		for (Buchung buchung : buchungList) {
+		Color farbe;
+
+		for (BuchungPlus buchung : buchungList) {
+			if (buchung.getBenutzerID() == Benutzer.getBenutzerID()) {
+				farbe = Color.GREEN;
+			} else {
+				farbe = Color.RED;
+			}
 			if (today.toString().compareTo(buchung.getDatum().toString()) == 0) {
 				for (Raum_View_Label label : labelList) {
-					if (buchung.getZeitVon().equals(label.getTime()) || buchung.getZeitBis().equals(label.getTime())
-							|| (label.getTime().before(buchung.getZeitBis())
-									&& label.getTime().after(buchung.getZeitVon()))) {
-						label.setBackground(Color.RED);
-						label.setBuchung(buchung);
+					if (buchung.getStatus().equalsIgnoreCase("a") || buchung.getStatus().equalsIgnoreCase("s")) {
+						label.removeBuchung();
+						label.setToolTipText(null);
+											} else {
+						if (buchung.getZeitVon().equals(label.getTime())
+								|| (label.getTime().before(buchung.getZeitBis())
+										&& label.getTime().after(buchung.getZeitVon()))) {
+							if (Benutzer.getBenutzertyp() == 'v') {
+								if (buchung.getZeitVon().equals(label.getTime())) {
+									label.setText(buchung.getBenutzerName());
+									label.setFont(new Font(buchung.getBenutzerName(), Font.BOLD, 16));
+									label.setHorizontalTextPosition(SwingConstants.CENTER);
+								}
+								label.setToolTipText("<html>" + raum.getName() + "<br>" + raum.getStrasse() + "<br>"
+										+ raum.getStock() + "<br>" + buchung.getBenutzerName() + "<br>"
+										+ buchung.getTelefon() + "<br>" + buchung.getZeitVon() + " Uhr - "
+										+ buchung.getZeitBis() + " Uhr" + "<br>" + "</html>");
+							}
+							if (buchung.getStatus().equals("v")) {
+								ImageIcon ii = new ImageIcon(
+										getClass().getClassLoader().getResource("ressources/muster.jpg"));
+								ImageIcon imageIcon = new ImageIcon(
+										ii.getImage().getScaledInstance(200, 20, Image.SCALE_DEFAULT));
+								label.setIcon(imageIcon);
+								label.setBuchung(buchung);
+								label.setFrame(frame);
+							} else {
+								label.setBackground(farbe);
+								label.setBuchung(buchung);
+								label.setFrame(frame);
+							}
+						}
 					}
+
 				}
 
 			}
@@ -126,16 +167,18 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	public void labelLeeren() {
 		for (Raum_View_Label label : labelList) {
+			label.setIcon(null);
+			label.setText(null);
 			label.setBackground(label.getParent().getBackground());
 			label.setMouseListener(this);
 		}
 	}
 
-	public void getBuchung(Buchung buchung) {
+	public void getBuchung(BuchungPlus buchung) {
 		this.buchungList.add(buchung);
 	}
 
-	public void setBuchungNeu(Buchung buchung) {
+	public void setBuchungNeu(BuchungPlus buchung) {
 		this.buchungList.add(buchung);
 	}
 
@@ -147,40 +190,55 @@ public class Raum_View extends JPanel implements MouseListener {
 		return raum.getRaumID();
 	}
 
+	public TappedPaneBuchung getPanelBuchung() {
+		return frame.getPanelBuchung();
+	}
+
+	public void setBuchungArray(ArrayList<BuchungPlus> list) {
+		frame.setBuchungArray(list);
+	}
+
+	public ArrayList<Raum_View_Label> getLabelList() {
+		return labelList;
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Raum_View_Label label = (Raum_View_Label) e.getSource();
 
-		int i = 0;
-		Bestellformular_View aktiv = null;
-		for (Bestellformular_View view : frame.getBVList()) {
-			if (view.isVisible()) {
-				aktiv = view;
-				i++;
+		if (!label.buchungGesetzt) {
+			frame.getPanelBuchung().setVisible(false);
+			int i = 0;
+			Bestellformular_View aktiv = null;
+			for (Bestellformular_View view : frame.getBVList()) {
+				if (view.isVisible()) {
+					aktiv = view;
+					i++;
+				}
+			}
+			if (i == 0) {
+				bv.setVisible(true);
+				bv.setScrollPane(frame.getformularScrollPane());
+				bv.setDate(frame.getCalendar());
+				bv.setMaxPersonen(raum.getAnzPersonen());
+				bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 
+				frame.getformularScrollPane().setVisible(true);
+
+				frame.validate();
+			} else {
+				aktiv.setVisible(false);
+				i = 0;
+				bv.setVisible(true);
+				bv.setScrollPane(frame.getformularScrollPane());
+				bv.setDate(frame.getCalendar());
+				bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
+				frame.getformularScrollPane().setVisible(true);
+
+				frame.validate();
 			}
 		}
-		if (i == 0) {
-			bv.setVisible(true);
-			bv.setScrollPane(frame.getformularScrollPane());
-			bv.setDate(frame.getCalendar());
-			bv.setMaxPersonen(raum.getAnzPersonen());
-			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 
-			frame.getformularScrollPane().setVisible(true);
-
-			frame.validate();
-		} else {
-			aktiv.setVisible(false);
-			i = 0;
-			bv.setVisible(true);
-			bv.setScrollPane(frame.getformularScrollPane());
-			bv.setDate(frame.getCalendar());
-			bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
-			frame.getformularScrollPane().setVisible(true);
-
-			frame.validate();
-		}
 	}
 
 	@Override

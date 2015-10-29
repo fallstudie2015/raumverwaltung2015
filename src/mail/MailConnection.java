@@ -13,17 +13,21 @@ import javax.mail.internet.MimeMessage;
 
 public class MailConnection {
 
-	public void sendMail(String username, String password, String senderAddress,
-			String recipientsAddress, String subject, String text) {
+	public void sendMail(String empfaengerAdresse, String betreff,
+			String text) {
+
+		/*
+		 * Anlegen der Daten für den Mail-Account über den die E-Mails gesendet
+		 * werden
+		 */
+
+		String username = new String("fallstudie2015@gmx.de");
+		String password = new String("fallstudie2015");
+		String senderAddress = new String("fallstudie2015@gmx.de");
 
 		MailAuthenticator auth = new MailAuthenticator(username, password);
 
 		Properties properties = new Properties();
-
-		// Den Properties wird die ServerAdresse hinzugefügt
-		// properties.put("mail.smtp.host", smtpHost);
-
-		// properties.put("mail.smtp.port", "587");
 
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.host", "smtp.gmx.de");
@@ -51,10 +55,10 @@ public class MailConnection {
 			// Hier werden die Absender- und Empfängeradressen gesetzt
 			msg.setFrom(new InternetAddress(senderAddress));
 			msg.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(recipientsAddress, false));
+					InternetAddress.parse(empfaengerAdresse, false));
 
 			// Der Betreff und Body der Message werden gesetzt
-			msg.setSubject(subject);
+			msg.setSubject(betreff);
 			msg.setText(text);
 
 			// Hier lassen sich HEADER-Informationen hinzufügen
@@ -69,7 +73,7 @@ public class MailConnection {
 		}
 	}
 
-	class MailAuthenticator extends Authenticator {
+	static class MailAuthenticator extends Authenticator {
 
 		/**
 		 * Ein String, der den Usernamen nach der Erzeugung eines Objektes<br>

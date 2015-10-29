@@ -7,6 +7,7 @@ public class Raum {
 	private String stock;
 	private int anzPersonen;
 
+	/* Anlegen des Objekts Raum mit allen nötigen Attributen */
 	public Raum(int raumID, String name, String strasse, String stock,
 			int anzPersonen) {
 		this.raumID = raumID;

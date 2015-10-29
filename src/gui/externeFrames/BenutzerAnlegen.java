@@ -1,34 +1,46 @@
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
-public class BenutzerAnlegen extends JFrame {
+import de.dhbw.java.SQL_Schnittstelle;
+
+public class BenutzerAnlegen extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textField_Name;
+	private JTextField textField_Vorname;
+	private JTextField textField_email;
 	private JPasswordField passwordField;
 	private ButtonGroup group;
-	private JTextField textField_3;
+	private JTextField textField_bereich;
+	private JRadioButton rdbtnBenutzer;
+	private JRadioButton rdbtnVerwalter;
+	private JLabel lblName;
+	private JLabel lblVorname;
+	private JLabel lblBereich;
+	private JLabel lblEmailAdresse;
+	private JLabel lblPasswort;
 
 	/**
 	 * Launch the application.
@@ -50,119 +62,232 @@ public class BenutzerAnlegen extends JFrame {
 	 * Create the frame.
 	 */
 	public BenutzerAnlegen() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerAnlegen.class.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
+		setModal(true); // Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerAnlegen.class
+				.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
 		setTitle("Benutzer anlegen");
 		setResizable(false);
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(100, 100, 310, 365);
-			contentPane = new JPanel();
-			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-			setContentPane(contentPane);
-			contentPane.setLayout(new BorderLayout(0, 0));
-			
-			JLabel lblRaumAnlegen = new JLabel("Benutzer anlegen");
-			lblRaumAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblRaumAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
-			contentPane.add(lblRaumAnlegen, BorderLayout.NORTH);
-			
-			JPanel panel = new JPanel();
-			contentPane.add(panel, BorderLayout.SOUTH);
-			
-			JSplitPane splitPane = new JSplitPane();
-			panel.add(splitPane);
-			
-			JButton btnNewButton = new JButton("Anlegen");
-			btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			splitPane.setLeftComponent(btnNewButton);
-			
-			JButton btnNewButton_1 = new JButton("Abbrechen");
-			btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			btnNewButton_1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					dispose();
+		setLocationRelativeTo(this);
+		setBounds(100, 100, 310, 365);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+
+		JLabel lblBenutzerAnlegen = new JLabel("Benutzer anlegen");
+		lblBenutzerAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblBenutzerAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblBenutzerAnlegen, BorderLayout.NORTH);
+
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.SOUTH);
+
+		JSplitPane splitPane = new JSplitPane();
+		panel.add(splitPane);
+
+		JButton btnAnlegen = new JButton("Anlegen");
+		btnAnlegen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				boolean pflicht = PflichtfelderPruefen();
+
+				if (pflicht) {
+					boolean feedback = SQL_Schnittstelle.insertBenutzer(
+							textField_Name.getText(),
+							textField_Vorname.getText(),
+							textField_email.getText(), GetPasswort(),
+							RadioZurueck(), textField_bereich.getText());
+					if (feedback == true) {// Rückgabewert der Methode
+											// Ausstattung
+											// anlegen
+						setInvisible();
+						Erfolg("Benutzer wurde erstellt!");
+					} else {
+						Erfolg("Benutzer konnte nicht erstellt werden!");
+					}
+				} else {
+					JOptionPane.showMessageDialog(null,
+							" Bitte fuellen Sie die Pflichtfelder aus",
+							"Achtung!", JOptionPane.ERROR_MESSAGE);
 				}
-			});
-			splitPane.setRightComponent(btnNewButton_1);
-			
-			JPanel panel_1 = new JPanel();
-			contentPane.add(panel_1, BorderLayout.CENTER);
-			panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-			
-			JPanel panel_2 = new JPanel();
-			panel_1.add(panel_2);
-			panel_2.setLayout(new GridLayout(0, 2, 0, 0));
-			
-			JPanel panel_3 = new JPanel();
-			panel_2.add(panel_3);
-			panel_3.setLayout(new GridLayout(7, 0, 0, 0));
-			
-			JLabel lblName = new JLabel("Name");
-			lblName.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_3.add(lblName);
-			
-			JLabel lblVorname = new JLabel("Vorname");
-			lblVorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_3.add(lblVorname);
-			
-			JLabel lblEmailAdresse = new JLabel("E-Mail - Adresse");
-			lblEmailAdresse.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_3.add(lblEmailAdresse);
-			
-			JLabel lblPasswort = new JLabel("Passwort");
-			lblPasswort.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_3.add(lblPasswort);
-			
-			JLabel lblRolle = new JLabel("Rolle:");
-			lblRolle.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_3.add(lblRolle);
-			
-			JLabel lblBereich = new JLabel("Bereich:");
-			lblBereich.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_3.add(lblBereich);
-			
-			JPanel panel_4 = new JPanel();
-			panel_2.add(panel_4);
-			panel_4.setLayout(new GridLayout(7, 0, 0, 0));
-			
-			textField = new JTextField();
-			textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_4.add(textField);
-			textField.setColumns(10);
-			
-			textField_1 = new JTextField();
-			textField_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_4.add(textField_1);
-			textField_1.setColumns(10);
-			
-			textField_2 = new JTextField();
-			textField_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_4.add(textField_2);
-			textField_2.setColumns(10);
-			
-			passwordField = new JPasswordField();
-			passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_4.add(passwordField);
-			
-			JPanel panel_5 = new JPanel();
-			panel_4.add(panel_5);
-			panel_5.setLayout(new GridLayout(0, 2, 0, 0));
-			
-			JRadioButton rdbtnVerwalter = new JRadioButton("Verwalter");
-			panel_5.add(rdbtnVerwalter);
-			rdbtnVerwalter.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			group.add(rdbtnVerwalter);
-			
-			JRadioButton rdbtnBenutzer = new JRadioButton("Benutzer");
-			panel_5.add(rdbtnBenutzer);
-			rdbtnBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			group.add(rdbtnBenutzer);
-			ButtonGroup group = new ButtonGroup();
-			
-			textField_3 = new JTextField();
-			textField_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panel_4.add(textField_3);
-			textField_3.setColumns(10);
-					
+			}
+		});
+		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		splitPane.setLeftComponent(btnAnlegen);
+
+		JButton btnAbbrechen = new JButton("Abbrechen");
+		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnAbbrechen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
+								// unsichtbar
+			}
+		});
+		splitPane.setRightComponent(btnAbbrechen);
+
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
+
+		JPanel panel_2 = new JPanel();
+		panel_1.add(panel_2);
+		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
+
+		JPanel panel_3 = new JPanel();
+		panel_2.add(panel_3);
+		panel_3.setLayout(new GridLayout(7, 0, 0, 0));
+
+		lblName = new JLabel("Name");
+		lblName.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblName);
+
+		lblVorname = new JLabel("Vorname");
+		lblVorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblVorname);
+
+		lblEmailAdresse = new JLabel("E-Mail - Adresse");
+		lblEmailAdresse.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblEmailAdresse);
+
+		lblPasswort = new JLabel("Passwort");
+		lblPasswort.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblPasswort);
+
+		JLabel lblRolle = new JLabel("Rolle:");
+		lblRolle.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblRolle);
+
+		lblBereich = new JLabel("Bereich:");
+		lblBereich.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(lblBereich);
+
+		JPanel panel_4 = new JPanel();
+		panel_2.add(panel_4);
+		panel_4.setLayout(new GridLayout(7, 0, 0, 0));
+
+		textField_Name = new JTextField();
+		textField_Name.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_4.add(textField_Name);
+		textField_Name.setColumns(10);
+
+		textField_Vorname = new JTextField();
+		textField_Vorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_4.add(textField_Vorname);
+		textField_Vorname.setColumns(10);
+
+		textField_email = new JTextField();
+		textField_email.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_4.add(textField_email);
+		textField_email.setColumns(10);
+
+		passwordField = new JPasswordField();
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_4.add(passwordField);
+
+		JPanel panel_5 = new JPanel();
+		panel_4.add(panel_5);
+		panel_5.setLayout(new GridLayout(0, 2, 0, 0));
+
+		rdbtnVerwalter = new JRadioButton("Verwalter");
+		rdbtnVerwalter.setSelected(false);
+		panel_5.add(rdbtnVerwalter);
+		rdbtnVerwalter.setFont(new Font("Tahoma", Font.PLAIN, 11));
+
+		rdbtnBenutzer = new JRadioButton("Benutzer");
+		rdbtnBenutzer.setSelected(true);
+		panel_5.add(rdbtnBenutzer);
+		rdbtnBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 11));
+
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnBenutzer);
+		group.add(rdbtnVerwalter);
+
+		textField_bereich = new JTextField();
+		textField_bereich.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_4.add(textField_bereich);
+		textField_bereich.setColumns(10);
+
 	}
 
+	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
+	// sind
+	{
+		boolean gefuellt = true;
+
+		if (textField_Name.getText().isEmpty()) {
+			lblName.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblName.setForeground(Color.black);
+		}
+
+		if (textField_Vorname.getText().isEmpty()) {
+			lblVorname.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblVorname.setForeground(Color.black);
+		}
+
+		if (textField_email.getText().isEmpty()) {
+			lblEmailAdresse.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblEmailAdresse.setForeground(Color.black);
+		}
+
+		if (passwordField.getText().isEmpty()) {
+			lblPasswort.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblPasswort.setForeground(Color.black);
+		}
+
+		if (textField_bereich.getText().isEmpty()) {
+			lblBereich.setForeground(Color.red);
+			gefuellt = false;
+		} else {
+			lblBereich.setForeground(Color.black);
+		}
+
+		return gefuellt;
+	}
+
+	private String RadioZurueck() // gibt den ausgewählten Wert der RadioButtons
+									// zurück
+	{
+
+		String benutzerRolle = null;
+
+		if (rdbtnBenutzer.isSelected()) { // entweder Benutzer
+			benutzerRolle = "b";
+		}
+
+		else if (rdbtnVerwalter.isSelected()) // oder Verwalter
+		{
+			benutzerRolle = "v";
+		}
+		return benutzerRolle;
+	}
+
+	private String GetPasswort() // gibt den Wert des Passwortfeldes zurück
+	{
+		String pw = "";
+		char[] charArray = passwordField.getPassword(); // wandelt char Array
+														// von passwordField in
+														// String um
+		for (int i = 0; i < charArray.length; i++) {
+			pw += charArray[i];
+		}
+		return pw;
+	}
+
+	private void setInvisible() { // Fenster unsichtbar machen
+		this.setVisible(false);
+	}
+
+	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
+		JOptionPane.showMessageDialog(null, nachricht, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
+
+	}
 }

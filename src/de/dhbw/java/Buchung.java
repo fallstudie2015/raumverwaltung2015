@@ -15,6 +15,10 @@ public class Buchung {
 	private int raumID;
 	private String status;
 
+	/*
+	 * Anlegen des Objekts Buchung mit alle für die Buchung relevanten
+	 * Attributen
+	 */
 	public Buchung(int buchungsID, String telefon, Date datum, Time zeitVon,
 			Time zeitBis, String kommentar, String bestuhlung, int benutzerID,
 			int raumID, String status) {
