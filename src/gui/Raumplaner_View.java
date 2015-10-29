@@ -49,8 +49,8 @@ import de.dhbw.java.SQL_Schnittstelle;
  *
  */
 public class Raumplaner_View extends JFrame {
-	Raumplaner_View diese = this;
 
+	public Raumplaner_View diese = this;
 	private JCalendar calendar;
 	private JPanel bvPanel, onScrollPanel, port;
 	private JLabel nameLabel, bereichLabel, logoLabel, raumplanerLabel, raumLabel, benutzerLabel, ausstattungLabel;
@@ -68,6 +68,9 @@ public class Raumplaner_View extends JFrame {
 		initView();
 	}
 
+	/*
+	 * Konstruktor initialisiert die Ansicht
+	 */
 	public Raumplaner_View(ArrayList<Raum> raumList, ArrayList<Buchung> buchungList) {
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(Raumplaner_View.class.getResource("/ressources/Desktop_Statusbar_icon.png")));
@@ -79,6 +82,11 @@ public class Raumplaner_View extends JFrame {
 		raumViewList = new ArrayList<Raum_View>();
 		initView();
 		this.choosenDate = new Date(calendar.getDate().getTime());
+
+		/*
+		 * Listener ändert die Ansicht, sobald ein neues Datum im Kalendar
+		 * ausgewählt wurde
+		 */
 		calendar.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
 
 			@Override
@@ -133,6 +141,9 @@ public class Raumplaner_View extends JFrame {
 		return logoPanel;
 	}
 
+	/*
+	 * Panel enthält alle Buttons, welche der Verwalter zusätzlich hat.
+	 */
 	private JPanel buttonPanel() {
 		ImageIcon iiAddButton = new ImageIcon(
 				getClass().getClassLoader().getResource("ressources/menu_benutzer_anlegen_transp.png"));
@@ -141,6 +152,8 @@ public class Raumplaner_View extends JFrame {
 		benutzerAddButton = new JButton(imageIconAddButton);
 		benutzerAddButton.setPreferredSize(new Dimension(50, 50));
 		benutzerAddButton.setToolTipText("Benutzer anlegen");
+
+		// Öffnet die Ansicht um einen Benutzer anzulegen
 		benutzerAddButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -158,6 +171,8 @@ public class Raumplaner_View extends JFrame {
 		benutzerDeleteButton = new JButton(imageIconDeleteButton);
 		benutzerDeleteButton.setPreferredSize(new Dimension(50, 50));
 		benutzerDeleteButton.setToolTipText("Benutzer löschen");
+
+		// Öffnet die Ansicht um einen Benutzer zu löschen
 		benutzerDeleteButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -174,6 +189,8 @@ public class Raumplaner_View extends JFrame {
 		raumAddButton = new JButton(imageIconRaumButton);
 		raumAddButton.setPreferredSize(new Dimension(50, 50));
 		raumAddButton.setToolTipText("Raum anlegen");
+
+		// Öffnet die Ansicht um einen Raum anzulegen
 		raumAddButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -190,6 +207,8 @@ public class Raumplaner_View extends JFrame {
 		raumDeleteButton = new JButton(imageIconRaumDeleteButton);
 		raumDeleteButton.setPreferredSize(new Dimension(50, 50));
 		raumDeleteButton.setToolTipText("Raum löschen");
+
+		// Öffnet die Ansicht um einen Raum zu löschen
 		raumDeleteButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -206,6 +225,8 @@ public class Raumplaner_View extends JFrame {
 		ausstattungAddButton = new JButton(imageIconAusButton);
 		ausstattungAddButton.setPreferredSize(new Dimension(50, 50));
 		ausstattungAddButton.setToolTipText("Ausstattung anlegen");
+
+		// Öffnet die Ansicht um eine Ausstattung anzulegen
 		ausstattungAddButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -222,6 +243,8 @@ public class Raumplaner_View extends JFrame {
 		ausstattungDeleteButton = new JButton(imageIconAusDeleteButton);
 		ausstattungDeleteButton.setPreferredSize(new Dimension(50, 50));
 		ausstattungDeleteButton.setToolTipText("Ausstattung löschen");
+
+		// Öffnet die Ansicht um Ausstattung zu löschen
 		ausstattungDeleteButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -244,10 +267,16 @@ public class Raumplaner_View extends JFrame {
 		return buttonPanel;
 	}
 
+	/*
+	 * Auf dem Panel sind die Buttons um sein Passwort zu ändern und sich
+	 * auszuloggen
+	 */
 	private JPanel logoutPanel() {
 		logoutButton = new JButton("Logout");
 		logoutButton.setToolTipText("Logout");
 		logoutButton.setPreferredSize(new Dimension(150, 30));
+
+		// Loggt den Nutzer aus
 		logoutButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -260,6 +289,8 @@ public class Raumplaner_View extends JFrame {
 		passwortChangeButton = new JButton("Passwort ändern");
 		passwortChangeButton.setToolTipText("Passwort ändern");
 		passwortChangeButton.setPreferredSize(new Dimension(150, 30));
+
+		// Öffnet die Ansicht um sein Passwort zu ändern
 		passwortChangeButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -299,6 +330,9 @@ public class Raumplaner_View extends JFrame {
 		return scrollPane;
 	}
 
+	/*
+	 * Setz das ScrollPane, aufwelches das Bestellformular angebracht wird
+	 */
 	private void setFormularScroller() {
 		formularScroller = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -307,6 +341,9 @@ public class Raumplaner_View extends JFrame {
 		formularScroller.setVisible(false);
 	}
 
+	/*
+	 * Hier werden alle Räume erstellt die in der DB vorhanden sind
+	 */
 	private void setRaum() {
 		try {
 			if (raumList.size() > 0) {
@@ -453,7 +490,7 @@ public class Raumplaner_View extends JFrame {
 
 	/*
 	 * Das seitlich linke Panel wird mit Kalender und Daten des Benutzers
-	 * gef�llt
+	 * gefüllt
 	 */
 	private JPanel leftPanel() {
 		calendar = new JCalendar();
@@ -469,18 +506,6 @@ public class Raumplaner_View extends JFrame {
 		setRaum();
 		setFormularScroller();
 		formularScroller.getViewport().add(bvPanel);
-
-		nameLabel = new JLabel((Benutzer.getVorname() + " " + Benutzer.getNachname()));
-		// nameLabel.setPreferredSize(new Dimension(150, 100));
-
-		bereichLabel = new JLabel("Bereich");
-
-		JPanel namenPanel = new JPanel();
-		namenPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		namenPanel.add(nameLabel);
-
-		JPanel bereichPanel = new JPanel();
-		bereichPanel.add(bereichLabel);
 
 		JPanel oben = new JPanel();
 		oben.setLayout(new BoxLayout(oben, BoxLayout.PAGE_AXIS));
@@ -524,6 +549,9 @@ public class Raumplaner_View extends JFrame {
 		return mainPanel;
 	}
 
+	/*
+	 * Die Buchungen werden den Räumen zugeordnet
+	 */
 	private void buchungenZuordnen() {
 		for (Raum_View rv : raumViewList) {
 			rv.deleteBuchungList();
@@ -548,7 +576,7 @@ public class Raumplaner_View extends JFrame {
 	}
 
 	/*
-	 * Die Komponenten werden zur�ckgegeben
+	 * Die Komponenten werden zurückgegeben
 	 */
 	public JScrollPane getScrollPane() {
 		return scroller;
@@ -598,8 +626,16 @@ public class Raumplaner_View extends JFrame {
 		return this;
 	}
 
+	public JPanel getBVPanel() {
+		return this.bvPanel;
+	}
+
+	public void setBVPanel(Bestellformular_View bv) {
+		this.bvPanel.add(bv);
+	}
+
 	/*
-	 * Methoden werden aufgerufen, wenn die Buchungen bzw. sich die R�ume �ndern
+	 * Methoden werden aufgerufen, wenn die Buchungen bzw. sich die Räume ändern
 	 */
 	public void setRaumArray(ArrayList<Raum> raumList) {
 		scroller.getViewport().remove(onScrollPanel);
@@ -625,6 +661,9 @@ public class Raumplaner_View extends JFrame {
 		windowAktualisieren();
 	}
 
+	/*
+	 * Methode ändert die Buchungseinträge auf den Paneln
+	 */
 	private void lookAfterCalendar() {
 		if (new Date(calendar.getDate().getTime()) != choosenDate) {
 			for (Raum_View rv : raumViewList) {
@@ -635,6 +674,9 @@ public class Raumplaner_View extends JFrame {
 		}
 	}
 
+	/*
+	 * Dem Bestller werden die Buttons für den Verwalter nicht angezeigt
+	 */
 	private void setBestellerView() {
 		if (Benutzer.getBenutzertyp() != 'v') {
 			raumAddButton.setVisible(false);
@@ -646,14 +688,9 @@ public class Raumplaner_View extends JFrame {
 		}
 	}
 
-	public JPanel getBVPanel() {
-		return this.bvPanel;
-	}
-
-	public void setBVPanel(Bestellformular_View bv) {
-		this.bvPanel.add(bv);
-	}
-
+	/*
+	 * JFrame aktualisieren
+	 */
 	public void windowAktualisieren() {
 		this.revalidate();
 	}

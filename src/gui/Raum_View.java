@@ -21,6 +21,14 @@ import de.dhbw.java.BuchungPlus;
 import de.dhbw.java.Raum;
 import de.dhbw.java.SQL_Schnittstelle;
 
+/**
+ * 
+ * @author Tim
+ * 
+ *         Hier wird die Ansicht der Räume erzeugt und die Buchungen farblich
+ *         hervorgebracht.
+ *
+ */
 public class Raum_View extends JPanel implements MouseListener {
 
 	private JLabel raumLabel;
@@ -46,6 +54,9 @@ public class Raum_View extends JPanel implements MouseListener {
 		this.add(raumzeitenPanel());
 	}
 
+	/*
+	 * Die Bestellformular_View wird erstellt und setzt bestimmte Felder.
+	 */
 	private void setBestellformularView() {
 		// Bestellformular view erstellen
 		bv = new Bestellformular_View(frame, Benutzer.getVorname(), Benutzer.getNachname(), raum.getRaumID(),
@@ -58,6 +69,9 @@ public class Raum_View extends JPanel implements MouseListener {
 		bv.initView();
 	}
 
+	/*
+	 * Alle Panels und Labels werden erstellt und gefärbt.
+	 */
 	private JPanel raumzeitenPanel() {
 		JPanel raumzeitenPanel = new JPanel();
 		raumzeitenPanel.setLayout(new GridLayout(23, 1));
@@ -103,32 +117,51 @@ public class Raum_View extends JPanel implements MouseListener {
 		return raumzeitenPanel;
 	}
 
+	/*
+	 * erstellt den Namen des Raumes
+	 */
 	public JLabel getRaumLabel() {
 		raumLabel = new JLabel(raumName, SwingConstants.CENTER);
 		raumLabel.setFont(new Font(raumName, 0, 18));
 		raumLabel.setPreferredSize(new Dimension(200, 50));
-		// raumLabel.addMouseListener(this);
 
 		return raumLabel;
 	}
 
+	/*
+	 * Methode füllt die Labels mit der passenden Farbe und Buchung, wenn eine
+	 * Buchung für den aktuellen Tag ausgewählt ist.
+	 */
 	public void setBuchungenInCalendar(Date today) {
 		labelLeeren();
 
 		Color farbe;
 
+		// Die eigenen Buchungen werden Grün angezeigt
 		for (BuchungPlus buchung : buchungList) {
 			if (buchung.getBenutzerID() == Benutzer.getBenutzerID()) {
 				farbe = Color.GREEN;
 			} else {
 				farbe = Color.RED;
 			}
+
+			// Es werden nut Buchungen in die Labels getragen, welche von dem
+			// ausgewählten Datum sind
 			if (today.toString().compareTo(buchung.getDatum().toString()) == 0) {
+
 				for (Raum_View_Label label : labelList) {
+
+					/*
+					 * Wenn die Buchung "abgelehnt" oder "storniert" ist, werden
+					 * die Daten auf dem Label null gesetzt.
+					 * 
+					 * Sonst werden die Daten der Buchung auf die Labels
+					 * eingetragen.
+					 */
 					if (buchung.getStatus().equalsIgnoreCase("a") || buchung.getStatus().equalsIgnoreCase("s")) {
 						label.removeBuchung();
 						label.setToolTipText(null);
-											} else {
+					} else {
 						if (buchung.getZeitVon().equals(label.getTime())
 								|| (label.getTime().before(buchung.getZeitBis())
 										&& label.getTime().after(buchung.getZeitVon()))) {
@@ -165,6 +198,9 @@ public class Raum_View extends JPanel implements MouseListener {
 		}
 	}
 
+	/*
+	 * Labels werden zurückgesetzt
+	 */
 	public void labelLeeren() {
 		for (Raum_View_Label label : labelList) {
 			label.setIcon(null);
@@ -174,8 +210,15 @@ public class Raum_View extends JPanel implements MouseListener {
 		}
 	}
 
+	/*
+	 * Getter und Setter Methoden der Klasse
+	 */
 	public void getBuchung(BuchungPlus buchung) {
 		this.buchungList.add(buchung);
+	}
+
+	public String getRaumName() {
+		return raumName;
 	}
 
 	public void setBuchungNeu(BuchungPlus buchung) {
@@ -202,6 +245,10 @@ public class Raum_View extends JPanel implements MouseListener {
 		return labelList;
 	}
 
+	/*
+	 * Listener setzt Bestellformular sichtbar, wenn keine Buchung auf dem Label
+	 * des Panels ist und setzt spezifische Felder des Bestellformulars.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Raum_View_Label label = (Raum_View_Label) e.getSource();
@@ -263,9 +310,5 @@ public class Raum_View extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 
-	}
-
-	public String getRaumName() {
-		return raumName;
 	}
 }

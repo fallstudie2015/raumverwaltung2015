@@ -8,6 +8,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * 
+ * @author Tim
+ * 
+ *         Erstellt die linke seitliche Seite des Scrollpanes.
+ *
+ */
 public class Zeit_View extends JPanel {
 
 	private JLabel zeitLabel;
@@ -21,6 +28,10 @@ public class Zeit_View extends JPanel {
 		this.add(uhrzeitenPanel());
 	}
 
+	/*
+	 * erstellt Label mit den Uhrzeiten von 08:00 Uhr bis 19:00 Uhr im 30 min.
+	 * Takt.
+	 */
 	private JPanel uhrzeitenPanel() {
 		JPanel uhrzeitenPanel = new JPanel();
 		uhrzeitenPanel.setLayout(new GridLayout(45, 1));

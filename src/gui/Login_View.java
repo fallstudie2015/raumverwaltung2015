@@ -29,15 +29,17 @@ import javax.swing.UIManager;
 
 import gui.externeFrames.AusstattungAnlegen;
 
+/**
+ * 
+ * @author Timi
+ *
+ *         Hier wird das Login Fenster erzeugt, es muss nach dem erzeugen auf
+ *         visible gesetzt werden
+ * 
+ *         Alle Elemente sind auf einem eigenen Panel implementiert, um deren
+ *         spezifische Größe zuändern.
+ */
 public class Login_View extends JFrame {
-
-	/*
-	 * Hier wird das Login Fenster erzeugt, es muss nach dem erzeugen auf
-	 * visible gesetzt werden
-	 * 
-	 * Alle Elemente sind auf einem eigenen Panel implementiert, um deren
-	 * spezifische Gr��e zu �ndern.
-	 */
 
 	private JLabel loginWrongLabel, logoLabel;
 	private JTextField userIDField;
@@ -45,7 +47,6 @@ public class Login_View extends JFrame {
 	private JButton loginButton, cancelButton;
 	private ActionListener action;
 	private static int wait = 0;
-	
 
 	public Login_View(ActionListener action) {
 		setLoginButtonListener(action);
@@ -62,7 +63,7 @@ public class Login_View extends JFrame {
 	/*
 	 * Rahmenbedingungen setzen
 	 * 
-	 * Aufl�sung: 786 * 500 als feste und unver�nderbare Gr��e
+	 * Auflösung: 786 * 500 als feste und unveränderbare Größe
 	 */
 	private void initLogin() {
 		setIconImage(Toolkit.getDefaultToolkit()
@@ -77,7 +78,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Alle erforderlichen Panel werden zusammengef�gt, bevor sie auf das Frame
+	 * Alle erforderlichen Panel werden zusammengefügt, bevor sie auf das Frame
 	 * gesetzt werden
 	 */
 	private JPanel loginPanel() {
@@ -100,7 +101,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Panel f�r das Label, welches erscheint, wenn die Daten falsch sind
+	 * Panel für das Label, welches erscheint, wenn die Daten falsch sind
 	 */
 	private JPanel labelPanel() {
 		loginWrongLabel = new JLabel("Benutzerdaten sind nicht korrekt angegeben!");
@@ -115,9 +116,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Panel enth�lt die zwei eingabe Felder
-	 * 
-	 * Die ActionListener m�ssen noch entfernt werden
+	 * Panel enthält die zwei eingabe Felder
 	 */
 	private JPanel insertFieldPanel() {
 		userIDField = new JTextField("eMail-Adresse");
@@ -130,7 +129,7 @@ public class Login_View extends JFrame {
 		passwordField.setPreferredSize(new Dimension(355, 30));
 		passwordField.setEchoChar((char) 0);
 
-		// userId Feld wird gedr�ckt
+		// userId Feld wird gedrückt
 		MouseListener ml1 = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -178,10 +177,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Panel enth�lt die zwei Buttons
-	 * 
-	 * ActionListener sind nur zu Testzwecken implementier, m�ssen noch entfernt
-	 * werden
+	 * Panel enthält die zwei Buttons
 	 */
 	private JPanel buttonPanel() {
 		loginButton = new JButton("Login");
@@ -220,7 +216,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Panel enth�lt ein Firmenlogo o.�.
+	 * Panel enthält das Logo
 	 */
 	private JPanel logoPanel() {
 		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource("ressources/logo_2.png"));
@@ -235,7 +231,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Methoden um ActionListener und andere Listener hinzuzuf�gen
+	 * Methoden um ActionListener und andere Listener hinzuzufügen
 	 */
 	public void setUserIDListener(ActionListener al) {
 		this.userIDField.addActionListener(al);
@@ -266,7 +262,7 @@ public class Login_View extends JFrame {
 	}
 
 	/*
-	 * Setter Methoden f�r die einzelnen Elemente auf dem JFrame
+	 * Setter Methoden für die einzelnen Elemente auf dem JFrame
 	 */
 	public JLabel getLoginWrongLabel() {
 		return loginWrongLabel;
