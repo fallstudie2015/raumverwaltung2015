@@ -57,11 +57,6 @@ public class Login_View extends JFrame {
 		setLoginButtonListener(new listener.Login_Listener(this));
 		userIDField.addActionListener(new listener.Login_Listener(this));
 		passwordField.addActionListener(new listener.Login_Listener(this));
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 	}
 
 	/*
