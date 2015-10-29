@@ -276,11 +276,13 @@ public abstract class SQL_Schnittstelle {
 					+ "', " + anzPersonen + ", '" + intExterneTeilnehmer + "')";
 			int buchungId = SQL_Schnittstelle.sqlInsert(updateString);
 			String ausstattung = null;
-			for (int i = 0; i < ausstattungList.size(); i++) {
-				ausstattung = ausstattungList.get(i);
-				int ausstattungId = getAusstatungsArtenID(ausstattung);
-				insertBuchungAusstattung(buchungId, ausstattungId);
+			if (ausstattungList != null) {
+				for (int i = 0; i < ausstattungList.size(); i++) {
+					ausstattung = ausstattungList.get(i);
+					int ausstattungId = getAusstatungsArtenID(ausstattung);
+					insertBuchungAusstattung(buchungId, ausstattungId);
 
+				}
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
