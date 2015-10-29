@@ -635,6 +635,7 @@ public class Bestellformular_View extends JPanel {
 	}
 
 	public void setGrundausstattung(ArrayList<Ausstattung> list) {
+		ausstattung = null;
 		ausstattung = new Ausstattung[list.size()];
 		ausstattung = list.toArray(ausstattung);
 	}

@@ -35,6 +35,7 @@ import javax.swing.SwingConstants;
 
 import com.toedter.calendar.JCalendar;
 
+import de.dhbw.java.Ausstattung;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 import de.dhbw.java.BuchungPlus;
@@ -659,6 +660,12 @@ public class Raumplaner_View extends JFrame {
 		this.buchungList = buchungList;
 		buchungenZuordnen();
 		windowAktualisieren();
+	}
+
+	public void setGrundausstattungArray(ArrayList<Ausstattung> list) {
+		for (Raum_View raum : raumViewList) {
+			raum.setGrundausstattung(list);
+		}
 	}
 
 	/*

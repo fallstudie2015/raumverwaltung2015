@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import de.dhbw.java.Ausstattung;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.BuchungPlus;
 import de.dhbw.java.Raum;
@@ -243,6 +244,10 @@ public class Raum_View extends JPanel implements MouseListener {
 
 	public ArrayList<Raum_View_Label> getLabelList() {
 		return labelList;
+	}
+
+	public void setGrundausstattung(ArrayList<Ausstattung> list) {
+		bv.setGrundausstattung(list);
 	}
 
 	/*
