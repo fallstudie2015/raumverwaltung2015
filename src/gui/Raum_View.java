@@ -123,6 +123,7 @@ public class Raum_View extends JPanel implements MouseListener {
 	 */
 	public JLabel getRaumLabel() {
 		raumLabel = new JLabel(raumName, SwingConstants.CENTER);
+		raumLabel.setToolTipText(raumName);
 		raumLabel.setFont(new Font(raumName, 0, 18));
 		raumLabel.setPreferredSize(new Dimension(200, 50));
 
@@ -146,7 +147,8 @@ public class Raum_View extends JPanel implements MouseListener {
 				farbe = Color.RED;
 			}
 
-			// Es werden nut Buchungen in die Labels getragen, welche von dem
+			// Es werden nut Buchungen in die Labels getragen, welche von
+			// dem
 			// ausgewählten Datum sind
 			if (today.toString().compareTo(buchung.getDatum().toString()) == 0) {
 
@@ -185,6 +187,10 @@ public class Raum_View extends JPanel implements MouseListener {
 								label.setIcon(imageIcon);
 								label.setBuchung(buchung);
 								label.setFrame(frame);
+							} else if (buchung.getStatus().equalsIgnoreCase("p")) {
+								label.setBackground(Color.ORANGE);
+								label.setFrame(frame);
+								label.setBuchung(buchung);
 							} else {
 								label.setBackground(farbe);
 								label.setBuchung(buchung);
