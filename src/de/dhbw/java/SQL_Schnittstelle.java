@@ -386,7 +386,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getAusstattungsID");
 		}
 		return ausstattungid;
-	}
+	} // ende get AusstattungsArtenID
 
 	/**
 	 * Läd jede Zusatzaussattung die bei einer Buchung ausgewählt wurde in die
