@@ -14,6 +14,14 @@ import javax.swing.JPanel;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 
+/**
+ * 
+ * @author Tim
+ * 
+ *         Erstellt die Labels auf dem Hauptfeld und speichert ihre Zeit und die
+ *         dazugehörige Buchung
+ *
+ */
 public class Raum_View_Label extends JLabel {
 
 	private Time time;
@@ -29,6 +37,10 @@ public class Raum_View_Label extends JLabel {
 		this.setOpaque(true);
 		this.setEnabled(true);
 
+		/*
+		 * Listener öffnet Benutzer abhängig die zu Bestätigenansicht oder
+		 * Stornierenansicht
+		 */
 		this.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -44,6 +56,9 @@ public class Raum_View_Label extends JLabel {
 		});
 	}
 
+	/*
+	 * Methoden zum setzten oder entfernen der Attribute auf dem Label
+	 */
 	public JPanel getPanel() {
 		return parent;
 	}

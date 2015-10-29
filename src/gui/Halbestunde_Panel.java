@@ -11,6 +11,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Tim
+ * 
+ *         Panel ist zur Unterscheidung zwischen Viertelstunde und Halbestunde
+ *         da. Damit wird ein Farblicher Unterschied angezeigt.
+ *
+ */
 public class Halbestunde_Panel extends JPanel {
 
 	private JPanel upperPanel, downerPanel;
@@ -44,6 +52,9 @@ public class Halbestunde_Panel extends JPanel {
 		label.setPanel(upperPanel);
 	}
 
+	/*
+	 * Labels werden auf das Panel gesetzt und gefärbt
+	 */
 	private void initPanel() {
 		upperPanel = new JPanel(new BorderLayout());
 
@@ -62,14 +73,17 @@ public class Halbestunde_Panel extends JPanel {
 		this.add(downerPanel);
 	}
 
-	public Time getLabelObenTime() {
-		return oberesLabel.getTime();
-	}
+	// public Time getLabelObenTime() {
+	// return oberesLabel.getTime();
+	// }
+	//
+	// public Time getLabelUntenTime() {
+	// return unteresLabel.getTime();
+	// }
 
-	public Time getLabelUntenTime() {
-		return unteresLabel.getTime();
-	}
-
+	/*
+	 * Methoden um die Labels auf den Panels zu erhalten
+	 */
 	public Raum_View_Label getRaumViewLabelOben() {
 		return oberesLabel;
 	}

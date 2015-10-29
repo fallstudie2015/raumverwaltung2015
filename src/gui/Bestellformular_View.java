@@ -39,6 +39,16 @@ import de.dhbw.java.Ausstattung;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.SQL_Schnittstelle;
 
+/**
+ * 
+ * @author Tim
+ * 
+ *         Die Klasse Bestellformular_View erstellt das Formular, welches alle
+ *         Daten erfasst, welche der Bneutzer für den Raum angeben möchte. Auf
+ *         dem Hauptpanel wird es auf der linken Seite angezeigt, sobald der
+ *         Benutzer auf die gewünschte Zeit, des gewünschten Raums geklcikt hat.
+ *
+ */
 public class Bestellformular_View extends JPanel {
 
 	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel, zeitVonLabel, zeitBisLabel, personenLabel,
@@ -67,6 +77,12 @@ public class Bestellformular_View extends JPanel {
 	private TappedPaneBuchung panelBuchung;
 	private Raum_View raum;
 
+	/*
+	 * Der Konstruktor benötigt das ParentFrame um es aktualisieren zu können,
+	 * dassselbe gilt für das panel der eigenen Buchungen. Zudem wird die
+	 * Raum_View benötigt, um bei einer erfolgten Buchung, den Kalender aktuell
+	 * zu halten
+	 */
 	public Bestellformular_View(JFrame frame, String name, String nachname, int raumId, TappedPaneBuchung panel,
 			String bereich, Raum_View rv) {
 		// initView();
@@ -81,12 +97,18 @@ public class Bestellformular_View extends JPanel {
 		this.setVisible(false);
 	}
 
+	/*
+	 * View wird erstellt
+	 */
 	public void initView() {
 		this.setLayout(new GridLayout(1, 1));
 		this.add(mainPanel());
 		setChooser();
 	}
 
+	/*
+	 * Alle Komponenten werden zusammengefügt
+	 */
 	private JPanel mainPanel() {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
@@ -117,6 +139,10 @@ public class Bestellformular_View extends JPanel {
 		return mainPanel;
 	}
 
+	/*
+	 * Panel beinhaltet den Namen und Bereich des Nutzers, sowie den Namen des
+	 * Raumes
+	 */
 	private JPanel raumUndNamePanel() {
 		raumLabel = new JLabel(raumName);
 		raumLabel.setPreferredSize(new Dimension(100, 30));
@@ -151,6 +177,10 @@ public class Bestellformular_View extends JPanel {
 		return raumNamePanel;
 	}
 
+	/*
+	 * Panel enthält ein Textfeld, in welches die Telefonnummer eingetragen
+	 * werden kann
+	 */
 	private JPanel telPanel() {
 		telLabel = new JLabel("Tel. :");
 		telLabel.setPreferredSize(new Dimension(50, 30));
@@ -174,6 +204,10 @@ public class Bestellformular_View extends JPanel {
 		return panel;
 	}
 
+	/*
+	 * Panel enthält die Datums anzeige, welche Anfangs immer auf den
+	 * ausgewählten Tag der Hauptanzeige eingestellt ist
+	 */
 	private JPanel datumPanel() {
 		datumLabel = new JLabel("Datum: ");
 		datumLabel.setPreferredSize(new Dimension(50, 30));
@@ -195,10 +229,16 @@ public class Bestellformular_View extends JPanel {
 		return panel;
 	}
 
+	/*
+	 * Panel beinhaltet die die Dropdownmenues, mit welchen die Zeit ausgewählt
+	 * werden kann
+	 */
 	private JPanel zeitVonPanel() {
 		zeitVonLabel = new JLabel("Zeit von:");
 		zeitVonLabel.setPreferredSize(new Dimension(100, 30));
 
+		// ItemListener setzt reservieren Button auf nicht klickbar, wenn für
+		// die ausgewählte Zeit und Datum schon eine Buchung existiert
 		ItemListener il = new ItemListener() {
 
 			@Override
@@ -241,10 +281,16 @@ public class Bestellformular_View extends JPanel {
 		return zeitVonPanel;
 	}
 
+	/*
+	 * Panel beinhaltet die die Dropdownmenues, mit welchen die Zeit ausgewählt
+	 * werden kann
+	 */
 	private JPanel zeitBisPanel() {
 		zeitBisLabel = new JLabel("bis:");
 		zeitBisLabel.setPreferredSize(new Dimension(100, 30));
 
+		// ItemListener setzt reservieren Button auf nicht klickbar, wenn für
+		// die ausgewählte Zeit und Datum schon eine Buchung existiert
 		ItemListener il = new ItemListener() {
 
 			@Override
@@ -287,6 +333,10 @@ public class Bestellformular_View extends JPanel {
 		return zeitBisPanel;
 	}
 
+	/*
+	 * In das Panel kann die Anzahl der Personen eingetragen werden, jedoch ist
+	 * dieses Feld von Raum zu Raum unterschiedlich limitiert
+	 */
 	private JPanel personenPanel() {
 		personenLabel = new JLabel("Anzahl Personen: ");
 		personenLabel.setPreferredSize(new Dimension(155, 30));
@@ -308,6 +358,10 @@ public class Bestellformular_View extends JPanel {
 		return panel;
 	}
 
+	/*
+	 * Die Checkbox bestimmt, ob Gäste und oder Externe Mitarbeiter den Raum
+	 * Nutzen oder Anwesend sind
+	 */
 	private JPanel inExPanel() {
 		externCheck = new JCheckBox("mit G\u00E4sten/Externen");
 		externCheck.setPreferredSize(new Dimension(140, 30));
@@ -318,6 +372,10 @@ public class Bestellformular_View extends JPanel {
 		return panel;
 	}
 
+	/*
+	 * In diesem Panel kann festgelegt werden, welche Ausstattung der Nutzer
+	 * zusätzlich bennötigt
+	 */
 	private JPanel technikPanel() {
 		JPanel technikPanel = new JPanel(new BorderLayout());
 
@@ -392,6 +450,9 @@ public class Bestellformular_View extends JPanel {
 		return technikPanel;
 	}
 
+	/*
+	 * Es wird die Raumspezifischeaussttung angezeigt
+	 */
 	private JPanel ausstattungPanel() {
 		JPanel ausstattungPanel = new JPanel(new BorderLayout());
 
@@ -423,6 +484,9 @@ public class Bestellformular_View extends JPanel {
 		return ausstattungPanel;
 	}
 
+	/*
+	 * Die gewünschte Bestuhlung kann ausgewählt werden
+	 */
 	private JPanel bestuhulungPanel() {
 		JPanel bestuhlungPanel = new JPanel(new BorderLayout());
 
@@ -446,11 +510,20 @@ public class Bestellformular_View extends JPanel {
 		return bestuhlungPanel;
 	}
 
+	/*
+	 * Die Bestellung kann reserviert oder abgebrochen werden
+	 */
 	private JPanel buttonPanel() {
 		reservierenButton = new JButton("reservieren");
 		reservierenButton.setPreferredSize(new Dimension(100, 30));
 		reservierenButton.addActionListener(new ActionListener() {
 
+			/*
+			 * Die Reservierung wird vorgenommen, wenn die Buchung in die DB
+			 * erfolgreich war. Eine Mail wird and der Verwalter und Hausmeister
+			 * gesendet. Danach wird die Ansicht nicht mehr sichtbar und die
+			 * Sicht wechselt zu der ursprünglichen.
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (setBuchung()) {
@@ -480,6 +553,10 @@ public class Bestellformular_View extends JPanel {
 		abbrechenButton.setPreferredSize(new Dimension(100, 30));
 		abbrechenButton.addActionListener(new ActionListener() {
 
+			/*
+			 * Die Sicht wird unsichtbar und die ursprüngliche Ansicht wieder
+			 * sichtbar.
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getBestellformular().setVisible(false);
@@ -503,6 +580,9 @@ public class Bestellformular_View extends JPanel {
 		return buttonPanel;
 	}
 
+	/*
+	 * Methoden um spezifische Komponenten der Bestellformular_View zu bekommen
+	 */
 	public void setRaumName(String name) {
 		this.raumName = name;
 	}
@@ -515,6 +595,9 @@ public class Bestellformular_View extends JPanel {
 		this.pane = pane;
 	}
 
+	/*
+	 * Methoden um Felder vorzubelegen
+	 */
 	public void setDate(JCalendar cal) {
 		dateChooser.setDate(cal.getDate());
 		oldDate = dateChooser.getDate();
@@ -552,10 +635,14 @@ public class Bestellformular_View extends JPanel {
 	}
 
 	public void setGrundausstattung(ArrayList<Ausstattung> list) {
+		ausstattung = null;
 		ausstattung = new Ausstattung[list.size()];
 		ausstattung = list.toArray(ausstattung);
 	}
 
+	/*
+	 * Metode um zu überprüfen, dass die Buchung in die DB erfolgreich war
+	 */
 	private boolean setBuchung() {
 		String telefon = telField.getText();
 		Date datum = new Date(dateChooser.getDate().getTime());
@@ -573,6 +660,10 @@ public class Bestellformular_View extends JPanel {
 				raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer);
 	}
 
+	/*
+	 * Listener prüft, ob eine Buchung zu der aktuellen Zeit und Datum vorliegt.
+	 * Wenn Ja wird der reservieren Button grau hinterlegt
+	 */
 	private void setChooser() {
 		PropertyChangeListener pc = new PropertyChangeListener() {
 
