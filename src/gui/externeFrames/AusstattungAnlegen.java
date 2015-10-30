@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
 import gui.externeFrames.RaumAnlegen.MeinActionListener;
 
 import javax.swing.JComboBox;
@@ -27,6 +28,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.Toolkit;
@@ -37,6 +40,7 @@ public class AusstattungAnlegen extends JDialog {
 	private JTextField textField_aName;
 	private JLabel lblAusstattungsname;
 	private MeinActionListener mal = new MeinActionListener();
+	private KeyListenerESC esc = new KeyListenerESC();
 
 	/**
 	 * Launch the application.
@@ -127,6 +131,7 @@ public class AusstattungAnlegen extends JDialog {
 		panel_4.add(textField_aName);
 		textField_aName.setColumns(10);
 		textField_aName.addActionListener(mal);
+		textField_aName.addKeyListener(esc);
 	}
 
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
@@ -180,5 +185,28 @@ public class AusstattungAnlegen extends JDialog {
 						"Achtung!", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+	public class KeyListenerESC implements KeyListener {
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				setInvisible();
+			}
 		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+	}
 }

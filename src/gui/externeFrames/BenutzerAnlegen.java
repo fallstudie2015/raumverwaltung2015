@@ -317,12 +317,6 @@ public class BenutzerAnlegen extends JDialog {
 	public class KeyListenerESC implements KeyListener {
 
 		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -331,11 +325,15 @@ public class BenutzerAnlegen extends JDialog {
 		}
 
 		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
-			if (e.getExtendedKeyCode() == KeyEvent.VK_ESCAPE) {
-			    System.out.println("Backspace pressed");
-			}
+			
 		}
 
 	}
