@@ -62,14 +62,34 @@ public abstract class MailTexte {
 	public static String getTextBestaetigenHausmeister(Buchung buchung) {
 
 		String antwort = new String(
-				"Sehr geehrte Raumverwalter, \n\n für die Reservierung am "
-						+ buchung.getDatum() + " in Raum "
+				"Sehr geehrte Raumverwalter, \n\n für die Reservierung am: "
+						+ buchung.getDatum() + " \n um: \t"
+						+ buchung.getZeitVon() + " \n in Raum: \t "
 						+ SQL_Schnittstelle.getRaumName(buchung.getRaumID())
-						+ " wird die Bestuhlung: \t" + buchung.getBestuhlung()
+						+ "\n wird die Bestuhlung: \t" + buchung.getBestuhlung()
 						+ "\n und die Ausstattung: \t"
 						+ SQL_Schnittstelle
 								.getAusstattungBuchung(buchung.getBuchungsID())
-						+ "\n benötigt. \n\n Bitte kümmern Sie sich um diese Wünsche.\n\n Mit freundlichen Grüßen\n Ihre Raumverwaltung.");
+						+ "\n benötigt.\n\n Es ist keine Pufferzeit eingeplant. \n\n Bitte kümmern Sie sich um diese Wünsche.\n\n Mit freundlichen Grüßen\n Ihre Raumverwaltung.");
+
+		return antwort;
+	}
+
+	public static String getTextBestaetigenHausmeisterMitPuffer(Buchung buchung,
+			String startPuffer) {
+
+		String antwort = new String(
+				"Sehr geehrte Raumverwalter, \n\n für die Reservierung am: \t"
+						+ buchung.getDatum() + "\n um: \t"
+						+ buchung.getZeitVon() + "\n in Raum: \t "
+						+ SQL_Schnittstelle.getRaumName(buchung.getRaumID())
+						+ "\n wird die Bestuhlung: \t" + buchung.getBestuhlung()
+						+ "\n und die Ausstattung: \t"
+						+ SQL_Schnittstelle
+								.getAusstattungBuchung(buchung.getBuchungsID())
+						+ "\n benötigt. \n\n Der Aufbau kann beginnen um: "
+						+ startPuffer
+						+ "\n\n Bitte kümmern Sie sich um diese Wünsche.\n\n Mit freundlichen Grüßen\n Ihre Raumverwaltung.");
 
 		return antwort;
 	}
@@ -80,7 +100,8 @@ public abstract class MailTexte {
 
 		String antwort = new String(
 
-				"Neue Raumbestellung am " + buchung.getDatum() + "");
+				"Neue Raumbestellung am " + buchung.getDatum() + " um "
+						+ buchung.getZeitVon());
 
 		return antwort;
 	}

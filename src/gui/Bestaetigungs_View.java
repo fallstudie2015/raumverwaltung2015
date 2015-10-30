@@ -25,6 +25,8 @@ public class Bestaetigungs_View extends JDialog {
 
 	private Buchung buchung;
 
+	private String pufferStart;
+
 	private JLabel buchungsID;
 	private JLabel raum;
 	private JLabel benutzer;
@@ -229,7 +231,7 @@ public class Bestaetigungs_View extends JDialog {
 					- Time.valueOf("01:" + cbPuffer.getSelectedItem() + ":00")
 							.getTime();
 			System.out.println("Pufferzeit start: " + new Time(diff));
-			String pufferStart = new Time(diff).toString();
+			pufferStart = new Time(diff).toString();
 			Time zeitVonPuffer = Time.valueOf(pufferStart);
 			System.out.println(zeitVonPuffer);
 
@@ -280,10 +282,20 @@ public class Bestaetigungs_View extends JDialog {
 								mbv.getBuchung().getBenutzerID()),
 						MailTexte.getBetreffBestaetigen(mbv.getBuchung()),
 						MailTexte.getTextBestaetigen(mbv.getBuchung()));
-				mail.sendMail(MailTexte.hausmeisterPostfach,
-						MailTexte.getBetreffBestaetigenHausmeister(mbv.buchung),
-						MailTexte.getTextBestaetigenHausmeister(
-								mbv.getBuchung()));
+
+				if (pufferStart == null) {
+					mail.sendMail(MailTexte.hausmeisterPostfach,
+							MailTexte.getBetreffBestaetigenHausmeister(
+									mbv.getBuchung()),
+							MailTexte.getTextBestaetigenHausmeister(
+									mbv.getBuchung()));
+				} else {
+					mail.sendMail(MailTexte.hausmeisterPostfach,
+							MailTexte.getBetreffBestaetigenHausmeister(
+									mbv.getBuchung()),
+							MailTexte.getTextBestaetigenHausmeisterMitPuffer(
+									mbv.getBuchung(), pufferStart));
+				}
 				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
 				mbv.dispose();
 
