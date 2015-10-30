@@ -28,6 +28,8 @@ import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
@@ -37,6 +39,7 @@ public class AusstattungLoeschen extends JDialog {
 	private JTextField textField_Ausstattung;
 	private JLabel lblAusstattung;
 	private MeinActionListener mal = new MeinActionListener();
+	private KeyListenerESC esc = new KeyListenerESC();
 
 	/**
 	 * Launch the application.
@@ -128,6 +131,7 @@ public class AusstattungLoeschen extends JDialog {
 		panel_3.add(textField_Ausstattung);
 		textField_Ausstattung.setColumns(10);
 		textField_Ausstattung.addActionListener(mal);
+		textField_Ausstattung.addKeyListener(esc);
 	}
 
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
@@ -179,6 +183,29 @@ public class AusstattungLoeschen extends JDialog {
 						" Bitte fuellen Sie das Pflichtfeld aus",
 						"Achtung!", JOptionPane.ERROR_MESSAGE);
 			}
+		}
+	}
+	
+	public class KeyListenerESC implements KeyListener {
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				setInvisible();
+			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }
