@@ -25,4 +25,8 @@ public class BuchungPlus extends Buchung {
 	public void setBenutzerName(String benutzerName) {
 		this.Name = benutzerName;
 	}
+	
+	public String getAusstattung(){
+		return ausstattung;
+	}
 }
