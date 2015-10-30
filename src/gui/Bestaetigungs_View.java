@@ -269,28 +269,61 @@ public class Bestaetigungs_View extends JDialog {
 				System.out.println(
 						"Aktuelles Label: " + labelListe.indexOf(label));
 				startInt = labelListe.indexOf(label);
-				if (labelListe.get(startInt - 1).buchungGesetzt == false
-						&& labelListe.get(startInt - 2).buchungGesetzt == false
-						&& labelListe
-								.get(startInt - 3).buchungGesetzt == false) {
-					minute = new String[4];
-					minute[0] = "keinen";
-					minute[1] = "15";
-					minute[2] = "30";
-					minute[3] = "45";
-				} else if (labelListe.get(startInt - 1).buchungGesetzt == false
-						&& labelListe
-								.get(startInt - 2).buchungGesetzt == false) {
-					minute = new String[3];
-					minute[0] = "keinen";
-					minute[1] = "15";
-					minute[2] = "30";
-				} else if (labelListe
-						.get(startInt - 1).buchungGesetzt == false) {
-					minute = new String[2];
-					minute[0] = "keinen";
-					minute[1] = "15";
-				} else {
+				if (startInt > 2) {
+					if (labelListe.get(startInt - 1).buchungGesetzt == false
+							&& labelListe
+									.get(startInt - 2).buchungGesetzt == false
+							&& labelListe.get(
+									startInt - 3).buchungGesetzt == false) {
+						minute = new String[4];
+						minute[0] = "keinen";
+						minute[1] = "15";
+						minute[2] = "30";
+						minute[3] = "45";
+					} else if (labelListe
+							.get(startInt - 1).buchungGesetzt == false
+							&& labelListe.get(
+									startInt - 2).buchungGesetzt == false) {
+						minute = new String[3];
+						minute[0] = "keinen";
+						minute[1] = "15";
+						minute[2] = "30";
+					} else if (labelListe
+							.get(startInt - 1).buchungGesetzt == false) {
+						minute = new String[2];
+						minute[0] = "keinen";
+						minute[1] = "15";
+					} else {
+						minute = new String[1];
+						minute[0] = "keinen";
+					}
+				} else if (startInt > 1) {
+					if (labelListe.get(startInt - 1).buchungGesetzt == false
+							&& labelListe.get(
+									startInt - 2).buchungGesetzt == false) {
+						minute = new String[3];
+						minute[0] = "keinen";
+						minute[1] = "15";
+						minute[2] = "30";
+					} else if (labelListe
+							.get(startInt - 1).buchungGesetzt == false) {
+						minute = new String[2];
+						minute[0] = "keinen";
+						minute[1] = "15";
+					} else {
+						minute = new String[1];
+						minute[0] = "keinen";
+					}
+				} else if (startInt > 0) {
+					if (labelListe.get(startInt - 1).buchungGesetzt == false) {
+						minute = new String[2];
+						minute[0] = "keinen";
+						minute[1] = "15";
+					} else {
+						minute = new String[1];
+						minute[0] = "keinen";
+					}
+				} else if (startInt == 0) {
 					minute = new String[1];
 					minute[0] = "keinen";
 				}
