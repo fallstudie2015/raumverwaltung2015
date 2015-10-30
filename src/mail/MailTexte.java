@@ -14,6 +14,12 @@ public abstract class MailTexte {
 	public static String verwalterPostfach = new String(
 			"fallstudie2015@gmx.de");
 
+	/*
+	 * Zentrale Variable zur Verwaltung des Hausmeisterpostaches.
+	 */
+	public static String hausmeisterPostfach = new String(
+			"hausmeister.fallstudie@gmx.de");
+
 	/* Betreff für die E-Mail bei Reservierungsstornierung */
 	public static String getBetreffStornierung(Buchung buchung) {
 
@@ -53,15 +59,31 @@ public abstract class MailTexte {
 	}
 
 	/* Text für Hausmeister für Bestätigung bei Reservierungsbestätigung */
-	// public static String getTextBestaetigenHausmeister(Buchung buchung) {
-	//
-	// String antwort = new String("Sehr geehrte Raumverwalter, \n\n für die
-	// Reservierung am " +
-	// buchung.getDatum() + " in Raum " +
-	// SQL_Schnittstelle.getRaumName(buchung.getRaumID()) + " wird die
-	// Bestuhlung: \t" + buchung.getBestuhlung() + "\n ");
-	//
-	// }
+	public static String getTextBestaetigenHausmeister(Buchung buchung) {
+
+		String antwort = new String(
+				"Sehr geehrte Raumverwalter, \n\n für die Reservierung am "
+						+ buchung.getDatum() + " in Raum "
+						+ SQL_Schnittstelle.getRaumName(buchung.getRaumID())
+						+ " wird die Bestuhlung: \t" + buchung.getBestuhlung()
+						+ "\n und die Ausstattung: \t"
+						+ SQL_Schnittstelle
+								.getAusstattungBuchung(buchung.getBuchungsID())
+						+ "\n benötigt. \n\n Bitte kümmern Sie sich um diese Wünsche.\n\n Mit freundlichen Grüßen\n Ihre Raumverwaltung.");
+
+		return antwort;
+	}
+
+	/* Betreff für Hausmeister für Bestätigung bei Reservierungsbestätigung */
+
+	public static String getBetreffBestaetigenHausmeister(Buchung buchung) {
+
+		String antwort = new String(
+
+				"Neue Raumbestellung am " + buchung.getDatum() + "");
+
+		return antwort;
+	}
 
 	/* Text für die E-Mail bei Reservierungsstornierung */
 	public static String getTextStornierung(Buchung buchung) {

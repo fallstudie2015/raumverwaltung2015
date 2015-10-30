@@ -14,6 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.Raumplaner_View;
+import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
 import gui.externeFrames.RaumAnlegen.MeinActionListener;
 
 import javax.swing.JComboBox;
@@ -27,6 +29,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.Toolkit;
@@ -37,27 +41,30 @@ public class AusstattungAnlegen extends JDialog {
 	private JTextField textField_aName;
 	private JLabel lblAusstattungsname;
 	private MeinActionListener mal = new MeinActionListener();
+	private KeyListenerESC esc = new KeyListenerESC();
+	private Raumplaner_View rv;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AusstattungLoeschen frame = new AusstattungLoeschen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					AusstattungLoeschen frame = new AusstattungLoeschen();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public AusstattungAnlegen() {
+	public AusstattungAnlegen(Raumplaner_View rv) {
+		this.rv = rv;
 		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(AusstattungAnlegen.class.getResource(
@@ -127,6 +134,7 @@ public class AusstattungAnlegen extends JDialog {
 		panel_4.add(textField_aName);
 		textField_aName.setColumns(10);
 		textField_aName.addActionListener(mal);
+		textField_aName.addKeyListener(esc);
 	}
 
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
@@ -173,6 +181,8 @@ public class AusstattungAnlegen extends JDialog {
 					Erfolg("Ausstattung wurde erstellt!");
 				} else {
 					Erfolg("Ausstattung konnte nicht erstellt werden!");
+					rv.setGrundausstattungArray(
+							SQL_Schnittstelle.getAusstattungsArtenLager());
 				}
 			} else {
 				JOptionPane.showMessageDialog(null,
@@ -180,5 +190,28 @@ public class AusstattungAnlegen extends JDialog {
 						"Achtung!", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+	public class KeyListenerESC implements KeyListener {
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				setInvisible();
+			}
 		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+	}
 }

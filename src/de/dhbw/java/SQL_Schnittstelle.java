@@ -74,7 +74,8 @@ public abstract class SQL_Schnittstelle {
 	}
 
 	/**
-	 * Fügt der Datenbank einen neuen Satz hinzu und gibt die ID der entsprechenden neuen Zeile aus.
+	 * Fügt der Datenbank einen neuen Satz hinzu und gibt die ID der
+	 * entsprechenden neuen Zeile aus.
 	 * 
 	 * @param abfrage
 	 * @return
@@ -128,17 +129,16 @@ public abstract class SQL_Schnittstelle {
 		try {
 			rowAffected = stmt.executeUpdate(abfrage);
 
-
 		} catch (Exception e) {
 			System.out.println("Update/Insert/Delete " + e.toString());
-			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlInsertBuchungAusstattung");
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.sqlInsertBuchungAusstattung");
 		}
 
 		return rowAffected; // Rueckgabe wert jetzt der generierte
-									// Schluessel
+							// Schluessel
 	}
 
-	
 	/**
 	 * Bearbeitet einen Satz in der Datenbank; Löschen oder bearbeiten.
 	 * 
@@ -197,7 +197,7 @@ public abstract class SQL_Schnittstelle {
 	public static ArrayList<Buchung> getBuchung() {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
-			String abfrageString = "SELECT * FROM buchung";
+			String abfrageString = "SELECT * FROM buchung WHERE status = 'v' AND status = 'g' AND status = 'p'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 			// TODO rsAusgabe noetig??
 			rsAusgabe(rs);
@@ -563,7 +563,8 @@ public abstract class SQL_Schnittstelle {
 	 *            Name der Ausstattungsart
 	 * @return wurde erfolgreich in die Datenbank eingetragen oder nicht
 	 */
-	public static boolean insertAusstattungsArtenLager(String ausstattungsartBezeichnung) {
+	public static boolean insertAusstattungsArtenLager(
+			String ausstattungsartBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
 
@@ -572,8 +573,9 @@ public abstract class SQL_Schnittstelle {
 
 			SQL_Schnittstelle.sqlInsert(updateString);
 		} catch (Exception e) {
-			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.insertAusstattungsArtenLager");
+			Error_Message_Box
+					.laufzeitfehler(e,
+							"de.dhbw.java.SQL_Schnittstelle.insertAusstattungsArtenLager");
 			return false;
 		}
 		return true;
@@ -688,6 +690,12 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 		return true;
+	}
+
+	public static ResultSet getAllRooms() {
+		String abfrageString = "SELECT raumid AS 'Raum-ID', name AS Name, strasse AS Strasse, stock AS stock from raum WHERE entfernt = 0;";
+		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+		return rs;
 	}
 
 	public static int getRaumID(String raumbezeichnung) {
@@ -836,6 +844,37 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getGrundAusstattungRaum");
 		}
 		return grundAusstattungListe;
+	}
+
+	/**
+	 * Liste alle zur Buchung dazugehörige Ausstattung als String
+	 * 
+	 * @param raumId
+	 *            von welchem Raum soll die Grundausstatung geladen werden
+	 * @return Gibt ein ArrayList zurück von Ausstattungsobjekten
+	 */
+	public static String getAusstattungBuchung(int buchungId) {
+		String ausstattungListe = "";
+		try {
+			String abfrageString = "SELECT aal.bezeichnung FROM ausstattungsArtenLager aal "
+					+ "JOIN buchungAusstattung ba ON ba.ausstattungsArtenLagerid = aal.ausstattungsArtenLagerid "
+					+ "WHERE buchungid = '" + buchungId + "'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			while (rs.next()) {
+				ausstattungListe = ausstattungListe
+						+ rs.getString("bezeichnung");
+				if (!rs.isLast()) {
+					ausstattungListe = ausstattungListe + ", ";
+				}
+				System.out.println("ausstattungListe " + ausstattungListe);
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getAusstattungBuchungen");
+		}
+		return ausstattungListe;
 	}
 
 	/**
