@@ -66,7 +66,7 @@ public class AusstattungLoeschen extends JDialog {
 				.getImage(AusstattungLoeschen.class.getResource(
 						"/ressources/menu_ausstattung_loeschen_transp.png")));
 		setResizable(false);
-		setTitle("Ausstattung loeschen");
+		setTitle("Ausstattung löschen");
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
@@ -74,7 +74,7 @@ public class AusstattungLoeschen extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblAusstattungLoeschen = new JLabel("Ausstattung loeschen");
+		JLabel lblAusstattungLoeschen = new JLabel("Ausstattung löschen");
 		lblAusstattungLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblAusstattungLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblAusstattungLoeschen, BorderLayout.NORTH);
@@ -85,7 +85,7 @@ public class AusstattungLoeschen extends JDialog {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 
-		JButton btnLoeschen = new JButton("Loeschen");
+		JButton btnLoeschen = new JButton("Löschen");
 		btnLoeschen.addActionListener(mal);
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);

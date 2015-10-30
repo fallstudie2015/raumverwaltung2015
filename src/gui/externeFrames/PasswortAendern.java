@@ -57,7 +57,7 @@ public class PasswortAendern extends JDialog {
 	public PasswortAendern() {
 		setModal(true); // Fenster wird aufgebaut
 		setType(Type.UTILITY);
-		setTitle("Passwort aendern");
+		setTitle("Passwort ändern");
 		setResizable(false);
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
@@ -66,7 +66,7 @@ public class PasswortAendern extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblPasswortAendern = new JLabel("Passwort aendern");
+		JLabel lblPasswortAendern = new JLabel("Passwort ändern");
 		lblPasswortAendern.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPasswortAendern.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblPasswortAendern, BorderLayout.NORTH);
@@ -77,7 +77,7 @@ public class PasswortAendern extends JDialog {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 
-		JButton btnNewButton = new JButton("Aendern");
+		JButton btnNewButton = new JButton("Ändern");
 		btnNewButton.addActionListener(mal);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnNewButton);

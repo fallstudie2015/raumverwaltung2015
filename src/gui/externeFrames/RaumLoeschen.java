@@ -70,7 +70,7 @@ public class RaumLoeschen extends JDialog {
 				.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		setResizable(false);
 		this.rv = rv;
-		setTitle("Raum loeschen");
+		setTitle("Raum löschen");
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
@@ -78,7 +78,7 @@ public class RaumLoeschen extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblRaumLoeschen = new JLabel("Raum loeschen");
+		JLabel lblRaumLoeschen = new JLabel("Raum löschen");
 		lblRaumLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblRaumLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblRaumLoeschen, BorderLayout.NORTH);
@@ -89,7 +89,7 @@ public class RaumLoeschen extends JDialog {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 
-		JButton btnLoeschen = new JButton("Loeschen");
+		JButton btnLoeschen = new JButton("Löschen");
 		btnLoeschen.addActionListener(mal);
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);

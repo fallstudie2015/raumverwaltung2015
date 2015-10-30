@@ -70,7 +70,7 @@ public class BenutzerLoeschen extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerLoeschen.class
 				.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
 		setResizable(false);
-		setTitle("Benutzer loeschen");
+		setTitle("Benutzer löschen");
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
@@ -78,7 +78,7 @@ public class BenutzerLoeschen extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblBenutzerLoeschen = new JLabel("Benutzer loeschen");
+		JLabel lblBenutzerLoeschen = new JLabel("Benutzer löschen");
 		lblBenutzerLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblBenutzerLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblBenutzerLoeschen, BorderLayout.NORTH);
@@ -89,7 +89,7 @@ public class BenutzerLoeschen extends JDialog {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 
-		JButton btnLoeschen = new JButton("Loeschen");
+		JButton btnLoeschen = new JButton("Löschen");
 		btnLoeschen.addActionListener(mal);
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
