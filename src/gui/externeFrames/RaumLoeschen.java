@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.PanelRaum;
 import gui.Raumplaner_View;
 import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
 import gui.externeFrames.RaumAnlegen.MeinActionListener;
@@ -39,11 +40,11 @@ import java.awt.Toolkit;
 public class RaumLoeschen extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField_Name;
+	private JComboBox combo_name;
 	private Raumplaner_View rv;
-	private JLabel label_Name;
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
+	private PanelRaum pr;
 
 	/**
 	 * Launch the application.
@@ -72,7 +73,7 @@ public class RaumLoeschen extends JDialog {
 		this.rv = rv;
 		setTitle("Raum löschen");
 		setLocationRelativeTo(this);
-		setBounds(100, 100, 310, 365);
+		setBounds(100, 100, 500, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -104,53 +105,11 @@ public class RaumLoeschen extends JDialog {
 		});
 		splitPane.setRightComponent(btnAbbrechen);
 
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-
-		JPanel panel_2 = new JPanel();
-		panel_1.add(panel_2);
-		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
-
-		JPanel panel_3 = new JPanel();
-		panel_2.add(panel_3);
-		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
-
-		JPanel panel_6 = new JPanel();
-		panel_3.add(panel_6);
-
-		label_Name = new JLabel("Raumname:");
-		label_Name.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(label_Name);
-
-		JPanel panel_4 = new JPanel();
-		panel_2.add(panel_4);
-		panel_4.setLayout(new GridLayout(8, 0, 0, 0));
-
-		JPanel panel_5 = new JPanel();
-		panel_4.add(panel_5);
-
-		textField_Name = new JTextField();
-		textField_Name.setColumns(10);
-		panel_4.add(textField_Name);
-		textField_Name.addActionListener(mal);
-		textField_Name.addKeyListener(esc);
+		pr = new PanelRaum();
+		contentPane.add(pr, BorderLayout.CENTER);
+		
 	}
 
-	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
-	// sind
-	{
-		boolean gefuellt = true;
-
-		if (textField_Name.getText().isEmpty()) {
-			label_Name.setForeground(Color.red);
-			gefuellt = false;
-		} else {
-			label_Name.setForeground(Color.black);
-		}
-
-		return gefuellt;
-	}
 
 	private void setInvisible() // Fenster unsichtbar machen
 	{
@@ -169,11 +128,9 @@ public class RaumLoeschen extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 
-			boolean pflicht = PflichtfelderPruefen();
-
-			if (pflicht) {
+		System.out.println(pr.getSelectedRaumID());
 				boolean feedback = SQL_Schnittstelle
-						.setDeleteFlagRaum(textField_Name.getText());
+						.setDeleteFlagRaumByID(pr.getSelectedRaumID());
 				if (feedback == true) {// Rückgabewert der Methode
 										// Ausstattung anlegen
 					setInvisible();
@@ -184,14 +141,11 @@ public class RaumLoeschen extends JDialog {
 				} else {
 					Erfolg("Raum konnte nicht gelöscht werden!");
 				}
-			} else {
-				JOptionPane.showMessageDialog(null,
-						" Bitte fuellen Sie das Pflichtfeld aus", "Achtung!",
-						JOptionPane.ERROR_MESSAGE);
+			
 			}
 		}
 
-	}
+	
 
 	public class KeyListenerESC implements KeyListener {
 

@@ -161,10 +161,7 @@ public class Raum_View extends JPanel implements MouseListener {
 					 * Sonst werden die Daten der Buchung auf die Labels
 					 * eingetragen.
 					 */
-					if (buchung.getStatus().equalsIgnoreCase("a") || buchung.getStatus().equalsIgnoreCase("s")) {
-						label.removeBuchung();
-						label.setToolTipText(null);
-					} else {
+					if (!(buchung.getStatus().equalsIgnoreCase("a") || buchung.getStatus().equalsIgnoreCase("s"))) {
 						if (buchung.getZeitVon().equals(label.getTime())
 								|| (label.getTime().before(buchung.getZeitBis())
 										&& label.getTime().after(buchung.getZeitVon()))) {
@@ -177,7 +174,9 @@ public class Raum_View extends JPanel implements MouseListener {
 								label.setToolTipText("<html>" + raum.getName() + "<br>" + raum.getStrasse() + "<br>"
 										+ raum.getStock() + "<br>" + buchung.getBenutzerName() + "<br>"
 										+ buchung.getTelefon() + "<br>" + buchung.getZeitVon() + " Uhr - "
-										+ buchung.getZeitBis() + " Uhr" + "<br>" + "</html>");
+										+ buchung.getZeitBis() + " Uhr" + "<br>" + "<br>" + "</html>");
+								// SQL_Schnittstelle.getAusstattungBuchung(buchung.getBuchungsID())
+								// +
 							}
 							if (buchung.getStatus().equals("v")) {
 								ImageIcon ii = new ImageIcon(

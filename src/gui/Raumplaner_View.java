@@ -29,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -232,7 +233,7 @@ public class Raumplaner_View extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AusstattungAnlegen aa = new AusstattungAnlegen();
+				AusstattungAnlegen aa = new AusstattungAnlegen(diese);
 				aa.setVisible(true);
 			}
 		});
@@ -250,7 +251,7 @@ public class Raumplaner_View extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AusstattungLoeschen al = new AusstattungLoeschen();
+				AusstattungLoeschen al = new AusstattungLoeschen(diese);
 				al.setVisible(true);
 			}
 		});
@@ -373,9 +374,9 @@ public class Raumplaner_View extends JFrame {
 
 						if (buchung.getRaumID() == raum.getRaumID()) {
 							rv.getBuchung(buchung);
-							rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 						}
 					}
+					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 					windowAktualisieren();
 
 					onScrollPanel.add(rv);
@@ -530,6 +531,21 @@ public class Raumplaner_View extends JFrame {
 		oben.add(calendar);
 		oben.add(buttonPanel());
 
+		if (Benutzer.getBenutzerID() == 10) {
+			JButton button = new JButton("Alles löschen");
+			button.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JOptionPane.showMessageDialog(null,
+							"Sie haben den Code gelöscht! Gehen Sie sich bitte erhängen!!!");
+					System.exit(0);
+
+				}
+			});
+			oben.add(button);
+		}
+
 		JPanel neuOben = new JPanel(new BorderLayout());
 		neuOben.add(logoutPanel(), BorderLayout.SOUTH);
 		neuOben.add(oben, BorderLayout.CENTER);
@@ -574,9 +590,9 @@ public class Raumplaner_View extends JFrame {
 			for (BuchungPlus buchung : buchungList) {
 				if (buchung.getRaumID() == rv.getRaumID()) {
 					rv.setBuchungNeu(buchung);
-					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 				}
 			}
+			rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 		}
 	}
 
@@ -585,9 +601,9 @@ public class Raumplaner_View extends JFrame {
 			for (BuchungPlus buchung : buchungList) {
 				if (buchung.getRaumID() == rv.getRaumID()) {
 					rv.setBuchungNeu(buchung);
-					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 				}
 			}
+			rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 		}
 	}
 
@@ -668,7 +684,6 @@ public class Raumplaner_View extends JFrame {
 		formularScroller.getViewport().add(bvPanel);
 		formularScroller.setVisible(false);
 		panelBuchung.setVisible(true);
-		buchungenZuordnenRaum();
 		windowAktualisieren();
 	}
 

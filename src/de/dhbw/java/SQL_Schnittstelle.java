@@ -606,6 +606,23 @@ public abstract class SQL_Schnittstelle {
 		}
 		return true;
 	}
+	
+	public static boolean setDeleteFlagRaumByID(int raumid) {
+		try {
+
+			String updateString = "Update raum set entfernt = 1 where raumid = '"
+					+ raumid + "'";
+			System.out.println("updateString " + updateString);
+			int rowsAffacted = SQL_Schnittstelle.sqlUpdateDelete(updateString);
+			if (rowsAffacted == 0) {
+				return false;
+			}
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.setDeleteFlagRaumByID");
+		}
+		return true;
+	}
 
 	/**
 	 * Ändert den Buchungsstatus (unbestätigt/bestätigt/storniert)
@@ -690,6 +707,18 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 		return true;
+	}
+
+	public static ResultSet getAllRooms() {
+		String abfrageString = "SELECT raumid AS 'Raum-ID', name AS Name, strasse AS Strasse, stock AS stock from raum WHERE entfernt = 0;";
+		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+		return rs;
+	}
+
+	public static ResultSet getAllAusstattung() {
+		String abfrageString = "SELECT ausstattungsArtenLagerid AS ID, bezeichnung AS Bezeichnung, artAusstattung AS Art FROM ausstattungsArtenLager;";
+		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+		return rs;
 	}
 
 	public static int getRaumID(String raumbezeichnung) {
@@ -832,7 +861,6 @@ public abstract class SQL_Schnittstelle {
 						.getInt("raumAusstattungid"), rs
 						.getString("bezeichnung")));
 			}
-			
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -841,7 +869,6 @@ public abstract class SQL_Schnittstelle {
 		return grundAusstattungListe;
 	}
 
-	
 	/**
 	 * Liste alle zur Buchung dazugehörige Ausstattung als String
 	 * 
@@ -853,13 +880,14 @@ public abstract class SQL_Schnittstelle {
 		String ausstattungListe = "";
 		try {
 			String abfrageString = "SELECT aal.bezeichnung FROM ausstattungsArtenLager aal "
-					+ "JOIN buchungAusstattung ba ON ba.ausstattungsArtenLagerid = aal.ausstattungsArtenLagerid " 
-					+ "WHERE buchungid = '"+ buchungId + "'";
+					+ "JOIN buchungAusstattung ba ON ba.ausstattungsArtenLagerid = aal.ausstattungsArtenLagerid "
+					+ "WHERE buchungid = '" + buchungId + "'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
-				ausstattungListe = ausstattungListe + rs.getString("bezeichnung");
-				if(!rs.isLast()){
+				ausstattungListe = ausstattungListe
+						+ rs.getString("bezeichnung");
+				if (!rs.isLast()) {
 					ausstattungListe = ausstattungListe + ", ";
 				}
 				System.out.println("ausstattungListe " + ausstattungListe);
@@ -871,7 +899,7 @@ public abstract class SQL_Schnittstelle {
 		}
 		return ausstattungListe;
 	}
-	
+
 	/**
 	 * Methode zum ändern des Passwortes.
 	 * 
@@ -1041,7 +1069,7 @@ public abstract class SQL_Schnittstelle {
 			int zeile = 1;
 			rs.beforeFirst();
 			while (rs.next()) {
-				System.out.print(zeile + ": " + "\t");
+				System.out.println(zeile + ": " + "\t");
 				for (int i = 1; i < rs.getMetaData().getColumnCount() + 1; i++) {
 					System.out.print(rs.getString(i) + "\t");
 				}
@@ -1147,6 +1175,24 @@ public abstract class SQL_Schnittstelle {
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.deleteAusstattungArt");
+
+		}
+		return true;
+	}
+	
+	public static boolean deleteAusstattungArtByID(int id) {
+		try {
+
+			int rowAffected = SQL_Schnittstelle
+					.sqlUpdateDelete("DELETE FROM ausstattungsArtenLager WHERE ausstattungsArtenLagerid = '"
+							+ id + "'");
+
+			if (rowAffected == 0) {
+				return false;
+			}
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.deleteAusstattungArtByID");
 
 		}
 		return true;
