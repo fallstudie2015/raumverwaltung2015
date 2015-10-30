@@ -273,9 +273,9 @@ public class Raumplaner_View extends JFrame {
 	 * auszuloggen
 	 */
 	private JPanel logoutPanel() {
-		refreshButton = new JButton("refresh");
-		refreshButton.setToolTipText("refresh");
-		refreshButton.setPreferredSize(new Dimension(150, 30));
+		refreshButton = new JButton("Aktualisieren");
+		refreshButton.setToolTipText("Aktualisieren");
+		refreshButton.setPreferredSize(new Dimension(117, 30));
 
 		refreshButton.addActionListener(new ActionListener() {
 
@@ -287,9 +287,9 @@ public class Raumplaner_View extends JFrame {
 			}
 		});
 
-		logoutButton = new JButton("Logout");
-		logoutButton.setToolTipText("Logout");
-		logoutButton.setPreferredSize(new Dimension(150, 30));
+		logoutButton = new JButton("Abmelden");
+		logoutButton.setToolTipText("Abmelden");
+		logoutButton.setPreferredSize(new Dimension(117, 30));
 
 		// Loggt den Nutzer aus
 		logoutButton.addActionListener(new ActionListener() {
@@ -303,7 +303,7 @@ public class Raumplaner_View extends JFrame {
 
 		passwortChangeButton = new JButton("Passwort ändern");
 		passwortChangeButton.setToolTipText("Passwort ändern");
-		passwortChangeButton.setPreferredSize(new Dimension(150, 30));
+		passwortChangeButton.setPreferredSize(new Dimension(117, 30));
 
 		// Öffnet die Ansicht um sein Passwort zu ändern
 		passwortChangeButton.addActionListener(new ActionListener() {
