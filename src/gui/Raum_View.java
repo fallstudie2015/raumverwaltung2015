@@ -65,7 +65,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		bv.setRaumName(raumName);
 		frame.setBVList(bv);
 		frame.setBVPanel(bv);
-		bv.setTechnik(SQL_Schnittstelle.getAusstattungArten());
+		bv.setTechnik(SQL_Schnittstelle.getAusstattungsArtenLager());
 		bv.setGrundausstattung(SQL_Schnittstelle.getGrundAusstattungRaum(raum.getRaumID()));
 		bv.initView();
 	}
