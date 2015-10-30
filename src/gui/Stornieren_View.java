@@ -54,8 +54,7 @@ public class Stornieren_View extends JDialog {
 
 	private Raumplaner_View mutterFenster;
 
-	public Stornieren_View(Raumplaner_View mutterView,
-			Buchung uebergabeBuchung) {
+	public Stornieren_View(Raumplaner_View mutterView, Buchung uebergabeBuchung) {
 
 		mutterFenster = mutterView;
 		buchung = uebergabeBuchung;
@@ -171,10 +170,12 @@ public class Stornieren_View extends JDialog {
 	private void befuelleMainPanel() {
 		try {
 			txtBuchungsID = new JTextField("" + buchung.getBuchungsID());
-			txtRaum = new JTextField(
-					"" + SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
-			txtBenutzer = new JTextField("" + SQL_Schnittstelle
-					.getBenutzerName(buchung.getBenutzerID()));
+			txtRaum = new JTextField(""
+					+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+			txtBenutzer = new JTextField(
+					""
+							+ SQL_Schnittstelle.getBenutzerName(buchung
+									.getBenutzerID()));
 			txtTelefon = new JTextField("" + buchung.getTelefon());
 			txtDatum = new JTextField("" + buchung.getDatum());
 			txtZeitVon = new JTextField("" + buchung.getZeitVon());
@@ -198,18 +199,18 @@ public class Stornieren_View extends JDialog {
 			if (label.getTime().equals(zeitVon)) {
 				startInt = labelListe.indexOf(label);
 				if (startInt != 0) {
-					if (labelListe.get(startInt - 1).getBuchung().getStatus()
-							.equals("p")) {
-						SQL_Schnittstelle
-								.upadteBuchungStatus(
-										labelListe.get(startInt - 1)
-												.getBuchung().getBuchungsID(),
-										's');
-					}
-					System.out.println();
-					System.out.println(
-							"Aktuelles Label: " + labelListe.indexOf(label));
+					if (labelListe.get(startInt - 1).buchungGesetzt) {
+						if (labelListe.get(startInt - 1).getBuchung()
+								.getStatus().equals("p")) {
+							SQL_Schnittstelle.upadteBuchungStatus(labelListe
+									.get(startInt - 1).getBuchung()
+									.getBuchungsID(), 's');
+						}
+						System.out.println();
+						System.out.println("Aktuelles Label: "
+								+ labelListe.indexOf(label));
 
+					}
 				}
 			}
 		}
@@ -242,8 +243,8 @@ public class Stornieren_View extends JDialog {
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						's');
 
-				mbv.getRaumView()
-						.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
+				mbv.getRaumView().setBuchungArray(
+						SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
 				mail.sendMail(MailTexte.verwalterPostfach,
 						MailTexte.getBetreffStornierung(mbv.getBuchung()),
