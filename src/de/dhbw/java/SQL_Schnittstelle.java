@@ -74,7 +74,8 @@ public abstract class SQL_Schnittstelle {
 	}
 
 	/**
-	 * Fügt der Datenbank einen neuen Satz hinzu und gibt die ID der entsprechenden neuen Zeile aus.
+	 * Fügt der Datenbank einen neuen Satz hinzu und gibt die ID der
+	 * entsprechenden neuen Zeile aus.
 	 * 
 	 * @param abfrage
 	 * @return
@@ -128,17 +129,16 @@ public abstract class SQL_Schnittstelle {
 		try {
 			rowAffected = stmt.executeUpdate(abfrage);
 
-
 		} catch (Exception e) {
 			System.out.println("Update/Insert/Delete " + e.toString());
-			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlInsertBuchungAusstattung");
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.sqlInsertBuchungAusstattung");
 		}
 
 		return rowAffected; // Rueckgabe wert jetzt der generierte
-									// Schluessel
+							// Schluessel
 	}
 
-	
 	/**
 	 * Bearbeitet einen Satz in der Datenbank; Löschen oder bearbeiten.
 	 * 
@@ -197,7 +197,7 @@ public abstract class SQL_Schnittstelle {
 	public static ArrayList<Buchung> getBuchung() {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
-			String abfrageString = "SELECT * FROM buchung";
+			String abfrageString = "SELECT * FROM buchung WHERE status = 'v' AND status = 'g' AND status = 'p'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 			// TODO rsAusgabe noetig??
 			rsAusgabe(rs);
@@ -563,7 +563,8 @@ public abstract class SQL_Schnittstelle {
 	 *            Name der Ausstattungsart
 	 * @return wurde erfolgreich in die Datenbank eingetragen oder nicht
 	 */
-	public static boolean insertAusstattungsArtenLager(String ausstattungsartBezeichnung) {
+	public static boolean insertAusstattungsArtenLager(
+			String ausstattungsartBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
 
@@ -572,8 +573,9 @@ public abstract class SQL_Schnittstelle {
 
 			SQL_Schnittstelle.sqlInsert(updateString);
 		} catch (Exception e) {
-			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.insertAusstattungsArtenLager");
+			Error_Message_Box
+					.laufzeitfehler(e,
+							"de.dhbw.java.SQL_Schnittstelle.insertAusstattungsArtenLager");
 			return false;
 		}
 		return true;

@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -21,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
+import gui.externeFrames.RaumLoeschen.MeinActionListener;
 
 public class PasswortAendern extends JDialog {
 
@@ -28,6 +32,8 @@ public class PasswortAendern extends JDialog {
 	private JPasswordField passwordFieldAlt;
 	private JPasswordField passwordFieldNeu1;
 	private JPasswordField passwordFieldNeu2;
+	private MeinActionListener mal = new MeinActionListener();
+	private KeyListenerESC esc = new KeyListenerESC();
 
 	/**
 	 * Launch the application.
@@ -49,9 +55,9 @@ public class PasswortAendern extends JDialog {
 	 * Create the frame.
 	 */
 	public PasswortAendern() {
-		setModal(true);					//Fenster wird aufgebaut
+		setModal(true); // Fenster wird aufgebaut
 		setType(Type.UTILITY);
-		setTitle("Passwort aendern");
+		setTitle("Passwort ändern");
 		setResizable(false);
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
@@ -60,7 +66,7 @@ public class PasswortAendern extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblPasswortAendern = new JLabel("Passwort aendern");
+		JLabel lblPasswortAendern = new JLabel("Passwort ändern");
 		lblPasswortAendern.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPasswortAendern.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblPasswortAendern, BorderLayout.NORTH);
@@ -71,18 +77,8 @@ public class PasswortAendern extends JDialog {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 
-		JButton btnNewButton = new JButton("Aendern");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String feedback = SQL_Schnittstelle.passwortAendern(
-						GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());
-				PwGeaendert(feedback);//Rückgabewert der Methode Ausstattung anlegen
-				if (feedback == "Passwort wurde erfolgreich geandert!")
-				{
-					setInvisible();
-				}
-			}
-		});
+		JButton btnNewButton = new JButton("Ändern");
+		btnNewButton.addActionListener(mal);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnNewButton);
 
@@ -90,7 +86,8 @@ public class PasswortAendern extends JDialog {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
+								// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnNewButton_1);
@@ -135,6 +132,8 @@ public class PasswortAendern extends JDialog {
 
 		passwordFieldAlt = new JPasswordField();
 		panel_5.add(passwordFieldAlt, BorderLayout.CENTER);
+		passwordFieldAlt.addActionListener(mal);
+		passwordFieldAlt.addKeyListener(esc);
 
 		JPanel panel_6 = new JPanel();
 		panel_4.add(panel_6);
@@ -148,6 +147,8 @@ public class PasswortAendern extends JDialog {
 
 		passwordFieldNeu1 = new JPasswordField();
 		panel_6.add(passwordFieldNeu1, BorderLayout.CENTER);
+		passwordFieldNeu1.addActionListener(mal);
+		passwordFieldNeu1.addKeyListener(esc);
 
 		JPanel panel_7 = new JPanel();
 		panel_4.add(panel_7);
@@ -161,6 +162,8 @@ public class PasswortAendern extends JDialog {
 
 		passwordFieldNeu2 = new JPasswordField();
 		panel_7.add(passwordFieldNeu2, BorderLayout.CENTER);
+		passwordFieldNeu2.addActionListener(mal);
+		passwordFieldNeu2.addKeyListener(esc);
 	}
 
 	private String GetPasswortAlt() // gibt den Wert des Passwortfeldes zurück
@@ -201,13 +204,55 @@ public class PasswortAendern extends JDialog {
 		return pw;
 	}
 
-	private void setInvisible() {		//Fenster unsichtbar machen 
+	private void setInvisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
 	}
 
-	public static void PwGeaendert(String nachricht) {		//MessageBox für Rückgabewert
+	public static void PwGeaendert(String nachricht) { // MessageBox für
+														// Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
+
+	}
+
+	public class KeyListenerESC implements KeyListener {
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				setInvisible();
+			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
+	public class MeinActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+			String feedback = SQL_Schnittstelle.passwortAendern(
+					GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());
+			PwGeaendert(feedback);// Rückgabewert der Methode Ausstattung
+									// anlegen
+			if (feedback == "Passwort wurde erfolgreich geandert!") {
+				setInvisible();
+			}
+		}
 
 	}
 }

@@ -46,13 +46,12 @@ public class Raum_View_Label extends JLabel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				super.mousePressed(e);
-				if (Benutzer.getBenutzertyp() == 'v' && buchung != null && !buchung.getStatus().equalsIgnoreCase("g")) {
+				if (Benutzer.getBenutzertyp() == 'v' && buchung != null && buchung.getStatus().equalsIgnoreCase("v")) {
 					Bestaetigungs_View beV = new Bestaetigungs_View(frame, buchung);
 				} else if (Benutzer.getBenutzertyp() == 'b' && buchung != null
 						&& Benutzer.getBenutzerID() == buchung.getBenutzerID()) {
 					Stornieren_View sv = new Stornieren_View(frame, buchung);
-				} else if (Benutzer.getBenutzertyp() == 'v' && buchung != null
-						&& buchung.getStatus().equalsIgnoreCase("g")) {
+				} else if (Benutzer.getBenutzertyp() == 'v' && buchung != null) {
 					Stornieren_View sv = new Stornieren_View(frame, buchung);
 				}
 			}
