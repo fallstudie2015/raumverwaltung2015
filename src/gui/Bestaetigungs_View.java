@@ -205,14 +205,22 @@ public class Bestaetigungs_View extends JDialog {
 					""
 							+ SQL_Schnittstelle.getBenutzerName(buchung
 									.getBenutzerID()));
+			txtRaum = new JTextField(""
+					+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+			txtBenutzer = new JTextField(
+					""
+							+ SQL_Schnittstelle.getBenutzerName(buchung
+									.getBenutzerID()));
 			txtTelefon = new JTextField("" + buchung.getTelefon());
 			txtDatum = new JTextField("" + buchung.getDatum());
 			txtZeitVon = new JTextField("" + buchung.getZeitVon());
 			txtZeitBis = new JTextField("" + buchung.getZeitBis());
 			txtBestuhlung = new JTextField("" + buchung.getBestuhlung());
 			txtKommentar = new JTextField("" + buchung.getKommentar());
-			txtAusstattung = new JTextField("Hier fehlt die Ausstattung");
 			befuelleCbPuffer(buchung.getZeitVon());
+			txtAusstattung = new JTextField(
+					SQL_Schnittstelle.getAusstattungBuchung(buchung
+							.getBuchungsID()));
 			cbPuffer = new JComboBox<String>(minute);
 		} catch (Exception ex) {
 			Error_Message_Box.laufzeitfehler(ex,
@@ -313,13 +321,20 @@ public class Bestaetigungs_View extends JDialog {
 						'g');
 
 				setPuffer();
+
 				mbv.getRaumView().setBuchungArray(
 						SQL_Schnittstelle.getBuchungPlus());
+
 				MailConnection mail = new MailConnection();
+
 				mail.sendMail(SQL_Schnittstelle.getBenutzerEmail(mbv
 						.getBuchung().getBenutzerID()), MailTexte
 						.getBetreffBestaetigen(mbv.getBuchung()), MailTexte
 						.getTextBestaetigen(mbv.getBuchung()));
+				mail.sendMail(MailTexte.hausmeisterPostfach, MailTexte
+						.getBetreffBestaetigenHausmeister(mbv.buchung),
+						MailTexte.getTextBestaetigenHausmeister(mbv
+								.getBuchung()));
 				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
 				mbv.dispose();
 
@@ -334,13 +349,16 @@ public class Bestaetigungs_View extends JDialog {
 
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						'a');
+
 				mbv.getRaumView().setBuchungArray(
 						SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
+
 				mail.sendMail(SQL_Schnittstelle.getBenutzerEmail(mbv
 						.getBuchung().getBenutzerID()), MailTexte
 						.getBetreffAbgelehnt(mbv.getBuchung()), MailTexte
 						.getTextAbgelehnt(mbv.getBuchung()));
+
 				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
 
 				mbv.dispose();
@@ -351,7 +369,6 @@ public class Bestaetigungs_View extends JDialog {
 			}
 
 		}
-
 	}
 
 }

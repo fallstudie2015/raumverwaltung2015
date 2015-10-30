@@ -212,6 +212,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		for (Raum_View_Label label : labelList) {
 			label.setIcon(null);
 			label.setText(null);
+			label.removeBuchung();
 			label.setBackground(label.getParent().getBackground());
 			label.setMouseListener(this);
 		}
