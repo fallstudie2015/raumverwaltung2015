@@ -52,6 +52,17 @@ public abstract class MailTexte {
 		return antwort;
 	}
 
+	/* Text für Hausmeister für Bestätigung bei Reservierungsbestätigung */
+	// public static String getTextBestaetigenHausmeister(Buchung buchung) {
+	//
+	// String antwort = new String("Sehr geehrte Raumverwalter, \n\n für die
+	// Reservierung am " +
+	// buchung.getDatum() + " in Raum " +
+	// SQL_Schnittstelle.getRaumName(buchung.getRaumID()) + " wird die
+	// Bestuhlung: \t" + buchung.getBestuhlung() + "\n ");
+	//
+	// }
+
 	/* Text für die E-Mail bei Reservierungsstornierung */
 	public static String getTextStornierung(Buchung buchung) {
 
