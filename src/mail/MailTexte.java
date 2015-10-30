@@ -68,9 +68,10 @@ public abstract class MailTexte {
 						+ " wird die Bestuhlung: \t" + buchung.getBestuhlung()
 						+ "\n und die Ausstattung: \t"
 						+ SQL_Schnittstelle
-								.getAusstatungBuchung(buchung.getBuchungsID())
+								.getAusstattungBuchung(buchung.getBuchungsID())
 						+ "\n benötigt. \n\n Bitte kümmern Sie sich um diese Wünsche.\n\n Mit freundlichen Grüßen\n Ihre Raumverwaltung.");
 
+		return antwort;
 	}
 
 	/* Betreff für Hausmeister für Bestätigung bei Reservierungsbestätigung */

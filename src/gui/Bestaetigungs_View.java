@@ -208,7 +208,8 @@ public class Bestaetigungs_View extends JDialog {
 			txtZeitBis = new JTextField("" + buchung.getZeitBis());
 			txtBestuhlung = new JTextField("" + buchung.getBestuhlung());
 			txtKommentar = new JTextField("" + buchung.getKommentar());
-			txtAusstattung = new JTextField("Hier fehlt die Ausstattung");
+			txtAusstattung = new JTextField(SQL_Schnittstelle
+					.getAusstattungBuchung(buchung.getBuchungsID()));
 			cbPuffer = new JComboBox<String>(minute);
 		} catch (Exception ex) {
 			Error_Message_Box.laufzeitfehler(ex,
