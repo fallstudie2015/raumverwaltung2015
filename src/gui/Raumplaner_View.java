@@ -373,9 +373,9 @@ public class Raumplaner_View extends JFrame {
 
 						if (buchung.getRaumID() == raum.getRaumID()) {
 							rv.getBuchung(buchung);
-							rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 						}
 					}
+					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 					windowAktualisieren();
 
 					onScrollPanel.add(rv);
@@ -574,9 +574,9 @@ public class Raumplaner_View extends JFrame {
 			for (BuchungPlus buchung : buchungList) {
 				if (buchung.getRaumID() == rv.getRaumID()) {
 					rv.setBuchungNeu(buchung);
-					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 				}
 			}
+			rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 		}
 	}
 
@@ -585,9 +585,9 @@ public class Raumplaner_View extends JFrame {
 			for (BuchungPlus buchung : buchungList) {
 				if (buchung.getRaumID() == rv.getRaumID()) {
 					rv.setBuchungNeu(buchung);
-					rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 				}
 			}
+			rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
 		}
 	}
 
@@ -668,7 +668,6 @@ public class Raumplaner_View extends JFrame {
 		formularScroller.getViewport().add(bvPanel);
 		formularScroller.setVisible(false);
 		panelBuchung.setVisible(true);
-		buchungenZuordnenRaum();
 		windowAktualisieren();
 	}
 
