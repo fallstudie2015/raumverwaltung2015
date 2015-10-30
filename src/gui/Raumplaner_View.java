@@ -666,6 +666,8 @@ public class Raumplaner_View extends JFrame {
 		scroller.setColumnHeaderView(port);
 		scroller.getViewport().add(onScrollPanel);
 		formularScroller.getViewport().add(bvPanel);
+		formularScroller.setVisible(false);
+		panelBuchung.setVisible(true);
 		buchungenZuordnenRaum();
 		windowAktualisieren();
 	}
