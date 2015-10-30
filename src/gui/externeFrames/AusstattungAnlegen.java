@@ -181,6 +181,8 @@ public class AusstattungAnlegen extends JDialog {
 					Erfolg("Ausstattung wurde erstellt!");
 				} else {
 					Erfolg("Ausstattung konnte nicht erstellt werden!");
+					rv.setGrundausstattungArray(
+							SQL_Schnittstelle.getAusstattungsArtenLager());
 				}
 			} else {
 				JOptionPane.showMessageDialog(null,
