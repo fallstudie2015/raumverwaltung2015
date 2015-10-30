@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.Raumplaner_View;
 import gui.externeFrames.RaumLoeschen.MeinActionListener;
 
 import java.awt.GridBagLayout;
@@ -30,37 +31,41 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
 public class AusstattungLoeschen extends JDialog {
 
 	private JPanel contentPane;
-	private JTextField textField_Ausstattung;
+	private JComboBox comboBox_Ausstattung;
 	private JLabel lblAusstattung;
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
+	private Raumplaner_View rv;
+	private ArrayList ausstattung;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AusstattungLoeschen frame = new AusstattungLoeschen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	// public static void main(String[] args) {
+	// EventQueue.invokeLater(new Runnable() {
+	// public void run() {
+	// try {
+	// AusstattungLoeschen frame = new AusstattungLoeschen();
+	// frame.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// });
+	// }
 
 	/**
 	 * Create the frame.
 	 */
-	public AusstattungLoeschen() {
+	public AusstattungLoeschen(Raumplaner_View rv) {
+		this.rv = rv;
 		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(AusstattungLoeschen.class.getResource(
@@ -126,28 +131,18 @@ public class AusstattungLoeschen extends JDialog {
 		JPanel panel_6 = new JPanel();
 		panel_3.add(panel_6);
 
-		textField_Ausstattung = new JTextField();
-		textField_Ausstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(textField_Ausstattung);
-		textField_Ausstattung.setColumns(10);
-		textField_Ausstattung.addActionListener(mal);
-		textField_Ausstattung.addKeyListener(esc);
+		ausstattung = SQL_Schnittstelle.getAusstattungsArtenLager();
+		ausstattung.toString();
+		Object[] a = new Object[ausstattung.size()];
+		a = ausstattung.toArray(a);
+		
+		comboBox_Ausstattung = new JComboBox(a);
+		comboBox_Ausstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_3.add(comboBox_Ausstattung);
+		comboBox_Ausstattung.addActionListener(mal);
+		comboBox_Ausstattung.addKeyListener(esc);
 	}
 
-	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
-	// sind
-	{
-		boolean gefuellt = true;
-
-		if (textField_Ausstattung.getText().isEmpty()) {
-			lblAusstattung.setForeground(Color.red);
-			gefuellt = false;
-		} else {
-			lblAusstattung.setForeground(Color.black);
-		}
-
-		return gefuellt;
-	}
 
 	private void setInvisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
@@ -158,34 +153,31 @@ public class AusstattungLoeschen extends JDialog {
 				JOptionPane.INFORMATION_MESSAGE);
 
 	}
+
 	public class MeinActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
 
-			boolean pflicht = PflichtfelderPruefen();
-
-			if (pflicht) {
-				boolean feedback = SQL_Schnittstelle.deleteAusstattungArt(
-						textField_Ausstattung.getText());
+			{
+				boolean feedback = SQL_Schnittstelle
+						.deleteAusstattungArt(comboBox_Ausstattung.getName());
 
 				if (feedback == true) { // Rückgabewert der Methode
 										// Ausstattung anlegen
 					setInvisible();
 					Erfolg("Ausstattung wurde gelöscht!");
+					rv.setGrundausstattungArray(
+							SQL_Schnittstelle.getAusstattungsArtenLager());
 				} else {
 					Erfolg("Ausstattung konnte nicht gelöscht werden!");
 				}
-			} else {
-				JOptionPane.showMessageDialog(null,
-						" Bitte fuellen Sie das Pflichtfeld aus",
-						"Achtung!", JOptionPane.ERROR_MESSAGE);
+
 			}
 		}
 	}
-	
+
 	public class KeyListenerESC implements KeyListener {
 
 		@Override
@@ -199,13 +191,13 @@ public class AusstattungLoeschen extends JDialog {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 }

@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.Raumplaner_View;
 import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
 import gui.externeFrames.RaumAnlegen.MeinActionListener;
 
@@ -41,27 +42,29 @@ public class AusstattungAnlegen extends JDialog {
 	private JLabel lblAusstattungsname;
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
+	private Raumplaner_View rv;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AusstattungLoeschen frame = new AusstattungLoeschen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					AusstattungLoeschen frame = new AusstattungLoeschen();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public AusstattungAnlegen() {
+	public AusstattungAnlegen(Raumplaner_View rv) {
+		this.rv = rv;
 		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(AusstattungAnlegen.class.getResource(
