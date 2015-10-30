@@ -197,7 +197,7 @@ public abstract class SQL_Schnittstelle {
 	public static ArrayList<Buchung> getBuchung() {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
-			String abfrageString = "SELECT * FROM buchung WHERE status = 'v' AND status = 'g' AND status = 'p'";
+			String abfrageString = "SELECT * FROM buchung WHERE status = 'v' OR status = 'g' OR status = 'p'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 			// TODO rsAusgabe noetig??
 			rsAusgabe(rs);
@@ -220,19 +220,30 @@ public abstract class SQL_Schnittstelle {
 	public static ArrayList<BuchungPlus> getBuchungPlus() {
 		ArrayList<BuchungPlus> buchungListe = new ArrayList<BuchungPlus>();
 		try {
-			String abfrageString = "select buchungid, telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, buchung.benutzerid, raumid, status, vorname, nachname from buchung, benutzer where buchung.benutzerid = benutzer.benutzerid;";
+			String abfrageString = "SELECT buchungid, telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, buchung.benutzerid, raumid, status, vorname, nachname FROM buchung, benutzer WHERE buchung.benutzerid = benutzer.benutzerid AND (status = 'v' OR status = 'g' OR status = 'p');";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
-			// TODO rsAusgabe noetig??
-			rsAusgabe(rs);
+
+			abfrageString = "SELECT ba.buchungid, aal.bezeichnung FROM ausstattungsArtenLager aal, buchungAusstattung ba, buchung  WHERE ba.ausstattungsArtenLagerid = aal.ausstattungsArtenLagerid AND buchung.buchungid = ba.buchungid AND (buchung.status = 'v' OR buchung.status = 'g')";
+			ResultSet rsa = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			String ausstattung = "";
 
 			while (rs.next()) {
+				ausstattung = "";
+				while (rsa.next()) {
+					if (rs.getInt("buchungid") == rsa.getInt("buchungid")) {
+						ausstattung = ausstattung
+								+ rsa.getString("bezeichnung") + ", ";
+					}
+				}
+
 				buchungListe.add(new BuchungPlus(rs.getInt("buchungid"), rs
 						.getString("telefon"), rs.getDate("datum"), rs
 						.getTime("zeitvon"), rs.getTime("zeitbis"), rs
 						.getString("kommentar"), rs.getString("bestuhlung"), rs
 						.getInt("benutzerid"), rs.getInt("raumid"), rs
 						.getString("status"), rs.getString("vorname") + " "
-						+ rs.getString("nachname")));
+						+ rs.getString("nachname"), ausstattung));
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -606,7 +617,7 @@ public abstract class SQL_Schnittstelle {
 		}
 		return true;
 	}
-	
+
 	public static boolean setDeleteFlagRaumByID(int raumid) {
 		try {
 
@@ -1179,7 +1190,7 @@ public abstract class SQL_Schnittstelle {
 		}
 		return true;
 	}
-	
+
 	public static boolean deleteAusstattungArtByID(int id) {
 		try {
 
