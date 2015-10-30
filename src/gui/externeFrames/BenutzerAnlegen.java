@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
@@ -43,6 +45,7 @@ public class BenutzerAnlegen extends JDialog {
 	private JLabel lblEmailAdresse;
 	private JLabel lblPasswort;
 	private MeinActionListener mal = new MeinActionListener();
+	private KeyListenerESC esc = new KeyListenerESC();
 
 	/**
 	 * Launch the application.
@@ -76,6 +79,7 @@ public class BenutzerAnlegen extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
+
 		JLabel lblBenutzerAnlegen = new JLabel("Benutzer anlegen");
 		lblBenutzerAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblBenutzerAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
@@ -105,6 +109,7 @@ public class BenutzerAnlegen extends JDialog {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
+		
 
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
@@ -147,23 +152,27 @@ public class BenutzerAnlegen extends JDialog {
 		panel_4.add(textField_Name);
 		textField_Name.setColumns(10);
 		textField_Name.addActionListener(mal);
+		textField_Name.addKeyListener(esc);
 
 		textField_Vorname = new JTextField();
 		textField_Vorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(textField_Vorname);
 		textField_Vorname.setColumns(10);
 		textField_Vorname.addActionListener(mal);
+		textField_Vorname.addKeyListener(esc);
 
 		textField_email = new JTextField();
 		textField_email.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(textField_email);
 		textField_email.setColumns(10);
 		textField_email.addActionListener(mal);
+		textField_email.addKeyListener(esc);
 
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(passwordField);
 		passwordField.addActionListener(mal);
+		passwordField.addKeyListener(esc);
 
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
@@ -173,11 +182,13 @@ public class BenutzerAnlegen extends JDialog {
 		rdbtnVerwalter.setSelected(false);
 		panel_5.add(rdbtnVerwalter);
 		rdbtnVerwalter.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		rdbtnVerwalter.addKeyListener(esc);
 
 		rdbtnBenutzer = new JRadioButton("Benutzer");
 		rdbtnBenutzer.setSelected(true);
 		panel_5.add(rdbtnBenutzer);
 		rdbtnBenutzer.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		rdbtnBenutzer.addKeyListener(esc);
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnBenutzer);
@@ -188,6 +199,7 @@ public class BenutzerAnlegen extends JDialog {
 		panel_4.add(textField_bereich);
 		textField_bereich.setColumns(10);
 		textField_bereich.addActionListener(mal);
+		textField_bereich.addKeyListener(esc);
 
 	}
 
@@ -272,19 +284,18 @@ public class BenutzerAnlegen extends JDialog {
 				JOptionPane.INFORMATION_MESSAGE);
 
 	}
-	
+
 	public class MeinActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+
 			boolean pflicht = PflichtfelderPruefen();
 
 			if (pflicht) {
 				boolean feedback = SQL_Schnittstelle.insertBenutzer(
-						textField_Name.getText(),
-						textField_Vorname.getText(),
+						textField_Name.getText(), textField_Vorname.getText(),
 						textField_email.getText(), GetPasswort(),
 						RadioZurueck(), textField_bereich.getText());
 				if (feedback == true) {// Rückgabewert der Methode
@@ -297,9 +308,35 @@ public class BenutzerAnlegen extends JDialog {
 				}
 			} else {
 				JOptionPane.showMessageDialog(null,
-						" Bitte fuellen Sie die Pflichtfelder aus",
-						"Achtung!", JOptionPane.ERROR_MESSAGE);
+						" Bitte fuellen Sie die Pflichtfelder aus", "Achtung!",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+
+	public class KeyListenerESC implements KeyListener {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				setInvisible();
+			}
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getExtendedKeyCode() == KeyEvent.VK_ESCAPE) {
+			    System.out.println("Backspace pressed");
+			}
+		}
+
 	}
 }
