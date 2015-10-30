@@ -849,7 +849,7 @@ public abstract class SQL_Schnittstelle {
 	 *            von welchem Raum soll die Grundausstatung geladen werden
 	 * @return Gibt ein ArrayList zurück von Ausstattungsobjekten
 	 */
-	public static String getAusstattungBuchungen(int buchungId) {
+	public static String getAusstattungBuchung(int buchungId) {
 		String ausstattungListe = "";
 		try {
 			String abfrageString = "SELECT aal.bezeichnung FROM ausstattungsArtenLager aal "
