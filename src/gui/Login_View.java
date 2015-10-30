@@ -47,7 +47,6 @@ public class Login_View extends JFrame {
 	private JButton loginButton, cancelButton;
 	private ActionListener action;
 	private int chooseP = 0;
-	private int chooseT = 0;
 
 	public Login_View(ActionListener action) {
 		setLoginButtonListener(action);
@@ -135,9 +134,8 @@ public class Login_View extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				if (chooseT == 0) {
+				if (userIDField.getText().equals("eMail-Adresse")) {
 					userIDField.setText("");
-					chooseT++;
 				}
 			}
 		};

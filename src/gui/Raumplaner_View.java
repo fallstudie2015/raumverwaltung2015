@@ -232,7 +232,7 @@ public class Raumplaner_View extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AusstattungAnlegen aa = new AusstattungAnlegen();
+				AusstattungAnlegen aa = new AusstattungAnlegen(diese);
 				aa.setVisible(true);
 			}
 		});
@@ -250,7 +250,7 @@ public class Raumplaner_View extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AusstattungLoeschen al = new AusstattungLoeschen();
+				AusstattungLoeschen al = new AusstattungLoeschen(diese);
 				al.setVisible(true);
 			}
 		});
