@@ -114,6 +114,31 @@ public abstract class SQL_Schnittstelle {
 									// Schluessel
 	}
 
+	public static int sqlInsertBuchungAusstattung(String abfrage) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		int rowAffected = 0;
+
+		try {
+			stmt = con.createStatement();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		try {
+			rowAffected = stmt.executeUpdate(abfrage);
+
+
+		} catch (Exception e) {
+			System.out.println("Update/Insert/Delete " + e.toString());
+			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlInsertBuchungAusstattung");
+		}
+
+		return rowAffected; // Rueckgabe wert jetzt der generierte
+									// Schluessel
+	}
+
+	
 	/**
 	 * Bearbeitet einen Satz in der Datenbank; Löschen oder bearbeiten.
 	 * 
@@ -375,12 +400,12 @@ public abstract class SQL_Schnittstelle {
 		// TODO Auto-generated method stub
 		int ausstattungid = 0;
 		try {
-			String abfrageString = "SELECT ausstattungArtenid FROM ausstattungsArten a WHERE a.bezeichnung = '"
+			String abfrageString = "SELECT ausstattungsArtenLagerid FROM ausstattungsArtenLager a WHERE a.bezeichnung = '"
 					+ ausstattung + "'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			if (rs.next()) {
-				ausstattungid = rs.getInt("ausstattungsArtenid");
+				ausstattungid = rs.getInt("ausstattungsArtenLagerid");
 
 				System.out.println("ausstattungid " + ausstattungid);
 			}
@@ -405,10 +430,10 @@ public abstract class SQL_Schnittstelle {
 		// TODO Auto-generated method stub
 		try {
 
-			String updateString = "INSERT INTO buchungAusstattung (buchungid, ausstattungid) VALUES ('"
+			String updateString = "INSERT INTO buchungAusstattung (buchungid, ausstattungsArtenLagerid) VALUES ('"
 					+ buchungId + "', '" + ausstattungId + "')";
 
-			SQL_Schnittstelle.sqlInsert(updateString);
+			SQL_Schnittstelle.sqlInsertBuchungAusstattung(updateString);
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.insertBuchungAusstattung");
@@ -538,17 +563,17 @@ public abstract class SQL_Schnittstelle {
 	 *            Name der Ausstattungsart
 	 * @return wurde erfolgreich in die Datenbank eingetragen oder nicht
 	 */
-	public static boolean insertAusstattungArt(String ausstattungsartBezeichnung) {
+	public static boolean insertAusstattungsArtenLager(String ausstattungsartBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
 
-			String updateString = "INSERT INTO ausstattungArten ( bezeichnung) VALUES ('"
+			String updateString = "INSERT INTO ausstattungsArtenLager ( bezeichnung) VALUES ('"
 					+ ausstattungsartBezeichnung + "')";
 
 			SQL_Schnittstelle.sqlInsert(updateString);
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.insertAusstattungArt");
+					"de.dhbw.java.SQL_Schnittstelle.insertAusstattungsArtenLager");
 			return false;
 		}
 		return true;
@@ -767,21 +792,21 @@ public abstract class SQL_Schnittstelle {
 	 * 
 	 * @return gibt Das ArrayList an Ausstatungsarten zurück
 	 */
-	public static ArrayList<Ausstattung> getAusstattungArten() {
+	public static ArrayList<Ausstattung> getAusstattungsArtenLager() {
 		ArrayList<Ausstattung> ausstattungListe = new ArrayList<Ausstattung>();
 		try {
-			String abfrageString = "SELECT * FROM ausstattungArten";
+			String abfrageString = "SELECT * FROM ausstattungsArtenLager";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
 				ausstattungListe.add(new Ausstattung(rs
-						.getInt("ausstattungArtenid"), rs
+						.getInt("ausstattungsArtenLagerid"), rs
 						.getString("bezeichnung")));
 			}
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.getAusstattungArten");
+					"de.dhbw.java.SQL_Schnittstelle.getAusstattungArtenLager");
 		}
 		return ausstattungListe;
 	}
@@ -796,7 +821,7 @@ public abstract class SQL_Schnittstelle {
 	public static ArrayList<Ausstattung> getGrundAusstattungRaum(int raumId) {
 		ArrayList<Ausstattung> grundAusstattungListe = new ArrayList<Ausstattung>();
 		try {
-			String abfrageString = "SELECT * FROM raumAusstattung where raumid = '"
+			String abfrageString = "SELECT * FROM raumAusstattung WHERE raumid = '"
 					+ raumId + "'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
@@ -843,7 +868,7 @@ public abstract class SQL_Schnittstelle {
 			}
 			int benutzerId = Benutzer.getBenutzerID();
 
-			String updateString = "Update benutzer set passwort = '"
+			String updateString = "UPDATE benutzer SET passwort = '"
 					+ neuesPasswort + "' where benutzerid = '" + benutzerId
 					+ "'";
 
@@ -946,8 +971,8 @@ public abstract class SQL_Schnittstelle {
 		ArrayList<Buchung> buchungListe = new ArrayList<Buchung>();
 		try {
 			String abfrageString = "SELECT * FROM buchung b WHERE b.raumid = '"
-					+ raumId + "' and datum = '" + datum
-					+ "' and status <> 'a'";
+					+ raumId + "' AND datum = '" + datum
+					+ "' AND status <> 'a'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
@@ -1079,7 +1104,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 
 			int rowAffected = SQL_Schnittstelle
-					.sqlUpdateDelete("DELETE FROM ausstattungArten WHERE bezeichnung = '"
+					.sqlUpdateDelete("DELETE FROM ausstattungsArtenLager WHERE bezeichnung = '"
 							+ bezeichnung + "'");
 
 			if (rowAffected == 0) {
