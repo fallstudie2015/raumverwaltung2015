@@ -692,6 +692,12 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	public static ResultSet getAllRooms() {
+		String abfrageString = "SELECT raumid AS 'Raum-ID', name AS Name, strasse AS Strasse, stock AS stock from raum WHERE entfernt = 0;";
+		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+		return rs;
+	}
+
 	public static int getRaumID(String raumbezeichnung) {
 		// TODO Auto-generated method stub
 		int raumId = 0;
@@ -832,7 +838,6 @@ public abstract class SQL_Schnittstelle {
 						.getInt("raumAusstattungid"), rs
 						.getString("bezeichnung")));
 			}
-			
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -841,7 +846,6 @@ public abstract class SQL_Schnittstelle {
 		return grundAusstattungListe;
 	}
 
-	
 	/**
 	 * Liste alle zur Buchung dazugehörige Ausstattung als String
 	 * 
@@ -853,13 +857,14 @@ public abstract class SQL_Schnittstelle {
 		String ausstattungListe = "";
 		try {
 			String abfrageString = "SELECT aal.bezeichnung FROM ausstattungsArtenLager aal "
-					+ "JOIN buchungAusstattung ba ON ba.ausstattungsArtenLagerid = aal.ausstattungsArtenLagerid " 
-					+ "WHERE buchungid = '"+ buchungId + "'";
+					+ "JOIN buchungAusstattung ba ON ba.ausstattungsArtenLagerid = aal.ausstattungsArtenLagerid "
+					+ "WHERE buchungid = '" + buchungId + "'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
-				ausstattungListe = ausstattungListe + rs.getString("bezeichnung");
-				if(!rs.isLast()){
+				ausstattungListe = ausstattungListe
+						+ rs.getString("bezeichnung");
+				if (!rs.isLast()) {
 					ausstattungListe = ausstattungListe + ", ";
 				}
 				System.out.println("ausstattungListe " + ausstattungListe);
@@ -871,7 +876,7 @@ public abstract class SQL_Schnittstelle {
 		}
 		return ausstattungListe;
 	}
-	
+
 	/**
 	 * Methode zum ändern des Passwortes.
 	 * 
