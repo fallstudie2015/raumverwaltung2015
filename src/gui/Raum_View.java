@@ -141,7 +141,6 @@ public class Raum_View extends JPanel implements MouseListener {
 
 		// Die eigenen Buchungen werden Grün angezeigt
 		for (BuchungPlus buchung : buchungList) {
-			System.out.println(buchung.getAusstattung());
 			if (buchung.getBenutzerID() == Benutzer.getBenutzerID()) {
 				farbe = Color.GREEN;
 			} else {
