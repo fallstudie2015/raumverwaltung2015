@@ -606,6 +606,23 @@ public abstract class SQL_Schnittstelle {
 		}
 		return true;
 	}
+	
+	public static boolean setDeleteFlagRaumByID(int raumid) {
+		try {
+
+			String updateString = "Update raum set entfernt = 1 where raumid = '"
+					+ raumid + "'";
+			System.out.println("updateString " + updateString);
+			int rowsAffacted = SQL_Schnittstelle.sqlUpdateDelete(updateString);
+			if (rowsAffacted == 0) {
+				return false;
+			}
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.setDeleteFlagRaumByID");
+		}
+		return true;
+	}
 
 	/**
 	 * Ändert den Buchungsstatus (unbestätigt/bestätigt/storniert)

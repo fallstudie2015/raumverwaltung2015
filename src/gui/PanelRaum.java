@@ -13,6 +13,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
 import listener.TableBuchungs_Listener;
 import de.dhbw.java.SQL_Schnittstelle;
 import de.dhbw.java.TableBuchung;
@@ -110,8 +112,16 @@ public class PanelRaum extends JPanel {
 	}
 
 	public int getSelectedRaumID() {
-		int raumid = Integer.parseInt(String.valueOf(tableRaum.getValueAt(
-				tableRaum.getSelectedRow(), 1)));
+		int raumid = 0;
+		System.out.println("");
+		System.out.println(tableRaum.getSelectedRow());
+		if(tableRaum.getSelectedRow() == -1)  {
+		
+		}
+		else { 
+		raumid = Integer.parseInt(String.valueOf(tableRaum.getValueAt(
+				tableRaum.getSelectedRow(), 0)));
+		}
 		return raumid;
 	}
 }
