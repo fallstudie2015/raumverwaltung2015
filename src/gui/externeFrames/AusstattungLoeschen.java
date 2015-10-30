@@ -14,6 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.PanelAusstattung;
+import gui.PanelRaum;
 import gui.Raumplaner_View;
 import gui.externeFrames.RaumLoeschen.MeinActionListener;
 
@@ -39,11 +41,11 @@ public class AusstattungLoeschen extends JDialog {
 
 	private JPanel contentPane;
 	private JComboBox comboBox_Ausstattung;
-	private JLabel lblAusstattung;
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
 	private Raumplaner_View rv;
 	private ArrayList ausstattung;
+	private PanelAusstattung pr;
 
 	/**
 	 * Launch the application.
@@ -105,42 +107,8 @@ public class AusstattungLoeschen extends JDialog {
 		});
 		splitPane.setRightComponent(btnAbbrechen);
 
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-
-		JPanel panel_2 = new JPanel();
-		panel_1.add(panel_2);
-		panel_2.setLayout(new GridLayout(0, 2, 0, 0));
-
-		JPanel panel_4 = new JPanel();
-		panel_2.add(panel_4);
-		panel_4.setLayout(new GridLayout(8, 0, 0, 0));
-
-		JPanel panel_5 = new JPanel();
-		panel_4.add(panel_5);
-
-		lblAusstattung = new JLabel("Ausstattungsname:");
-		lblAusstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_4.add(lblAusstattung);
-
-		JPanel panel_3 = new JPanel();
-		panel_2.add(panel_3);
-		panel_3.setLayout(new GridLayout(8, 0, 0, 0));
-
-		JPanel panel_6 = new JPanel();
-		panel_3.add(panel_6);
-
-		ausstattung = SQL_Schnittstelle.getAusstattungsArtenLager();
-		ausstattung.toString();
-		Object[] a = new Object[ausstattung.size()];
-		a = ausstattung.toArray(a);
-		
-		comboBox_Ausstattung = new JComboBox(a);
-		comboBox_Ausstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel_3.add(comboBox_Ausstattung);
-		comboBox_Ausstattung.addActionListener(mal);
-		comboBox_Ausstattung.addKeyListener(esc);
+		pr = new PanelAusstattung();
+		contentPane.add(pr, BorderLayout.CENTER);
 	}
 
 
@@ -162,7 +130,7 @@ public class AusstattungLoeschen extends JDialog {
 
 			{
 				boolean feedback = SQL_Schnittstelle
-						.deleteAusstattungArt(comboBox_Ausstattung.getName());
+						.deleteAusstattungArtByID(pr.getSelectedAusstattungsID());
 
 				if (feedback == true) { // Rückgabewert der Methode
 										// Ausstattung anlegen

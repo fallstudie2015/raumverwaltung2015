@@ -1179,4 +1179,22 @@ public abstract class SQL_Schnittstelle {
 		}
 		return true;
 	}
+	
+	public static boolean deleteAusstattungArtByID(int id) {
+		try {
+
+			int rowAffected = SQL_Schnittstelle
+					.sqlUpdateDelete("DELETE FROM ausstattungsArtenLager WHERE ausstattungsArtenLagerid = '"
+							+ id + "'");
+
+			if (rowAffected == 0) {
+				return false;
+			}
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.deleteAusstattungArtByID");
+
+		}
+		return true;
+	}
 }

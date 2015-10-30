@@ -109,9 +109,17 @@ public class PanelAusstattung extends JPanel {
 		return tableData;
 	}
 
-	public int getSelectedRaumID() {
-		int raumid = Integer.parseInt(String.valueOf(tableRaum.getValueAt(
-				tableRaum.getSelectedRow(), 1)));
-		return raumid;
+	public int getSelectedAusstattungsID() {
+		int ausid = 0;
+		System.out.println("");
+		System.out.println(tableRaum.getSelectedRow());
+		if(tableRaum.getSelectedRow() == -1)  {
+		
+		}
+		else { 
+		ausid = Integer.parseInt(String.valueOf(tableRaum.getValueAt(
+				tableRaum.getSelectedRow(), 0)));
+		}
+		return ausid;
 	}
 }
