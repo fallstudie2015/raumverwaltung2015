@@ -65,7 +65,7 @@ public class Bestellformular_View extends JPanel {
 	private final String stundeBis[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
 	private final String minute[] = { "00", "15", "30", "45" };
 	private Ausstattung ausstattung[];
-	private final String bestuhulung[] = { "", "U-Form", "Blockbildung", "Schulbanksystem/parlamentarische Bestuhlung",
+	private final String bestuhulung[] = { "Standard", "U-Form", "Blockbildung", "Schulbanksystem",
 			"Sonderbestuhlung" };
 	private Ausstattung technik[];
 	private String raumName;
