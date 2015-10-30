@@ -1046,7 +1046,7 @@ public abstract class SQL_Schnittstelle {
 			int zeile = 1;
 			rs.beforeFirst();
 			while (rs.next()) {
-				System.out.print(zeile + ": " + "\t");
+				System.out.println(zeile + ": " + "\t");
 				for (int i = 1; i < rs.getMetaData().getColumnCount() + 1; i++) {
 					System.out.print(rs.getString(i) + "\t");
 				}
