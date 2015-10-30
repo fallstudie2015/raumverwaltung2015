@@ -164,7 +164,7 @@ public class AusstattungAnlegen extends JDialog {
 
 			if (pflicht) {
 				boolean feedback = SQL_Schnittstelle
-						.insertAusstattungArt(textField_aName.getText());
+						.insertAusstattungsArtenLager(textField_aName.getText());
 
 				if (feedback == true) { // Rückgabewert der Methode
 										// Ausstattung
