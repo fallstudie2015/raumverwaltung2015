@@ -11,13 +11,17 @@ public class Start {
 
 	public static void main(String[] args) {
 		try {
+			// Die Oberfläche wird auf ein Crossplattform UI Manager geändert,
+			// um auf allen Systemen die gleiche Oberfläche zu gewährleisten
 			try {
 				UIManager.setLookAndFeel(UIManager
 						.getCrossPlatformLookAndFeelClassName());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			// SQL-Connection zum Server wird aufgebaut
 			SQL_Schnittstelle.createConnection();
+			// Login Fenster wird erstellt und angezeigt
 			Login_View lf = new Login_View();
 			lf.setVisible(true);
 		} catch (Exception e) {
