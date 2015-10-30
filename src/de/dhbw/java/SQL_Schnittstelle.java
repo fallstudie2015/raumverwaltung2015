@@ -225,9 +225,7 @@ public abstract class SQL_Schnittstelle {
 
 			abfrageString = "SELECT ba.buchungid, aal.bezeichnung FROM ausstattungsArtenLager aal, buchungAusstattung ba, buchung  WHERE ba.ausstattungsArtenLagerid = aal.ausstattungsArtenLagerid AND buchung.buchungid = ba.buchungid AND (buchung.status = 'v' OR buchung.status = 'g')";
 			ResultSet rsa = SQL_Schnittstelle.sqlAbfrage(abfrageString);
-
 			String ausstattung = "";
-
 			while (rs.next()) {
 				ausstattung = "";
 				while (rsa.next()) {
@@ -236,6 +234,8 @@ public abstract class SQL_Schnittstelle {
 								+ rsa.getString("bezeichnung") + ", ";
 					}
 				}
+				rsa.beforeFirst();
+				System.out.println("Ausstattungsstring: " + ausstattung);
 
 				buchungListe.add(new BuchungPlus(rs.getInt("buchungid"), rs
 						.getString("telefon"), rs.getDate("datum"), rs
@@ -1080,11 +1080,12 @@ public abstract class SQL_Schnittstelle {
 			int zeile = 1;
 			rs.beforeFirst();
 			while (rs.next()) {
-				System.out.println(zeile + ": " + "\t");
+				System.out.print(zeile + ": " + "\t");
 				for (int i = 1; i < rs.getMetaData().getColumnCount() + 1; i++) {
 					System.out.print(rs.getString(i) + "\t");
 				}
 				zeile++;
+				System.out.println();
 			}
 			rs.beforeFirst();
 		} catch (Exception e) {
