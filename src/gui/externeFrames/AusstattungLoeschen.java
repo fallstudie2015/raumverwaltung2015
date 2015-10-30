@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.externeFrames.RaumLoeschen.MeinActionListener;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -35,6 +36,7 @@ public class AusstattungLoeschen extends JDialog {
 	private JPanel contentPane;
 	private JTextField textField_Ausstattung;
 	private JLabel lblAusstattung;
+	private MeinActionListener mal = new MeinActionListener();
 
 	/**
 	 * Launch the application.
@@ -81,29 +83,7 @@ public class AusstattungLoeschen extends JDialog {
 		panel.add(splitPane);
 
 		JButton btnLoeschen = new JButton("Loeschen");
-		btnLoeschen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				boolean pflicht = PflichtfelderPruefen();
-
-				if (pflicht) {
-					boolean feedback = SQL_Schnittstelle.deleteAusstattungArt(
-							textField_Ausstattung.getText());
-
-					if (feedback == true) { // Rückgabewert der Methode
-											// Ausstattung anlegen
-						setInvisible();
-						Erfolg("Ausstattung wurde gelöscht!");
-					} else {
-						Erfolg("Ausstattung konnte nicht gelöscht werden!");
-					}
-				} else {
-					JOptionPane.showMessageDialog(null,
-							" Bitte fuellen Sie das Pflichtfeld aus",
-							"Achtung!", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		btnLoeschen.addActionListener(mal);
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
 
@@ -147,6 +127,7 @@ public class AusstattungLoeschen extends JDialog {
 		textField_Ausstattung.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_3.add(textField_Ausstattung);
 		textField_Ausstattung.setColumns(10);
+		textField_Ausstattung.addActionListener(mal);
 	}
 
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
@@ -172,5 +153,32 @@ public class AusstattungLoeschen extends JDialog {
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 
+	}
+	public class MeinActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+
+			boolean pflicht = PflichtfelderPruefen();
+
+			if (pflicht) {
+				boolean feedback = SQL_Schnittstelle.deleteAusstattungArt(
+						textField_Ausstattung.getText());
+
+				if (feedback == true) { // Rückgabewert der Methode
+										// Ausstattung anlegen
+					setInvisible();
+					Erfolg("Ausstattung wurde gelöscht!");
+				} else {
+					Erfolg("Ausstattung konnte nicht gelöscht werden!");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null,
+						" Bitte fuellen Sie das Pflichtfeld aus",
+						"Achtung!", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 }

@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
 import gui.Raumplaner_View;
+import gui.externeFrames.RaumAnlegen.MeinActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -38,6 +39,7 @@ public class RaumLoeschen extends JDialog {
 	private JTextField textField_Name;
 	private Raumplaner_View rv;
 	private JLabel label_Name;
+	private MeinActionListener mal = new MeinActionListener();
 
 	/**
 	 * Launch the application.
@@ -84,30 +86,7 @@ public class RaumLoeschen extends JDialog {
 		panel.add(splitPane);
 
 		JButton btnLoeschen = new JButton("Loeschen");
-		btnLoeschen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean pflicht = PflichtfelderPruefen();
-
-				if (pflicht) {
-					boolean feedback = SQL_Schnittstelle
-							.setDeleteFlagRaum(textField_Name.getText());
-					if (feedback == true) {// Rückgabewert der Methode
-											// Ausstattung anlegen
-						setInvisible();
-						Erfolg("Raum wurde gelöscht!");
-						rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
-																		// die
-																		// Räume
-					} else {
-						Erfolg("Raum konnte nicht gelöscht werden!");
-					}
-				} else {
-					JOptionPane.showMessageDialog(null,
-							" Bitte fuellen Sie das Pflichtfeld aus",
-							"Achtung!", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		btnLoeschen.addActionListener(mal);
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
 
@@ -150,6 +129,7 @@ public class RaumLoeschen extends JDialog {
 		textField_Name = new JTextField();
 		textField_Name.setColumns(10);
 		panel_4.add(textField_Name);
+		textField_Name.addActionListener(mal);
 	}
 
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
@@ -177,4 +157,33 @@ public class RaumLoeschen extends JDialog {
 				JOptionPane.INFORMATION_MESSAGE);
 
 	}
+	public class MeinActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+			boolean pflicht = PflichtfelderPruefen();
+
+			if (pflicht) {
+				boolean feedback = SQL_Schnittstelle
+						.setDeleteFlagRaum(textField_Name.getText());
+				if (feedback == true) {// Rückgabewert der Methode
+										// Ausstattung anlegen
+					setInvisible();
+					Erfolg("Raum wurde gelöscht!");
+					rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
+																	// die
+																	// Räume
+				} else {
+					Erfolg("Raum konnte nicht gelöscht werden!");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null,
+						" Bitte fuellen Sie das Pflichtfeld aus",
+						"Achtung!", JOptionPane.ERROR_MESSAGE);
+			}
+			}
+
+		}
 }

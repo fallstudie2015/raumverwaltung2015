@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.externeFrames.RaumLoeschen.MeinActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -39,6 +40,7 @@ public class BenutzerLoeschen extends JDialog {
 	private JLabel lblBenutzer_Vorname;
 	private JLabel lblBenutzer_Nachname;
 	private JLabel lblBenutzer_email;
+	private MeinActionListener mal = new MeinActionListener();
 	
 
 	/**
@@ -85,28 +87,7 @@ public class BenutzerLoeschen extends JDialog {
 		panel.add(splitPane);
 
 		JButton btnLoeschen = new JButton("Loeschen");
-		btnLoeschen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				boolean pflicht = PflichtfelderPruefen();
-
-				if (pflicht) {
-				boolean feedback = SQL_Schnittstelle.deleteBenutzer(
-						textField_email.getText(), textField_Vorname.getText(),
-						textField_nachname.getText());
-				if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
-					setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
-					Erfolg("Benutzer wurde gelöscht!");
-				} else {
-					Erfolg("Benutzer konnte nicht gelöscht werden!");
-				}
-				} else {
-					JOptionPane.showMessageDialog(null,
-							" Bitte fuellen Sie die Pflichtfelder aus",
-							"Achtung!", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		btnLoeschen.addActionListener(mal);
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
 
@@ -155,6 +136,7 @@ public class BenutzerLoeschen extends JDialog {
 		textField_Vorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_5.add(textField_Vorname, BorderLayout.CENTER);
 		textField_Vorname.setColumns(10);
+		textField_Vorname.addActionListener(mal);
 
 		Component rigidArea = Box.createRigidArea(new Dimension(147, 11));
 		panel_5.add(rigidArea, BorderLayout.NORTH);
@@ -170,6 +152,7 @@ public class BenutzerLoeschen extends JDialog {
 		textField_nachname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_6.add(textField_nachname, BorderLayout.CENTER);
 		textField_nachname.setColumns(10);
+		textField_nachname.addActionListener(mal);
 
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(147, 11));
 		panel_6.add(rigidArea_2, BorderLayout.NORTH);
@@ -185,6 +168,7 @@ public class BenutzerLoeschen extends JDialog {
 		textField_email.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_7.add(textField_email, BorderLayout.CENTER);
 		textField_email.setColumns(10);
+		textField_email.addActionListener(mal);
 
 		Component rigidArea_4 = Box.createRigidArea(new Dimension(147, 11));
 		panel_7.add(rigidArea_4, BorderLayout.NORTH);
@@ -231,5 +215,31 @@ public class BenutzerLoeschen extends JDialog {
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 
+	}
+	
+	public class MeinActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+			boolean pflicht = PflichtfelderPruefen();
+
+			if (pflicht) {
+			boolean feedback = SQL_Schnittstelle.deleteBenutzer(
+					textField_email.getText(), textField_Vorname.getText(),
+					textField_nachname.getText());
+			if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
+				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
+				Erfolg("Benutzer wurde gelöscht!");
+			} else {
+				Erfolg("Benutzer konnte nicht gelöscht werden!");
+			}
+			} else {
+				JOptionPane.showMessageDialog(null,
+						" Bitte fuellen Sie die Pflichtfelder aus",
+						"Achtung!", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 }

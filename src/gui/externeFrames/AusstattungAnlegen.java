@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.externeFrames.RaumAnlegen.MeinActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -35,6 +36,7 @@ public class AusstattungAnlegen extends JDialog {
 	private JPanel contentPane;
 	private JTextField textField_aName;
 	private JLabel lblAusstattungsname;
+	private MeinActionListener mal = new MeinActionListener();
 
 	/**
 	 * Launch the application.
@@ -81,33 +83,7 @@ public class AusstattungAnlegen extends JDialog {
 		panel.add(splitPane);
 
 		JButton btnAnlegen = new JButton("Anlegen");
-		btnAnlegen.addActionListener(new ActionListener() { // Aktion Listener
-															// und Anbindung
-															// Methode für
-															// Ausstattung
-															// Anlegen
-			public void actionPerformed(ActionEvent e) {
-				boolean pflicht = PflichtfelderPruefen();
-
-				if (pflicht) {
-					boolean feedback = SQL_Schnittstelle
-							.insertAusstattungArt(textField_aName.getText());
-
-					if (feedback == true) { // Rückgabewert der Methode
-											// Ausstattung
-											// anlegen
-						setInvisible();
-						Erfolg("Ausstattung wurde erstellt!");
-					} else {
-						Erfolg("Ausstattung konnte nicht erstellt werden!");
-					}
-				} else {
-					JOptionPane.showMessageDialog(null,
-							" Bitte fuellen Sie das Pflichtfeld aus",
-							"Achtung!", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		btnAnlegen.addActionListener(mal);
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnAnlegen);
 
@@ -150,6 +126,7 @@ public class AusstattungAnlegen extends JDialog {
 		textField_aName = new JTextField();
 		panel_4.add(textField_aName);
 		textField_aName.setColumns(10);
+		textField_aName.addActionListener(mal);
 	}
 
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
@@ -176,4 +153,32 @@ public class AusstattungAnlegen extends JDialog {
 				JOptionPane.INFORMATION_MESSAGE);
 
 	}
+	
+	public class MeinActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+			boolean pflicht = PflichtfelderPruefen();
+
+			if (pflicht) {
+				boolean feedback = SQL_Schnittstelle
+						.insertAusstattungArt(textField_aName.getText());
+
+				if (feedback == true) { // Rückgabewert der Methode
+										// Ausstattung
+										// anlegen
+					setInvisible();
+					Erfolg("Ausstattung wurde erstellt!");
+				} else {
+					Erfolg("Ausstattung konnte nicht erstellt werden!");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null,
+						" Bitte fuellen Sie das Pflichtfeld aus",
+						"Achtung!", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		}
 }
