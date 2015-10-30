@@ -110,7 +110,8 @@ public class PanelRaum extends JPanel {
 	}
 
 	public int getSelectedRaumID() {
-		int raumid = (int) tableRaum.getValueAt(tableRaum.getSelectedRow(), 1);
+		int raumid = Integer.parseInt(String.valueOf(tableRaum.getValueAt(
+				tableRaum.getSelectedRow(), 1)));
 		return raumid;
 	}
 }
