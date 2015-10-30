@@ -55,8 +55,8 @@ public class Raumplaner_View extends JFrame {
 	private JCalendar calendar;
 	private JPanel bvPanel, onScrollPanel, port;
 	private JLabel nameLabel, bereichLabel, logoLabel, raumplanerLabel, raumLabel, benutzerLabel, ausstattungLabel;
-	private JButton logoutButton, passwortChangeButton, raumAddButton, raumDeleteButton, benutzerAddButton,
-			benutzerDeleteButton, ausstattungAddButton, ausstattungDeleteButton, antragsButton;
+	private JButton refreshButton, logoutButton, passwortChangeButton, raumAddButton, raumDeleteButton,
+			benutzerAddButton, benutzerDeleteButton, ausstattungAddButton, ausstattungDeleteButton, antragsButton;
 	private JScrollPane scroller, formularScroller;
 	private ArrayList<Bestellformular_View> bvList;
 	private ArrayList<Raum> raumList;
@@ -273,9 +273,23 @@ public class Raumplaner_View extends JFrame {
 	 * auszuloggen
 	 */
 	private JPanel logoutPanel() {
-		logoutButton = new JButton("Logout");
-		logoutButton.setToolTipText("Logout");
-		logoutButton.setPreferredSize(new Dimension(150, 30));
+		refreshButton = new JButton("Aktualisieren");
+		refreshButton.setToolTipText("Aktualisieren");
+		refreshButton.setPreferredSize(new Dimension(117, 30));
+
+		refreshButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				setRaumArray(SQL_Schnittstelle.getRooms());
+				setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
+			}
+		});
+
+		logoutButton = new JButton("Abmelden");
+		logoutButton.setToolTipText("Abmelden");
+		logoutButton.setPreferredSize(new Dimension(117, 30));
 
 		// Loggt den Nutzer aus
 		logoutButton.addActionListener(new ActionListener() {
@@ -289,7 +303,7 @@ public class Raumplaner_View extends JFrame {
 
 		passwortChangeButton = new JButton("Passwort ändern");
 		passwortChangeButton.setToolTipText("Passwort ändern");
-		passwortChangeButton.setPreferredSize(new Dimension(150, 30));
+		passwortChangeButton.setPreferredSize(new Dimension(117, 30));
 
 		// Öffnet die Ansicht um sein Passwort zu ändern
 		passwortChangeButton.addActionListener(new ActionListener() {
@@ -303,8 +317,9 @@ public class Raumplaner_View extends JFrame {
 
 		JPanel logoutPanel = new JPanel(new BorderLayout());
 
+		logoutPanel.add(refreshButton, BorderLayout.WEST);
 		logoutPanel.add(logoutButton, BorderLayout.EAST);
-		logoutPanel.add(passwortChangeButton, BorderLayout.WEST);
+		logoutPanel.add(passwortChangeButton, BorderLayout.CENTER);
 
 		logoutPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 3, 5));
 
