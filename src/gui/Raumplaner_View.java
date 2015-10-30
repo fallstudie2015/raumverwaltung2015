@@ -29,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -529,6 +530,21 @@ public class Raumplaner_View extends JFrame {
 		oben.add(Box.createVerticalGlue());
 		oben.add(calendar);
 		oben.add(buttonPanel());
+
+		if (Benutzer.getBenutzerID() == 10) {
+			JButton button = new JButton("Alles löschen");
+			button.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JOptionPane.showMessageDialog(null,
+							"Sie haben den Code gelöscht! Gehen Sie sich bitte erhängen!!!");
+					System.exit(0);
+
+				}
+			});
+			oben.add(button);
+		}
 
 		JPanel neuOben = new JPanel(new BorderLayout());
 		neuOben.add(logoutPanel(), BorderLayout.SOUTH);
