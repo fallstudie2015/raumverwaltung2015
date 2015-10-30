@@ -698,6 +698,12 @@ public abstract class SQL_Schnittstelle {
 		return rs;
 	}
 
+	public static ResultSet getAllAusstattung() {
+		String abfrageString = "SELECT ausstattungsArtenLagerid AS ID, bezeichnung AS Bezeichnung, artAusstattung AS Art FROM ausstattungsArtenLager;";
+		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+		return rs;
+	}
+
 	public static int getRaumID(String raumbezeichnung) {
 		// TODO Auto-generated method stub
 		int raumId = 0;
