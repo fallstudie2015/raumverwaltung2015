@@ -240,8 +240,6 @@ public abstract class SQL_Schnittstelle {
 							ausstattung.length() - 2);
 				}
 
-				System.out.println("Ausstattungsstring: " + ausstattung);
-
 				buchungListe.add(new BuchungPlus(rs.getInt("buchungid"), rs
 						.getString("telefon"), rs.getDate("datum"), rs
 						.getTime("zeitvon"), rs.getTime("zeitbis"), rs
