@@ -11,6 +11,7 @@ import javax.swing.text.NumberFormatter;
 
 import de.dhbw.java.SQL_Schnittstelle;
 import gui.Raumplaner_View;
+import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -41,6 +42,8 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JCheckBox;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -69,6 +72,7 @@ public class RaumAnlegen extends JDialog {
 	private JLabel lblAusstattung;
 	public Raumplaner_View rv;
 	private MeinActionListener mal = new MeinActionListener();
+	private KeyListenerESC esc = new KeyListenerESC();
 
 	/**
 	 * Launch the application.
@@ -115,9 +119,9 @@ public class RaumAnlegen extends JDialog {
 		panel.add(splitPane);
 
 		JButton btnAnlegen = new JButton("Anlegen");
-		
+
 		btnAnlegen.addActionListener(mal); // Aktion Listener
-		
+
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnAnlegen);
 
@@ -176,6 +180,7 @@ public class RaumAnlegen extends JDialog {
 		panel_5.add(textField_name, BorderLayout.CENTER);
 		textField_name.setColumns(10);
 		textField_name.addActionListener(mal);
+		textField_name.addKeyListener(esc);
 
 		JPanel panel_9 = new JPanel();
 		panel_4.add(panel_9);
@@ -186,6 +191,7 @@ public class RaumAnlegen extends JDialog {
 		panel_9.add(textField_strasse, BorderLayout.CENTER);
 		textField_strasse.setColumns(10);
 		textField_strasse.addActionListener(mal);
+		textField_strasse.addKeyListener(esc);
 
 		JPanel panel_10 = new JPanel();
 		panel_4.add(panel_10);
@@ -196,6 +202,7 @@ public class RaumAnlegen extends JDialog {
 		panel_10.add(textField_stock, BorderLayout.CENTER);
 		textField_stock.setColumns(10);
 		textField_stock.addActionListener(mal);
+		textField_stock.addKeyListener(esc);
 
 		JPanel panel_6 = new JPanel();
 		panel_4.add(panel_6);
@@ -207,6 +214,7 @@ public class RaumAnlegen extends JDialog {
 		formatter.setAllowsInvalid(false);
 		textField_personen = new JFormattedTextField(formatter);
 		textField_personen.addActionListener(mal);
+		textField_personen.addKeyListener(esc);
 
 		textField_personen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_6.add(textField_personen, BorderLayout.CENTER);
@@ -221,6 +229,7 @@ public class RaumAnlegen extends JDialog {
 		textField_a1.setColumns(10);
 		panel_7.add(textField_a1, BorderLayout.CENTER);
 		textField_a1.addActionListener(mal);
+		textField_a1.addKeyListener(esc);
 
 		JPanel panel_8 = new JPanel();
 		panel_4.add(panel_8);
@@ -231,6 +240,7 @@ public class RaumAnlegen extends JDialog {
 		panel_8.add(textField_a2, BorderLayout.CENTER);
 		textField_a2.setColumns(10);
 		textField_a2.addActionListener(mal);
+		textField_a2.addKeyListener(esc);
 
 		JPanel panel_11 = new JPanel();
 		panel_4.add(panel_11);
@@ -241,6 +251,7 @@ public class RaumAnlegen extends JDialog {
 		panel_11.add(textField_a3, BorderLayout.CENTER);
 		textField_a3.setColumns(10);
 		textField_a3.addActionListener(mal);
+		textField_a3.addKeyListener(esc);
 
 		JPanel panel_12 = new JPanel();
 		panel_4.add(panel_12);
@@ -251,6 +262,7 @@ public class RaumAnlegen extends JDialog {
 		panel_12.add(textField_a4, BorderLayout.CENTER);
 		textField_a4.setColumns(10);
 		textField_a4.addActionListener(mal);
+		textField_a4.addKeyListener(esc);
 
 		JPanel panel_13 = new JPanel();
 		panel_4.add(panel_13);
@@ -261,6 +273,7 @@ public class RaumAnlegen extends JDialog {
 		panel_13.add(textField_a5, BorderLayout.CENTER);
 		textField_a5.setColumns(10);
 		textField_a5.addActionListener(mal);
+		textField_a5.addKeyListener(esc);
 
 		JPanel panel_14 = new JPanel();
 		panel_4.add(panel_14);
@@ -271,6 +284,7 @@ public class RaumAnlegen extends JDialog {
 		panel_14.add(textField_a6, BorderLayout.CENTER);
 		textField_a6.setColumns(10);
 		textField_a6.addActionListener(mal);
+		textField_a6.addKeyListener(esc);
 
 		JPanel panel_15 = new JPanel();
 		panel_4.add(panel_15);
@@ -281,6 +295,7 @@ public class RaumAnlegen extends JDialog {
 		panel_15.add(textField_a7, BorderLayout.CENTER);
 		textField_a7.setColumns(10);
 		textField_a7.addActionListener(mal);
+		textField_a7.addKeyListener(esc);
 
 		JPanel panel_16 = new JPanel();
 		panel_4.add(panel_16);
@@ -291,6 +306,8 @@ public class RaumAnlegen extends JDialog {
 		panel_16.add(textField_a8, BorderLayout.CENTER);
 		textField_a8.setColumns(10);
 		textField_a8.addActionListener(mal);
+		textField_a8.addActionListener(mal);
+		textField_a8.addKeyListener(esc);
 	}
 
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
@@ -412,6 +429,30 @@ public class RaumAnlegen extends JDialog {
 						" Bitte fuellen Sie die Pflichtfelder aus", "Achtung!",
 						JOptionPane.ERROR_MESSAGE);
 			}
+
+		}
+
+	}
+
+	public class KeyListenerESC implements KeyListener {
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				setInvisible();
+			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
 
 		}
 
