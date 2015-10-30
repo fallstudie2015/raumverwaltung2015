@@ -46,7 +46,8 @@ public class Login_View extends JFrame {
 	private JPasswordField passwordField;
 	private JButton loginButton, cancelButton;
 	private ActionListener action;
-	private static int wait = 0;
+	private int chooseP = 0;
+	private int chooseT = 0;
 
 	public Login_View(ActionListener action) {
 		setLoginButtonListener(action);
@@ -134,7 +135,10 @@ public class Login_View extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				userIDField.setText("");
+				if (chooseT == 0) {
+					userIDField.setText("");
+					chooseT++;
+				}
 			}
 		};
 		userIDField.addMouseListener(ml1);
@@ -144,8 +148,11 @@ public class Login_View extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				passwordField.setText("");
-				passwordField.setEchoChar('\u2022');
+				if (chooseP == 0) {
+					passwordField.setText("");
+					passwordField.setEchoChar('\u2022');
+					chooseP++;
+				}
 			}
 		};
 		passwordField.addMouseListener(ml2);
@@ -153,10 +160,10 @@ public class Login_View extends JFrame {
 			@Override
 			public void focusGained(FocusEvent e) {
 				super.focusGained(e);
-				if (wait == 0) {
+				if (chooseP == 0) {
 					passwordField.setText("");
 					passwordField.setEchoChar('\u2022');
-					wait++;
+					chooseP++;
 				}
 			}
 		});

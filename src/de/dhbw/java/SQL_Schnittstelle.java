@@ -832,6 +832,7 @@ public abstract class SQL_Schnittstelle {
 						.getInt("raumAusstattungid"), rs
 						.getString("bezeichnung")));
 			}
+			
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -840,6 +841,37 @@ public abstract class SQL_Schnittstelle {
 		return grundAusstattungListe;
 	}
 
+	
+	/**
+	 * Liste alle zur Buchung dazugehörige Ausstattung als String
+	 * 
+	 * @param raumId
+	 *            von welchem Raum soll die Grundausstatung geladen werden
+	 * @return Gibt ein ArrayList zurück von Ausstattungsobjekten
+	 */
+	public static String getAusstattungBuchung(int buchungId) {
+		String ausstattungListe = "";
+		try {
+			String abfrageString = "SELECT aal.bezeichnung FROM ausstattungsArtenLager aal "
+					+ "JOIN buchungAusstattung ba ON ba.ausstattungsArtenLagerid = aal.ausstattungsArtenLagerid " 
+					+ "WHERE buchungid = '"+ buchungId + "'";
+			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
+
+			while (rs.next()) {
+				ausstattungListe = ausstattungListe + rs.getString("bezeichnung");
+				if(!rs.isLast()){
+					ausstattungListe = ausstattungListe + ", ";
+				}
+				System.out.println("ausstattungListe " + ausstattungListe);
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.getAusstattungBuchungen");
+		}
+		return ausstattungListe;
+	}
+	
 	/**
 	 * Methode zum ändern des Passwortes.
 	 * 
