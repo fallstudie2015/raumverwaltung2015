@@ -235,6 +235,11 @@ public abstract class SQL_Schnittstelle {
 					}
 				}
 				rsa.beforeFirst();
+				if (ausstattung.contains(",")) {
+					ausstattung = ausstattung.substring(0,
+							ausstattung.length() - 2);
+				}
+
 				System.out.println("Ausstattungsstring: " + ausstattung);
 
 				buchungListe.add(new BuchungPlus(rs.getInt("buchungid"), rs
