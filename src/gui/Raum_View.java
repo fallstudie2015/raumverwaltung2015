@@ -240,6 +240,10 @@ public class Raum_View extends JPanel implements MouseListener {
 		return raum.getRaumID();
 	}
 
+	public ArrayList<Raum_View_Label> getLabellist() {
+		return labelList;
+	}
+
 	public TappedPaneBuchung getPanelBuchung() {
 		return frame.getPanelBuchung();
 	}

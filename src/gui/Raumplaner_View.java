@@ -668,6 +668,15 @@ public class Raumplaner_View extends JFrame {
 		}
 	}
 
+	public ArrayList<Raum_View_Label> getLabellist(int raumID) {
+		for (Raum_View raum : raumViewList) {
+			if (raum.getRaumID() == raumID) {
+				return raum.getLabelList();
+			}
+		}
+		return null;
+	}
+
 	/*
 	 * Methode ändert die Buchungseinträge auf den Paneln
 	 */
