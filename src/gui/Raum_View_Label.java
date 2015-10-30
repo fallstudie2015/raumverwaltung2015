@@ -44,7 +44,7 @@ public class Raum_View_Label extends JLabel {
 		this.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				super.mousePressed(e);
 				if (Benutzer.getBenutzertyp() == 'v' && buchung != null && buchung.getStatus().equalsIgnoreCase("v")) {
 					Bestaetigungs_View beV = new Bestaetigungs_View(frame, buchung);
