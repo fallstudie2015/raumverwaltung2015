@@ -70,7 +70,7 @@ public class PanelRaum extends JPanel {
 
 	private String[][] buchungBestellerListeToTableStringArray() {
 		ResultSet rs = null;
-		rs = SQL_Schnittstelle.getBuchungenZuGenehmigung();
+		rs = SQL_Schnittstelle.getAllRooms();
 		String[][] tableData = null;
 		int anzahlSpalten = 0;
 		int anzahlZeilen = 0;
