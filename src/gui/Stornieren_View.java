@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +18,7 @@ import de.dhbw.java.SQL_Schnittstelle;
 import mail.MailConnection;
 import mail.MailTexte;
 
-public class Stornieren_View extends JFrame {
+public class Stornieren_View extends JDialog {
 
 	private Buchung buchung;
 
@@ -49,11 +50,11 @@ public class Stornieren_View extends JFrame {
 
 	private Raumplaner_View mutterFenster;
 
-	public Stornieren_View(Raumplaner_View mutterView,
-			Buchung uebergabeBuchung) {
+	public Stornieren_View(Raumplaner_View mutterView, Buchung uebergabeBuchung) {
 
 		mutterFenster = mutterView;
 		buchung = uebergabeBuchung;
+		this.setModal(true);
 		this.setLayout(new BorderLayout());
 		this.add(this.createButtonPanel(), BorderLayout.SOUTH);
 
@@ -84,8 +85,7 @@ public class Stornieren_View extends JFrame {
 			buttonPanel.add(btnStornieren);
 			buttonPanel.add(btnAbbrechen);
 		} catch (Exception ex) {
-			Error_Message_Box.laufzeitfehler(ex,
-					"gui.Bestaetigungs_View.createButtonPanel");
+			Error_Message_Box.laufzeitfehler(ex, "gui.Bestaetigungs_View.createButtonPanel");
 		}
 		return buttonPanel;
 	}
@@ -105,8 +105,7 @@ public class Stornieren_View extends JFrame {
 			zeitPanel.add(txtZeitBis);
 			txtZeitBis.setEditable(false);
 		} catch (Exception ex) {
-			Error_Message_Box.laufzeitfehler(ex,
-					"gui.Bestaetigungs_View.createZeitPanel()");
+			Error_Message_Box.laufzeitfehler(ex, "gui.Bestaetigungs_View.createZeitPanel()");
 		}
 
 		return zeitPanel;
@@ -156,8 +155,7 @@ public class Stornieren_View extends JFrame {
 			txtAusstattung.setEditable(false);
 
 		} catch (Exception ex) {
-			Error_Message_Box.laufzeitfehler(ex,
-					"gui.Bestaetigungs_View.createMainPanel");
+			Error_Message_Box.laufzeitfehler(ex, "gui.Bestaetigungs_View.createMainPanel");
 		}
 		return mainPanel;
 	}
@@ -165,10 +163,8 @@ public class Stornieren_View extends JFrame {
 	private void befuelleMainPanel() {
 		try {
 			txtBuchungsID = new JTextField("" + buchung.getBuchungsID());
-			txtRaum = new JTextField(
-					"" + SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
-			txtBenutzer = new JTextField("" + SQL_Schnittstelle
-					.getBenutzerName(buchung.getBenutzerID()));
+			txtRaum = new JTextField("" + SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+			txtBenutzer = new JTextField("" + SQL_Schnittstelle.getBenutzerName(buchung.getBenutzerID()));
 			txtTelefon = new JTextField("" + buchung.getTelefon());
 			txtDatum = new JTextField("" + buchung.getDatum());
 			txtZeitVon = new JTextField("" + buchung.getZeitVon());
@@ -177,8 +173,7 @@ public class Stornieren_View extends JFrame {
 			txtKommentar = new JTextField("" + buchung.getKommentar());
 			txtAusstattung = new JTextField("Hier fehlt die Ausstattung");
 		} catch (Exception ex) {
-			Error_Message_Box.laufzeitfehler(ex,
-					"gui.Bestaetigungs_View.befuelleMainPanel");
+			Error_Message_Box.laufzeitfehler(ex, "gui.Bestaetigungs_View.befuelleMainPanel");
 		}
 
 	}
@@ -204,14 +199,11 @@ public class Stornieren_View extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == btnStornieren) {
-				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
-						's');
+				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(), 's');
 
-				mbv.getRaumView()
-						.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
+				mbv.getRaumView().setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
-				mail.sendMail(MailTexte.verwalterPostfach,
-						MailTexte.getBetreffStornierung(mbv.getBuchung()),
+				mail.sendMail(MailTexte.verwalterPostfach, MailTexte.getBetreffStornierung(mbv.getBuchung()),
 						MailTexte.getTextStornierung(mbv.getBuchung()));
 
 				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();

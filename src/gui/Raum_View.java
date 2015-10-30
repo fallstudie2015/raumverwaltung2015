@@ -240,6 +240,10 @@ public class Raum_View extends JPanel implements MouseListener {
 		return raum.getRaumID();
 	}
 
+	public ArrayList<Raum_View_Label> getLabellist() {
+		return labelList;
+	}
+
 	public TappedPaneBuchung getPanelBuchung() {
 		return frame.getPanelBuchung();
 	}
@@ -262,6 +266,23 @@ public class Raum_View extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
 		Raum_View_Label label = (Raum_View_Label) e.getSource();
 
 		if (!label.buchungGesetzt) {
@@ -296,24 +317,6 @@ public class Raum_View extends JPanel implements MouseListener {
 				frame.validate();
 			}
 		}
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

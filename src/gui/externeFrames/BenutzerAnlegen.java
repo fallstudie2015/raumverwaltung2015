@@ -24,6 +24,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.externeFrames.RaumLoeschen.MeinActionListener;
 
 public class BenutzerAnlegen extends JDialog {
 
@@ -41,6 +42,7 @@ public class BenutzerAnlegen extends JDialog {
 	private JLabel lblBereich;
 	private JLabel lblEmailAdresse;
 	private JLabel lblPasswort;
+	private MeinActionListener mal = new MeinActionListener();
 
 	/**
 	 * Launch the application.
@@ -86,32 +88,7 @@ public class BenutzerAnlegen extends JDialog {
 		panel.add(splitPane);
 
 		JButton btnAnlegen = new JButton("Anlegen");
-		btnAnlegen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				boolean pflicht = PflichtfelderPruefen();
-
-				if (pflicht) {
-					boolean feedback = SQL_Schnittstelle.insertBenutzer(
-							textField_Name.getText(),
-							textField_Vorname.getText(),
-							textField_email.getText(), GetPasswort(),
-							RadioZurueck(), textField_bereich.getText());
-					if (feedback == true) {// Rückgabewert der Methode
-											// Ausstattung
-											// anlegen
-						setInvisible();
-						Erfolg("Benutzer wurde erstellt!");
-					} else {
-						Erfolg("Benutzer konnte nicht erstellt werden!");
-					}
-				} else {
-					JOptionPane.showMessageDialog(null,
-							" Bitte fuellen Sie die Pflichtfelder aus",
-							"Achtung!", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		btnAnlegen.addActionListener(mal);
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnAnlegen);
 
@@ -169,20 +146,24 @@ public class BenutzerAnlegen extends JDialog {
 		textField_Name.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(textField_Name);
 		textField_Name.setColumns(10);
+		textField_Name.addActionListener(mal);
 
 		textField_Vorname = new JTextField();
 		textField_Vorname.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(textField_Vorname);
 		textField_Vorname.setColumns(10);
+		textField_Vorname.addActionListener(mal);
 
 		textField_email = new JTextField();
 		textField_email.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(textField_email);
 		textField_email.setColumns(10);
+		textField_email.addActionListener(mal);
 
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(passwordField);
+		passwordField.addActionListener(mal);
 
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
@@ -206,6 +187,7 @@ public class BenutzerAnlegen extends JDialog {
 		textField_bereich.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_4.add(textField_bereich);
 		textField_bereich.setColumns(10);
+		textField_bereich.addActionListener(mal);
 
 	}
 
@@ -289,5 +271,35 @@ public class BenutzerAnlegen extends JDialog {
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 
+	}
+	
+	public class MeinActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+			boolean pflicht = PflichtfelderPruefen();
+
+			if (pflicht) {
+				boolean feedback = SQL_Schnittstelle.insertBenutzer(
+						textField_Name.getText(),
+						textField_Vorname.getText(),
+						textField_email.getText(), GetPasswort(),
+						RadioZurueck(), textField_bereich.getText());
+				if (feedback == true) {// Rückgabewert der Methode
+										// Ausstattung
+										// anlegen
+					setInvisible();
+					Erfolg("Benutzer wurde erstellt!");
+				} else {
+					Erfolg("Benutzer konnte nicht erstellt werden!");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null,
+						" Bitte fuellen Sie die Pflichtfelder aus",
+						"Achtung!", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 }

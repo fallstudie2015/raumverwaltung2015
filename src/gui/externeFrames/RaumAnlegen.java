@@ -68,6 +68,7 @@ public class RaumAnlegen extends JDialog {
 	private JLabel lblAnzahlPersonen;
 	private JLabel lblAusstattung;
 	public Raumplaner_View rv;
+	private MeinActionListener mal = new MeinActionListener();
 
 	/**
 	 * Launch the application.
@@ -114,43 +115,9 @@ public class RaumAnlegen extends JDialog {
 		panel.add(splitPane);
 
 		JButton btnAnlegen = new JButton("Anlegen");
-		btnAnlegen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { // Action Listener und
-
-				boolean pflicht = PflichtfelderPruefen();
-
-				if (pflicht) {				
-						
-					boolean feedback = SQL_Schnittstelle.insertRaum( // Aufruf
-																		// RaumAnlegen
-																		// Methode
-							textField_name.getText(),
-							textField_strasse.getText(),
-							textField_stock.getText(),
-							Integer.parseInt(textField_personen.getText()),
-							Ausstattung());
-
-					if (feedback == true) // Rückgabewert der Methode
-											// Ausstattung anlegen
-					{
-						setInvisible();
-						erfolg("Raum wurde angelegt");
-						System.out.println("Raum wurde angelegt");
-						rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
-																		// die
-																		// Räume
-					} else {
-						erfolg("Raum konnte nicht angelegt werden");
-						System.out.println("Raum konnte nicht angelegt werden");
-					}
-				} else {
-					JOptionPane.showMessageDialog(null,
-							" Bitte fuellen Sie die Pflichtfelder aus",
-							"Achtung!", JOptionPane.ERROR_MESSAGE);
-				}
-
-			}
-		});
+		
+		btnAnlegen.addActionListener(mal); // Aktion Listener
+		
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnAnlegen);
 
@@ -208,6 +175,7 @@ public class RaumAnlegen extends JDialog {
 		textField_name.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_5.add(textField_name, BorderLayout.CENTER);
 		textField_name.setColumns(10);
+		textField_name.addActionListener(mal);
 
 		JPanel panel_9 = new JPanel();
 		panel_4.add(panel_9);
@@ -217,6 +185,7 @@ public class RaumAnlegen extends JDialog {
 		textField_strasse.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_9.add(textField_strasse, BorderLayout.CENTER);
 		textField_strasse.setColumns(10);
+		textField_strasse.addActionListener(mal);
 
 		JPanel panel_10 = new JPanel();
 		panel_4.add(panel_10);
@@ -226,19 +195,19 @@ public class RaumAnlegen extends JDialog {
 		textField_stock.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_10.add(textField_stock, BorderLayout.CENTER);
 		textField_stock.setColumns(10);
+		textField_stock.addActionListener(mal);
 
 		JPanel panel_6 = new JPanel();
 		panel_4.add(panel_6);
 		panel_6.setLayout(new BorderLayout(0, 0));
 
 		NumberFormat format = NumberFormat.getInstance();
-        format.setGroupingUsed(false);
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setAllowsInvalid(false);
-        textField_personen = new JFormattedTextField(formatter);
+		format.setGroupingUsed(false);
+		NumberFormatter formatter = new NumberFormatter(format);
+		formatter.setAllowsInvalid(false);
+		textField_personen = new JFormattedTextField(formatter);
+		textField_personen.addActionListener(mal);
 
-		
-		
 		textField_personen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_6.add(textField_personen, BorderLayout.CENTER);
 		textField_personen.setColumns(10);
@@ -251,6 +220,7 @@ public class RaumAnlegen extends JDialog {
 		textField_a1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textField_a1.setColumns(10);
 		panel_7.add(textField_a1, BorderLayout.CENTER);
+		textField_a1.addActionListener(mal);
 
 		JPanel panel_8 = new JPanel();
 		panel_4.add(panel_8);
@@ -260,6 +230,7 @@ public class RaumAnlegen extends JDialog {
 		textField_a2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_8.add(textField_a2, BorderLayout.CENTER);
 		textField_a2.setColumns(10);
+		textField_a2.addActionListener(mal);
 
 		JPanel panel_11 = new JPanel();
 		panel_4.add(panel_11);
@@ -269,6 +240,7 @@ public class RaumAnlegen extends JDialog {
 		textField_a3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_11.add(textField_a3, BorderLayout.CENTER);
 		textField_a3.setColumns(10);
+		textField_a3.addActionListener(mal);
 
 		JPanel panel_12 = new JPanel();
 		panel_4.add(panel_12);
@@ -278,6 +250,7 @@ public class RaumAnlegen extends JDialog {
 		textField_a4.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_12.add(textField_a4, BorderLayout.CENTER);
 		textField_a4.setColumns(10);
+		textField_a4.addActionListener(mal);
 
 		JPanel panel_13 = new JPanel();
 		panel_4.add(panel_13);
@@ -287,6 +260,7 @@ public class RaumAnlegen extends JDialog {
 		textField_a5.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_13.add(textField_a5, BorderLayout.CENTER);
 		textField_a5.setColumns(10);
+		textField_a5.addActionListener(mal);
 
 		JPanel panel_14 = new JPanel();
 		panel_4.add(panel_14);
@@ -296,6 +270,7 @@ public class RaumAnlegen extends JDialog {
 		textField_a6.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_14.add(textField_a6, BorderLayout.CENTER);
 		textField_a6.setColumns(10);
+		textField_a6.addActionListener(mal);
 
 		JPanel panel_15 = new JPanel();
 		panel_4.add(panel_15);
@@ -305,6 +280,7 @@ public class RaumAnlegen extends JDialog {
 		textField_a7.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_15.add(textField_a7, BorderLayout.CENTER);
 		textField_a7.setColumns(10);
+		textField_a7.addActionListener(mal);
 
 		JPanel panel_16 = new JPanel();
 		panel_4.add(panel_16);
@@ -314,7 +290,7 @@ public class RaumAnlegen extends JDialog {
 		textField_a8.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_16.add(textField_a8, BorderLayout.CENTER);
 		textField_a8.setColumns(10);
-
+		textField_a8.addActionListener(mal);
 	}
 
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
@@ -400,4 +376,44 @@ public class RaumAnlegen extends JDialog {
 
 	}
 
+	public class MeinActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+			boolean pflicht = PflichtfelderPruefen();
+
+			if (pflicht) {
+
+				boolean feedback = SQL_Schnittstelle.insertRaum( // Aufruf
+																	// RaumAnlegen
+																	// Methode
+						textField_name.getText(), textField_strasse.getText(),
+						textField_stock.getText(),
+						Integer.parseInt(textField_personen.getText()),
+						Ausstattung());
+
+				if (feedback == true) // Rückgabewert der Methode
+										// Ausstattung anlegen
+				{
+					setInvisible();
+					erfolg("Raum wurde angelegt");
+					System.out.println("Raum wurde angelegt");
+					rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
+																	// die
+																	// Räume
+				} else {
+					erfolg("Raum konnte nicht angelegt werden");
+					System.out.println("Raum konnte nicht angelegt werden");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null,
+						" Bitte fuellen Sie die Pflichtfelder aus", "Achtung!",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
+
+	}
 }
