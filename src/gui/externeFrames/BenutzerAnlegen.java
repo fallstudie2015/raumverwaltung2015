@@ -79,7 +79,6 @@ public class BenutzerAnlegen extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-
 		JLabel lblBenutzerAnlegen = new JLabel("Benutzer anlegen");
 		lblBenutzerAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblBenutzerAnlegen.setHorizontalAlignment(SwingConstants.CENTER);
@@ -109,7 +108,6 @@ public class BenutzerAnlegen extends JDialog {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		
 
 		JPanel panel_2 = new JPanel();
 		panel_1.add(panel_2);
@@ -317,12 +315,6 @@ public class BenutzerAnlegen extends JDialog {
 	public class KeyListenerESC implements KeyListener {
 
 		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -331,11 +323,15 @@ public class BenutzerAnlegen extends JDialog {
 		}
 
 		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
-			if (e.getExtendedKeyCode() == KeyEvent.VK_ESCAPE) {
-			    System.out.println("Backspace pressed");
-			}
+
 		}
 
 	}

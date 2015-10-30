@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
 import gui.Raumplaner_View;
+import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
 import gui.externeFrames.RaumAnlegen.MeinActionListener;
 
 import javax.swing.JComboBox;
@@ -28,6 +29,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -40,6 +43,7 @@ public class RaumLoeschen extends JDialog {
 	private Raumplaner_View rv;
 	private JLabel label_Name;
 	private MeinActionListener mal = new MeinActionListener();
+	private KeyListenerESC esc = new KeyListenerESC();
 
 	/**
 	 * Launch the application.
@@ -66,7 +70,7 @@ public class RaumLoeschen extends JDialog {
 				.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		setResizable(false);
 		this.rv = rv;
-		setTitle("Raum loeschen");
+		setTitle("Raum löschen");
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
@@ -74,7 +78,7 @@ public class RaumLoeschen extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblRaumLoeschen = new JLabel("Raum loeschen");
+		JLabel lblRaumLoeschen = new JLabel("Raum löschen");
 		lblRaumLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblRaumLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblRaumLoeschen, BorderLayout.NORTH);
@@ -85,7 +89,7 @@ public class RaumLoeschen extends JDialog {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 
-		JButton btnLoeschen = new JButton("Loeschen");
+		JButton btnLoeschen = new JButton("Löschen");
 		btnLoeschen.addActionListener(mal);
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
@@ -130,6 +134,7 @@ public class RaumLoeschen extends JDialog {
 		textField_Name.setColumns(10);
 		panel_4.add(textField_Name);
 		textField_Name.addActionListener(mal);
+		textField_Name.addKeyListener(esc);
 	}
 
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
@@ -157,6 +162,7 @@ public class RaumLoeschen extends JDialog {
 				JOptionPane.INFORMATION_MESSAGE);
 
 	}
+
 	public class MeinActionListener implements ActionListener {
 
 		@Override
@@ -180,10 +186,34 @@ public class RaumLoeschen extends JDialog {
 				}
 			} else {
 				JOptionPane.showMessageDialog(null,
-						" Bitte fuellen Sie das Pflichtfeld aus",
-						"Achtung!", JOptionPane.ERROR_MESSAGE);
+						" Bitte fuellen Sie das Pflichtfeld aus", "Achtung!",
+						JOptionPane.ERROR_MESSAGE);
 			}
+		}
+
+	}
+
+	public class KeyListenerESC implements KeyListener {
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				setInvisible();
 			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
 
 		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
 }

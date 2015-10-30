@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
 import gui.externeFrames.RaumLoeschen.MeinActionListener;
 
 import javax.swing.JComboBox;
@@ -27,6 +28,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.Toolkit;
@@ -41,7 +44,7 @@ public class BenutzerLoeschen extends JDialog {
 	private JLabel lblBenutzer_Nachname;
 	private JLabel lblBenutzer_email;
 	private MeinActionListener mal = new MeinActionListener();
-	
+	private KeyListenerESC esc = new KeyListenerESC();
 
 	/**
 	 * Launch the application.
@@ -63,11 +66,11 @@ public class BenutzerLoeschen extends JDialog {
 	 * Create the frame.
 	 */
 	public BenutzerLoeschen() {
-		setModal(true);					//Fenster wird aufgebaut
+		setModal(true); // Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerLoeschen.class
 				.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
 		setResizable(false);
-		setTitle("Benutzer loeschen");
+		setTitle("Benutzer löschen");
 		setLocationRelativeTo(this);
 		setBounds(100, 100, 310, 365);
 		contentPane = new JPanel();
@@ -75,7 +78,7 @@ public class BenutzerLoeschen extends JDialog {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblBenutzerLoeschen = new JLabel("Benutzer loeschen");
+		JLabel lblBenutzerLoeschen = new JLabel("Benutzer löschen");
 		lblBenutzerLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblBenutzerLoeschen.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblBenutzerLoeschen, BorderLayout.NORTH);
@@ -86,7 +89,7 @@ public class BenutzerLoeschen extends JDialog {
 		JSplitPane splitPane = new JSplitPane();
 		panel.add(splitPane);
 
-		JButton btnLoeschen = new JButton("Loeschen");
+		JButton btnLoeschen = new JButton("Löschen");
 		btnLoeschen.addActionListener(mal);
 		btnLoeschen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnLoeschen);
@@ -137,6 +140,7 @@ public class BenutzerLoeschen extends JDialog {
 		panel_5.add(textField_Vorname, BorderLayout.CENTER);
 		textField_Vorname.setColumns(10);
 		textField_Vorname.addActionListener(mal);
+		textField_Vorname.addKeyListener(esc);
 
 		Component rigidArea = Box.createRigidArea(new Dimension(147, 11));
 		panel_5.add(rigidArea, BorderLayout.NORTH);
@@ -153,6 +157,7 @@ public class BenutzerLoeschen extends JDialog {
 		panel_6.add(textField_nachname, BorderLayout.CENTER);
 		textField_nachname.setColumns(10);
 		textField_nachname.addActionListener(mal);
+		textField_nachname.addKeyListener(esc);
 
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(147, 11));
 		panel_6.add(rigidArea_2, BorderLayout.NORTH);
@@ -169,6 +174,7 @@ public class BenutzerLoeschen extends JDialog {
 		panel_7.add(textField_email, BorderLayout.CENTER);
 		textField_email.setColumns(10);
 		textField_email.addActionListener(mal);
+		textField_email.addKeyListener(esc);
 
 		Component rigidArea_4 = Box.createRigidArea(new Dimension(147, 11));
 		panel_7.add(rigidArea_4, BorderLayout.NORTH);
@@ -176,7 +182,7 @@ public class BenutzerLoeschen extends JDialog {
 		Component rigidArea_5 = Box.createRigidArea(new Dimension(147, 11));
 		panel_7.add(rigidArea_5, BorderLayout.SOUTH);
 	}
-	
+
 	private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
 	// sind
 	{
@@ -203,43 +209,68 @@ public class BenutzerLoeschen extends JDialog {
 			lblBenutzer_email.setForeground(Color.black);
 		}
 
-
 		return gefuellt;
 	}
 
-	private void setInvisible() {		//Fenster unsichtbar machen 
+	private void setInvisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
 	}
 
-	public static void Erfolg(String nachricht) {		//MessageBox für Rückgabewert
+	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 
 	}
-	
+
 	public class MeinActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+
 			boolean pflicht = PflichtfelderPruefen();
 
 			if (pflicht) {
-			boolean feedback = SQL_Schnittstelle.deleteBenutzer(
-					textField_email.getText(), textField_Vorname.getText(),
-					textField_nachname.getText());
-			if (feedback == true) {//Rückgabewert der Methode Ausstattung anlegen
-				setInvisible();//Beim Klicken auf Abbrechen wird Fenster unsichtbar
-				Erfolg("Benutzer wurde gelöscht!");
-			} else {
-				Erfolg("Benutzer konnte nicht gelöscht werden!");
-			}
+				boolean feedback = SQL_Schnittstelle.deleteBenutzer(
+						textField_email.getText(), textField_Vorname.getText(),
+						textField_nachname.getText());
+				if (feedback == true) {// Rückgabewert der Methode Ausstattung
+										// anlegen
+					setInvisible();// Beim Klicken auf Abbrechen wird Fenster
+									// unsichtbar
+					Erfolg("Benutzer wurde gelöscht!");
+				} else {
+					Erfolg("Benutzer konnte nicht gelöscht werden!");
+				}
 			} else {
 				JOptionPane.showMessageDialog(null,
-						" Bitte fuellen Sie die Pflichtfelder aus",
-						"Achtung!", JOptionPane.ERROR_MESSAGE);
+						" Bitte fuellen Sie die Pflichtfelder aus", "Achtung!",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+
+	public class KeyListenerESC implements KeyListener {
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				setInvisible();
+			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
 	}
 }
