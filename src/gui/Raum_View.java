@@ -257,7 +257,7 @@ public class Raum_View extends JPanel implements MouseListener {
 	}
 
 	public void setGrundausstattung(ArrayList<Ausstattung> list) {
-		bv.setGrundausstattung(list);
+		bv.setTechnik(list);
 	}
 
 	/*
