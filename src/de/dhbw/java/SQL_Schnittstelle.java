@@ -175,8 +175,7 @@ public abstract class SQL_Schnittstelle {
 			// holt alle nicht "gelöschten" räume aus der Datenbank
 			String abfrageString = "SELECT * FROM raum where entfernt = 0";
 			ResultSet rs = sqlAbfrage(abfrageString);
-			// TODO rsAusgabe wird nicht benoetigt
-			rsAusgabe(rs);
+			// Räume werden in einer Schleife zur Liste hinzugefügt
 			while (rs.next()) {
 				raumListe.add(new Raum(rs.getInt("raumid"), rs
 						.getString("name"), rs.getString("strasse"), rs
@@ -190,7 +189,8 @@ public abstract class SQL_Schnittstelle {
 	}
 
 	/**
-	 * Liest alle Buchungen aus der Datenbank
+	 * Liest alle für die Anzeige relevanten Buchungen aus der Datenbank v -
+	 * vorgemerkt, g - genehmigt, p - puffer
 	 * 
 	 * @return ArrayList mit Buchungsobjekten
 	 */
@@ -199,8 +199,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT * FROM buchung WHERE status = 'v' OR status = 'g' OR status = 'p'";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
-			// TODO rsAusgabe noetig??
-			rsAusgabe(rs);
+			// Alle Datensätze werden zu einer ArrayListe hinzugefügt
 			while (rs.next()) {
 				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
 						.getString("telefon"), rs.getDate("datum"), rs
@@ -217,15 +216,27 @@ public abstract class SQL_Schnittstelle {
 		return buchungListe;
 	}
 
+	/**
+	 * Liest alle für die Anzeige relevanten Buchungen aus der Datenbank v -
+	 * vorgemerkt, g - genehmigt, p - puffer BuchungPlus enthält noch
+	 * zusätzliche Informationen um unnötige Datenzugriffe zu vermeiden (Name,
+	 * Ausstattungsgegenstände)
+	 * 
+	 * @return ArrayList mit Buchungsobjekten
+	 */
 	public static ArrayList<BuchungPlus> getBuchungPlus() {
 		ArrayList<BuchungPlus> buchungListe = new ArrayList<BuchungPlus>();
 		try {
 			String abfrageString = "SELECT buchungid, telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, buchung.benutzerid, raumid, status, vorname, nachname FROM buchung, benutzer WHERE buchung.benutzerid = benutzer.benutzerid AND (status = 'v' OR status = 'g' OR status = 'p');";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
+			// Ausstattungsgegnstände werden ausgelesen weil diese zur Anzeige
+			// im Raumplaner_View benötigt werden
 			abfrageString = "SELECT ba.buchungid, aal.bezeichnung FROM ausstattungsArtenLager aal, buchungAusstattung ba, buchung  WHERE ba.ausstattungsArtenLagerid = aal.ausstattungsArtenLagerid AND buchung.buchungid = ba.buchungid AND (buchung.status = 'v' OR buchung.status = 'g')";
 			ResultSet rsa = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 			String ausstattung = "";
+			// Ausstattungsgegenstände werden einer Buchung zugeordnet und in
+			// einen String geschrieben
 			while (rs.next()) {
 				ausstattung = "";
 				while (rsa.next()) {
@@ -315,6 +326,8 @@ public abstract class SQL_Schnittstelle {
 					+ "', " + anzPersonen + ", '" + intExterneTeilnehmer + "')";
 			int buchungId = SQL_Schnittstelle.sqlInsert(updateString);
 			String ausstattung = null;
+			// austattungsList wird auf null geprüft um die methode Liste.size()
+			// verwenden zu können
 			if (ausstattungList != null) {
 				for (int i = 0; i < ausstattungList.size(); i++) {
 					ausstattung = ausstattungList.get(i);
@@ -359,8 +372,10 @@ public abstract class SQL_Schnittstelle {
 	}
 
 	/**
+	 * Liest alle unbestätigten bzw. vorgemerkten Buchungen aus der Datenbank
+	 * Wird für die KLasse panelBuchung benötigt, zur Ausgabe in Tabelle
 	 * 
-	 * @return
+	 * @return ResultSet mit allen vorgemerkten Buchungen ('v')
 	 */
 	public static ResultSet getBuchungenZuGenehmigung() {
 		ResultSet rs = null;
@@ -380,9 +395,12 @@ public abstract class SQL_Schnittstelle {
 	}
 
 	/**
+	 * Liest alle Buchungen eines bestimmten Benutzers aus Diese werden in der
+	 * Klasse panelMeineBuchung benötigt
 	 * 
 	 * @param benutzerid
-	 * @return
+	 *            Fremdschlüssel in der Buchungstabelle
+	 * @return ResultSet mit allen Buchungen des eingeloggten Benutzers
 	 */
 	public static ResultSet getMyBuchungen(int benutzerid) {
 		ResultSet rs = null;
@@ -621,6 +639,15 @@ public abstract class SQL_Schnittstelle {
 		return true;
 	}
 
+	/**
+	 * Ein Flag wird in die Raumtabelle in der Datenbank, sodass der Raum nicht
+	 * mehr in Programm angezeigt wird, über den Primärschlüssel raumid
+	 * 
+	 * @param raumid
+	 *            Welcher Raum soll "gelöscht" werden
+	 * @return hat der Update in der Datenbank funktioniert oder nicht
+	 *         (true/false)
+	 */
 	public static boolean setDeleteFlagRaumByID(int raumid) {
 		try {
 
@@ -667,74 +694,34 @@ public abstract class SQL_Schnittstelle {
 	}
 
 	/**
+	 * Alle angelegten aktiven Räume werden ausgelesen Wird benötigt für die
+	 * Klasse PanelRaum
 	 * 
-	 * @param datum
-	 * @param zeitVon
-	 * @param zeitBis
-	 * @param raumbezeichnung
-	 * @param status
-	 * @return
+	 * @return ResultSet mit Raum-ID, Name, Strasse, Stock
 	 */
-	// public static boolean updateBuchungStatus(Date datum, Time zeitVon,
-	// Time zeitBis, String raumbezeichnung, char status) {
-	// try {
-	//
-	// int raumId = getRaumID(raumbezeichnung);
-	// String updateString = "Update buchung set status = '" + status
-	// + "' where datum = '" + datum + "'and zeitvon = '"
-	// + zeitVon + "' and zeitbis = '" + zeitBis
-	// + "' and raumid = '" + raumId + "'";
-	//
-	// System.out.println("updateString " + updateString);
-	// SQL_Schnittstelle.sqlUpdateDelete(updateString);
-	//
-	// } catch (Exception e) {
-	// Error_Message_Box.laufzeitfehler(e,
-	// "de.dhbw.java.SQL_Schnittstelle.getRaumID");
-	// return false;
-	// }
-	// return true;
-	// }
-	/**
-	 * Liest die RaumID aus der Datenbank anhand der Raumbezeichnung
-	 * 
-	 * @param raumbezeichnung
-	 * @return gibt die RaumID aus der Datenbank zurück
-	 */
-
-	public static boolean updateBuchungStatus(Date datum, Time zeitVon,
-			Time zeitBis, String raumbezeichnung, char status) {
-		try {
-
-			int raumId = getRaumID(raumbezeichnung);
-			String updateString = "Update buchung set status = '" + status
-					+ "' where datum = '" + datum + "'and zeitvon = '"
-					+ zeitVon + "' and zeitbis = '" + zeitBis
-					+ "' and raumid = '" + raumId + "'";
-
-			System.out.println("updateString " + updateString);
-			SQL_Schnittstelle.sqlUpdateDelete(updateString);
-
-		} catch (Exception e) {
-			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.getRaumID");
-			return false;
-		}
-		return true;
-	}
-
 	public static ResultSet getAllRooms() {
-		String abfrageString = "SELECT raumid AS 'Raum-ID', name AS Name, strasse AS Strasse, stock AS stock from raum WHERE entfernt = 0;";
+		String abfrageString = "SELECT raumid AS 'Raum-ID', name AS Name, strasse AS Strasse, stock AS Stock from raum WHERE entfernt = 0;";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 		return rs;
 	}
 
+	/**
+	 * Alle angelegten aktiven Ausstattungen werden ausgelesen Wird benötigt für
+	 * die Klasse PanelAusstattung
+	 * 
+	 * @return ResultSet mit ID, Bezeichnung, Art
+	 */
 	public static ResultSet getAllAusstattung() {
 		String abfrageString = "SELECT ausstattungsArtenLagerid AS ID, bezeichnung AS Bezeichnung, artAusstattung AS Art FROM ausstattungsArtenLager;";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 		return rs;
 	}
 
+	/**
+	 * RaumID wird zurückgegeben über den Raumnamen
+	 * 
+	 * @return Int
+	 */
 	public static int getRaumID(String raumbezeichnung) {
 		// TODO Auto-generated method stub
 		int raumId = 0;

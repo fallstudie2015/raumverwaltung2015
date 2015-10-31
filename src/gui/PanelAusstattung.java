@@ -2,15 +2,12 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.sql.ResultSet;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import listener.TableBuchungs_Listener;
@@ -28,17 +25,12 @@ public class PanelAusstattung extends JPanel {
 
 	private JScrollPane scrollPane;;
 
-	private JLabel lblHeader = new JLabel("Unbestätigte Buchungen",
-			SwingConstants.CENTER);
-
 	public PanelAusstattung() {
 		tableRaum.getSelectionModel().setSelectionMode(
 				ListSelectionModel.SINGLE_SELECTION);
 		tableRaum.getSelectionModel().addListSelectionListener(tbl);
 		tableRaum.setAutoCreateRowSorter(true);
 		setLayout(new BorderLayout());
-		lblHeader.setFont(new Font("header", 0, 20));
-		// add(lblHeader, BorderLayout.NORTH);
 		scrollPane = new JScrollPane(tableRaum);
 		add(scrollPane, BorderLayout.CENTER);
 		setBorder(BorderFactory.createLineBorder(Color.black));
@@ -92,14 +84,6 @@ public class PanelAusstattung extends JPanel {
 					}
 				}
 
-				// int i = 0;
-				//
-				// while (rs.next()) {
-				// tableData[i][0] = rs.getDate("datum").toString();
-				// tableData[i][1] = rs.getString("raumName");
-				// tableData[i][2] = rs.getString("benutzerName");
-				// i++;
-				// }
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -113,12 +97,11 @@ public class PanelAusstattung extends JPanel {
 		int ausid = 0;
 		System.out.println("");
 		System.out.println(tableRaum.getSelectedRow());
-		if(tableRaum.getSelectedRow() == -1)  {
-		
-		}
-		else { 
-		ausid = Integer.parseInt(String.valueOf(tableRaum.getValueAt(
-				tableRaum.getSelectedRow(), 0)));
+		if (tableRaum.getSelectedRow() == -1) {
+
+		} else {
+			ausid = Integer.parseInt(String.valueOf(tableRaum.getValueAt(
+					tableRaum.getSelectedRow(), 0)));
 		}
 		return ausid;
 	}
