@@ -688,7 +688,7 @@ public class Bestellformular_View extends JPanel {
 		boolean externeTeilnehmer = externCheck.isSelected();
 
 		return SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis, kommentar, bestuhlung, benutzerId,
-				raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer);
+				raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer, bezeichnung);
 	}
 
 	/*
