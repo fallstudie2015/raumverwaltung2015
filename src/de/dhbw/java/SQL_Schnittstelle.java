@@ -227,7 +227,7 @@ public abstract class SQL_Schnittstelle {
 	public static ArrayList<BuchungPlus> getBuchungPlus() {
 		ArrayList<BuchungPlus> buchungListe = new ArrayList<BuchungPlus>();
 		try {
-			String abfrageString = "SELECT buchungid, telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, buchung.benutzerid, raumid, status, vorname, nachname FROM buchung, benutzer WHERE buchung.benutzerid = benutzer.benutzerid AND (status = 'v' OR status = 'g' OR status = 'p');";
+			String abfrageString = "SELECT buchungid, telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, buchung.benutzerid, raumid, status, vorname, nachname, bereich FROM buchung, benutzer WHERE buchung.benutzerid = benutzer.benutzerid AND (status = 'v' OR status = 'g' OR status = 'p');";
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			// Ausstattungsgegnstände werden ausgelesen weil diese zur Anzeige
@@ -257,7 +257,8 @@ public abstract class SQL_Schnittstelle {
 						.getString("kommentar"), rs.getString("bestuhlung"), rs
 						.getInt("benutzerid"), rs.getInt("raumid"), rs
 						.getString("status"), rs.getString("vorname") + " "
-						+ rs.getString("nachname"), ausstattung));
+						+ rs.getString("nachname"), ausstattung, rs
+						.getString("bereich")));
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
