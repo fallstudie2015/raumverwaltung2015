@@ -45,7 +45,7 @@ public abstract class SQL_Schnittstelle {
 			Error_Message_Box.laufzeitfehler(s,
 					"de.dhbw.java.SQL_Schnittstelle_createConnection");
 		}
-	}
+	} // end method createConnection
 
 	/**
 	 * Arbeitet die übergebene Abfrage ab und übergibt das Resultset.
@@ -71,7 +71,7 @@ public abstract class SQL_Schnittstelle {
 		}
 
 		return rs;
-	}
+	} // end method sqlAbfrage
 
 	/**
 	 * Fügt der Datenbank einen neuen Satz hinzu und gibt die ID der
@@ -111,10 +111,14 @@ public abstract class SQL_Schnittstelle {
 			Error_Message_Box.laufzeitfehler(e, "de.dhbw.java.sqlInsert");
 		}
 
-		return autoIncKeyFromApi; // Rueckgabe wert jetzt der generierte
-									// Schluessel
-	}
+		return autoIncKeyFromApi; // Rueckgabe wert jetzt der generierte	// Schluessel
+	} // end method sqlInsert
 
+	/**
+	 * Fügt eine neue Verknüpfung zwischen buchung und Ausstattung hinzu. 
+	 * @param abfrage
+	 * @return
+	 */
 	public static int sqlInsertBuchungAusstattung(String abfrage) {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -137,7 +141,7 @@ public abstract class SQL_Schnittstelle {
 
 		return rowAffected; // Rueckgabe wert jetzt der generierte
 							// Schluessel
-	}
+	} // end method sqlInsertBuchungAusstattung
 
 	/**
 	 * Bearbeitet einen Satz in der Datenbank; Löschen oder bearbeiten.
@@ -162,7 +166,7 @@ public abstract class SQL_Schnittstelle {
 		}
 
 		return rowAffected; // Wieviel Zeilen wurden verändert
-	}
+	} // end sqlUpdateDelete
 
 	/**
 	 * Liest alle Räume aus der Datenbank aus
@@ -187,7 +191,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getRooms");
 		}
 		return raumListe;
-	}
+	} // end getRooms
 
 	/**
 	 * Liest alle Buchungen aus der Datenbank
@@ -215,8 +219,12 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getVerwaltungBuchung");
 		}
 		return buchungListe;
-	}
+	} // end getBuchung
 
+	/**
+	 * Findet alle BUchungen des aktuellen Benutzers
+	 * @return ArrayList von Buchungen
+	 */
 	public static ArrayList<BuchungPlus> getBuchungPlus() {
 		ArrayList<BuchungPlus> buchungListe = new ArrayList<BuchungPlus>();
 		try {
@@ -239,7 +247,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getVerwaltungBuchung");
 		}
 		return buchungListe;
-	}
+	} // end method getBuchungPlus
 
 	/**
 	 * Legt eine neue Buchung in der Datenbank an
@@ -315,7 +323,7 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 		return true;
-	}
+	} // end method insertBuchung
 
 	/**
 	 * Liest alle unbestätigten bzw. vorgemerkten Buchungen aus der Datenbank
@@ -342,10 +350,10 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getBestellerBuchung");
 		}
 		return buchungListe;
-	}
+	} // end method getAlleVorgemerktenBuchungen
 
 	/**
-	 * 
+	 * Findet alle zu genehmigenden Buchungen
 	 * @return
 	 */
 	public static ResultSet getBuchungenZuGenehmigung() {
@@ -363,10 +371,10 @@ public abstract class SQL_Schnittstelle {
 		}
 
 		return rs;
-	}
+	} // end method getBuchungenZuGenehmigung
 
 	/**
-	 * 
+	 * Findet alle eigenen Buchungen
 	 * @param benutzerid
 	 * @return
 	 */
@@ -386,7 +394,7 @@ public abstract class SQL_Schnittstelle {
 		}
 
 		return rs;
-	}
+	} // end method getMyBuchungen
 
 	/**
 	 * Liest AusstattungsartID aus der Datenbank anhand der
@@ -418,7 +426,7 @@ public abstract class SQL_Schnittstelle {
 	} // ende get AusstattungsArtenID
 
 	/**
-	 * Läd jede Zusatzaussattung die bei einer Buchung ausgewählt wurde in die
+	 * Lädt jede Zusatzaussattung die bei einer Buchung ausgewählt wurde in die
 	 * Datenbank und weißt sie einer Buchung zu
 	 * 
 	 * @param buchungId
@@ -437,13 +445,11 @@ public abstract class SQL_Schnittstelle {
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.insertBuchungAusstattung");
-
 		}
-
-	}
+	} // end method insertBuchungAusstattung
 
 	/**
-	 * Läd auftretende Fehlermeldung in die Datenbank mit ensprechenden
+	 * Lädt auftretende Fehlermeldung in die Datenbank mit ensprechenden
 	 * Informationen
 	 * 
 	 * @param klasse
@@ -486,10 +492,10 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 		return true;
-	}
+	} // end method insertLogging
 
 	/**
-	 * Läd neuen Raum in die Datenbank
+	 * Lädt neuen Raum in die Datenbank
 	 * 
 	 * @param name
 	 *            Bezeichnung des Raums
@@ -530,8 +536,7 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 		return true;
-
-	}
+	} // end method insertRaum 
 
 	/**
 	 * Läd jede Grundausstattung für einen speziellen Raum in die Datenbank
@@ -554,7 +559,7 @@ public abstract class SQL_Schnittstelle {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.insertRaumAusstattung");
 		}
-	}
+	} // end methood insertRaumGrundAusstattung
 
 	/**
 	 * Läd einen neue Zusatzausstattungsart in die Datenbank
@@ -579,7 +584,7 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 		return true;
-	}
+	} // end method insertAusstattungsArtenLager
 
 	/**
 	 * Ein Flag wird in die Raumtabelle in der Datenbank, sodass der Raum nicht
@@ -605,8 +610,13 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.setDeleteFlagRaum");
 		}
 		return true;
-	}
+	} // end method setDeleteFlagRaum
 	
+	/**
+	 * Setzt bei dem Raum mit gegebener ID das "gelöscht"-flag auf 1 (gelöscht)
+	 * @param raumid
+	 * @return
+	 */
 	public static boolean setDeleteFlagRaumByID(int raumid) {
 		try {
 
@@ -622,7 +632,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.setDeleteFlagRaumByID");
 		}
 		return true;
-	}
+	} // end method setDeleteFlagRaumByID
 
 	/**
 	 * Ändert den Buchungsstatus (unbestätigt/bestätigt/storniert)
@@ -650,7 +660,7 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 		return true;
-	}
+	} // end method upadteBuchungStatus
 
 	/**
 	 * 
@@ -688,6 +698,15 @@ public abstract class SQL_Schnittstelle {
 	 * @return gibt die RaumID aus der Datenbank zurück
 	 */
 
+	/**
+	 * Aktualisiert den STATUS der gegebenen Buchung.
+	 * @param datum
+	 * @param zeitVon
+	 * @param zeitBis
+	 * @param raumbezeichnung
+	 * @param status
+	 * @return
+	 */
 	public static boolean updateBuchungStatus(Date datum, Time zeitVon,
 			Time zeitBis, String raumbezeichnung, char status) {
 		try {
@@ -707,14 +726,23 @@ public abstract class SQL_Schnittstelle {
 			return false;
 		}
 		return true;
-	}
+	} // end method updateBuchungStatus
 
+	/**
+	 * Findet alle Räume.
+	 * @return
+	 */
 	public static ResultSet getAllRooms() {
 		String abfrageString = "SELECT raumid AS 'Raum-ID', name AS Name, strasse AS Strasse, stock AS stock from raum WHERE entfernt = 0;";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 		return rs;
-	}
+	} // end method getAllRooms
 
+	/**
+	 * Findet die RaumID zu dem raum mit gegebener Bezeichnung.
+	 * @param raumbezeichnung
+	 * @return
+	 */
 	public static int getRaumID(String raumbezeichnung) {
 		// TODO Auto-generated method stub
 		int raumId = 0;
@@ -732,7 +760,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getRaumID");
 		}
 		return raumId;
-	}
+	} // end method getRaumID
 
 	/**
 	 * Liest den Raumnamen aus der Datenbank aus, anhand der RaumID
@@ -757,7 +785,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getRaumID");
 		}
 		return raumName;
-	}
+	} // end method getRaumName
 
 	/**
 	 * Liest die Emailadresse des übergebenen Benutzers aus der Datenbank
@@ -782,7 +810,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getBenutzerEmail");
 		}
 		return emailAdresse;
-	}
+	} // end method getBenutzerEmail
 
 	/**
 	 * Liest den Benutzername aus der Datenbank aus, anhand der BenutzerID
@@ -809,7 +837,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getRaumID");
 		}
 		return benutzerName;
-	}
+	} // end method getBenutzerName
 
 	/**
 	 * Liest alle Ausstattungsartenbezeichnungen aus der Datenbank und schreibt
@@ -834,7 +862,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getAusstattungArtenLager");
 		}
 		return ausstattungListe;
-	}
+	} // end method getAusstattungsArtenLager
 
 	/**
 	 * Liest alle zum Raum dazugehörige Grundausstattung in ein ArrayList
@@ -861,7 +889,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getGrundAusstattungRaum");
 		}
 		return grundAusstattungListe;
-	}
+	} // end method getGrundAusstattungRaum
 
 	/**
 	 * Liste alle zur Buchung dazugehörige Ausstattung als String
@@ -892,7 +920,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getAusstattungBuchungen");
 		}
 		return ausstattungListe;
-	}
+	} // end method getAusstattungBuchung
 
 	/**
 	 * Methode zum ändern des Passwortes.
@@ -937,7 +965,7 @@ public abstract class SQL_Schnittstelle {
 
 		}
 		return "Passwort wurde erfolgreich geandert!";
-	}
+	} // end method passwortAendern
 
 	/**
 	 * Gibt das aktuelle Passwort aus.
@@ -961,8 +989,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getAktuellesPasswort");
 		}
 		return aktuellesPasswort;
-
-	}
+	} // end method getAktuellesPasswort
 
 	/**
 	 * Prüft, ob die Buchung sich mit anderen Buchungen überschneidet.
@@ -1013,7 +1040,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.pruefeBuchungskonflikt");
 		}
 		return true;
-	}
+	} // end method pruefeBuchungskonflikt
 
 	/**
 	 * Gibt alle Buchungen am übergebenen Tag zu einem übergebenen Raum als
@@ -1045,7 +1072,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.getBuchungAnTagX");
 		}
 		return buchungListe;
-	}
+	} // end method getBuchungAnTagX
 
 	/**
 	 * Gibt das Resultset Zeile für Zeile in der Konsole aus.
@@ -1074,9 +1101,8 @@ public abstract class SQL_Schnittstelle {
 			System.out.println(e.getMessage());
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.rsAusgabe");
-
 		}
-	}
+	} // end method rsAusgabe
 
 	/**
 	 * Fügt einen neuen Benutzer in die Datenbank ein.
@@ -1118,7 +1144,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.insertBenutyer");
 		}
 		return antwort;
-	}
+	} // end method insertBenutzer
 
 	/**
 	 * Löscht den übergebenen Benutzer aus der Datenbank.
@@ -1147,7 +1173,7 @@ public abstract class SQL_Schnittstelle {
 
 		}
 		return true;
-	}
+	} // end method deleteBenutzer
 
 	/**
 	 * Löscht den übergebene Ausstattungstyp aus der Datenbank.
@@ -1172,5 +1198,6 @@ public abstract class SQL_Schnittstelle {
 
 		}
 		return true;
-	}
-}
+	} // end method deleteAusstattungArt
+	
+} // end class SQL_Schnittstelle
