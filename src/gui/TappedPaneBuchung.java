@@ -4,6 +4,8 @@
  */
 package gui;
 
+import java.awt.Dimension;
+
 import javax.swing.JTabbedPane;
 
 import com.toedter.calendar.JCalendar;
@@ -35,6 +37,7 @@ public class TappedPaneBuchung extends JTabbedPane {
 				pb = new PanelBuchung(jc);
 				addTab("Unbestätigte Buchungen", pb);
 			}
+			setPreferredSize(new Dimension(350, 100));
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"gui.TappedPaneBuchung.TappedPaneBuchung(JCalendar jc)");
