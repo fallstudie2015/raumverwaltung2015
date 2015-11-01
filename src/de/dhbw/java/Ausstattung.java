@@ -1,3 +1,7 @@
+/* Programmiert von: ??
+ * Programmiert für: SQL_Schnittstelle
+ * Beschreibung: Wird verwendet um Datensätze in Objekte einzulesen
+ */
 package de.dhbw.java;
 
 public class Ausstattung {

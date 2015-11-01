@@ -1,8 +1,15 @@
+/* Programmiert von: Kai Kleefisch
+ * Programmiert für: Raumplaner_View
+ * Beschreibung: Um Datenbankzugriffe zu minimieren wurde diese KLasse ins Leben gerufen. Die Klasse beinhaltet alle Infos die zur anzeige auf Raumplaner_View benötigt werden
+ * 
+ */
+
 package de.dhbw.java;
 
 import java.sql.Date;
 import java.sql.Time;
 
+//Erbt von der Buchungsklasse, enthält weitere Informationen (siehe Attribute)
 public class BuchungPlus extends Buchung {
 	private String Name;
 	private String ausstattung;
