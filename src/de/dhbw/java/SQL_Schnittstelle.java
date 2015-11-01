@@ -309,14 +309,14 @@ public abstract class SQL_Schnittstelle {
 	public static boolean insertBuchung(String telefon, Date datum,
 			Time zeitVon, Time zeitBis, String kommentar, String bestuhlung,
 			int benutzerId, int raumId, char status, int anzPersonen,
-			ArrayList<String> ausstattungList, boolean externeTeilnehmer) {
+			ArrayList<String> ausstattungList, boolean externeTeilnehmer, String veranstaltungsbezeichnung) {
 
 		int intExterneTeilnehmer = 0;
 		try {
 			if (externeTeilnehmer == true) {
 				intExterneTeilnehmer = 1;
 			}
-			String updateString = "INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status, anzPersonen, externeTeilnehmer) VALUES('"
+			String updateString = "INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status, anzPersonen, externeTeilnehmer, veranstaltungsbezeichnung) VALUES('"
 					+ telefon
 					+ "', '"
 					+ datum
@@ -334,7 +334,7 @@ public abstract class SQL_Schnittstelle {
 					+ raumId
 					+ ", '"
 					+ status
-					+ "', " + anzPersonen + ", '" + intExterneTeilnehmer + "')";
+					+ "', " + anzPersonen + ", '" + intExterneTeilnehmer + ", '" + veranstaltungsbezeichnung + "')";
 			int buchungId = SQL_Schnittstelle.sqlInsert(updateString);
 			String ausstattung = null;
 			// austattungsList wird auf null geprüft um die methode Liste.size()
