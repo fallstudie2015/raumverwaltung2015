@@ -1,3 +1,7 @@
+/* Programmiert von: Kai Kleefisch
+ * Programmiert für: Löschdialog der Ausstattung
+ * Beschreibung: Zeigt eine Tabelle mit allen aktiven Ausstattungen, um so die zu löschende Ausstattung auswählen zu können
+ */
 package gui;
 
 import java.awt.BorderLayout;
@@ -10,98 +14,54 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import listener.TableBuchungs_Listener;
+import de.dhbw.java.MeineTabelle;
 import de.dhbw.java.SQL_Schnittstelle;
-import de.dhbw.java.TableBuchung;
+import de.dhbw.java.TabellenWerkzeug;
 
 public class PanelAusstattung extends JPanel {
-	private String[] tableHeader = getStringTableHeader();
-	private String[][] dataBuchung = buchungBestellerListeToTableStringArray();
-	private DefaultTableModel buchungBestellerModel = new DefaultTableModel(
-			dataBuchung, tableHeader);
+	private String[] tableHeader;
+	private String[][] tableData;
+	// TabellenModel wird zur erstellung einer Tabelle benötigt
+	private DefaultTableModel tableModel;
 
-	private TableBuchung tableRaum = new TableBuchung(buchungBestellerModel);
-	private TableBuchungs_Listener tbl;
-
+	private MeineTabelle tableAusstattung;
 	private JScrollPane scrollPane;;
 
 	public PanelAusstattung() {
-		tableRaum.getSelectionModel().setSelectionMode(
-				ListSelectionModel.SINGLE_SELECTION);
-		tableRaum.getSelectionModel().addListSelectionListener(tbl);
-		tableRaum.setAutoCreateRowSorter(true);
-		setLayout(new BorderLayout());
-		scrollPane = new JScrollPane(tableRaum);
-		add(scrollPane, BorderLayout.CENTER);
-		setBorder(BorderFactory.createLineBorder(Color.black));
-	}
-
-	private String[] getStringTableHeader() {
-		ResultSet rs = null;
-		rs = SQL_Schnittstelle.getAllAusstattung();
-		int anzahlSpalten = 0;
 		try {
-			anzahlSpalten = rs.getMetaData().getColumnCount();
+			ResultSet rs = SQL_Schnittstelle.getAllAusstattung();
+			tableHeader = TabellenWerkzeug.getStringTableHeader(rs);
+			tableData = TabellenWerkzeug.resultSetToTableStringArray(rs);
+			tableModel = new DefaultTableModel(tableData, tableHeader);
+
+			tableAusstattung = new MeineTabelle(tableModel);
+			tableAusstattung.getSelectionModel().setSelectionMode(
+					ListSelectionModel.SINGLE_SELECTION);
+			tableAusstattung.setAutoCreateRowSorter(true);
+			setLayout(new BorderLayout());
+			scrollPane = new JScrollPane(tableAusstattung);
+			add(scrollPane, BorderLayout.CENTER);
+			setBorder(BorderFactory.createLineBorder(Color.black));
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"gui.PanelBuchung.getStringTableHeader");
+					"gui.PanelAusstattung.PanelAusstattung()");
 		}
-
-		String[] stringTableHeader = new String[anzahlSpalten];
-		try {
-			for (int i = 1; i < anzahlSpalten + 1; i++) {
-				stringTableHeader[i - 1] = rs.getMetaData().getColumnLabel(i);
-			}
-		} catch (Exception e) {
-			Error_Message_Box.laufzeitfehler(e,
-					"gui.PanelBuchung.getStringTableHeader");
-		}
-
-		return stringTableHeader;
 	}
 
-	private String[][] buchungBestellerListeToTableStringArray() {
-		ResultSet rs = null;
-		rs = SQL_Schnittstelle.getAllAusstattung();
-		String[][] tableData = null;
-		int anzahlSpalten = 0;
-		int anzahlZeilen = 0;
-
-		try {
-			rs.last();
-			tableData = new String[rs.getRow()][3];
-			rs.beforeFirst();
-			if (rs.next()) {
-				rs.last();
-				anzahlSpalten = rs.getMetaData().getColumnCount();
-				anzahlZeilen = rs.getRow();
-				tableData = new String[anzahlZeilen][anzahlSpalten];
-				rs.beforeFirst();
-
-				while (rs.next()) {
-					for (int i = 1; i < anzahlSpalten + 1; i++) {
-						tableData[rs.getRow() - 1][i - 1] = rs.getString(i);
-					}
-				}
-
-			}
-		} catch (Exception e) {
-			Error_Message_Box.laufzeitfehler(e,
-					"gui.PanelBuchung.buchungBestellerListeToTableStringArray");
-		}
-
-		return tableData;
-	}
-
+	// Gibt die ID der Ausstattung zurück die gelöscht werden soll
 	public int getSelectedAusstattungsID() {
 		int ausid = 0;
-		System.out.println("");
-		System.out.println(tableRaum.getSelectedRow());
-		if (tableRaum.getSelectedRow() == -1) {
+		try {
+			if (tableAusstattung.getSelectedRow() == -1) {
 
-		} else {
-			ausid = Integer.parseInt(String.valueOf(tableRaum.getValueAt(
-					tableRaum.getSelectedRow(), 0)));
+			} else {
+				ausid = Integer.parseInt(String.valueOf(tableAusstattung
+						.getValueAt(tableAusstattung.getSelectedRow(), 0)));
+			}
+
+		} catch (Exception e) {
+			Error_Message_Box.laufzeitfehler(e,
+					"gui.PanelAusstattung.getSelectedAusstattungsID()");
 		}
 		return ausid;
 	}

@@ -3,13 +3,10 @@ package de.dhbw.java;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class TableBuchung extends JTable {
+public class MeineTabelle extends JTable {
 
-	// private JMPlayer myPlayer; // Tabelle wird mit dem Player verknüpft
-
-	public TableBuchung(DefaultTableModel model) {
+	public MeineTabelle(DefaultTableModel model) {
 		super(model);
-		// this.myPlayer = myPlayer;
 	}
 
 	// Methode um festzulegen welche Zellen bearbeitet werden können
