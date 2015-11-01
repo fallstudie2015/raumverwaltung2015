@@ -262,7 +262,7 @@ public abstract class SQL_Schnittstelle {
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.getVerwaltungBuchung");
+					"de.dhbw.java.SQL_Schnittstelle.getBuchungPlus");
 		}
 		return buchungListe;
 	}
@@ -445,7 +445,7 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.getAusstattungsID");
+					"de.dhbw.java.SQL_Schnittstelle.getAusstattungsArtenID");
 		}
 		return ausstattungid;
 	} // ende get AusstattungsArtenID
@@ -762,7 +762,7 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+					"de.dhbw.java.SQL_Schnittstelle.getRaumName");
 		}
 		return raumName;
 	}
@@ -814,7 +814,7 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.getRaumID");
+					"de.dhbw.java.SQL_Schnittstelle.getBenutzerName");
 		}
 		return benutzerName;
 	}
@@ -897,7 +897,7 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.getAusstattungBuchungen");
+					"de.dhbw.java.SQL_Schnittstelle.getAusstattungBuchung");
 		}
 		return ausstattungListe;
 	}
@@ -1124,7 +1124,7 @@ public abstract class SQL_Schnittstelle {
 		} catch (Exception e) {
 			antwort = false;
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.insertBenutyer");
+					"de.dhbw.java.SQL_Schnittstelle.insertBenutzer");
 		}
 		return antwort;
 	}
@@ -1152,7 +1152,7 @@ public abstract class SQL_Schnittstelle {
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"de.dhbw.java.SQL_Schnittstelle.insertBenutyer");
+					"de.dhbw.java.SQL_Schnittstelle.deleteBenutyer");
 
 		}
 		return true;
