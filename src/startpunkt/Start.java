@@ -1,3 +1,8 @@
+/* Programmiert von: Kai Kleefisch
+ * Programmiert für: Einstiegspunkt in die Anwendung
+ * Beschreibung: Dient als Startpunkt vom Programm, hier kann auch der UIManager mitgegeben werden um das LookAndFeel anzupassen
+ */
+
 package startpunkt;
 
 import gui.Error_Message_Box;

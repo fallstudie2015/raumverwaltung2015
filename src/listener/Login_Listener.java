@@ -1,3 +1,8 @@
+/* Programmiert von: Kai Kleefisch
+ * Programmiert für: Login Ansicht
+ * Beschreibung: Wird ausgeführt bei Enter oder Login-Button im Login_View
+ */
+
 package listener;
 
 import gui.Error_Message_Box;

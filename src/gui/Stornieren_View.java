@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Time;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -21,6 +23,8 @@ import mail.MailTexte;
 public class Stornieren_View extends JDialog {
 
 	private Buchung buchung;
+
+	private int startInt;
 
 	private JLabel buchungsID;
 	private JLabel raum;
@@ -85,7 +89,8 @@ public class Stornieren_View extends JDialog {
 			buttonPanel.add(btnStornieren);
 			buttonPanel.add(btnAbbrechen);
 		} catch (Exception ex) {
-			Error_Message_Box.laufzeitfehler(ex, "gui.Bestaetigungs_View.createButtonPanel");
+			Error_Message_Box.laufzeitfehler(ex,
+					"gui.Bestaetigungs_View.createButtonPanel");
 		}
 		return buttonPanel;
 	}
@@ -105,7 +110,8 @@ public class Stornieren_View extends JDialog {
 			zeitPanel.add(txtZeitBis);
 			txtZeitBis.setEditable(false);
 		} catch (Exception ex) {
-			Error_Message_Box.laufzeitfehler(ex, "gui.Bestaetigungs_View.createZeitPanel()");
+			Error_Message_Box.laufzeitfehler(ex,
+					"gui.Bestaetigungs_View.createZeitPanel()");
 		}
 
 		return zeitPanel;
@@ -155,7 +161,8 @@ public class Stornieren_View extends JDialog {
 			txtAusstattung.setEditable(false);
 
 		} catch (Exception ex) {
-			Error_Message_Box.laufzeitfehler(ex, "gui.Bestaetigungs_View.createMainPanel");
+			Error_Message_Box.laufzeitfehler(ex,
+					"gui.Bestaetigungs_View.createMainPanel");
 		}
 		return mainPanel;
 	}
@@ -163,8 +170,12 @@ public class Stornieren_View extends JDialog {
 	private void befuelleMainPanel() {
 		try {
 			txtBuchungsID = new JTextField("" + buchung.getBuchungsID());
-			txtRaum = new JTextField("" + SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
-			txtBenutzer = new JTextField("" + SQL_Schnittstelle.getBenutzerName(buchung.getBenutzerID()));
+			txtRaum = new JTextField(""
+					+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+			txtBenutzer = new JTextField(
+					""
+							+ SQL_Schnittstelle.getBenutzerName(buchung
+									.getBenutzerID()));
 			txtTelefon = new JTextField("" + buchung.getTelefon());
 			txtDatum = new JTextField("" + buchung.getDatum());
 			txtZeitVon = new JTextField("" + buchung.getZeitVon());
@@ -173,9 +184,38 @@ public class Stornieren_View extends JDialog {
 			txtKommentar = new JTextField("" + buchung.getKommentar());
 			txtAusstattung = new JTextField("Hier fehlt die Ausstattung");
 		} catch (Exception ex) {
-			Error_Message_Box.laufzeitfehler(ex, "gui.Bestaetigungs_View.befuelleMainPanel");
+			Error_Message_Box.laufzeitfehler(ex,
+					"gui.Bestaetigungs_View.befuelleMainPanel");
 		}
 
+	}
+
+	public boolean loeschePuffer(Time zeitVon) {
+
+		ArrayList<Raum_View_Label> labelListe = mutterFenster
+				.getLabellist(buchung.getRaumID());
+
+		for (Raum_View_Label label : labelListe) {
+			if (label.getTime().equals(zeitVon)) {
+				startInt = labelListe.indexOf(label);
+				if (startInt != 0) {
+					if (labelListe.get(startInt - 1).buchungGesetzt) {
+						if (labelListe.get(startInt - 1).getBuchung()
+								.getStatus().equals("p")) {
+							SQL_Schnittstelle.upadteBuchungStatus(labelListe
+									.get(startInt - 1).getBuchung()
+									.getBuchungsID(), 's');
+						}
+						System.out.println();
+						System.out.println("Aktuelles Label: "
+								+ labelListe.indexOf(label));
+
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public Raumplaner_View getRaumView() {
@@ -199,11 +239,15 @@ public class Stornieren_View extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getSource() == btnStornieren) {
-				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(), 's');
+				mbv.loeschePuffer(buchung.getZeitVon());
+				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
+						's');
 
-				mbv.getRaumView().setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
+				mbv.getRaumView().setBuchungArray(
+						SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
-				mail.sendMail(MailTexte.verwalterPostfach, MailTexte.getBetreffStornierung(mbv.getBuchung()),
+				mail.sendMail(MailTexte.verwalterPostfach,
+						MailTexte.getBetreffStornierung(mbv.getBuchung()),
 						MailTexte.getTextStornierung(mbv.getBuchung()));
 
 				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();

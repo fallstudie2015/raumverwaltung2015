@@ -174,7 +174,8 @@ public class Raum_View extends JPanel implements MouseListener {
 								label.setToolTipText("<html>" + raum.getName() + "<br>" + raum.getStrasse() + "<br>"
 										+ raum.getStock() + "<br>" + buchung.getBenutzerName() + "<br>"
 										+ buchung.getTelefon() + "<br>" + buchung.getZeitVon() + " Uhr - "
-										+ buchung.getZeitBis() + " Uhr" + "<br>" + "<br>" + "</html>");
+										+ buchung.getZeitBis() + " Uhr" + "<br>" + buchung.getAusstattung() + "<br>"
+										+ "</html>");
 								// SQL_Schnittstelle.getAusstattungBuchung(buchung.getBuchungsID())
 								// +
 							}

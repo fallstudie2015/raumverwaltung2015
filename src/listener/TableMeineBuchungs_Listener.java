@@ -1,3 +1,7 @@
+/* Programmiert von: Kai Kleefisch
+ * Programmiert für: Festellung von Änderungen in PanelBuchung
+ * Beschreibung: Wenn der Benutzer einen Wert in der Tabelle ausgewählt hat wird automatisch die Ansicht aktualisiert
+ */
 package listener;
 
 import gui.PanelMeineBuchung;

@@ -17,14 +17,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import mail.MailConnection;
-import mail.MailTexte;
 import de.dhbw.java.Buchung;
 import de.dhbw.java.SQL_Schnittstelle;
+import mail.MailConnection;
+import mail.MailTexte;
 
 public class Bestaetigungs_View extends JDialog {
 
 	private Buchung buchung;
+
+	private String pufferStart;
 
 	private JLabel buchungsID;
 	private JLabel raum;
@@ -199,18 +201,14 @@ public class Bestaetigungs_View extends JDialog {
 	private void befuelleMainPanel() {
 		try {
 			txtBuchungsID = new JTextField("" + buchung.getBuchungsID());
-			txtRaum = new JTextField(""
-					+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
-			txtBenutzer = new JTextField(
-					""
-							+ SQL_Schnittstelle.getBenutzerName(buchung
-									.getBenutzerID()));
-			txtRaum = new JTextField(""
-					+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
-			txtBenutzer = new JTextField(
-					""
-							+ SQL_Schnittstelle.getBenutzerName(buchung
-									.getBenutzerID()));
+			txtRaum = new JTextField(
+					"" + SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+			txtBenutzer = new JTextField("" + SQL_Schnittstelle
+					.getBenutzerName(buchung.getBenutzerID()));
+			txtRaum = new JTextField(
+					"" + SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+			txtBenutzer = new JTextField("" + SQL_Schnittstelle
+					.getBenutzerName(buchung.getBenutzerID()));
 			txtTelefon = new JTextField("" + buchung.getTelefon());
 			txtDatum = new JTextField("" + buchung.getDatum());
 			txtZeitVon = new JTextField("" + buchung.getZeitVon());
@@ -218,9 +216,8 @@ public class Bestaetigungs_View extends JDialog {
 			txtBestuhlung = new JTextField("" + buchung.getBestuhlung());
 			txtKommentar = new JTextField("" + buchung.getKommentar());
 			befuelleCbPuffer(buchung.getZeitVon());
-			txtAusstattung = new JTextField(
-					SQL_Schnittstelle.getAusstattungBuchung(buchung
-							.getBuchungsID()));
+			txtAusstattung = new JTextField(SQL_Schnittstelle
+					.getAusstattungBuchung(buchung.getBuchungsID()));
 			cbPuffer = new JComboBox<String>(minute);
 		} catch (Exception ex) {
 			Error_Message_Box.laufzeitfehler(ex,
@@ -240,7 +237,7 @@ public class Bestaetigungs_View extends JDialog {
 					- Time.valueOf("01:" + cbPuffer.getSelectedItem() + ":00")
 							.getTime();
 			System.out.println("Pufferzeit start: " + new Time(diff));
-			String pufferStart = new Time(diff).toString();
+			pufferStart = new Time(diff).toString();
 			Time zeitVonPuffer = Time.valueOf(pufferStart);
 			System.out.println(zeitVonPuffer);
 
@@ -269,28 +266,64 @@ public class Bestaetigungs_View extends JDialog {
 		for (Raum_View_Label label : labelListe) {
 			if (label.getTime().equals(zeitVon)) {
 				System.out.println();
-				System.out.println("Aktuelles Label: "
-						+ labelListe.indexOf(label));
+				System.out.println(
+						"Aktuelles Label: " + labelListe.indexOf(label));
 				startInt = labelListe.indexOf(label);
-				if (labelListe.get(startInt - 1).buchungGesetzt == false
-						&& labelListe.get(startInt - 2).buchungGesetzt == false
-						&& labelListe.get(startInt - 3).buchungGesetzt == false) {
-					minute = new String[4];
-					minute[0] = "keinen";
-					minute[1] = "15";
-					minute[2] = "30";
-					minute[3] = "45";
-				} else if (labelListe.get(startInt - 1).buchungGesetzt == false
-						&& labelListe.get(startInt - 2).buchungGesetzt == false) {
-					minute = new String[3];
-					minute[0] = "keinen";
-					minute[1] = "15";
-					minute[2] = "30";
-				} else if (labelListe.get(startInt - 1).buchungGesetzt == false) {
-					minute = new String[2];
-					minute[0] = "keinen";
-					minute[1] = "15";
-				} else {
+				if (startInt > 2) {
+					if (labelListe.get(startInt - 1).buchungGesetzt == false
+							&& labelListe
+									.get(startInt - 2).buchungGesetzt == false
+							&& labelListe.get(
+									startInt - 3).buchungGesetzt == false) {
+						minute = new String[4];
+						minute[0] = "keinen";
+						minute[1] = "15";
+						minute[2] = "30";
+						minute[3] = "45";
+					} else if (labelListe
+							.get(startInt - 1).buchungGesetzt == false
+							&& labelListe.get(
+									startInt - 2).buchungGesetzt == false) {
+						minute = new String[3];
+						minute[0] = "keinen";
+						minute[1] = "15";
+						minute[2] = "30";
+					} else if (labelListe
+							.get(startInt - 1).buchungGesetzt == false) {
+						minute = new String[2];
+						minute[0] = "keinen";
+						minute[1] = "15";
+					} else {
+						minute = new String[1];
+						minute[0] = "keinen";
+					}
+				} else if (startInt > 1) {
+					if (labelListe.get(startInt - 1).buchungGesetzt == false
+							&& labelListe.get(
+									startInt - 2).buchungGesetzt == false) {
+						minute = new String[3];
+						minute[0] = "keinen";
+						minute[1] = "15";
+						minute[2] = "30";
+					} else if (labelListe
+							.get(startInt - 1).buchungGesetzt == false) {
+						minute = new String[2];
+						minute[0] = "keinen";
+						minute[1] = "15";
+					} else {
+						minute = new String[1];
+						minute[0] = "keinen";
+					}
+				} else if (startInt > 0) {
+					if (labelListe.get(startInt - 1).buchungGesetzt == false) {
+						minute = new String[2];
+						minute[0] = "keinen";
+						minute[1] = "15";
+					} else {
+						minute = new String[1];
+						minute[0] = "keinen";
+					}
+				} else if (startInt == 0) {
 					minute = new String[1];
 					minute[0] = "keinen";
 				}
@@ -322,19 +355,31 @@ public class Bestaetigungs_View extends JDialog {
 
 				setPuffer();
 
-				mbv.getRaumView().setBuchungArray(
-						SQL_Schnittstelle.getBuchungPlus());
+				mbv.getRaumView()
+						.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 
 				MailConnection mail = new MailConnection();
 
-				mail.sendMail(SQL_Schnittstelle.getBenutzerEmail(mbv
-						.getBuchung().getBenutzerID()), MailTexte
-						.getBetreffBestaetigen(mbv.getBuchung()), MailTexte
-						.getTextBestaetigen(mbv.getBuchung()));
-				mail.sendMail(MailTexte.hausmeisterPostfach, MailTexte
-						.getBetreffBestaetigenHausmeister(mbv.buchung),
-						MailTexte.getTextBestaetigenHausmeister(mbv
-								.getBuchung()));
+				mail.sendMail(
+						SQL_Schnittstelle.getBenutzerEmail(
+								mbv.getBuchung().getBenutzerID()),
+						MailTexte.getBetreffBestaetigen(mbv.getBuchung()),
+						MailTexte.getTextBestaetigen(mbv.getBuchung()));
+
+				if (pufferStart == null) {
+					mail.sendMail(MailTexte.hausmeisterPostfach,
+							MailTexte.getBetreffBestaetigenHausmeister(
+									mbv.getBuchung()),
+							MailTexte.getTextBestaetigenHausmeister(
+									mbv.getBuchung()));
+				} else {
+					mail.sendMail(MailTexte.hausmeisterPostfach,
+							MailTexte.getBetreffBestaetigenHausmeister(
+									mbv.getBuchung()),
+							MailTexte.getTextBestaetigenHausmeisterMitPuffer(
+									mbv.getBuchung(), pufferStart));
+				}
+
 				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
 				mbv.dispose();
 
@@ -350,14 +395,15 @@ public class Bestaetigungs_View extends JDialog {
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						'a');
 
-				mbv.getRaumView().setBuchungArray(
-						SQL_Schnittstelle.getBuchungPlus());
+				mbv.getRaumView()
+						.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
 
-				mail.sendMail(SQL_Schnittstelle.getBenutzerEmail(mbv
-						.getBuchung().getBenutzerID()), MailTexte
-						.getBetreffAbgelehnt(mbv.getBuchung()), MailTexte
-						.getTextAbgelehnt(mbv.getBuchung()));
+				mail.sendMail(
+						SQL_Schnittstelle.getBenutzerEmail(
+								mbv.getBuchung().getBenutzerID()),
+						MailTexte.getBetreffAbgelehnt(mbv.getBuchung()),
+						MailTexte.getTextAbgelehnt(mbv.getBuchung()));
 
 				mbv.getRaumView().getPanelBuchung().reloadTableBuchung();
 
