@@ -1,3 +1,8 @@
+/* Programmiert von:
+ * Programmiert für: 
+ * Beschreibung:
+ */
+
 package de.dhbw.java;
 
 import javax.swing.JTable;

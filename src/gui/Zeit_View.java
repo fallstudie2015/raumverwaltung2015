@@ -1,3 +1,8 @@
+/* Programmiert von: Tim Deisser
+ * Programmiert für: Hauptoberfläche
+ * Beschreibung: Erstellt die seitliche Seite des Scrollpanes
+ */
+
 package gui;
 
 import java.awt.Dimension;
@@ -8,13 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-/**
- * 
- * @author Tim
- * 
- *         Erstellt die linke seitliche Seite des Scrollpanes.
- *
- */
 public class Zeit_View extends JPanel {
 
 	private JLabel zeitLabel;
@@ -40,7 +38,8 @@ public class Zeit_View extends JPanel {
 		 * 8:00 - 19:00 Uhr
 		 */
 		for (int i = 8; i < 19; i++) {
-			JLabel uhrzeitLabel = new JLabel(i + ":00" + " Uhr", SwingConstants.CENTER);
+			JLabel uhrzeitLabel = new JLabel(i + ":00" + " Uhr",
+					SwingConstants.CENTER);
 			uhrzeitLabel.setFont(new Font(i + ":00" + " Uhr", 0, 18));
 			uhrzeitLabel.setPreferredSize(new Dimension(100, 40));
 			uhrzeitenPanel.add(uhrzeitLabel);
@@ -52,7 +51,8 @@ public class Zeit_View extends JPanel {
 			// uhrzeitenPanel.add(uhrzeitLabel2);
 
 			for (int j = 30; j < 31; j += 15) {
-				JLabel uhrzeitLabel3 = new JLabel(i + ":" + j + " Uhr", SwingConstants.CENTER);
+				JLabel uhrzeitLabel3 = new JLabel(i + ":" + j + " Uhr",
+						SwingConstants.CENTER);
 				uhrzeitLabel3.setFont(new Font(i + ":" + j + " Uhr", 0, 18));
 				uhrzeitLabel3.setPreferredSize(new Dimension(100, 40));
 				uhrzeitenPanel.add(uhrzeitLabel3);
@@ -67,7 +67,8 @@ public class Zeit_View extends JPanel {
 			}
 			// }
 			if (i + 1 == 19) {
-				JLabel uhrzeitLabel5 = new JLabel(i + 1 + ":00" + " Uhr", SwingConstants.CENTER);
+				JLabel uhrzeitLabel5 = new JLabel(i + 1 + ":00" + " Uhr",
+						SwingConstants.CENTER);
 				uhrzeitLabel5.setFont(new Font(i + 1 + ":00" + " Uhr", 0, 18));
 				uhrzeitLabel5.setPreferredSize(new Dimension(100, 40));
 				uhrzeitenPanel.add(uhrzeitLabel5);

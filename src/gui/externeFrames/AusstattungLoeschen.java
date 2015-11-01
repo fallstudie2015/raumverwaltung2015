@@ -1,11 +1,20 @@
+/* Programmiert von: David Fankhänel
+ * Programmiert für: AusstattungLöschen-Button auf der Hauptoberfläche
+ * Beschreibung: Dient zur Löschung von bereits angelegten Ausstattungen
+ */
+
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,56 +24,20 @@ import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
 import gui.PanelAusstattung;
-import gui.PanelRaum;
 import gui.Raumplaner_View;
-import gui.externeFrames.RaumLoeschen.MeinActionListener;
-
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Dimension;
-import java.awt.Insets;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
 
 public class AusstattungLoeschen extends JDialog {
 
 	private JPanel contentPane;
-	private JComboBox comboBox_Ausstattung;
+	// private JComboBox comboBox_Ausstattung;
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
 	private Raumplaner_View rv;
-	private ArrayList ausstattung;
+	// private ArrayList ausstattung;
 	private PanelAusstattung pr;
 
-	/**
-	 * Launch the application.
-	 */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// AusstattungLoeschen frame = new AusstattungLoeschen();
-	// frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
-
-	/**
-	 * Create the frame.
+	/*
+	 * Fenster aufbauen
 	 */
 	public AusstattungLoeschen(Raumplaner_View rv) {
 		this.rv = rv;
@@ -111,7 +84,6 @@ public class AusstattungLoeschen extends JDialog {
 		contentPane.add(pr, BorderLayout.CENTER);
 	}
 
-
 	private void setInvisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
 	}
@@ -124,13 +96,11 @@ public class AusstattungLoeschen extends JDialog {
 
 	public class MeinActionListener implements ActionListener {
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 
 			{
-				boolean feedback = SQL_Schnittstelle
-						.deleteAusstattungArtByID(pr.getSelectedAusstattungsID());
+				boolean feedback = SQL_Schnittstelle.deleteAusstattungArtByID(
+						pr.getSelectedAusstattungsID());
 
 				if (feedback == true) { // Rückgabewert der Methode
 										// Ausstattung anlegen
@@ -148,23 +118,17 @@ public class AusstattungLoeschen extends JDialog {
 
 	public class KeyListenerESC implements KeyListener {
 
-		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				setInvisible();
 			}
 		}
 
-		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
-		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 	}

@@ -1,3 +1,8 @@
+/* Programmiert von: Melanie Müller
+ * Programmiert für: Oberflächen in denen Passwörter angezeigt und abgefragt werden
+ * Beschreibung: Dient zum verschlüsseln und entschlüsseln von Passwörtern
+ */
+
 package de.dhbw.java;
 
 import java.io.UnsupportedEncodingException;

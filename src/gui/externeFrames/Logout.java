@@ -1,52 +1,32 @@
+/* Programmiert von: David Fankhänel
+ * Programmiert für: Logout-Button auf der Hauptoberfläche
+ * Beschreibung: Dient zum Logout, also zur Abmeldung als User um sich als neuer User einzuloggen
+ */
+
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import de.dhbw.java.SQL_Schnittstelle;
 import gui.Raumplaner_View;
-import startpunkt.Start;
 
 public class Logout extends JDialog {
 
 	private Raumplaner_View rv;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PasswortAendern frame = new PasswortAendern();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
+	/*
+	 * Fenster aufbauen
 	 */
 	public Logout(Raumplaner_View rv) {
 		this.rv = rv;
@@ -87,13 +67,14 @@ public class Logout extends JDialog {
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
-		
+
 		JLabel lblAusloggen = new JLabel("Logout?");
 		lblAusloggen.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAusloggen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		contentPane.add(lblAusloggen, BorderLayout.CENTER);
 	}
 
+	/* Oberfläche unsichtbar machen */
 	private void setInvisible() {
 		this.setVisible(false);
 	}

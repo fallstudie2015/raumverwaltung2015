@@ -1,6 +1,6 @@
 /* Programmiert von: ??
  * Programmiert für: SQL_Schnittstelle
- * Beschreibung: Wird verwendet um Datensätze in Objekte einzulesen
+ * Beschreibung: Wird verwendet um Datensätze von Ausstattungen in Objekte einzulesen
  */
 package de.dhbw.java;
 

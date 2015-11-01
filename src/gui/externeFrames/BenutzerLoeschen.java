@@ -1,38 +1,34 @@
+/* Programmiert von: David Fankhänel
+ * Programmiert für: BenutzerLöschen-Button auf der Hauptoberfläche
+ * Beschreibung: Bereits angelegte Benutzer können gelöscht werden
+ */
+
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.JFrame;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
-import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
-import gui.externeFrames.RaumLoeschen.MeinActionListener;
-
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import java.awt.Toolkit;
 
 public class BenutzerLoeschen extends JDialog {
 
@@ -46,24 +42,8 @@ public class BenutzerLoeschen extends JDialog {
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BenutzerLoeschen frame = new BenutzerLoeschen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
+	/*
+	 * Fenster aufbauen
 	 */
 	public BenutzerLoeschen() {
 		setModal(true); // Fenster wird aufgebaut
@@ -224,9 +204,7 @@ public class BenutzerLoeschen extends JDialog {
 
 	public class MeinActionListener implements ActionListener {
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 
 			boolean pflicht = PflichtfelderPruefen();
 
@@ -252,23 +230,17 @@ public class BenutzerLoeschen extends JDialog {
 
 	public class KeyListenerESC implements KeyListener {
 
-		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				setInvisible();
 			}
 		}
 
-		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
-		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 

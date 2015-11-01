@@ -1,3 +1,8 @@
+/* Programmiert von: Florian Fay
+ * Programmiert für: E-Mail-Versand
+ * Beschreibung: Dient zum Versenden von E-Mails über einen gmx-Account
+ */
+
 package mail;
 
 import java.util.Date;
@@ -31,21 +36,17 @@ public class MailConnection {
 
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.host", "smtp.gmx.de");
-		properties.put("mail.smtp.user", username); // User name
-		properties.put("mail.smtp.password", password); // password, wird
-		// bereits in MailAuthenticator gespeichert
+		properties.put("mail.smtp.user", username);
+		properties.put("mail.smtp.password", password);
+		// password, wird bereits in MailAuthenticator gespeichert
 		properties.put("mail.smtp.port", "587");
 		properties.put("mail.smtp.auth", "true");
 
 		// !!Wichtig!! Falls der SMTP-Server eine Authentifizierung
-		// verlangt
-		// muss an dieser Stelle die Property auf "true" gesetzt
-		// werden
-		// properties.put("mail.smtp.auth", "true");
+		// verlangt muss an dieser Stelle die Property auf "true" gesetzt werden
 
-		// Hier wird mit den Properties und dem implements Contructor
-		// erzeugten
-		// MailAuthenticator eine Session erzeugt
+		// Hier wird mit den Properties und dem im Constructor
+		// erzeugten MailAuthenticator eine Session erzeugt
 		Session session = Session.getDefaultInstance(properties, auth);
 
 		try {
@@ -75,36 +76,31 @@ public class MailConnection {
 
 	static class MailAuthenticator extends Authenticator {
 
-		/**
-		 * Ein String, der den Usernamen nach der Erzeugung eines Objektes<br>
+		/*
+		 * Ein String, der den Usernamen nach der Erzeugung eines Objektes
 		 * dieser Klasse enthalten wird.
 		 */
 		private final String user;
 
-		/**
-		 * Ein String, der das Passwort nach der Erzeugung eines Objektes<br>
-		 * dieser Klasse enthalten wird.
+		/*
+		 * Ein String, der das Passwort nach der Erzeugung eines Objektes dieser
+		 * Klasse enthalten wird.
 		 */
 		private final String password;
 
-		/**
-		 * Der Konstruktor erzeugt ein MailAuthenticator Objekt<br>
-		 * aus den beiden Parametern user und passwort.
-		 *
-		 * @param user
-		 *            String, der Username fuer den Mailaccount.
-		 * @param password
-		 *            String, das Passwort fuer den Mailaccount.
+		/*
+		 * Der Konstruktor erzeugt ein MailAuthenticator Objekt aus den beiden
+		 * Parametern user und passwort.
 		 */
 		public MailAuthenticator(String user, String password) {
 			this.user = user;
 			this.password = password;
 		}
 
-		/**
-		 * Diese Methode gibt ein neues PasswortAuthentication Objekt zurueck.
+		/*
+		 * Diese Methode gibt ein neues PasswortAuthentication Objekt zurück.
 		 *
-		 * @see javax.mail.Authenticator#getPasswordAuthentication()
+		 * 
 		 */
 		protected PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication(this.user, this.password);

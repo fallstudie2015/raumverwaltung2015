@@ -1,53 +1,36 @@
+/* Programmiert von: David Fankhänel
+ * Programmiert für: RaumAnlegen-Button auf der Hauptoberfläche
+ * Beschreibung: Gibt die Möglichkeit neue Räume mit unterschiedlichen Ausstattungen anzulegen
+ */
+
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.NumberFormatter;
-
-import de.dhbw.java.SQL_Schnittstelle;
-import gui.Raumplaner_View;
-import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
-
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 import java.awt.Font;
-
-import javax.swing.JSplitPane;
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
-
-import javax.swing.JTextField;
-
-import java.awt.Component;
-
-import javax.swing.Box;
-
-import java.awt.Dimension;
-
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
-import javax.swing.JCheckBox;
-
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.NumberFormatter;
+
+import de.dhbw.java.SQL_Schnittstelle;
+import gui.Raumplaner_View;
 
 public class RaumAnlegen extends JDialog {
 
@@ -74,24 +57,8 @@ public class RaumAnlegen extends JDialog {
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
 
-	/**
-	 * Launch the application.
-	 */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// RaumAnlegen frame = new RaumAnlegen();
-	// frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
-
-	/**
-	 * Create the frame.
+	/*
+	 * Fenster aufbauen
 	 */
 	public RaumAnlegen(final Raumplaner_View rv) {
 		setModal(true); // Fenster wird aufgebaut
@@ -120,7 +87,7 @@ public class RaumAnlegen extends JDialog {
 
 		JButton btnAnlegen = new JButton("Anlegen");
 
-		btnAnlegen.addActionListener(mal); // Aktion Listener
+		btnAnlegen.addActionListener(mal); // ActionListener hinzufügen
 
 		btnAnlegen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		splitPane.setLeftComponent(btnAnlegen);
@@ -395,9 +362,7 @@ public class RaumAnlegen extends JDialog {
 
 	public class MeinActionListener implements ActionListener {
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 
 			boolean pflicht = PflichtfelderPruefen();
 
@@ -436,23 +401,17 @@ public class RaumAnlegen extends JDialog {
 
 	public class KeyListenerESC implements KeyListener {
 
-		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				setInvisible();
 			}
 		}
 
-		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
-		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
