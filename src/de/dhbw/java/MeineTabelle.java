@@ -14,6 +14,7 @@ public class MeineTabelle extends JTable {
 	// Mutter-Klasse
 	public MeineTabelle(DefaultTableModel model) {
 		super(model);
+		getTableHeader().setReorderingAllowed(false);
 	}
 
 	// Methode um festzulegen welche Zellen bearbeitet werden können
