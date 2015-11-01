@@ -328,7 +328,7 @@ public abstract class SQL_Schnittstelle {
 					+ telefon + "', '" + datum + "', '" + zeitVon + "', '"
 					+ zeitBis + "', '" + kommentar + "', '" + bestuhlung + "', "
 					+ benutzerId + ", " + raumId + ", '" + status + "', "
-					+ anzPersonen + ", '" + intExterneTeilnehmer + ", '"
+					+ anzPersonen + ", " + intExterneTeilnehmer + ", '"
 					+ veranstaltungsbezeichnung + "')";
 			int buchungId = SQL_Schnittstelle.sqlInsert(updateString);
 			String ausstattung = null;
