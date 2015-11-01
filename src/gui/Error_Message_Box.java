@@ -1,3 +1,7 @@
+/* Programmiert von: Kai Kleefisch
+ * Programmiert für: Alle Try Catch Blöcke müssen diesen Fehlerdialog verwenden
+ * Beschreibung: zeigt eine spezifische Fehlermeldung an ung gibt hinweise wo der Fehler passiert ist
+ */
 package gui;
 
 import javax.swing.JOptionPane;
