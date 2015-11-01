@@ -1,13 +1,9 @@
-package gui;
+/* Programmiert von: Tim Deisser
+ * Programmiert für: Die Hauptoberfläche
+ * Beschreibung: Dient zur Anzeige der Hauptansicht für den Besteller, sowie die modifizierte Ansicht für den Verwalter
+ */
 
-import gui.externeFrames.AusstattungAnlegen;
-import gui.externeFrames.AusstattungLoeschen;
-import gui.externeFrames.BenutzerAnlegen;
-import gui.externeFrames.BenutzerLoeschen;
-import gui.externeFrames.Logout;
-import gui.externeFrames.PasswortAendern;
-import gui.externeFrames.RaumAnlegen;
-import gui.externeFrames.RaumLoeschen;
+package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -42,14 +38,15 @@ import de.dhbw.java.Buchung;
 import de.dhbw.java.BuchungPlus;
 import de.dhbw.java.Raum;
 import de.dhbw.java.SQL_Schnittstelle;
+import gui.externeFrames.AusstattungAnlegen;
+import gui.externeFrames.AusstattungLoeschen;
+import gui.externeFrames.BenutzerAnlegen;
+import gui.externeFrames.BenutzerLoeschen;
+import gui.externeFrames.Logout;
+import gui.externeFrames.PasswortAendern;
+import gui.externeFrames.RaumAnlegen;
+import gui.externeFrames.RaumLoeschen;
 
-/**
- * @author Tim
- * 
- *         Die Klasse liefert die Haupansicht f�r den Besteller, sowie die
- *         modifizierte Ansicht f�r den Verwalter
- *
- */
 public class Raumplaner_View extends JFrame {
 
 	public Raumplaner_View diese = this;
@@ -59,8 +56,8 @@ public class Raumplaner_View extends JFrame {
 			raumLabel, benutzerLabel, ausstattungLabel;
 	private JButton refreshButton, logoutButton, passwortChangeButton,
 			raumAddButton, raumDeleteButton, benutzerAddButton,
-			benutzerDeleteButton, ausstattungAddButton,
-			ausstattungDeleteButton, antragsButton;
+			benutzerDeleteButton, ausstattungAddButton, ausstattungDeleteButton,
+			antragsButton;
 	private JScrollPane scroller, formularScroller;
 	private ArrayList<Bestellformular_View> bvList;
 	private ArrayList<Raum> raumList;
@@ -78,9 +75,8 @@ public class Raumplaner_View extends JFrame {
 	 */
 	public Raumplaner_View(ArrayList<Raum> raumList,
 			ArrayList<Buchung> buchungList) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Raumplaner_View.class
-						.getResource("/ressources/Desktop_Statusbar_icon.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Raumplaner_View.class
+				.getResource("/ressources/Desktop_Statusbar_icon.png")));
 		this.bvPanel = new JPanel(new FlowLayout());
 		this.onScrollPanel = new JPanel(new FlowLayout());
 		this.port = new JPanel(new FlowLayout());
@@ -94,8 +90,8 @@ public class Raumplaner_View extends JFrame {
 		 * Listener ändert die Ansicht, sobald ein neues Datum im Kalendar
 		 * ausgewählt wurde
 		 */
-		calendar.getDayChooser().addPropertyChangeListener(
-				new PropertyChangeListener() {
+		calendar.getDayChooser()
+				.addPropertyChangeListener(new PropertyChangeListener() {
 
 					@Override
 					public void propertyChange(PropertyChangeEvent evt) {
@@ -132,17 +128,17 @@ public class Raumplaner_View extends JFrame {
 	 * angeordnet
 	 */
 	private JPanel logoPanel() {
-		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource(
-				"ressources/logo_2.png"));
-		ImageIcon imageIcon = new ImageIcon(ii1.getImage().getScaledInstance(
-				300, 150, Image.SCALE_DEFAULT));
+		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader()
+				.getResource("ressources/logo_2.png"));
+		ImageIcon imageIcon = new ImageIcon(ii1.getImage()
+				.getScaledInstance(300, 150, Image.SCALE_DEFAULT));
 		logoLabel = new JLabel(imageIcon, SwingConstants.LEFT);
 		logoLabel.setPreferredSize(new Dimension(300, 150));
 
-		ImageIcon ii2 = new ImageIcon(getClass().getClassLoader().getResource(
-				"ressources/Schrift.png"));
-		ImageIcon imageIcon2 = new ImageIcon(ii2.getImage().getScaledInstance(
-				700, 150, Image.SCALE_DEFAULT));
+		ImageIcon ii2 = new ImageIcon(getClass().getClassLoader()
+				.getResource("ressources/Schrift.png"));
+		ImageIcon imageIcon2 = new ImageIcon(ii2.getImage()
+				.getScaledInstance(700, 150, Image.SCALE_DEFAULT));
 		raumplanerLabel = new JLabel(imageIcon2, SwingConstants.LEFT);
 		raumplanerLabel.setPreferredSize(new Dimension(700, 150));
 
@@ -213,9 +209,8 @@ public class Raumplaner_View extends JFrame {
 			}
 		});
 
-		ImageIcon iiRaumDeleteButton = new ImageIcon(getClass()
-				.getClassLoader().getResource(
-						"ressources/menu_raum_loeschen_transp.png"));
+		ImageIcon iiRaumDeleteButton = new ImageIcon(getClass().getClassLoader()
+				.getResource("ressources/menu_raum_loeschen_transp.png"));
 		ImageIcon imageIconRaumDeleteButton = new ImageIcon(iiRaumDeleteButton
 				.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
 		raumDeleteButton = new JButton(imageIconRaumDeleteButton);
@@ -250,8 +245,9 @@ public class Raumplaner_View extends JFrame {
 			}
 		});
 
-		ImageIcon iiAusDeleteButton = new ImageIcon(getClass().getClassLoader()
-				.getResource("ressources/menu_ausstattung_loeschen_transp.png"));
+		ImageIcon iiAusDeleteButton = new ImageIcon(
+				getClass().getClassLoader().getResource(
+						"ressources/menu_ausstattung_loeschen_transp.png"));
 		ImageIcon imageIconAusDeleteButton = new ImageIcon(iiAusDeleteButton
 				.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
 		ausstattungDeleteButton = new JButton(imageIconAusDeleteButton);
@@ -292,9 +288,7 @@ public class Raumplaner_View extends JFrame {
 
 		refreshButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				setRaumArray(SQL_Schnittstelle.getRooms());
 				setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 			}
@@ -307,7 +301,6 @@ public class Raumplaner_View extends JFrame {
 		// Loggt den Nutzer aus
 		logoutButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				Logout lo = new Logout(diese);
 				lo.setVisible(true);
@@ -368,8 +361,8 @@ public class Raumplaner_View extends JFrame {
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		formularScroller.getVerticalScrollBar().setUnitIncrement(16);
-		formularScroller.setPreferredSize(new Dimension(350, formularScroller
-				.getPreferredSize().height));
+		formularScroller.setPreferredSize(
+				new Dimension(350, formularScroller.getPreferredSize().height));
 		formularScroller.setVisible(false);
 	}
 
@@ -391,8 +384,8 @@ public class Raumplaner_View extends JFrame {
 							rv.getBuchung(buchung);
 						}
 					}
-					rv.setBuchungenInCalendar(new Date(calendar.getDate()
-							.getTime()));
+					rv.setBuchungenInCalendar(
+							new Date(calendar.getDate().getTime()));
 					windowAktualisieren();
 
 					onScrollPanel.add(rv);
@@ -428,8 +421,8 @@ public class Raumplaner_View extends JFrame {
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
 		JPanel raumAddDelPanel = new JPanel();
-		raumAddDelPanel.setLayout(new BoxLayout(raumAddDelPanel,
-				BoxLayout.PAGE_AXIS));
+		raumAddDelPanel
+				.setLayout(new BoxLayout(raumAddDelPanel, BoxLayout.PAGE_AXIS));
 
 		raumAddDelPanel.add((Box.createVerticalGlue()));
 		raumAddDelPanel.add(raumPanel);
@@ -479,8 +472,8 @@ public class Raumplaner_View extends JFrame {
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
 		JPanel benutzerAddDelPanel = new JPanel();
-		benutzerAddDelPanel.setLayout(new BoxLayout(benutzerAddDelPanel,
-				BoxLayout.PAGE_AXIS));
+		benutzerAddDelPanel.setLayout(
+				new BoxLayout(benutzerAddDelPanel, BoxLayout.PAGE_AXIS));
 
 		benutzerAddDelPanel.add((Box.createVerticalGlue()));
 		benutzerAddDelPanel.add(benutzerPanel);
@@ -513,8 +506,8 @@ public class Raumplaner_View extends JFrame {
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
 		JPanel ausstattungAddDelPanel = new JPanel();
-		ausstattungAddDelPanel.setLayout(new BoxLayout(ausstattungAddDelPanel,
-				BoxLayout.PAGE_AXIS));
+		ausstattungAddDelPanel.setLayout(
+				new BoxLayout(ausstattungAddDelPanel, BoxLayout.PAGE_AXIS));
 
 		ausstattungAddDelPanel.add((Box.createVerticalGlue()));
 		ausstattungAddDelPanel.add(ausstattungPanel);
@@ -556,9 +549,8 @@ public class Raumplaner_View extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JOptionPane
-							.showMessageDialog(null,
-									"Sie haben den Code gelöscht! Gehen Sie sich bitte erhängen!!!");
+					JOptionPane.showMessageDialog(null,
+							"Sie haben den Code gelöscht! Gehen Sie sich bitte erhängen!!!");
 					System.exit(0);
 
 				}
@@ -737,7 +729,8 @@ public class Raumplaner_View extends JFrame {
 	private void lookAfterCalendar() {
 		if (new Date(calendar.getDate().getTime()) != choosenDate) {
 			for (Raum_View rv : raumViewList) {
-				rv.setBuchungenInCalendar(new Date(calendar.getDate().getTime()));
+				rv.setBuchungenInCalendar(
+						new Date(calendar.getDate().getTime()));
 			}
 			windowAktualisieren();
 			choosenDate = new Date(calendar.getDate().getTime());

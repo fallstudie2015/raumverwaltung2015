@@ -1,3 +1,8 @@
+/* Programmiert von: Tim Deisser
+ * Programmiert für: Die Hauptoberfläche
+ * Beschreibung: Erstellt die Labels auf dem Hauptfeld und speichert ihre Zeit und die dazugehörige Buchung
+ */
+
 package gui;
 
 import java.awt.Color;
@@ -14,14 +19,6 @@ import javax.swing.JPanel;
 import de.dhbw.java.Benutzer;
 import de.dhbw.java.Buchung;
 
-/**
- * 
- * @author Tim
- * 
- *         Erstellt die Labels auf dem Hauptfeld und speichert ihre Zeit und die
- *         dazugehörige Buchung
- *
- */
 public class Raum_View_Label extends JLabel {
 
 	private Time time;
@@ -43,15 +40,18 @@ public class Raum_View_Label extends JLabel {
 		 */
 		this.addMouseListener(new MouseAdapter() {
 
-			@Override
 			public void mouseReleased(MouseEvent e) {
 				super.mousePressed(e);
-				if (Benutzer.getBenutzertyp() == 'v' && buchung != null && buchung.getStatus().equalsIgnoreCase("v")) {
-					Bestaetigungs_View beV = new Bestaetigungs_View(frame, buchung);
+				if (Benutzer.getBenutzertyp() == 'v' && buchung != null
+						&& buchung.getStatus().equalsIgnoreCase("v")) {
+					Bestaetigungs_View beV = new Bestaetigungs_View(frame,
+							buchung);
 				} else if (Benutzer.getBenutzertyp() == 'b' && buchung != null
-						&& Benutzer.getBenutzerID() == buchung.getBenutzerID()) {
+						&& Benutzer.getBenutzerID() == buchung
+								.getBenutzerID()) {
 					Stornieren_View sv = new Stornieren_View(frame, buchung);
-				} else if (Benutzer.getBenutzertyp() == 'v' && buchung != null) {
+				} else if (Benutzer.getBenutzertyp() == 'v'
+						&& buchung != null) {
 					Stornieren_View sv = new Stornieren_View(frame, buchung);
 				}
 			}

@@ -1,8 +1,12 @@
+/* Programmiert von: David Fankhänel
+ * Programmiert für: BenuterAnlegen-Button auf der Hauptoberfläche
+ * Beschreibung: Dient zum Anlegen von neuen Benutzern, die in die Datenbank geschrieben werden
+ */
+
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -10,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -26,7 +29,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
-import gui.externeFrames.RaumLoeschen.MeinActionListener;
 
 public class BenutzerAnlegen extends JDialog {
 
@@ -47,24 +49,8 @@ public class BenutzerAnlegen extends JDialog {
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BenutzerAnlegen frame = new BenutzerAnlegen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
+	/*
+	 * Fenster aufbauen
 	 */
 	public BenutzerAnlegen() {
 		setModal(true); // Fenster wird aufgebaut
@@ -285,9 +271,7 @@ public class BenutzerAnlegen extends JDialog {
 
 	public class MeinActionListener implements ActionListener {
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 
 			boolean pflicht = PflichtfelderPruefen();
 
@@ -314,23 +298,17 @@ public class BenutzerAnlegen extends JDialog {
 
 	public class KeyListenerESC implements KeyListener {
 
-		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				setInvisible();
 			}
 		}
 
-		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
-		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 

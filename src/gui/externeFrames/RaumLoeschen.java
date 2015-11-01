@@ -1,11 +1,20 @@
+/* Programmiert von: David Fankhänel
+ * Programmiert für: RaumLöschen-Button auf Hauptoberfläche
+ * Beschreibung: Oberfläche die die Möglichkeit zum Löschen von Räumen ermöglicht
+ */
+
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,54 +25,18 @@ import javax.swing.border.EmptyBorder;
 import de.dhbw.java.SQL_Schnittstelle;
 import gui.PanelRaum;
 import gui.Raumplaner_View;
-import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
-import gui.externeFrames.RaumAnlegen.MeinActionListener;
-
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import java.awt.Toolkit;
 
 public class RaumLoeschen extends JDialog {
 
 	private JPanel contentPane;
-	private JComboBox combo_name;
+
 	private Raumplaner_View rv;
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
 	private PanelRaum pr;
 
-	/**
-	 * Launch the application.
-	 */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// RaumLoeschen frame = new RaumLoeschen();
-	// frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
-
-	/**
-	 * Create the frame.
+	/*
+	 * Fenster wird aufgebaut
 	 */
 	public RaumLoeschen(Raumplaner_View rv) {
 		setModal(true); // Fenster wird aufgebaut
@@ -107,9 +80,8 @@ public class RaumLoeschen extends JDialog {
 
 		pr = new PanelRaum();
 		contentPane.add(pr, BorderLayout.CENTER);
-		
-	}
 
+	}
 
 	private void setInvisible() // Fenster unsichtbar machen
 	{
@@ -124,48 +96,43 @@ public class RaumLoeschen extends JDialog {
 
 	public class MeinActionListener implements ActionListener {
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 
-		System.out.println(pr.getSelectedRaumID());
-				boolean feedback = SQL_Schnittstelle
-						.setDeleteFlagRaumByID(pr.getSelectedRaumID());
-				if (feedback == true) {// Rückgabewert der Methode
-										// Ausstattung anlegen
-					setInvisible();
-					Erfolg("Raum wurde gelöscht!");
-					rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
-																	// die
-																	// Räume
-				} else {
-					Erfolg("Raum konnte nicht gelöscht werden!");
-				}
-			
+			System.out.println(pr.getSelectedRaumID());
+			boolean feedback = SQL_Schnittstelle
+					.setDeleteFlagRaumByID(pr.getSelectedRaumID());
+			if (feedback == true) {// Rückgabewert der Methode
+									// Ausstattung anlegen
+				setInvisible();
+				Erfolg("Raum wurde gelöscht!");
+				rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
+																// die
+																// Räume
+			} else {
+				Erfolg("Raum konnte nicht gelöscht werden!");
 			}
-		}
 
-	
+		}
+	}
 
 	public class KeyListenerESC implements KeyListener {
 
-		@Override
+		/*
+		 * Kann hier noch durch ein Interface ergänzt werden um unbenutzte
+		 * Methoden raus zu nehmen
+		 */
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
+
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				setInvisible();
 			}
 		}
 
-		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
-		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 

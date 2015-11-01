@@ -1,9 +1,14 @@
+/* Programmiert von: Tim Deisser
+ * Programmiert für: Raum_View
+ * Beschreibung: Panel ist zur Unterscheidung zwischen Viertelstunde und Halbestunde nötig. 
+ * Hierdurch kann ein farblicher Unterschied angezeigt werden.
+ */
+
 package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.sql.Time;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -11,14 +16,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- * 
- * @author Tim
- * 
- *         Panel ist zur Unterscheidung zwischen Viertelstunde und Halbestunde
- *         da. Damit wird ein Farblicher Unterschied angezeigt.
- *
- */
 public class Halbestunde_Panel extends JPanel {
 
 	private JPanel upperPanel, downerPanel;

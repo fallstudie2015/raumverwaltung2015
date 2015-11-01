@@ -1,3 +1,8 @@
+/* Programmiert von: Kai Kleefisch + Florian Fay
+ * Programmiert für: Das Stornieren durch klicken auf eigene Buchungen.
+ * Beschreibung: Dient zum Stornieren von bereits getätigten Buchungen
+ */
+
 package gui;
 
 import java.awt.BorderLayout;
@@ -54,7 +59,9 @@ public class Stornieren_View extends JDialog {
 
 	private Raumplaner_View mutterFenster;
 
-	public Stornieren_View(Raumplaner_View mutterView, Buchung uebergabeBuchung) {
+	/* Konstruktor der alle Komponenten auf ein mal erzeugt */
+	public Stornieren_View(Raumplaner_View mutterView,
+			Buchung uebergabeBuchung) {
 
 		mutterFenster = mutterView;
 		buchung = uebergabeBuchung;
@@ -72,6 +79,7 @@ public class Stornieren_View extends JDialog {
 
 	}
 
+	/* Methode zum Erstellen des Panels auf dem die Button liegen */
 	private JPanel createButtonPanel() {
 
 		JPanel buttonPanel = new JPanel();
@@ -95,6 +103,10 @@ public class Stornieren_View extends JDialog {
 		return buttonPanel;
 	}
 
+	/*
+	 * Methode zum Erstellen des Panels auf dem die zwei Felder für die Zeit
+	 * liegen
+	 */
 	private JPanel createZeitPanel() {
 
 		JPanel zeitPanel = new JPanel();
@@ -117,6 +129,10 @@ public class Stornieren_View extends JDialog {
 		return zeitPanel;
 	}
 
+	/*
+	 * Methode zum Erstellen des Haupt-Panels auf dem die Text-Felder und das
+	 * BuchungsPanel liegen
+	 */
 	private JPanel createMainPanel() {
 		JPanel mainPanel = new JPanel();
 		try {
@@ -167,15 +183,14 @@ public class Stornieren_View extends JDialog {
 		return mainPanel;
 	}
 
+	/* Methode zur Befüllung aller Textfelder im Hauptpanel */
 	private void befuelleMainPanel() {
 		try {
 			txtBuchungsID = new JTextField("" + buchung.getBuchungsID());
-			txtRaum = new JTextField(""
-					+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
-			txtBenutzer = new JTextField(
-					""
-							+ SQL_Schnittstelle.getBenutzerName(buchung
-									.getBenutzerID()));
+			txtRaum = new JTextField(
+					"" + SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+			txtBenutzer = new JTextField("" + SQL_Schnittstelle
+					.getBenutzerName(buchung.getBenutzerID()));
 			txtTelefon = new JTextField("" + buchung.getTelefon());
 			txtDatum = new JTextField("" + buchung.getDatum());
 			txtZeitVon = new JTextField("" + buchung.getZeitVon());
@@ -190,6 +205,7 @@ public class Stornieren_View extends JDialog {
 
 	}
 
+	/* Methode um angelegten Puffer, der zu einer Buchung gehört, zu löschen */
 	public boolean loeschePuffer(Time zeitVon) {
 
 		ArrayList<Raum_View_Label> labelListe = mutterFenster
@@ -202,9 +218,10 @@ public class Stornieren_View extends JDialog {
 					if (labelListe.get(startInt - 1).buchungGesetzt) {
 						if (labelListe.get(startInt - 1).getBuchung()
 								.getStatus().equals("p")) {
-							SQL_Schnittstelle.upadteBuchungStatus(labelListe
-									.get(startInt - 1).getBuchung()
-									.getBuchungsID(), 's');
+							SQL_Schnittstelle.upadteBuchungStatus(
+									labelListe.get(startInt - 1).getBuchung()
+											.getBuchungsID(),
+									's');
 						}
 						System.out.println();
 						System.out.println("Aktuelles Label: "
@@ -228,6 +245,9 @@ public class Stornieren_View extends JDialog {
 		return buchung;
 	}
 
+	/*
+	 * Neuer ActionListener anlegen, der für die Stornieren_View benötigt wird
+	 */
 	class stornierenViewListener implements ActionListener {
 
 		Stornieren_View mbv;
@@ -243,8 +263,8 @@ public class Stornieren_View extends JDialog {
 				SQL_Schnittstelle.upadteBuchungStatus(buchung.getBuchungsID(),
 						's');
 
-				mbv.getRaumView().setBuchungArray(
-						SQL_Schnittstelle.getBuchungPlus());
+				mbv.getRaumView()
+						.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
 				mail.sendMail(MailTexte.verwalterPostfach,
 						MailTexte.getBetreffStornierung(mbv.getBuchung()),

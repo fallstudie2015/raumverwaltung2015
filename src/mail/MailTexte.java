@@ -1,3 +1,8 @@
+/* Programmiert von: Florian Fay
+ * Programmiert für: Nachrichten für den E-Mail-Versand
+ * Beschreibung: Dient als zentrale Vorlage von Nachrichten zum Versenden von E-Mails.
+ */
+
 package mail;
 
 import java.sql.Date;
@@ -75,6 +80,10 @@ public abstract class MailTexte {
 		return antwort;
 	}
 
+	/*
+	 * Text für Hausmeister für Bestätigung bei Reservierungsbestätigung wenn
+	 * ein zusätzlicher Puffer eingetragen wurde
+	 */
 	public static String getTextBestaetigenHausmeisterMitPuffer(Buchung buchung,
 			String startPuffer) {
 

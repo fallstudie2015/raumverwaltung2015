@@ -1,3 +1,9 @@
+/* Programmiert von: Tim Deisser
+ * Programmiert für: Einloggen-Oberfläche
+ * Beschreibung: Hier wird das Login Fenster erzeugt. 
+ * Alle Elemente sind auf einem eigenen Panel implementiert, um deren spezifische Größe zu ändern.
+ */
+
 package gui;
 
 import java.awt.BorderLayout;
@@ -25,20 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
-import gui.externeFrames.AusstattungAnlegen;
-
-/**
- * 
- * @author Timi
- *
- *         Hier wird das Login Fenster erzeugt, es muss nach dem erzeugen auf
- *         visible gesetzt werden
- * 
- *         Alle Elemente sind auf einem eigenen Panel implementiert, um deren
- *         spezifische Größe zuändern.
- */
 public class Login_View extends JFrame {
 
 	private JLabel loginWrongLabel, logoLabel;
@@ -66,8 +59,8 @@ public class Login_View extends JFrame {
 	 * Auflösung: 786 * 500 als feste und unveränderbare Größe
 	 */
 	private void initLogin() {
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(Login_View.class.getResource("/ressources/Desktop_Statusbar_icon.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login_View.class
+				.getResource("/ressources/Desktop_Statusbar_icon.png")));
 		setLayout(new BorderLayout());
 		getContentPane().add(loginPanel(), BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +97,8 @@ public class Login_View extends JFrame {
 	 * Panel für das Label, welches erscheint, wenn die Daten falsch sind
 	 */
 	private JPanel labelPanel() {
-		loginWrongLabel = new JLabel("Benutzerdaten sind nicht korrekt angegeben!");
+		loginWrongLabel = new JLabel(
+				"Benutzerdaten sind nicht korrekt angegeben!");
 		loginWrongLabel.setForeground(Color.RED);
 		loginWrongLabel.setBorder(BorderFactory.createEmptyBorder(40, 5, 5, 5));
 		loginWrongLabel.setVisible(false);
@@ -224,8 +218,10 @@ public class Login_View extends JFrame {
 	 * Panel enthält das Logo
 	 */
 	private JPanel logoPanel() {
-		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource("ressources/logo_2.png"));
-		ImageIcon imageIcon = new ImageIcon(ii1.getImage().getScaledInstance(300, 150, Image.SCALE_DEFAULT));
+		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader()
+				.getResource("ressources/logo_2.png"));
+		ImageIcon imageIcon = new ImageIcon(ii1.getImage()
+				.getScaledInstance(300, 150, Image.SCALE_DEFAULT));
 		logoLabel = new JLabel(imageIcon, SwingConstants.CENTER);
 		logoLabel.setPreferredSize(new Dimension(300, 150));
 

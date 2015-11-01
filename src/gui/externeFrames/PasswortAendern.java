@@ -1,9 +1,13 @@
+/* Programmiert von: David Fankhänel
+ * Programmiert für: PasswortÄndern-Button auf der Hauptoberfläche
+ * Beschreibung: Oberfläche um Passwort zu ändern
+ */
+
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,8 +27,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
-import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
-import gui.externeFrames.RaumLoeschen.MeinActionListener;
 
 public class PasswortAendern extends JDialog {
 
@@ -35,24 +37,8 @@ public class PasswortAendern extends JDialog {
 	private MeinActionListener mal = new MeinActionListener();
 	private KeyListenerESC esc = new KeyListenerESC();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PasswortAendern frame = new PasswortAendern();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
+	/*
+	 * Fenster erstellen
 	 */
 	public PasswortAendern() {
 		setModal(true); // Fenster wird aufgebaut
@@ -217,23 +203,17 @@ public class PasswortAendern extends JDialog {
 
 	public class KeyListenerESC implements KeyListener {
 
-		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				setInvisible();
 			}
 		}
 
-		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
-		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
@@ -241,9 +221,7 @@ public class PasswortAendern extends JDialog {
 
 	public class MeinActionListener implements ActionListener {
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 
 			String feedback = SQL_Schnittstelle.passwortAendern(
 					GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());

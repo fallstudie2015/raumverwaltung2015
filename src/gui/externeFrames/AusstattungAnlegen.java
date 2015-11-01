@@ -1,39 +1,32 @@
+/* Programmiert von: David Fankhänel
+ * Programmiert für: AusstattungAnlegen-Button auf Hauptoberfläche
+ * Beschreibung: Dient zum Anlegen von neuen, nicht an einen Raum gebundenen Ausstattungsobjekten
+ */
+
 package gui.externeFrames;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.SQL_Schnittstelle;
 import gui.Raumplaner_View;
-import gui.externeFrames.BenutzerAnlegen.KeyListenerESC;
-import gui.externeFrames.RaumAnlegen.MeinActionListener;
-
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import java.awt.Toolkit;
 
 public class AusstattungAnlegen extends JDialog {
 
@@ -44,24 +37,8 @@ public class AusstattungAnlegen extends JDialog {
 	private KeyListenerESC esc = new KeyListenerESC();
 	private Raumplaner_View rv;
 
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					AusstattungLoeschen frame = new AusstattungLoeschen();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
-	 * Create the frame.
+	/*
+	 * Fenster aufbauen
 	 */
 	public AusstattungAnlegen(Raumplaner_View rv) {
 		this.rv = rv;
@@ -161,18 +138,17 @@ public class AusstattungAnlegen extends JDialog {
 				JOptionPane.INFORMATION_MESSAGE);
 
 	}
-	
+
 	public class MeinActionListener implements ActionListener {
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 
 			boolean pflicht = PflichtfelderPruefen();
 
 			if (pflicht) {
 				boolean feedback = SQL_Schnittstelle
-						.insertAusstattungsArtenLager(textField_aName.getText());
+						.insertAusstattungsArtenLager(
+								textField_aName.getText());
 
 				if (feedback == true) { // Rückgabewert der Methode
 										// Ausstattung
@@ -186,31 +162,26 @@ public class AusstattungAnlegen extends JDialog {
 				}
 			} else {
 				JOptionPane.showMessageDialog(null,
-						" Bitte fuellen Sie das Pflichtfeld aus",
-						"Achtung!", JOptionPane.ERROR_MESSAGE);
+						" Bitte fuellen Sie das Pflichtfeld aus", "Achtung!",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
+
 	public class KeyListenerESC implements KeyListener {
 
-		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				setInvisible();
 			}
 		}
 
-		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
+
 		}
 
-		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
+
 		}
 
 	}

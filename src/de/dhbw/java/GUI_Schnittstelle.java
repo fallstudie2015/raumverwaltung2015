@@ -1,16 +1,21 @@
+/* Programmiert von: Alexander Finkbeiner
+ * Programmiert für: Login-View und Raumplaner-View
+ * Beschreibung: Dient zur Verbindung zwischen der Login-View, der Prüfung des Passworts und der Raumplaner-View
+ */
+
 package de.dhbw.java;
+
+import java.sql.ResultSet;
 
 import gui.Error_Message_Box;
 import gui.Login_View;
 import gui.Raumplaner_View;
 
-import java.sql.ResultSet;
-
 public abstract class GUI_Schnittstelle {
 	private static Raumplaner_View raumplanerView;
 
 	/**
-	 * Gibt intfuer die GUI zurueck
+	 * Gibt int für die GUI zurück
 	 * 
 	 * @param benutzername
 	 *            : name des benutzers, egal ob Verwalter oder Besteller.
@@ -37,8 +42,8 @@ public abstract class GUI_Schnittstelle {
 				Benutzer.setBenutzerGesamt(rs.getInt("benutzerid"),
 						rs.getString("email"), rs.getString("vorname"),
 						rs.getString("nachname"),
- rs.getString("rolle").charAt(0), rs
-					.getString("bereich"));
+						rs.getString("rolle").charAt(0),
+						rs.getString("bereich"));
 			} else {
 				Benutzer.setBenutzerID(-1);
 			}
@@ -56,7 +61,8 @@ public abstract class GUI_Schnittstelle {
 			for (int i = 0; i < charArray.length; i++) {
 				pw += charArray[i];
 			}
-			System.out.println(pw + " " + loginView.getUserIDField().getText());
+			// System.out.println(pw + " " +
+			// loginView.getUserIDField().getText());
 			einloggen(loginView.getUserIDField().getText(), pw);
 			// loginView.getUserIDField().getText(), "maxima.fallstudie@gmx.de"
 			// pw "fallstudie2015
@@ -74,9 +80,6 @@ public abstract class GUI_Schnittstelle {
 
 			} else {
 				loginView.getLoginWrongLabel().setVisible(true);
-				// sag dem sackgesicht, dass er was flasch eingegeben hat und
-				// zähle wie oft er was falsch macht...
-				// code
 			}
 
 		} catch (Exception e) {
@@ -84,6 +87,5 @@ public abstract class GUI_Schnittstelle {
 					"de.dhbw.java.GUI_Schnittstelle.check");
 		}
 	}
-	
 
 }

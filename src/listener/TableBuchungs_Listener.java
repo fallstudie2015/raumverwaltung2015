@@ -4,11 +4,11 @@
  */
 
 package listener;
-import gui.PanelBuchung;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import gui.PanelBuchung;
 
 public class TableBuchungs_Listener implements ListSelectionListener {
 	PanelBuchung pb;
@@ -17,7 +17,6 @@ public class TableBuchungs_Listener implements ListSelectionListener {
 		this.pb = pb;
 	}
 
-	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == true) {
 			pb.auswahlAnzeigenImRaumplaner_View();

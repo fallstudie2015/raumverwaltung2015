@@ -2,6 +2,7 @@
  * Programmiert für: Alle in der gui angezeigten Tabellen
  * Beschreibung: Die Klasse kann verwendet werden, um allen in der gui angezeigten Tabellen funktionen hinzuzufügen oder zu entfernen 
  */
+
 package de.dhbw.java;
 
 import javax.swing.JTable;
