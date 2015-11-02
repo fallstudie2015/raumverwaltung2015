@@ -548,7 +548,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 
 			String updateString = "INSERT INTO raum (name, strasse, stock, maxAnzPersonen, entfernt) VALUES('"
-					+ name + "', '" + stock + "', '" + stock + "', '"
+					+ name + "', '" + strasse + "', '" + stock + "', '"
 					+ maxAnzPersonen + "', '0')";
 			String grunAusstattungBezeichnung = null;
 			int raumId = SQL_Schnittstelle.sqlInsert(updateString);
