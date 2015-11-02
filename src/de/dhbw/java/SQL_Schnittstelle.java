@@ -1079,14 +1079,14 @@ public abstract class SQL_Schnittstelle {
 				Time zeitBisDb = buchungen.get(i).getZeitBis();
 
 				if (zeitBis.after(zeitVonDb) && zeitVon.before(zeitBisDb)) {
-					return "";
+					return " ";
 				}
 
 				if (zeitVon.equals(zeitVonDb) || zeitBis.equals(zeitBisDb)) {
-					return "";
+					return " ";
 				}
 			}
-			return "";
+			return null;
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.pruefeBuchungskonflikt");
