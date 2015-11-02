@@ -37,7 +37,6 @@ public class PanelRaum extends JPanel {
 			tableRaum = new MeineTabelle(tableModel);
 			tableRaum.getSelectionModel().setSelectionMode(
 					ListSelectionModel.SINGLE_SELECTION);
-			tableRaum.setAutoCreateRowSorter(true);
 			setLayout(new BorderLayout());
 			scrollPane = new JScrollPane(tableRaum);
 			add(scrollPane, BorderLayout.CENTER);
