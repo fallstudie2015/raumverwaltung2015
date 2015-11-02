@@ -101,14 +101,14 @@ public class Raum_View extends JPanel implements MouseListener {
 					}
 				}
 			}
-			if (i + 1 == 19) {
-				Halbestunde_Panel panel5 = new Halbestunde_Panel(
-						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00")),
-						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":15:00")));
-				raumzeitenPanel.add(panel5);
-				labelList.add(panel5.getRaumViewLabelOben());
-				labelList.add(panel5.getRaumViewLabelUnten());
-			}
+			// if (i + 1 == 19) {
+			// Halbestunde_Panel panel5 = new Halbestunde_Panel(
+			// new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00")),
+			// new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":15:00")));
+			// raumzeitenPanel.add(panel5);
+			// labelList.add(panel5.getRaumViewLabelOben());
+			// labelList.add(panel5.getRaumViewLabelUnten());
+			// }
 		}
 
 		labelLeeren();
