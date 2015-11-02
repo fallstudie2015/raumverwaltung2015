@@ -61,7 +61,7 @@ public abstract class SQL_Schnittstelle {
 	public static ResultSet sqlAbfrage(String abfrage) {
 		Statement stmt = null;
 		ResultSet rs = null;
-
+		abfrage = GUI_Schnittstelle.preventSQLInjection(abfrage);
 		try {
 			stmt = con.createStatement();
 		} catch (Exception e) {
@@ -90,7 +90,7 @@ public abstract class SQL_Schnittstelle {
 		ResultSet rs = null;
 		int autoIncKeyFromApi = -1;
 		int rowAffected = 0;
-
+		abfrage = GUI_Schnittstelle.preventSQLInjection(abfrage);
 		try {
 			stmt = con.createStatement();
 		} catch (Exception e) {
@@ -159,7 +159,7 @@ public abstract class SQL_Schnittstelle {
 	public static int sqlUpdateDelete(String abfrage) {
 		Statement stmt = null;
 		int rowAffected = 0;
-
+		abfrage = GUI_Schnittstelle.preventSQLInjection(abfrage);
 		try {
 			stmt = con.createStatement();
 		} catch (Exception e) {
