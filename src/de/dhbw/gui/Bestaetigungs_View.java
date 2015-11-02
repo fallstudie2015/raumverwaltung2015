@@ -7,6 +7,7 @@
 package de.dhbw.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -85,7 +86,8 @@ public class Bestaetigungs_View extends JDialog {
 		this.befuelleMainPanel();
 		this.add(this.createMainPanel(), BorderLayout.CENTER);
 
-		this.setSize(500, 500);
+		this.setMinimumSize(new Dimension(500, 500));
+		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
