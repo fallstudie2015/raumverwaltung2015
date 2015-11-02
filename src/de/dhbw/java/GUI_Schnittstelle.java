@@ -7,9 +7,9 @@ package de.dhbw.java;
 
 import java.sql.ResultSet;
 
-import gui.Error_Message_Box;
-import gui.Login_View;
-import gui.Raumplaner_View;
+import de.dhbw.gui.Error_Message_Box;
+import de.dhbw.gui.Login_View;
+import de.dhbw.gui.Raumplaner_View;
 
 public abstract class GUI_Schnittstelle {
 	private static Raumplaner_View raumplanerView;
