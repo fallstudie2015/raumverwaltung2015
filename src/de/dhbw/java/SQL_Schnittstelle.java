@@ -320,8 +320,8 @@ public abstract class SQL_Schnittstelle {
 		try {
 			telefon = GUI_Schnittstelle.preventSQLInjection(telefon);
 			kommentar = GUI_Schnittstelle.preventSQLInjection(kommentar);
-			veranstaltungsbezeichnung = GUI_Schnittstelle.preventSQLInjection(veranstaltungsbezeichnung);
-			
+			veranstaltungsbezeichnung = GUI_Schnittstelle
+					.preventSQLInjection(veranstaltungsbezeichnung);
 
 			if (externeTeilnehmer == true) {
 				intExterneTeilnehmer = 1;
@@ -820,7 +820,7 @@ public abstract class SQL_Schnittstelle {
 	 * @return
 	 */
 	public static ResultSet getAllBenutzer() {
-		String abfrageString = "SELECT benutzerid AS 'Benutzer-ID', vorname AS Vorname, nachname AS Nachname, email AS 'E-Mail' from raum WHERE entfernt = 0;";
+		String abfrageString = "SELECT benutzerid AS 'Benutzer-ID', vorname AS Vorname, nachname AS Nachname, email AS 'E-Mail' from benutzer;";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 		return rs;
 	} // end method getAllBenutzer
@@ -1268,14 +1268,12 @@ public abstract class SQL_Schnittstelle {
 	 * @return true, wenn es funktioniert hat; false, wenn der Benutzer nicht in
 	 *         der Datenbank vorhanden war.
 	 */
-	public static boolean deleteBenutzer(String email, String vorname,
-			String nachname) {
+	public static boolean deleteBenutzer(int benutzerID) {
 		try {
 
 			int rowAffected = SQL_Schnittstelle
-					.sqlUpdateDelete("DELETE FROM benutzer WHERE email = '"
-							+ email + "' and vorname = '" + vorname
-							+ "' and nachname = '" + nachname + "'");
+					.sqlUpdateDelete("DELETE FROM benutzer WHERE benutzerid = "
+							+ benutzerID + ";");
 			if (rowAffected == 0) {
 				return false;
 			}
