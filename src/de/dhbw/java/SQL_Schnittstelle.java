@@ -636,7 +636,7 @@ public abstract class SQL_Schnittstelle {
 			String ausstattungsartBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
-
+			ausstattungsartBezeichnung=GUI_Schnittstelle.preventSQLInjection(ausstattungsartBezeichnung);
 			String updateString = "INSERT INTO ausstattungsArtenLager ( bezeichnung) VALUES ('"
 					+ ausstattungsartBezeichnung + "')";
 
