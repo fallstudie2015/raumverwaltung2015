@@ -7,6 +7,7 @@
 package de.dhbw.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -46,26 +47,22 @@ import de.dhbw.mail.MailTexte;
 
 public class Bestellformular_View extends JPanel {
 
-	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel,
-			zeitVonLabel, zeitBisLabel, personenLabel, technikLabel,
-			ausstattungLabel, bestuhlungLabel, bezLabel;
+	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel, zeitVonLabel, zeitBisLabel, personenLabel,
+			technikLabel, ausstattungLabel, bestuhlungLabel, bezLabel, maxLabel, limitLabel;
 	private JTextField telField, bezField;
 	private JSpinField persField;
 	private JDateChooser dateChooser;
 	private java.util.Date oldDate;
-	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB,
-			zeitBisStundeCB, zeitBisMinuteCB;
+	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB, zeitBisStundeCB, zeitBisMinuteCB;
 	private JButton reservierenButton, abbrechenButton;
 	private JTextArea sonstigeArea;
 	private JCheckBox externCheck;
-	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13",
-			"14", "15", "16", "17", "18" };
-	private final String stundeBis[] = { "08", "09", "10", "11", "12", "13",
-			"14", "15", "16", "17", "18", "19" };
+	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
+	private final String stundeBis[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
 	private final String minute[] = { "00", "15", "30", "45" };
 	private Ausstattung ausstattung[];
-	private final String bestuhulung[] = { "Standard", "U-Form", "Blockbildung",
-			"Schulbanksystem", "Sonderbestuhlung" };
+	private final String bestuhulung[] = { "Standard", "U-Form", "Blockbildung", "Schulbanksystem",
+			"Sonderbestuhlung" };
 	private Ausstattung technik[];
 	private String raumName;
 	private JScrollPane sonstigeScroller, pane;
@@ -75,6 +72,7 @@ public class Bestellformular_View extends JPanel {
 	private ArrayList<String> ausstattungList;
 	private TappedPaneBuchung panelBuchung;
 	private Raum_View raum;
+	private int maxPers;
 
 	/*
 	 * Der Konstruktor benötigt das ParentFrame um es aktualisieren zu können,
@@ -82,8 +80,8 @@ public class Bestellformular_View extends JPanel {
 	 * Raum_View benötigt, um bei einer erfolgten Buchung, den Kalender aktuell
 	 * zu halten
 	 */
-	public Bestellformular_View(JFrame frame, String name, String nachname,
-			int raumId, TappedPaneBuchung panel, String bereich, Raum_View rv) {
+	public Bestellformular_View(JFrame frame, String name, String nachname, int raumId, TappedPaneBuchung panel,
+			String bereich, Raum_View rv) {
 		// initView();
 		this.raumId = raumId;
 		this.raum = rv;
@@ -269,15 +267,20 @@ public class Bestellformular_View extends JPanel {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if (!SQL_Schnittstelle.pruefeBuchungskonflikt(raumName,
-						new Date(dateChooser.getDate().getTime()),
-						Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
-								+ zeitVonMinuteCB.getSelectedItem() + ":00"),
-						Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
-								+ zeitBisMinuteCB.getSelectedItem() + ":00"))) {
+				String proof = SQL_Schnittstelle
+						.pruefeBuchungskonflikt(raumName, new Date(dateChooser.getDate().getTime()),
+								Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem()
+										+ ":00"),
+						Time.valueOf(
+								zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00"));
+				if (proof != null) {
 					reservierenButton.setEnabled(false);
+					limitLabel.setText(proof);
+					limitLabel.setVisible(true);
 				} else {
 					reservierenButton.setEnabled(true);
+					limitLabel.setVisible(false);
+					// Label über reservieren rot anzeigen mit Onhalt von proof
 				}
 			}
 		};
@@ -321,15 +324,20 @@ public class Bestellformular_View extends JPanel {
 		ItemListener il = new ItemListener() {
 
 			public void itemStateChanged(ItemEvent e) {
-				if (!SQL_Schnittstelle.pruefeBuchungskonflikt(raumName,
-						new Date(dateChooser.getDate().getTime()),
-						Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
-								+ zeitVonMinuteCB.getSelectedItem() + ":00"),
-						Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
-								+ zeitBisMinuteCB.getSelectedItem() + ":00"))) {
+				String proof = SQL_Schnittstelle
+						.pruefeBuchungskonflikt(raumName, new Date(dateChooser.getDate().getTime()),
+								Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem()
+										+ ":00"),
+						Time.valueOf(
+								zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00"));
+				if (proof != null) {
 					reservierenButton.setEnabled(false);
+					limitLabel.setText(proof);
+					limitLabel.setVisible(true);
 				} else {
 					reservierenButton.setEnabled(true);
+					limitLabel.setVisible(false);
+					// Label über reservieren rot anzeigen mit Onhalt von proof
 				}
 			}
 		};
@@ -370,13 +378,17 @@ public class Bestellformular_View extends JPanel {
 
 		persField = new JSpinField();
 		persField.setMinimum(0);
-		persField.setPreferredSize(new Dimension(105, 30));
+		persField.setPreferredSize(new Dimension(75, 30));
+
+		maxLabel = new JLabel();
+		maxLabel.setPreferredSize(new Dimension(30, 30));
 
 		JPanel personenPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		personenPanel.add(personenLabel);
 
 		JPanel feldPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		feldPanel.add(persField);
+		feldPanel.add(maxLabel);
 
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(personenPanel, BorderLayout.WEST);
@@ -453,8 +465,7 @@ public class Bestellformular_View extends JPanel {
 		sonstigeArea.setLineWrap(true);
 		sonstigeArea.setVisible(true);
 
-		sonstigeScroller = new JScrollPane(sonstigeArea,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		sonstigeScroller = new JScrollPane(sonstigeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		sonstigeScroller.setPreferredSize(new Dimension(200, 100));
 		sonstigeScroller.setVisible(false);
@@ -541,6 +552,10 @@ public class Bestellformular_View extends JPanel {
 	 * Die Bestellung kann reserviert oder abgebrochen werden
 	 */
 	private JPanel buttonPanel() {
+		limitLabel = new JLabel();
+		limitLabel.setVisible(false);
+		limitLabel.setForeground(Color.RED);
+
 		reservierenButton = new JButton("reservieren");
 		reservierenButton.setPreferredSize(new Dimension(100, 30));
 		reservierenButton.addActionListener(new ActionListener() {
@@ -557,21 +572,20 @@ public class Bestellformular_View extends JPanel {
 					raum.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 					MailConnection mail = new MailConnection();
 					Date datum = new Date(dateChooser.getDate().getTime());
-					mail.sendMail(MailTexte.verwalterPostfach,
-							MailTexte.getBetreffNeueReservierung(),
+					mail.sendMail(MailTexte.verwalterPostfach, MailTexte.getBetreffNeueReservierung(),
 							MailTexte.getTextNeueReservierung(datum));
 
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"Es ist ein Fehler bei der Reservierung aufgerteten!");
-				}
-				ausstattungList.clear();
-				getBestellformular().setVisible(false);
-				pane.setVisible(false);
-				panelBuchung.reloadTableBuchung();
-				panelBuchung.setVisible(true);
+					ausstattungList.clear();
+					getBestellformular().setVisible(false);
+					pane.setVisible(false);
+					panelBuchung.reloadTableBuchung();
+					panelBuchung.setVisible(true);
 
-				frame.validate();
+					frame.validate();
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Es ist ein Fehler bei der Reservierung aufgerteten!");
+				}
 			}
 		});
 
@@ -603,6 +617,7 @@ public class Bestellformular_View extends JPanel {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BorderLayout());
 
+		buttonPanel.add(limitLabel, BorderLayout.NORTH);
 		buttonPanel.add(rbPanel, BorderLayout.WEST);
 		buttonPanel.add(abPanel, BorderLayout.EAST);
 
@@ -633,7 +648,8 @@ public class Bestellformular_View extends JPanel {
 	}
 
 	public void setMaxPersonen(int max) {
-		persField.setMaximum(max);
+		maxPers = max;
+		maxLabel.setText("(" + maxPers + ")");
 	}
 
 	public void setZeitCB(String hr, String min) {
@@ -649,14 +665,22 @@ public class Bestellformular_View extends JPanel {
 		} else {
 			if (min.equals("45")) {
 				zeitBisMinuteCB.setSelectedIndex(0);
-				zeitBisStundeCB.setSelectedIndex(
-						zeitVonStundeCB.getSelectedIndex() + 1);
+				zeitBisStundeCB.setSelectedIndex(zeitVonStundeCB.getSelectedIndex() + 1);
 			} else {
-				zeitBisMinuteCB.setSelectedIndex(
-						zeitVonMinuteCB.getSelectedIndex() + 1);
+				zeitBisMinuteCB.setSelectedIndex(zeitVonMinuteCB.getSelectedIndex() + 1);
 				zeitBisStundeCB.setSelectedItem(hr);
 			}
 		}
+
+		resetFields();
+	}
+
+	private void resetFields() {
+		telField.setText("");
+		bezField.setText("");
+		sonstigeArea.setText("");
+		persField.setValue(0);
+		externCheck.setSelected(false);
 	}
 
 	public void setTechnik(ArrayList<Ausstattung> list) {
@@ -678,19 +702,36 @@ public class Bestellformular_View extends JPanel {
 		String telefon = telField.getText();
 		String bezeichnung = bezField.getText();
 		Date datum = new Date(dateChooser.getDate().getTime());
-		Time zeitVon = Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
-				+ zeitVonMinuteCB.getSelectedItem() + ":00");
-		Time zeitBis = Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
-				+ zeitBisMinuteCB.getSelectedItem() + ":00");
+		Time zeitVon = Time
+				.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem() + ":00");
+		Time zeitBis = Time
+				.valueOf(zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00");
 		String kommentar = sonstigeArea.getText();
 		String bestuhlung = String.valueOf(bestuhlungCB.getSelectedItem());
 		int benutzerId = Benutzer.getBenutzerID();
 		int anzPersonen = persField.getValue();
 		boolean externeTeilnehmer = externCheck.isSelected();
 
-		return SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis,
-				kommentar, bestuhlung, benutzerId, raumId, 'v', anzPersonen,
-				ausstattungList, externeTeilnehmer, bezeichnung);
+		if (proofField()) {
+			return SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis, kommentar, bestuhlung, benutzerId,
+					raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer, bezeichnung);
+		} else {
+			return false;
+		}
+	}
+
+	private boolean proofField() {
+		if (persField.getValue() > maxPers) {
+			JOptionPane.showMessageDialog(null, "Die Anzahl der Personen ist zu groß. Der Raum ist limitiert auf "
+					+ maxPers + " Personen. Bitte ändern Sie die Angeabe!");
+			return false;
+		}
+		if (bezField.getText().toString().length() > 80) {
+			JOptionPane.showMessageDialog(null,
+					"Die länge der Veranstaltungsbezeichnugn ist zu lang. Bitte ändern Sie die Angeabe!");
+			return false;
+		}
+		return true;
 	}
 
 	/*
@@ -703,17 +744,21 @@ public class Bestellformular_View extends JPanel {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (oldDate != dateChooser.getDate()) {
-					if (!SQL_Schnittstelle.pruefeBuchungskonflikt(raumName,
+					String proof = SQL_Schnittstelle.pruefeBuchungskonflikt(raumName,
 							new Date(dateChooser.getDate().getTime()),
-							Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
-									+ zeitVonMinuteCB.getSelectedItem()
+							Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem()
 									+ ":00"),
-							Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
-									+ zeitBisMinuteCB.getSelectedItem()
-									+ ":00"))) {
+							Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem()
+									+ ":00"));
+					if (proof != null) {
 						reservierenButton.setEnabled(false);
+						limitLabel.setText(proof);
+						limitLabel.setVisible(true);
 					} else {
 						reservierenButton.setEnabled(true);
+						limitLabel.setVisible(false);
+						// Label über reservieren rot anzeigen mit Onhalt von
+						// proof
 					}
 				}
 			}

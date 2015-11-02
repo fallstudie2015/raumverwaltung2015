@@ -57,15 +57,13 @@ public class Raum_View extends JPanel implements MouseListener {
 	 */
 	private void setBestellformularView() {
 		// Bestellformular view erstellen
-		bv = new Bestellformular_View(frame, Benutzer.getVorname(),
-				Benutzer.getNachname(), raum.getRaumID(),
+		bv = new Bestellformular_View(frame, Benutzer.getVorname(), Benutzer.getNachname(), raum.getRaumID(),
 				frame.getPanelBuchung(), Benutzer.getBereich(), this);
 		bv.setRaumName(raumName);
 		frame.setBVList(bv);
 		frame.setBVPanel(bv);
 		bv.setTechnik(SQL_Schnittstelle.getAusstattungsArtenLager());
-		bv.setGrundausstattung(
-				SQL_Schnittstelle.getGrundAusstattungRaum(raum.getRaumID()));
+		bv.setGrundausstattung(SQL_Schnittstelle.getGrundAusstattungRaum(raum.getRaumID()));
 		bv.initView();
 	}
 
@@ -82,10 +80,8 @@ public class Raum_View extends JPanel implements MouseListener {
 			// raumzeitenPanel.add(panel);
 			// labelList.add(panel.getRaumViewLabel());
 			for (int k = 15; k < 16; k += 15) {
-				Halbestunde_Panel panel2 = new Halbestunde_Panel(
-						new Raum_View_Label(Time.valueOf("0" + i + ":00:00")),
-						new Raum_View_Label(
-								Time.valueOf("0" + i + ":" + k + ":00")));
+				Halbestunde_Panel panel2 = new Halbestunde_Panel(new Raum_View_Label(Time.valueOf("0" + i + ":00:00")),
+						new Raum_View_Label(Time.valueOf("0" + i + ":" + k + ":00")));
 				raumzeitenPanel.add(panel2);
 				labelList.add(panel2.getRaumViewLabelOben());
 				labelList.add(panel2.getRaumViewLabelUnten());
@@ -96,10 +92,8 @@ public class Raum_View extends JPanel implements MouseListener {
 					// labelList.add(panel3.getRaumViewLabel());
 					for (int l = 45; l < 46; l += 15) {
 						Halbestunde_Panel panel4 = new Halbestunde_Panel(
-								new Raum_View_Label(Time
-										.valueOf("0" + i + ":" + j + ":00")),
-								new Raum_View_Label(Time
-										.valueOf("0" + i + ":" + l + ":00")));
+								new Raum_View_Label(Time.valueOf("0" + i + ":" + j + ":00")),
+								new Raum_View_Label(Time.valueOf("0" + i + ":" + l + ":00")));
 						raumzeitenPanel.add(panel4);
 						labelList.add(panel4.getRaumViewLabelOben());
 						labelList.add(panel4.getRaumViewLabelUnten());
@@ -108,10 +102,8 @@ public class Raum_View extends JPanel implements MouseListener {
 			}
 			if (i + 1 == 19) {
 				Halbestunde_Panel panel5 = new Halbestunde_Panel(
-						new Raum_View_Label(
-								Time.valueOf("0" + (i + 1) + ":00:00")),
-						new Raum_View_Label(
-								Time.valueOf("0" + (i + 1) + ":15:00")));
+						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":00:00")),
+						new Raum_View_Label(Time.valueOf("0" + (i + 1) + ":15:00")));
 				raumzeitenPanel.add(panel5);
 				labelList.add(panel5.getRaumViewLabelOben());
 				labelList.add(panel5.getRaumViewLabelUnten());
@@ -147,17 +139,16 @@ public class Raum_View extends JPanel implements MouseListener {
 		// Die eigenen Buchungen werden Grün angezeigt
 		for (BuchungPlus buchung : buchungList) {
 			if (buchung.getBenutzerID() == Benutzer.getBenutzerID()) {
-				farbe = Color.GREEN;
+				farbe = new Color(59, 201, 59);
 			} else {
-				farbe = Color.RED;
+				farbe = new Color(82, 145, 178);
 			}
 
 			/*
 			 * Es werden nur Buchungen in die Labels getragen, welche von dem
 			 * ausgewählten Datum sind
 			 */
-			if (today.toString()
-					.compareTo(buchung.getDatum().toString()) == 0) {
+			if (today.toString().compareTo(buchung.getDatum().toString()) == 0) {
 
 				for (Raum_View_Label label : labelList) {
 
@@ -165,47 +156,33 @@ public class Raum_View extends JPanel implements MouseListener {
 					 * Sonst werden die Daten der Buchung auf die Labels
 					 * eingetragen.
 					 */
-					if (!(buchung.getStatus().equalsIgnoreCase("a")
-							|| buchung.getStatus().equalsIgnoreCase("s"))) {
+					if (!(buchung.getStatus().equalsIgnoreCase("a") || buchung.getStatus().equalsIgnoreCase("s"))) {
 						if (buchung.getZeitVon().equals(label.getTime())
 								|| (label.getTime().before(buchung.getZeitBis())
-										&& label.getTime()
-												.after(buchung.getZeitVon()))) {
+										&& label.getTime().after(buchung.getZeitVon()))) {
 							if (Benutzer.getBenutzertyp() == 'v') {
-								if (buchung.getZeitVon()
-										.equals(label.getTime())) {
+								if (buchung.getZeitVon().equals(label.getTime())) {
 									label.setText(buchung.getBenutzerName());
-									label.setFont(
-											new Font(buchung.getBenutzerName(),
-													Font.BOLD, 16));
-									label.setHorizontalTextPosition(
-											SwingConstants.CENTER);
+									label.setFont(new Font(buchung.getBenutzerName(), Font.BOLD, 16));
+									label.setHorizontalTextPosition(SwingConstants.CENTER);
 								}
-								label.setToolTipText("<html>" + raum.getName()
-										+ "<br>" + raum.getStrasse() + "<br>"
-										+ raum.getStock() + "<br>"
-										+ buchung.getVeranstaltungsBezeichnung()
-										+ "<br>" + buchung.getBenutzerName()
-										+ "<br>" + buchung.getTelefon() + "<br>"
-										+ buchung.getZeitVon() + " Uhr - "
-										+ buchung.getZeitBis() + " Uhr" + "<br>"
-										+ buchung.getAusstattung() + "<br>"
-										+ "</html>");
+								label.setToolTipText("<html>" + raum.getName() + "<br>" + raum.getStrasse() + "<br>"
+										+ raum.getStock() + "<br>" + buchung.getVeranstaltungsBezeichnung() + "<br>"
+										+ buchung.getBenutzerName() + "<br>" + buchung.getTelefon() + "<br>"
+										+ buchung.getZeitVon() + " Uhr - " + buchung.getZeitBis() + " Uhr" + "<br>"
+										+ buchung.getAusstattung() + "<br>" + "</html>");
 								// SQL_Schnittstelle.getAusstattungBuchung(buchung.getBuchungsID())
 								// +
 							}
 							if (buchung.getStatus().equals("v")) {
 								ImageIcon ii = new ImageIcon(
-										getClass().getClassLoader().getResource(
-												"ressources/muster.jpg"));
+										getClass().getClassLoader().getResource("ressources/muster.jpg"));
 								ImageIcon imageIcon = new ImageIcon(
-										ii.getImage().getScaledInstance(200, 20,
-												Image.SCALE_DEFAULT));
+										ii.getImage().getScaledInstance(200, 20, Image.SCALE_DEFAULT));
 								label.setIcon(imageIcon);
 								label.setBuchung(buchung);
 								label.setFrame(frame);
-							} else if (buchung.getStatus()
-									.equalsIgnoreCase("p")) {
+							} else if (buchung.getStatus().equalsIgnoreCase("p")) {
 								label.setBackground(Color.ORANGE);
 								label.setFrame(frame);
 								label.setBuchung(buchung);
@@ -313,8 +290,7 @@ public class Raum_View extends JPanel implements MouseListener {
 				bv.setScrollPane(frame.getformularScrollPane());
 				bv.setDate(frame.getCalendar());
 				bv.setMaxPersonen(raum.getAnzPersonen());
-				bv.setZeitCB(label.getTime().toString().substring(0, 2),
-						label.getTime().toString().substring(3, 5));
+				bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 
 				frame.getformularScrollPane().setVisible(true);
 
@@ -325,8 +301,7 @@ public class Raum_View extends JPanel implements MouseListener {
 				bv.setVisible(true);
 				bv.setScrollPane(frame.getformularScrollPane());
 				bv.setDate(frame.getCalendar());
-				bv.setZeitCB(label.getTime().toString().substring(0, 2),
-						label.getTime().toString().substring(3, 5));
+				bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 				frame.getformularScrollPane().setVisible(true);
 
 				frame.validate();
