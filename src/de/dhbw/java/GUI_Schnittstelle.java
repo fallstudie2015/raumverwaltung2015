@@ -92,6 +92,7 @@ public abstract class GUI_Schnittstelle {
 		sqlBefehl= sqlBefehl.replaceAll(">", " ");
 		sqlBefehl= sqlBefehl.replaceAll("<", " ");
 		sqlBefehl= sqlBefehl.replaceAll("'", " ");
+		sqlBefehl.trim();
 		return sqlBefehl;
 	}
 
