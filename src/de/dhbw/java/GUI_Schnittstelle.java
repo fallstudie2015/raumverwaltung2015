@@ -87,5 +87,12 @@ public abstract class GUI_Schnittstelle {
 					"de.dhbw.java.GUI_Schnittstelle.check");
 		}
 	}
+	public static String preventSQLInjection(String sqlBefehl){
+		
+		sqlBefehl= sqlBefehl.replace('>', ' ');
+		sqlBefehl= sqlBefehl.replace('<', ' ');
+		sqlBefehl= sqlBefehl.replace("'", "");
+		return sqlBefehl;
+	}
 
 }
