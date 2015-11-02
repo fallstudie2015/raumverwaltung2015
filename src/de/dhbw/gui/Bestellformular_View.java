@@ -152,7 +152,7 @@ public class Bestellformular_View extends JPanel {
 		nameLabel.setPreferredSize(new Dimension(125, 30));
 
 		bereichLabel = new JLabel(nutzerBereich);
-		bereichLabel.setPreferredSize(new Dimension(50, 30));
+		bereichLabel.setPreferredSize(new Dimension(175, 30));
 
 		JPanel raumPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		raumPanel.add(raumLabel);
@@ -160,7 +160,7 @@ public class Bestellformular_View extends JPanel {
 		JPanel namenPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		namenPanel.add(nameLabel);
 
-		JPanel bereichPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel bereichPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		bereichPanel.add(bereichLabel);
 
 		JPanel nameBereichPanel = new JPanel();
