@@ -362,7 +362,7 @@ public class Raumplaner_View extends JFrame {
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		formularScroller.getVerticalScrollBar().setUnitIncrement(16);
 		formularScroller.setPreferredSize(
-				new Dimension(350, formularScroller.getPreferredSize().height));
+				new Dimension(400, formularScroller.getPreferredSize().height));
 		formularScroller.setVisible(false);
 	}
 

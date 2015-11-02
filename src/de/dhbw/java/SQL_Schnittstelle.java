@@ -1,6 +1,6 @@
-/* Programmiert von:
- * Programmiert für: 
- * Beschreibung:
+/* Programmiert von: Alexander Finkbeiner + Severin Klug
+ * Programmiert für: Schnittstelle zwischen Oberfläche und Datenbank
+ * Beschreibung: Regelt den Zugriff auf die Datenbank zwischen Anwendung und hinterlegter Datenbank
  */
 
 package de.dhbw.java;
