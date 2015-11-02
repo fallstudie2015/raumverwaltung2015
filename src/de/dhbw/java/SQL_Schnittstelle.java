@@ -441,8 +441,9 @@ public abstract class SQL_Schnittstelle {
 	public static ResultSet getMyBuchungen(int benutzerid) {
 		ResultSet rs = null;
 		try {
-			String abfrageString = "SELECT buchungid as 'ID', r.name as 'Raumbez.', datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis', status AS Status "
+			String abfrageString = "SELECT buchungid as 'ID', r.name as 'Raumbez.', datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis', sb.bezeichnung AS Status "
 					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
+					+ "JOIN statusBezeichnung sb ON sb.abkuerzung = b.status "
 					+ "WHERE benutzerid = "
 					+ benutzerid
 					+ " AND b.datum >= DATE(NOW()) ORDER BY b.datum; ";
