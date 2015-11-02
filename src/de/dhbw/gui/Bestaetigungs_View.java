@@ -36,6 +36,7 @@ public class Bestaetigungs_View extends JDialog {
 
 	private JLabel buchungsID;
 	private JLabel raum;
+	private JLabel bezeichnung;
 	private JLabel benutzer;
 	private JLabel telefon;
 	private JLabel datum;
@@ -47,6 +48,7 @@ public class Bestaetigungs_View extends JDialog {
 
 	private JTextField txtBuchungsID;
 	private JTextField txtRaum;
+	private JTextField txtBezeichnung;
 	private JTextField txtBenutzer;
 	private JTextField txtTelefon;
 	private JTextField txtDatum;
@@ -151,12 +153,13 @@ public class Bestaetigungs_View extends JDialog {
 		JPanel mainPanel = new JPanel();
 		try {
 
-			mainPanel.setLayout(new GridLayout(10, 2));
+			mainPanel.setLayout(new GridLayout(11, 2));
 
 			buchungsID = new JLabel("Buchungs-ID");
 			raum = new JLabel("Raum");
 			benutzer = new JLabel("Benutzer");
 			telefon = new JLabel("Telefonnummer");
+			bezeichnung = new JLabel("Veranstaltungsbezeichnung");
 			datum = new JLabel("Datum");
 			zeit = new JLabel("Zeit");
 			bestuhlung = new JLabel("Bestuhlung");
@@ -176,6 +179,9 @@ public class Bestaetigungs_View extends JDialog {
 			mainPanel.add(telefon);
 			mainPanel.add(txtTelefon);
 			txtTelefon.setEditable(false);
+			mainPanel.add(bezeichnung);
+			mainPanel.add(txtBezeichnung);
+			txtBezeichnung.setEditable(false);
 			mainPanel.add(datum);
 			mainPanel.add(txtDatum);
 			txtDatum.setEditable(false);
@@ -216,6 +222,8 @@ public class Bestaetigungs_View extends JDialog {
 			txtBenutzer = new JTextField("" + SQL_Schnittstelle
 					.getBenutzerName(buchung.getBenutzerID()));
 			txtTelefon = new JTextField("" + buchung.getTelefon());
+			txtBezeichnung = new JTextField(
+					"" + buchung.getVeranstaltungsBezeichnung());
 			txtDatum = new JTextField("" + buchung.getDatum());
 			txtZeitVon = new JTextField("" + buchung.getZeitVon());
 			txtZeitBis = new JTextField("" + buchung.getZeitBis());

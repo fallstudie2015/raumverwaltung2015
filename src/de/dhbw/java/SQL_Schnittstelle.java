@@ -217,7 +217,8 @@ public abstract class SQL_Schnittstelle {
 						rs.getTime("zeitvon"), rs.getTime("zeitbis"),
 						rs.getString("kommentar"), rs.getString("bestuhlung"),
 						rs.getInt("benutzerid"), rs.getInt("raumid"),
-						rs.getString("status")));
+						rs.getString("status"),
+						rs.getString("veranstaltungsBezeichnung")));
 			}
 
 		} catch (Exception e) {
@@ -367,7 +368,8 @@ public abstract class SQL_Schnittstelle {
 						rs.getTime("zeitvon"), rs.getTime("zeitbis"),
 						rs.getString("kommentar"), rs.getString("bestuhlung"),
 						rs.getInt("benutzerid"), rs.getInt("raumid"),
-						rs.getString("status")));
+						rs.getString("status"),
+						rs.getString("veranstaltungsBezeichnung")));
 			}
 
 		} catch (Exception e) {
@@ -1113,7 +1115,8 @@ public abstract class SQL_Schnittstelle {
 						rs.getTime("zeitvon"), rs.getTime("zeitbis"),
 						rs.getString("kommentar"), rs.getString("bestuhlung"),
 						rs.getInt("benutzerid"), rs.getInt("raumid"),
-						rs.getString("status")));
+						rs.getString("status"),
+						rs.getString("veranstaltungsBezeichnung")));
 			}
 
 		} catch (Exception e) {

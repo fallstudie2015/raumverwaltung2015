@@ -19,6 +19,7 @@ public class Buchung {
 	private int benutzerID;
 	private int raumID;
 	private String status;
+	private String bezeichnungVeranstaltung;
 
 	/*
 	 * Anlegen des Objekts Buchung mit alle für die Buchung relevanten
@@ -26,7 +27,7 @@ public class Buchung {
 	 */
 	public Buchung(int buchungsID, String telefon, Date datum, Time zeitVon,
 			Time zeitBis, String kommentar, String bestuhlung, int benutzerID,
-			int raumID, String status) {
+			int raumID, String status, String bezeichnungVeranstaltung) {
 
 		this.buchungsID = buchungsID;
 		this.telefon = telefon;
@@ -38,6 +39,7 @@ public class Buchung {
 		this.benutzerID = benutzerID;
 		this.raumID = raumID;
 		this.status = status;
+		this.bezeichnungVeranstaltung = bezeichnungVeranstaltung;
 	}
 
 	public int getBuchungsID() {
@@ -118,6 +120,14 @@ public class Buchung {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getVeranstaltungsBezeichnung() {
+		return bezeichnungVeranstaltung;
+	}
+
+	public void setVeranstaltungsBezeichnung(String bezeichnungVeranstaltung) {
+		this.bezeichnungVeranstaltung = bezeichnungVeranstaltung;
 	}
 
 }

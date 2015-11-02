@@ -14,18 +14,19 @@ public class BuchungPlus extends Buchung {
 	private String Name;
 	private String ausstattung;
 	private String bereich;
-	private String veranstaltungsBezeichnung;
+	// private String veranstaltungsBezeichnung;
 
 	public BuchungPlus(int buchungsID, String telefon, Date datum, Time zeitVon,
 			Time zeitBis, String kommentar, String bestuhlung, int benutzerID,
 			int raumID, String status, String Name, String ausstattung,
-			String bereich, String veranstaltungsBezeichnung) {
+			String bereich, String bezeichnungVeranstaltung) {
 		super(buchungsID, telefon, datum, zeitVon, zeitBis, kommentar,
-				bestuhlung, benutzerID, raumID, status);
+				bestuhlung, benutzerID, raumID, status,
+				bezeichnungVeranstaltung);
 		this.Name = Name;
 		this.ausstattung = ausstattung;
 		this.bereich = bereich;
-		this.veranstaltungsBezeichnung = veranstaltungsBezeichnung;
+		// this.veranstaltungsBezeichnung = veranstaltungsBezeichnung;
 	}
 
 	public String getBenutzerName() {
@@ -44,7 +45,7 @@ public class BuchungPlus extends Buchung {
 		return bereich;
 	}
 
-	public String getVeranstaltungsBezeichnung() {
-		return veranstaltungsBezeichnung;
-	}
+	// public String getVeranstaltungsBezeichnung() {
+	// return veranstaltungsBezeichnung;
+	// }
 }
