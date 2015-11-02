@@ -805,16 +805,17 @@ public abstract class SQL_Schnittstelle {
 	} // end method getAllRooms
 
 	/**
-	 * Findet die RaumID zu dem raum mit gegebener Bezeichnung.
+	 * Gibt ResultSet mit allen Benutzen zurück (Benutzer-ID, Vorname, Nachname,
+	 * E-Mail
 	 * 
-	 * @param raumbezeichnung
+	 * @param email
 	 * @return
 	 */
 	public static ResultSet getAllBenutzer() {
-		String abfrageString = "SELECT benutzerid AS 'Benutzer-ID', name AS Name, strasse AS Strasse, stock AS Stock from raum WHERE entfernt = 0;";
+		String abfrageString = "SELECT benutzerid AS 'Benutzer-ID', vorname AS Vorname, nachname AS Nachname, email AS 'E-Mail' from raum WHERE entfernt = 0;";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 		return rs;
-	} // end method getAllRooms
+	} // end method getAllBenutzer
 
 	/**
 	 * Alle angelegten aktiven Ausstattungen werden ausgelesen Wird benötigt für
