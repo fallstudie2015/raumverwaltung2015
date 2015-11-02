@@ -1104,7 +1104,8 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT * FROM buchung b WHERE b.raumid = '"
 					+ raumId + "' AND datum = '" + datum
-					+ "' AND status <> 'a'";
+					+ "' AND status <> 'a' AND status <> 's'";
+;
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
