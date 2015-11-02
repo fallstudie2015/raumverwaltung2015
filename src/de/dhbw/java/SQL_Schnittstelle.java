@@ -550,7 +550,7 @@ public abstract class SQL_Schnittstelle {
 		try {
 
 			String updateString = "INSERT INTO raum (name, strasse, stock, maxAnzPersonen, entfernt) VALUES('"
-					+ name + "', '" + stock + "', '" + stock + "', '"
+					+ name + "', '" + strasse + "', '" + stock + "', '"
 					+ maxAnzPersonen + "', '0')";
 			String grunAusstattungBezeichnung = null;
 			int raumId = SQL_Schnittstelle.sqlInsert(updateString);
@@ -1050,10 +1050,11 @@ public abstract class SQL_Schnittstelle {
 	 * @param datum
 	 * @param zeitVon
 	 * @param zeitBis
-	 * @return true, wenn es keine Überschneidung gibt; false, wenn es eine oder
-	 *         mehrere Überschneidungen gibt.
+	 * @return Gibt eine Meldung zurück falls es sich um einen besonderen 
+	 * Raum handelt und falls nicht wird ein leerer String zurück gegeben
+	 *         
 	 */
-	public static boolean pruefeBuchungskonflikt(String raumbezeichnung,
+	public static String pruefeBuchungskonflikt(String raumbezeichnung,
 			Date datum, Time zeitVon, Time zeitBis) {
 		// TODO Auto-generated method stub
 		int raumId = 0;
@@ -1065,9 +1066,11 @@ public abstract class SQL_Schnittstelle {
 			// Kegelbahn gibt
 			// falls gibt die Methode ein Buchungskonflikt also false zurück
 			System.out.println("Anzahl an buchungen: " + buchungen.size());
-			if (!buchungen.isEmpty() && (raumbezeichnung.equals("Gewölbekeller")
-					|| raumbezeichnung.equals("Kegelbahn"))) {
-				return false;
+			if (!buchungen.isEmpty() && (raumbezeichnung.equals("Gewölbekeller"))) {
+				return "Der Gewölbekeller kann nur einmal am Tag gebucht werden.";
+			}
+			if (!buchungen.isEmpty() && raumbezeichnung.equals("Kegelbahn")) {
+				return "Die Kegelbahn kann nur einmal am Tag gebucht werden.";
 			}
 			// prüft jede Buchung an einem bestimmten Tag in einem bestimmten
 			// Raum
@@ -1078,19 +1081,19 @@ public abstract class SQL_Schnittstelle {
 				Time zeitBisDb = buchungen.get(i).getZeitBis();
 
 				if (zeitBis.after(zeitVonDb) && zeitVon.before(zeitBisDb)) {
-					return false;
+					return " ";
 				}
 
 				if (zeitVon.equals(zeitVonDb) || zeitBis.equals(zeitBisDb)) {
-					return false;
+					return " ";
 				}
 			}
-			return true;
+
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.pruefeBuchungskonflikt");
 		}
-		return true;
+		return null;
 	} // end method pruefeBuchungskonflikt
 
 	/**
@@ -1106,7 +1109,8 @@ public abstract class SQL_Schnittstelle {
 		try {
 			String abfrageString = "SELECT * FROM buchung b WHERE b.raumid = '"
 					+ raumId + "' AND datum = '" + datum
-					+ "' AND status <> 'a'";
+					+ "' AND status <> 'a' AND status <> 's'";
+;
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {

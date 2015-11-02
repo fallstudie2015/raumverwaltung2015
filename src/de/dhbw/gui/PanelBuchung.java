@@ -53,7 +53,6 @@ public class PanelBuchung extends JPanel {
 			tableBuchung.getSelectionModel().setSelectionMode(
 					ListSelectionModel.SINGLE_SELECTION);
 			tableBuchung.getSelectionModel().addListSelectionListener(tbl);
-			tableBuchung.setAutoCreateRowSorter(true);
 			setLayout(new BorderLayout());
 			scrollPane = new JScrollPane(tableBuchung);
 			add(scrollPane, BorderLayout.CENTER);
