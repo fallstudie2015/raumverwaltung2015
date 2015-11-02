@@ -318,6 +318,11 @@ public abstract class SQL_Schnittstelle {
 
 		int intExterneTeilnehmer = 0;
 		try {
+			telefon = GUI_Schnittstelle.preventSQLInjection(telefon);
+			kommentar = GUI_Schnittstelle.preventSQLInjection(kommentar);
+			veranstaltungsbezeichnung = GUI_Schnittstelle.preventSQLInjection(veranstaltungsbezeichnung);
+			
+
 			if (externeTeilnehmer == true) {
 				intExterneTeilnehmer = 1;
 			}
@@ -568,6 +573,9 @@ public abstract class SQL_Schnittstelle {
 			int maxAnzPersonen, ArrayList<String> grundAusstattungList) {
 
 		try {
+			name = GUI_Schnittstelle.preventSQLInjection(name);
+			strasse = GUI_Schnittstelle.preventSQLInjection(strasse);
+			stock = GUI_Schnittstelle.preventSQLInjection(stock);
 
 			String updateString = "INSERT INTO raum (name, strasse, stock, maxAnzPersonen, entfernt) VALUES('"
 					+ name
@@ -1219,6 +1227,13 @@ public abstract class SQL_Schnittstelle {
 		boolean antwort = false;
 		int rueckgabeBenutzerID;
 		try {
+			nachname = GUI_Schnittstelle.preventSQLInjection(nachname);
+			vorname = GUI_Schnittstelle.preventSQLInjection(vorname);
+			email = GUI_Schnittstelle.preventSQLInjection(email);
+			passwort = GUI_Schnittstelle.preventSQLInjection(passwort);
+			rolle = GUI_Schnittstelle.preventSQLInjection(rolle);
+			bereich = GUI_Schnittstelle.preventSQLInjection(bereich);
+
 			passwort = EncryptPassword.SHA512(passwort);
 			rueckgabeBenutzerID = SQL_Schnittstelle
 					.sqlInsert("INSERT INTO benutzer (nachname, vorname, email, passwort, rolle, bereich)"
