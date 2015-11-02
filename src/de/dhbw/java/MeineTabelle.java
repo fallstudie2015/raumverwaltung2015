@@ -15,6 +15,11 @@ public class MeineTabelle extends JTable {
 	public MeineTabelle(DefaultTableModel model) {
 		super(model);
 		getTableHeader().setReorderingAllowed(false);
+		setAutoCreateRowSorter(true);
+		getColumnModel().getColumn(0).setMinWidth(0);
+		getColumnModel().getColumn(0).setMaxWidth(0);
+		getColumnModel().getColumn(0).setWidth(0);
+
 	}
 
 	// Methode um festzulegen welche Zellen bearbeitet werden können

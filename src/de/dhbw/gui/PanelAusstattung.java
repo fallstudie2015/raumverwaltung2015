@@ -37,7 +37,6 @@ public class PanelAusstattung extends JPanel {
 			tableAusstattung = new MeineTabelle(tableModel);
 			tableAusstattung.getSelectionModel().setSelectionMode(
 					ListSelectionModel.SINGLE_SELECTION);
-			tableAusstattung.setAutoCreateRowSorter(true);
 			setLayout(new BorderLayout());
 			scrollPane = new JScrollPane(tableAusstattung);
 			add(scrollPane, BorderLayout.CENTER);
