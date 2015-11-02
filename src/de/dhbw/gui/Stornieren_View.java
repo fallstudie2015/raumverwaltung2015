@@ -36,6 +36,7 @@ public class Stornieren_View extends JDialog {
 	private JLabel raum;
 	private JLabel benutzer;
 	private JLabel telefon;
+	private JLabel bezeichnung;
 	private JLabel datum;
 	private JLabel zeit;
 	private JLabel bestuhlung;
@@ -46,6 +47,7 @@ public class Stornieren_View extends JDialog {
 	private JTextField txtRaum;
 	private JTextField txtBenutzer;
 	private JTextField txtTelefon;
+	private JTextField txtBezeichnung;
 	private JTextField txtDatum;
 	private JTextField txtZeitVon;
 	private JTextField txtZeitBis;
@@ -138,7 +140,7 @@ public class Stornieren_View extends JDialog {
 		JPanel mainPanel = new JPanel();
 		try {
 
-			mainPanel.setLayout(new GridLayout(9, 2));
+			mainPanel.setLayout(new GridLayout(10, 2));
 
 			mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -146,6 +148,7 @@ public class Stornieren_View extends JDialog {
 			raum = new JLabel("Raum");
 			benutzer = new JLabel("Benutzer");
 			telefon = new JLabel("Telefonnummer");
+			bezeichnung = new JLabel("Veranstaltungsbezeichnung");
 			datum = new JLabel("Datum");
 			zeit = new JLabel("Zeit");
 			bestuhlung = new JLabel("Bestuhlung");
@@ -164,6 +167,9 @@ public class Stornieren_View extends JDialog {
 			mainPanel.add(telefon);
 			mainPanel.add(txtTelefon);
 			txtTelefon.setEditable(false);
+			mainPanel.add(bezeichnung);
+			mainPanel.add(txtBezeichnung);
+			txtBezeichnung.setEditable(false);
 			mainPanel.add(datum);
 			mainPanel.add(txtDatum);
 			txtDatum.setEditable(false);
@@ -195,6 +201,8 @@ public class Stornieren_View extends JDialog {
 			txtBenutzer = new JTextField("" + SQL_Schnittstelle
 					.getBenutzerName(buchung.getBenutzerID()));
 			txtTelefon = new JTextField("" + buchung.getTelefon());
+			txtBezeichnung = new JTextField(
+					"" + buchung.getVeranstaltungsBezeichnung());
 			txtDatum = new JTextField("" + buchung.getDatum());
 			txtZeitVon = new JTextField("" + buchung.getZeitVon());
 			txtZeitBis = new JTextField("" + buchung.getZeitBis());
