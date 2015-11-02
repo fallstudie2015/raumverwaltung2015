@@ -1086,12 +1086,12 @@ public abstract class SQL_Schnittstelle {
 					return " ";
 				}
 			}
-			return null;
+
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
 					"de.dhbw.java.SQL_Schnittstelle.pruefeBuchungskonflikt");
 		}
-		return "";
+		return null;
 	} // end method pruefeBuchungskonflikt
 
 	/**
