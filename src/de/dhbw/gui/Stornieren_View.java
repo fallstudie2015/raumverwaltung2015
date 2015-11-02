@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.Buchung;
 import de.dhbw.java.SQL_Schnittstelle;
@@ -138,6 +139,8 @@ public class Stornieren_View extends JDialog {
 		try {
 
 			mainPanel.setLayout(new GridLayout(9, 2));
+
+			mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 			buchungsID = new JLabel("Buchungs-ID");
 			raum = new JLabel("Raum");
