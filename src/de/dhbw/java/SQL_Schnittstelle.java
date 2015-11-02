@@ -391,7 +391,7 @@ public abstract class SQL_Schnittstelle {
 	public static ResultSet getBuchungenZuGenehmigung() {
 		ResultSet rs = null;
 		try {
-			String abfrageString = "SELECT b.buchungid AS 'Buchungs-ID', CONCAT(vorname ,' ', nachname) AS Name, r.name AS 'Raumbez.', b.datum AS 'Datum' "
+			String abfrageString = "SELECT b.buchungid AS 'ID', CONCAT(vorname ,' ', nachname) AS Name, r.name AS 'Raumbez.', b.datum AS 'Datum' "
 					+ "FROM buchung b JOIN benutzer u ON u.benutzerid = b.benutzerid "
 					+ "JOIN raum r ON r.raumid = b.raumid WHERE b.status LIKE 'v' AND b.datum >= DATE(NOW()) ORDER BY b.datum ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
@@ -420,7 +420,7 @@ public abstract class SQL_Schnittstelle {
 	public static ResultSet getMyBuchungen(int benutzerid) {
 		ResultSet rs = null;
 		try {
-			String abfrageString = "SELECT buchungid as 'Buchungs-ID', r.name as 'Raumbez.', datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis', status AS Status "
+			String abfrageString = "SELECT buchungid as 'ID', r.name as 'Raumbez.', datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis', status AS Status "
 					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
 					+ "WHERE benutzerid = " + benutzerid
 					+ " AND b.datum >= DATE(NOW()) ORDER BY b.datum; ";

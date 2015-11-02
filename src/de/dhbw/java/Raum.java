@@ -1,6 +1,6 @@
-/* Programmiert von: 
- * Programmiert für: 
- * Beschreibung: 
+/* Programmiert von: Kai Kleefisch
+ * Programmiert für: SQL_Schnittstelle
+ * Beschreibung: Wird verwendet um Datensätze in Objekte einzulesen
  */
 
 package de.dhbw.java;

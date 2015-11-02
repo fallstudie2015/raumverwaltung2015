@@ -1,4 +1,4 @@
-/* Programmiert von: ??
+/* Programmiert von: Kai Kleefisch
  * Programmiert für: SQL_Schnittstelle
  * Beschreibung: Wird verwendet um Datensätze von Ausstattungen in Objekte einzulesen
  */
