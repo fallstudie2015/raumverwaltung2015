@@ -79,6 +79,7 @@ public class Bestellformular_View extends JPanel {
 	private int maxPers;
 	private JSpinner spinner;
 	private SpinnerModel spinnerModel;
+	private ArrayList<JCheckBox> checkBoxList;
 
 	/*
 	 * Der Konstruktor benötigt das ParentFrame um es aktualisieren zu können,
@@ -97,6 +98,7 @@ public class Bestellformular_View extends JPanel {
 		this.nutzerBereich = bereich;
 		this.frame = frame;
 		ausstattungList = new ArrayList<String>();
+		checkBoxList = new ArrayList<>();
 		this.setVisible(false);
 	}
 
@@ -158,6 +160,10 @@ public class Bestellformular_View extends JPanel {
 		bereichLabel = new JLabel(nutzerBereich);
 		bereichLabel.setPreferredSize(new Dimension(175, 30));
 
+		limitLabel = new JLabel();
+		limitLabel.setVisible(false);
+		limitLabel.setForeground(Color.RED);
+
 		JPanel raumPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		raumPanel.add(raumLabel);
 
@@ -174,10 +180,11 @@ public class Bestellformular_View extends JPanel {
 		nameBereichPanel.add(bereichPanel);
 
 		JPanel raumNamePanel = new JPanel();
-		raumNamePanel.setLayout(new GridLayout(2, 1));
+		raumNamePanel.setLayout(new GridLayout(3, 1));
 
 		raumNamePanel.add(raumPanel);
 		raumNamePanel.add(nameBereichPanel);
+		raumNamePanel.add(limitLabel);
 
 		return raumNamePanel;
 	}
@@ -288,6 +295,7 @@ public class Bestellformular_View extends JPanel {
 					limitLabel.setVisible(false);
 					// Label über reservieren rot anzeigen mit Onhalt von proof
 				}
+
 			}
 		};
 
@@ -344,6 +352,10 @@ public class Bestellformular_View extends JPanel {
 					reservierenButton.setEnabled(true);
 					limitLabel.setVisible(false);
 					// Label über reservieren rot anzeigen mit Onhalt von proof
+				}
+
+				if (zeitBisStundeCB.getSelectedItem() == "19" && zeitBisMinuteCB.getSelectedIndex() != 0) {
+					zeitBisMinuteCB.setSelectedIndex(0);
 				}
 			}
 		};
@@ -441,6 +453,7 @@ public class Bestellformular_View extends JPanel {
 
 		for (Ausstattung string : technik) {
 			JCheckBox check = new JCheckBox(string.getBezeichnung());
+			checkBoxList.add(check);
 			check.setPreferredSize(new Dimension(140, 30));
 			check.setToolTipText(string.getBezeichnung());
 			check.addItemListener(new ItemListener() {
@@ -561,10 +574,6 @@ public class Bestellformular_View extends JPanel {
 	 * Die Bestellung kann reserviert oder abgebrochen werden
 	 */
 	private JPanel buttonPanel() {
-		limitLabel = new JLabel();
-		limitLabel.setVisible(false);
-		limitLabel.setForeground(Color.RED);
-
 		reservierenButton = new JButton("reservieren");
 		reservierenButton.setPreferredSize(new Dimension(100, 30));
 		reservierenButton.addActionListener(new ActionListener() {
@@ -593,7 +602,7 @@ public class Bestellformular_View extends JPanel {
 					frame.validate();
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Es ist ein Fehler bei der Reservierung aufgerteten!");
+					JOptionPane.showMessageDialog(null, "Es ist ein Fehler bei der Reservierung aufgetreten!");
 				}
 			}
 		});
@@ -626,7 +635,7 @@ public class Bestellformular_View extends JPanel {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BorderLayout());
 
-		buttonPanel.add(limitLabel, BorderLayout.NORTH);
+		// buttonPanel.add(limitLabel, BorderLayout.NORTH);
 		buttonPanel.add(rbPanel, BorderLayout.WEST);
 		buttonPanel.add(abPanel, BorderLayout.EAST);
 
@@ -694,9 +703,12 @@ public class Bestellformular_View extends JPanel {
 		telField.setText("");
 		bezField.setText("");
 		sonstigeArea.setText("");
-		// persField.setValue(0);
 		spinner.setValue(0);
 		externCheck.setSelected(false);
+		bestuhlungCB.setSelectedIndex(0);
+		for (JCheckBox check : checkBoxList) {
+			check.setSelected(false);
+		}
 	}
 
 	public void setTechnik(ArrayList<Ausstattung> list) {
@@ -728,7 +740,7 @@ public class Bestellformular_View extends JPanel {
 		int anzPersonen = Integer.valueOf(spinner.getValue().toString());
 		boolean externeTeilnehmer = externCheck.isSelected();
 
-		if (proofField()) {
+		if (proofField(zeitVon, zeitBis)) {
 			return SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis, kommentar, bestuhlung, benutzerId,
 					raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer, bezeichnung);
 		} else {
@@ -736,10 +748,22 @@ public class Bestellformular_View extends JPanel {
 		}
 	}
 
-	private boolean proofField() {
+	/*
+	 * prüft die spezifischen Felder auf ihre Korrektheit
+	 */
+	private boolean proofField(Time zeitVon, Time zeitBis) {
 		if (bezField.getText().toString().length() > 80) {
 			JOptionPane.showMessageDialog(null,
-					"Die länge der Veranstaltungsbezeichnugn ist zu lang. Bitte ändern Sie die Angeabe!");
+					"Die Länge der Veranstaltungsbezeichnugn ist zu lang. Bitte ändern Sie die Angabe!");
+			return false;
+		}
+		if (telField.getText().toString().length() > 45) {
+			JOptionPane.showMessageDialog(null,
+					"Die Länge der Telefonnummer ist zu lang. Bitte ändern Sie die Angabe!");
+			return false;
+		}
+		if (zeitBis.before(zeitVon) || zeitBis.equals(zeitVon)) {
+			JOptionPane.showMessageDialog(null, "Die Angaben der Zeit sind Falsch. Bitte ändern Sie die Angabe!");
 			return false;
 		}
 		return true;

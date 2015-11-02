@@ -66,13 +66,13 @@ public class Zeit_View extends JPanel {
 				// }
 			}
 			// }
-			if (i + 1 == 19) {
-				JLabel uhrzeitLabel5 = new JLabel(i + 1 + ":00" + " Uhr",
-						SwingConstants.CENTER);
-				uhrzeitLabel5.setFont(new Font(i + 1 + ":00" + " Uhr", 0, 18));
-				uhrzeitLabel5.setPreferredSize(new Dimension(100, 40));
-				uhrzeitenPanel.add(uhrzeitLabel5);
-			}
+			// if (i + 1 == 19) {
+			// JLabel uhrzeitLabel5 = new JLabel(i + 1 + ":00" + " Uhr",
+			// SwingConstants.CENTER);
+			// uhrzeitLabel5.setFont(new Font(i + 1 + ":00" + " Uhr", 0, 18));
+			// uhrzeitLabel5.setPreferredSize(new Dimension(100, 40));
+			// uhrzeitenPanel.add(uhrzeitLabel5);
+			// }
 		}
 
 		return uhrzeitenPanel;

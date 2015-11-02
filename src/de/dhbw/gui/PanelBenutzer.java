@@ -29,7 +29,7 @@ public class PanelBenutzer extends JPanel {
 
 	public PanelBenutzer() {
 		try {
-			ResultSet rs = SQL_Schnittstelle.getAllAusstattung();
+			ResultSet rs = SQL_Schnittstelle.getAllBenutzer();
 			tableHeader = TabellenWerkzeug.getStringTableHeader(rs);
 			tableData = TabellenWerkzeug.resultSetToTableStringArray(rs);
 			tableModel = new DefaultTableModel(tableData, tableHeader);
@@ -43,25 +43,25 @@ public class PanelBenutzer extends JPanel {
 			setBorder(BorderFactory.createLineBorder(Color.black));
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"gui.PanelAusstattung.PanelAusstattung()");
+					"gui.PanelBenutzer.PanelBenutzer()");
 		}
 	}
 
 	// Gibt die ID der Ausstattung zurück die gelöscht werden soll
-	public int getSelectedAusstattungsID() {
-		int ausid = 0;
+	public int getSelectedBenutzerID() {
+		int benutzerid = 0;
 		try {
 			if (tableBenutzer.getSelectedRow() == -1) {
 
 			} else {
-				ausid = Integer.parseInt(String.valueOf(tableBenutzer
+				benutzerid = Integer.parseInt(String.valueOf(tableBenutzer
 						.getValueAt(tableBenutzer.getSelectedRow(), 0)));
 			}
 
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
-					"gui.PanelAusstattung.getSelectedAusstattungsID()");
+					"gui.PanelBenutzer.getSelectedBenutzerID()");
 		}
-		return ausid;
+		return benutzerid;
 	}
 }

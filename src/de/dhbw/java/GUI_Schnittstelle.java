@@ -89,9 +89,10 @@ public abstract class GUI_Schnittstelle {
 	}
 	public static String preventSQLInjection(String sqlBefehl){
 		
-		sqlBefehl= sqlBefehl.replace('>', ' ');
-		sqlBefehl= sqlBefehl.replace('<', ' ');
-		sqlBefehl= sqlBefehl.replace("'", "");
+		sqlBefehl= sqlBefehl.replaceAll(">", " ");
+		sqlBefehl= sqlBefehl.replaceAll("<", " ");
+		sqlBefehl= sqlBefehl.replaceAll("'", " ");
+		sqlBefehl.trim();
 		return sqlBefehl;
 	}
 

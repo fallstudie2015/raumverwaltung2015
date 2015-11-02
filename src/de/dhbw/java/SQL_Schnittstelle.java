@@ -318,6 +318,11 @@ public abstract class SQL_Schnittstelle {
 
 		int intExterneTeilnehmer = 0;
 		try {
+			telefon = GUI_Schnittstelle.preventSQLInjection(telefon);
+			kommentar = GUI_Schnittstelle.preventSQLInjection(kommentar);
+			veranstaltungsbezeichnung = GUI_Schnittstelle
+					.preventSQLInjection(veranstaltungsbezeichnung);
+
 			if (externeTeilnehmer == true) {
 				intExterneTeilnehmer = 1;
 			}
@@ -436,8 +441,9 @@ public abstract class SQL_Schnittstelle {
 	public static ResultSet getMyBuchungen(int benutzerid) {
 		ResultSet rs = null;
 		try {
-			String abfrageString = "SELECT buchungid as 'ID', r.name as 'Raumbez.', datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis', status AS Status "
+			String abfrageString = "SELECT buchungid as 'ID', r.name as 'Raumbez.', datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis', sb.bezeichnung AS Status "
 					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
+					+ "JOIN statusBezeichnung sb ON sb.abkuerzung = b.status "
 					+ "WHERE benutzerid = "
 					+ benutzerid
 					+ " AND b.datum >= DATE(NOW()) ORDER BY b.datum; ";
@@ -568,6 +574,9 @@ public abstract class SQL_Schnittstelle {
 			int maxAnzPersonen, ArrayList<String> grundAusstattungList) {
 
 		try {
+			name = GUI_Schnittstelle.preventSQLInjection(name);
+			strasse = GUI_Schnittstelle.preventSQLInjection(strasse);
+			stock = GUI_Schnittstelle.preventSQLInjection(stock);
 
 			String updateString = "INSERT INTO raum (name, strasse, stock, maxAnzPersonen, entfernt) VALUES('"
 					+ name
@@ -627,7 +636,7 @@ public abstract class SQL_Schnittstelle {
 			String ausstattungsartBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
-
+			ausstattungsartBezeichnung=GUI_Schnittstelle.preventSQLInjection(ausstattungsartBezeichnung);
 			String updateString = "INSERT INTO ausstattungsArtenLager ( bezeichnung) VALUES ('"
 					+ ausstattungsartBezeichnung + "')";
 
@@ -805,16 +814,17 @@ public abstract class SQL_Schnittstelle {
 	} // end method getAllRooms
 
 	/**
-	 * Findet die RaumID zu dem raum mit gegebener Bezeichnung.
+	 * Gibt ResultSet mit allen Benutzen zurück (Benutzer-ID, Vorname, Nachname,
+	 * E-Mail
 	 * 
-	 * @param raumbezeichnung
+	 * @param email
 	 * @return
 	 */
 	public static ResultSet getAllBenutzer() {
-		String abfrageString = "SELECT benutzerid AS 'Benutzer-ID', name AS Name, strasse AS Strasse, stock AS Stock from raum WHERE entfernt = 0;";
+		String abfrageString = "SELECT benutzerid AS 'Benutzer-ID', vorname AS Vorname, nachname AS Nachname, email AS 'E-Mail' from benutzer;";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 		return rs;
-	} // end method getAllRooms
+	} // end method getAllBenutzer
 
 	/**
 	 * Alle angelegten aktiven Ausstattungen werden ausgelesen Wird benötigt für
@@ -1218,6 +1228,13 @@ public abstract class SQL_Schnittstelle {
 		boolean antwort = false;
 		int rueckgabeBenutzerID;
 		try {
+			nachname = GUI_Schnittstelle.preventSQLInjection(nachname);
+			vorname = GUI_Schnittstelle.preventSQLInjection(vorname);
+			email = GUI_Schnittstelle.preventSQLInjection(email);
+			passwort = GUI_Schnittstelle.preventSQLInjection(passwort);
+			rolle = GUI_Schnittstelle.preventSQLInjection(rolle);
+			bereich = GUI_Schnittstelle.preventSQLInjection(bereich);
+
 			passwort = EncryptPassword.SHA512(passwort);
 			rueckgabeBenutzerID = SQL_Schnittstelle
 					.sqlInsert("INSERT INTO benutzer (nachname, vorname, email, passwort, rolle, bereich)"
@@ -1252,14 +1269,12 @@ public abstract class SQL_Schnittstelle {
 	 * @return true, wenn es funktioniert hat; false, wenn der Benutzer nicht in
 	 *         der Datenbank vorhanden war.
 	 */
-	public static boolean deleteBenutzer(String email, String vorname,
-			String nachname) {
+	public static boolean deleteBenutzer(int benutzerID) {
 		try {
 
 			int rowAffected = SQL_Schnittstelle
-					.sqlUpdateDelete("DELETE FROM benutzer WHERE email = '"
-							+ email + "' and vorname = '" + vorname
-							+ "' and nachname = '" + nachname + "'");
+					.sqlUpdateDelete("DELETE FROM benutzer WHERE benutzerid = "
+							+ benutzerID + ";");
 			if (rowAffected == 0) {
 				return false;
 			}

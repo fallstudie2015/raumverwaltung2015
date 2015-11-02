@@ -59,12 +59,12 @@ public class Login_View extends JFrame {
 	 * Auflösung: 786 * 500 als feste und unveränderbare Größe
 	 */
 	private void initLogin() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login_View.class
-				.getResource("/ressources/Desktop_Statusbar_icon.png")));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(Login_View.class.getResource("/ressources/Desktop_Statusbar_icon.png")));
 		setLayout(new BorderLayout());
 		getContentPane().add(loginPanel(), BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Raumplaner v.1.0");
+		setTitle("Open Room Manager");
 		setSize(new Dimension(786, 500));
 		setResizable(false);
 		setLocationRelativeTo(this);
@@ -85,7 +85,7 @@ public class Login_View extends JFrame {
 		felderPanel.add(insertFieldPanel());
 		felderPanel.add(buttonPanel());
 
-		felderPanel.setBorder(BorderFactory.createEmptyBorder(50, 75, 10, 75));
+		felderPanel.setBorder(BorderFactory.createEmptyBorder(0, 75, 0, 75));
 
 		mainFrame.add(logoPanel(), BorderLayout.NORTH);
 		mainFrame.add(felderPanel, BorderLayout.CENTER);
@@ -97,14 +97,14 @@ public class Login_View extends JFrame {
 	 * Panel für das Label, welches erscheint, wenn die Daten falsch sind
 	 */
 	private JPanel labelPanel() {
-		loginWrongLabel = new JLabel(
-				"Benutzerdaten sind nicht korrekt angegeben!");
+		loginWrongLabel = new JLabel("Benutzerdaten sind nicht korrekt angegeben!");
 		loginWrongLabel.setForeground(Color.RED);
-		loginWrongLabel.setBorder(BorderFactory.createEmptyBorder(40, 5, 5, 5));
 		loginWrongLabel.setVisible(false);
 
 		JPanel labelPanel = new JPanel();
 		labelPanel.add(loginWrongLabel);
+
+		labelPanel.setBorder(BorderFactory.createEmptyBorder(25, 5, 5, 5));
 
 		return labelPanel;
 	}
@@ -218,15 +218,15 @@ public class Login_View extends JFrame {
 	 * Panel enthält das Logo
 	 */
 	private JPanel logoPanel() {
-		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader()
-				.getResource("ressources/logo_2.png"));
-		ImageIcon imageIcon = new ImageIcon(ii1.getImage()
-				.getScaledInstance(300, 150, Image.SCALE_DEFAULT));
+		ImageIcon ii1 = new ImageIcon(getClass().getClassLoader().getResource("ressources/Desktop_Statusbar_icon.png"));
+		ImageIcon imageIcon = new ImageIcon(ii1.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
 		logoLabel = new JLabel(imageIcon, SwingConstants.CENTER);
-		logoLabel.setPreferredSize(new Dimension(300, 150));
+		logoLabel.setPreferredSize(new Dimension(200, 200));
 
 		JPanel logoPanel = new JPanel();
 		logoPanel.add(logoLabel);
+
+		logoPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
 
 		return logoPanel;
 	}
