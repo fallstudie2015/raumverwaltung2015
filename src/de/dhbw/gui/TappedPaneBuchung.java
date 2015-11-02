@@ -4,6 +4,8 @@
  */
 package de.dhbw.gui;
 
+import java.awt.Dimension;
+
 import javax.swing.JTabbedPane;
 
 import com.toedter.calendar.JCalendar;
@@ -27,6 +29,7 @@ public class TappedPaneBuchung extends JTabbedPane {
 			this.jc = jc;
 			pmb = new PanelMeineBuchung(jc);
 			addTab("Meine Buchungen", pmb);
+			setPreferredSize(new Dimension(400, 100));
 			/*
 			 * Wenn BenutzerTyp gleich Verwalter, dann bekommt er auch die
 			 * Tabelle mit den unbestätigten Buchungen angezeigt
