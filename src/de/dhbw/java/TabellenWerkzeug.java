@@ -4,9 +4,9 @@
  */
 package de.dhbw.java;
 
-import gui.Error_Message_Box;
-
 import java.sql.ResultSet;
+
+import de.dhbw.gui.Error_Message_Box;
 
 public abstract class TabellenWerkzeug {
 

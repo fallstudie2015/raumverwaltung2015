@@ -15,7 +15,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 
-import gui.Error_Message_Box;
+import de.dhbw.gui.Error_Message_Box;
 
 public abstract class SQL_Schnittstelle {
 
