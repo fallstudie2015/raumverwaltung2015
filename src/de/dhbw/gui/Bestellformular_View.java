@@ -79,6 +79,7 @@ public class Bestellformular_View extends JPanel {
 	private int maxPers;
 	private JSpinner spinner;
 	private SpinnerModel spinnerModel;
+	private ArrayList<JCheckBox> checkBoxList;
 
 	/*
 	 * Der Konstruktor benötigt das ParentFrame um es aktualisieren zu können,
@@ -97,6 +98,7 @@ public class Bestellformular_View extends JPanel {
 		this.nutzerBereich = bereich;
 		this.frame = frame;
 		ausstattungList = new ArrayList<String>();
+		checkBoxList = new ArrayList<>();
 		this.setVisible(false);
 	}
 
@@ -451,6 +453,7 @@ public class Bestellformular_View extends JPanel {
 
 		for (Ausstattung string : technik) {
 			JCheckBox check = new JCheckBox(string.getBezeichnung());
+			checkBoxList.add(check);
 			check.setPreferredSize(new Dimension(140, 30));
 			check.setToolTipText(string.getBezeichnung());
 			check.addItemListener(new ItemListener() {
@@ -700,10 +703,12 @@ public class Bestellformular_View extends JPanel {
 		telField.setText("");
 		bezField.setText("");
 		sonstigeArea.setText("");
-		// persField.setValue(0);
 		spinner.setValue(0);
 		externCheck.setSelected(false);
 		bestuhlungCB.setSelectedIndex(0);
+		for (JCheckBox check : checkBoxList) {
+			check.setSelected(false);
+		}
 	}
 
 	public void setTechnik(ArrayList<Ausstattung> list) {
@@ -743,10 +748,18 @@ public class Bestellformular_View extends JPanel {
 		}
 	}
 
+	/*
+	 * prüft die spezifischen Felder auf ihre Korrektheit
+	 */
 	private boolean proofField(Time zeitVon, Time zeitBis) {
 		if (bezField.getText().toString().length() > 80) {
 			JOptionPane.showMessageDialog(null,
 					"Die Länge der Veranstaltungsbezeichnugn ist zu lang. Bitte ändern Sie die Angabe!");
+			return false;
+		}
+		if (telField.getText().toString().length() > 45) {
+			JOptionPane.showMessageDialog(null,
+					"Die Länge der Telefonnummer ist zu lang. Bitte ändern Sie die Angabe!");
 			return false;
 		}
 		if (zeitBis.before(zeitVon) || zeitBis.equals(zeitVon)) {
