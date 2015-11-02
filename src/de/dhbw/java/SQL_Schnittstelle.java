@@ -782,7 +782,7 @@ public abstract class SQL_Schnittstelle {
 	 * @return ResultSet mit ID, Bezeichnung, Art
 	 */
 	public static ResultSet getAllAusstattung() {
-		String abfrageString = "SELECT ausstattungsArtenLagerid AS ID, bezeichnung AS Bezeichnung, artAusstattung AS Art FROM ausstattungsArtenLager;";
+		String abfrageString = "SELECT ausstattungsArtenLagerid AS ID, bezeichnung AS Bezeichnung FROM ausstattungsArtenLager;";
 		ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 		return rs;
 	}

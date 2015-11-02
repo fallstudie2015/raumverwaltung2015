@@ -52,11 +52,15 @@ public abstract class TabellenWerkzeug {
 
 				while (rs.next()) {
 					for (int i = 1; i < anzahlSpalten + 1; i++) {
-						if (rs.getString(i).contains(":")) {
-							tableData[rs.getRow() - 1][i - 1] = rs.getString(i)
-									.substring(0, rs.getString(i).length() - 3);
-						} else {
-							tableData[rs.getRow() - 1][i - 1] = rs.getString(i);
+						if (rs.getString(i) != null) {
+							if (rs.getString(i).contains(":")) {
+								tableData[rs.getRow() - 1][i - 1] = rs
+										.getString(i).substring(0,
+												rs.getString(i).length() - 3);
+							} else {
+								tableData[rs.getRow() - 1][i - 1] = rs
+										.getString(i);
+							}
 						}
 					}
 				}
