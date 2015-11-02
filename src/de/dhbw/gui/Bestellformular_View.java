@@ -32,8 +32,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.plaf.basic.BasicSpinnerUI;
 
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
@@ -50,7 +54,7 @@ public class Bestellformular_View extends JPanel {
 	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel, zeitVonLabel, zeitBisLabel, personenLabel,
 			technikLabel, ausstattungLabel, bestuhlungLabel, bezLabel, maxLabel, limitLabel;
 	private JTextField telField, bezField;
-	private JSpinField persField;
+	// private JSpinField persField;
 	private JDateChooser dateChooser;
 	private java.util.Date oldDate;
 	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB, zeitBisStundeCB, zeitBisMinuteCB;
@@ -73,6 +77,8 @@ public class Bestellformular_View extends JPanel {
 	private TappedPaneBuchung panelBuchung;
 	private Raum_View raum;
 	private int maxPers;
+	private JSpinner spinner;
+	private SpinnerModel spinnerModel;
 
 	/*
 	 * Der Konstruktor benötigt das ParentFrame um es aktualisieren zu können,
@@ -376,19 +382,22 @@ public class Bestellformular_View extends JPanel {
 		personenLabel = new JLabel("Anzahl Personen: ");
 		personenLabel.setPreferredSize(new Dimension(155, 30));
 
-		persField = new JSpinField();
-		persField.setMinimum(0);
-		persField.setPreferredSize(new Dimension(75, 30));
+		// spinner.setPreferredSize(new Dimension(105, 30));
 
-		maxLabel = new JLabel();
-		maxLabel.setPreferredSize(new Dimension(30, 30));
+		// persField = new JSpinField();
+		// persField.setMinimum(0);
+		// persField.setPreferredSize(new Dimension(75, 30));
+		// persField.get
+
+		// maxLabel = new JLabel();
+		// maxLabel.setPreferredSize(new Dimension(30, 30));
 
 		JPanel personenPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		personenPanel.add(personenLabel);
 
 		JPanel feldPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		feldPanel.add(persField);
-		feldPanel.add(maxLabel);
+		feldPanel.add(spinner);
+		// feldPanel.add(maxLabel);
 
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(personenPanel, BorderLayout.WEST);
@@ -648,8 +657,14 @@ public class Bestellformular_View extends JPanel {
 	}
 
 	public void setMaxPersonen(int max) {
+		spinnerModel = new SpinnerNumberModel(0, 0, max, 1);
+		spinner = new JSpinner(spinnerModel);
+		spinner.setPreferredSize(new Dimension(105, 30));
+		spinner.setEditor(new JSpinner.DefaultEditor(spinner));
+		((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(false);
+
 		maxPers = max;
-		maxLabel.setText("(" + maxPers + ")");
+		// maxLabel.setText("(" + maxPers + ")");
 	}
 
 	public void setZeitCB(String hr, String min) {
@@ -679,7 +694,8 @@ public class Bestellformular_View extends JPanel {
 		telField.setText("");
 		bezField.setText("");
 		sonstigeArea.setText("");
-		persField.setValue(0);
+		// persField.setValue(0);
+		spinner.setValue(0);
 		externCheck.setSelected(false);
 	}
 
@@ -709,7 +725,7 @@ public class Bestellformular_View extends JPanel {
 		String kommentar = sonstigeArea.getText();
 		String bestuhlung = String.valueOf(bestuhlungCB.getSelectedItem());
 		int benutzerId = Benutzer.getBenutzerID();
-		int anzPersonen = persField.getValue();
+		int anzPersonen = Integer.valueOf(spinner.getValue().toString());
 		boolean externeTeilnehmer = externCheck.isSelected();
 
 		if (proofField()) {
@@ -721,11 +737,6 @@ public class Bestellformular_View extends JPanel {
 	}
 
 	private boolean proofField() {
-		if (persField.getValue() > maxPers) {
-			JOptionPane.showMessageDialog(null, "Die Anzahl der Personen ist zu groß. Der Raum ist limitiert auf "
-					+ maxPers + " Personen. Bitte ändern Sie die Angeabe!");
-			return false;
-		}
 		if (bezField.getText().toString().length() > 80) {
 			JOptionPane.showMessageDialog(null,
 					"Die länge der Veranstaltungsbezeichnugn ist zu lang. Bitte ändern Sie die Angeabe!");

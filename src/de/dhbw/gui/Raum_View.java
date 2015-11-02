@@ -64,6 +64,7 @@ public class Raum_View extends JPanel implements MouseListener {
 		frame.setBVPanel(bv);
 		bv.setTechnik(SQL_Schnittstelle.getAusstattungsArtenLager());
 		bv.setGrundausstattung(SQL_Schnittstelle.getGrundAusstattungRaum(raum.getRaumID()));
+		bv.setMaxPersonen(raum.getAnzPersonen());
 		bv.initView();
 	}
 
@@ -289,7 +290,6 @@ public class Raum_View extends JPanel implements MouseListener {
 				bv.setVisible(true);
 				bv.setScrollPane(frame.getformularScrollPane());
 				bv.setDate(frame.getCalendar());
-				bv.setMaxPersonen(raum.getAnzPersonen());
 				bv.setZeitCB(label.getTime().toString().substring(0, 2), label.getTime().toString().substring(3, 5));
 
 				frame.getformularScrollPane().setVisible(true);
