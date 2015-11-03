@@ -40,8 +40,11 @@ public class RaumLoeschen extends JDialog {
 	 */
 	public RaumLoeschen(Raumplaner_View rv) {
 		setModal(true); // Fenster wird aufgebaut
-		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumLoeschen.class
-				.getResource("/ressources/menu_raum_loeschen_transp.png")));
+		setIconImage(Toolkit
+				.getDefaultToolkit()
+				.getImage(
+						RaumLoeschen.class
+								.getResource("/ressources/menu_raum_loeschen_transp.png")));
 		setResizable(false);
 		this.rv = rv;
 		setTitle("Raum löschen");
@@ -72,8 +75,8 @@ public class RaumLoeschen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInvisible(); // Beim Klicken auf Abbrechen wird Fenster
-								// unsichtbar
+				dispose(); // Beim Klicken auf Abbrechen wird Fenster
+							// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -81,11 +84,6 @@ public class RaumLoeschen extends JDialog {
 		pr = new PanelRaum();
 		contentPane.add(pr, BorderLayout.CENTER);
 
-	}
-
-	private void setInvisible() // Fenster unsichtbar machen
-	{
-		this.setVisible(false);
 	}
 
 	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
@@ -102,15 +100,15 @@ public class RaumLoeschen extends JDialog {
 
 		public void actionPerformed(ActionEvent e) {
 
-			boolean feedback = SQL_Schnittstelle
-					.setDeleteFlagRaumByID(pr.getSelectedRaumID());
+			boolean feedback = SQL_Schnittstelle.setDeleteFlagRaumByID(pr
+					.getSelectedRaumID());
 			if (feedback == true) {// Rückgabewert der Methode
 									// Ausstattung anlegen
-				setInvisible();
 				Erfolg("Raum wurde gelöscht!");
 				rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
 																// die
 																// Räume
+				dispose();
 			} else {
 				Erfolg("Raum konnte nicht gelöscht werden!");
 			}
@@ -126,7 +124,7 @@ public class RaumLoeschen extends JDialog {
 		public void keyReleased(KeyEvent e) {
 
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				setInvisible();
+				dispose();
 			}
 		}
 

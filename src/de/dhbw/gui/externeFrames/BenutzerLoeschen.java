@@ -70,14 +70,10 @@ public class BenutzerLoeschen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInvisible();
+				dispose();
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
-	}
-
-	private void setInvisible() { // Fenster unsichtbar machen
-		this.setVisible(false);
 	}
 
 	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
@@ -98,9 +94,10 @@ public class BenutzerLoeschen extends JDialog {
 					.deleteBenutzer(meinPanelBenutzer.getSelectedBenutzerID());
 			if (feedback == true) {// Rückgabewert der Methode Ausstattung
 									// anlegen
-				setInvisible();// Nach löschen des Benutzers wird das Fenster
-				// unsichtbar
+				// Nach löschen des Benutzers wird das Fenster
+				// geschlossen
 				Erfolg("Benutzer wurde gelöscht!");
+				dispose();
 			} else {
 				Erfolg("Benutzer konnte nicht gelöscht werden!");
 			}

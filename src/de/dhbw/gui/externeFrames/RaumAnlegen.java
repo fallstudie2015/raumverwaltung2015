@@ -62,8 +62,11 @@ public class RaumAnlegen extends JDialog {
 	 */
 	public RaumAnlegen(final Raumplaner_View rv) {
 		setModal(true); // Fenster wird aufgebaut
-		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumAnlegen.class
-				.getResource("/ressources/menu_raum_anlegen_transp.png")));
+		setIconImage(Toolkit
+				.getDefaultToolkit()
+				.getImage(
+						RaumAnlegen.class
+								.getResource("/ressources/menu_raum_anlegen_transp.png")));
 		setResizable(false);
 		this.rv = rv;
 		setTitle("Raum anlegen");
@@ -95,8 +98,8 @@ public class RaumAnlegen extends JDialog {
 		JButton btnAbbrechen = new JButton("Abbrechen");
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
-								// unsichtbar
+				dispose();// Beim Klicken auf Abbrechen wird Fenster
+							// unsichtbar
 			}
 		});
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -350,10 +353,6 @@ public class RaumAnlegen extends JDialog {
 		return ausstattungsList;
 	}
 
-	private void setInvisible() { // Fenster unsichtbar machen
-		this.setVisible(false);
-	}
-
 	public static void erfolg(String nachricht) { // MessageBox für Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
@@ -372,9 +371,10 @@ public class RaumAnlegen extends JDialog {
 
 			if (pflicht) {
 
-				boolean feedback = SQL_Schnittstelle.insertRaum( // Aufruf
-																	// RaumAnlegen
-																	// Methode
+				boolean feedback = SQL_Schnittstelle.insertRaum(
+						// Aufruf
+						// RaumAnlegen
+						// Methode
 						textField_name.getText(), textField_strasse.getText(),
 						textField_stock.getText(),
 						Integer.parseInt(textField_personen.getText()),
@@ -383,20 +383,21 @@ public class RaumAnlegen extends JDialog {
 				if (feedback == true) // Rückgabewert der Methode
 										// Ausstattung anlegen
 				{
-					setInvisible();
 					erfolg("Raum wurde angelegt");
 					System.out.println("Raum wurde angelegt");
 					rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
 																	// die
 																	// Räume
+					dispose();
 				} else {
 					erfolg("Raum konnte nicht angelegt werden");
 					System.out.println("Raum konnte nicht angelegt werden");
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, // Fehlermeldung, wenn nicht
-													// alle Pflichtfelder
-													// ausgefüllt sind
+				JOptionPane.showMessageDialog(
+						null, // Fehlermeldung, wenn nicht
+								// alle Pflichtfelder
+								// ausgefüllt sind
 						"Bitte füllen Sie die Pflichtfelder aus!", "Achtung!",
 						JOptionPane.ERROR_MESSAGE);
 			}
@@ -412,7 +413,7 @@ public class RaumAnlegen extends JDialog {
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				setInvisible();
+				dispose();
 			}
 		}
 

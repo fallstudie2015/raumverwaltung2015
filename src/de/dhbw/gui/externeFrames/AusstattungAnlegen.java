@@ -44,9 +44,11 @@ public class AusstattungAnlegen extends JDialog {
 
 		this.rv = rv;
 		setModal(true); // Ab hier: Fenster wird aufgebaut
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(AusstattungAnlegen.class.getResource(
-						"/ressources/menu_ausstattung_anlegen_transp.png")));
+		setIconImage(Toolkit
+				.getDefaultToolkit()
+				.getImage(
+						AusstattungAnlegen.class
+								.getResource("/ressources/menu_ausstattung_anlegen_transp.png")));
 		setResizable(false);
 		setTitle("Ausstattung anlegen");
 		setLocationRelativeTo(null);
@@ -76,8 +78,8 @@ public class AusstattungAnlegen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
-								// unsichtbar
+				dispose();// Beim Klicken auf Abbrechen wird Fenster
+							// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -130,10 +132,6 @@ public class AusstattungAnlegen extends JDialog {
 		return gefuellt;
 	}
 
-	private void setInvisible() { // Fenster unsichtbar machen
-		this.setVisible(false);
-	}
-
 	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
@@ -152,18 +150,18 @@ public class AusstattungAnlegen extends JDialog {
 
 			if (pflicht) {
 				boolean feedback = SQL_Schnittstelle
-						.insertAusstattungsArtenLager(
-								textField_aName.getText());
+						.insertAusstattungsArtenLager(textField_aName.getText());
 
 				if (feedback == true) { // Rückgabewert der Methode
 										// Ausstattung
 										// anlegen
-					setInvisible();
 					Erfolg("Ausstattung wurde erstellt!");
+					dispose();
 				} else {
 					Erfolg("Ausstattung konnte nicht erstellt werden!");
-					rv.setGrundausstattungArray(
-							SQL_Schnittstelle.getAusstattungsArtenLager());
+					rv.setGrundausstattungArray(SQL_Schnittstelle
+							.getAusstattungsArtenLager());
+					dispose();
 				}
 			} else {
 				JOptionPane.showMessageDialog(null,
@@ -180,7 +178,7 @@ public class AusstattungAnlegen extends JDialog {
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				setInvisible();
+				dispose();
 			}
 		}
 
