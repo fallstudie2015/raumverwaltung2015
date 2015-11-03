@@ -110,7 +110,7 @@ public class Raumplaner_View extends JFrame {
 		setLayout(new BorderLayout());
 		getContentPane().add(mainPanel(), BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Raumplaner v.1.0");
+		setTitle("Open Room Manager");
 		setMinimumSize(new Dimension(1024, 786));
 		setMaximumSize(new Dimension(1920, 1080));
 		setExtendedState(MAXIMIZED_BOTH);
