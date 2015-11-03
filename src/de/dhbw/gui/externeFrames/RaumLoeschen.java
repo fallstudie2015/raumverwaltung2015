@@ -94,11 +94,14 @@ public class RaumLoeschen extends JDialog {
 
 	}
 
-	public class MeinActionListener implements ActionListener {
+	public class MeinActionListener implements ActionListener { // ActionListener,
+																// für Drücken
+																// auf den
+																// Löschen
+																// Button
 
 		public void actionPerformed(ActionEvent e) {
 
-			System.out.println(pr.getSelectedRaumID());
 			boolean feedback = SQL_Schnittstelle
 					.setDeleteFlagRaumByID(pr.getSelectedRaumID());
 			if (feedback == true) {// Rückgabewert der Methode
@@ -115,12 +118,11 @@ public class RaumLoeschen extends JDialog {
 		}
 	}
 
-	public class KeyListenerESC implements KeyListener {
+	public class KeyListenerESC implements KeyListener { // Key Listener, damit
+															// mit ESC das
+															// Fenster beendet
+															// werden kann
 
-		/*
-		 * Kann hier noch durch ein Interface ergänzt werden um unbenutzte
-		 * Methoden raus zu nehmen
-		 */
 		public void keyReleased(KeyEvent e) {
 
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

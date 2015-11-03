@@ -30,18 +30,14 @@ public class BenutzerLoeschen extends JDialog {
 	private JPanel contentPane;
 	private PanelBenutzer meinPanelBenutzer;
 	private MeinActionListener mal = new MeinActionListener();
-	private KeyListenerESC esc = new KeyListenerESC();
 
 	/*
 	 * Fenster aufbauen
 	 */
 	public BenutzerLoeschen() {
-		setModal(true); // Fenster wird aufgebaut
-		setIconImage(Toolkit
-				.getDefaultToolkit()
-				.getImage(
-						BenutzerLoeschen.class
-								.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
+		setModal(true); // Ab hier: Fenster wird aufgebaut
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerLoeschen.class
+				.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Benutzer löschen");
 		setLocationRelativeTo(this);
@@ -79,35 +75,6 @@ public class BenutzerLoeschen extends JDialog {
 		splitPane.setRightComponent(btnAbbrechen);
 	}
 
-	// private boolean PflichtfelderPruefen() // Prüft, ob Pflichtfelder gefüllt
-	// // sind
-	// {
-	// boolean gefuellt = true;
-	//
-	// if (textField_Vorname.getText().isEmpty()) {
-	// lblBenutzer_Vorname.setForeground(Color.red);
-	// gefuellt = false;
-	// } else {
-	// lblBenutzer_Vorname.setForeground(Color.black);
-	// }
-	//
-	// if (textField_nachname.getText().isEmpty()) {
-	// lblBenutzer_Nachname.setForeground(Color.red);
-	// gefuellt = false;
-	// } else {
-	// lblBenutzer_Nachname.setForeground(Color.black);
-	// }
-	//
-	// if (textField_email.getText().isEmpty()) {
-	// lblBenutzer_email.setForeground(Color.red);
-	// gefuellt = false;
-	// } else {
-	// lblBenutzer_email.setForeground(Color.black);
-	// }
-	//
-	// return gefuellt;
-	// }
-
 	private void setInvisible() { // Fenster unsichtbar machen
 		this.setVisible(false);
 	}
@@ -118,11 +85,13 @@ public class BenutzerLoeschen extends JDialog {
 
 	}
 
-	public class MeinActionListener implements ActionListener {
+	public class MeinActionListener implements ActionListener { // ActionListener,
+																// für Drücken
+																// auf den
+																// Löschen
+																// Button
 
 		public void actionPerformed(ActionEvent e) {
-
-			// boolean pflicht = PflichtfelderPruefen();
 
 			boolean feedback = SQL_Schnittstelle
 					.deleteBenutzer(meinPanelBenutzer.getSelectedBenutzerID());
@@ -135,23 +104,5 @@ public class BenutzerLoeschen extends JDialog {
 				Erfolg("Benutzer konnte nicht gelöscht werden!");
 			}
 		}
-	}
-
-	public class KeyListenerESC implements KeyListener {
-
-		public void keyReleased(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				setInvisible();
-			}
-		}
-
-		public void keyPressed(KeyEvent e) {
-
-		}
-
-		public void keyTyped(KeyEvent e) {
-
-		}
-
 	}
 }

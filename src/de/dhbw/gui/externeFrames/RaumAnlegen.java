@@ -360,7 +360,11 @@ public class RaumAnlegen extends JDialog {
 
 	}
 
-	public class MeinActionListener implements ActionListener {
+	public class MeinActionListener implements ActionListener { // ActionListener,
+																// für Drücken
+																// auf den
+																// Anlegen
+																// Button
 
 		public void actionPerformed(ActionEvent e) {
 
@@ -390,8 +394,10 @@ public class RaumAnlegen extends JDialog {
 					System.out.println("Raum konnte nicht angelegt werden");
 				}
 			} else {
-				JOptionPane.showMessageDialog(null,
-						" Bitte fuellen Sie die Pflichtfelder aus", "Achtung!",
+				JOptionPane.showMessageDialog(null, // Fehlermeldung, wenn nicht
+													// alle Pflichtfelder
+													// ausgefüllt sind
+						"Bitte füllen Sie die Pflichtfelder aus!", "Achtung!",
 						JOptionPane.ERROR_MESSAGE);
 			}
 
@@ -399,7 +405,10 @@ public class RaumAnlegen extends JDialog {
 
 	}
 
-	public class KeyListenerESC implements KeyListener {
+	public class KeyListenerESC implements KeyListener { // Key Listener, damit
+															// mit ESC das
+															// Fenster beendet
+															// werden kann
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

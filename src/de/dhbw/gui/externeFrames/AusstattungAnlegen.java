@@ -42,7 +42,7 @@ public class AusstattungAnlegen extends JDialog {
 	 */
 	public AusstattungAnlegen(Raumplaner_View rv) {
 		this.rv = rv;
-		setModal(true); // Fenster wird aufgebaut
+		setModal(true); // Ab hier: Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(AusstattungAnlegen.class.getResource(
 						"/ressources/menu_ausstattung_anlegen_transp.png")));
@@ -139,7 +139,11 @@ public class AusstattungAnlegen extends JDialog {
 
 	}
 
-	public class MeinActionListener implements ActionListener {
+	public class MeinActionListener implements ActionListener { // ActionListener,
+																// für Drücken
+																// auf den
+																// Anlegen
+																// Button
 
 		public void actionPerformed(ActionEvent e) {
 
@@ -168,7 +172,10 @@ public class AusstattungAnlegen extends JDialog {
 		}
 	}
 
-	public class KeyListenerESC implements KeyListener {
+	public class KeyListenerESC implements KeyListener { // Key Listener, damit
+															// mit ESC das
+															// Fenster beendet
+															// werden kann
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

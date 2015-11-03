@@ -53,7 +53,7 @@ public class BenutzerAnlegen extends JDialog {
 	 * Fenster aufbauen
 	 */
 	public BenutzerAnlegen() {
-		setModal(true); // Fenster wird aufgebaut
+		setModal(true); // Ab hier: Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerAnlegen.class
 				.getResource("/ressources/menu_benutzer_anlegen_transp.png")));
 		setTitle("Benutzer anlegen");
@@ -269,7 +269,11 @@ public class BenutzerAnlegen extends JDialog {
 
 	}
 
-	public class MeinActionListener implements ActionListener {
+	public class MeinActionListener implements ActionListener { // ActionListener,
+																// für Drücken
+																// auf den
+																// Anlegen
+																// Button
 
 		public void actionPerformed(ActionEvent e) {
 
@@ -296,7 +300,10 @@ public class BenutzerAnlegen extends JDialog {
 		}
 	}
 
-	public class KeyListenerESC implements KeyListener {
+	public class KeyListenerESC implements KeyListener { // Key Listener, damit
+															// mit ESC das
+															// Fenster beendet
+															// werden kann
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

@@ -41,7 +41,7 @@ public class PasswortAendern extends JDialog {
 	 * Fenster erstellen
 	 */
 	public PasswortAendern() {
-		setModal(true); // Fenster wird aufgebaut
+		setModal(true); // Ab hier: Fenster wird aufgebaut
 		setType(Type.UTILITY);
 		setTitle("Passwort ändern");
 		setResizable(false);
@@ -201,7 +201,10 @@ public class PasswortAendern extends JDialog {
 
 	}
 
-	public class KeyListenerESC implements KeyListener {
+	public class KeyListenerESC implements KeyListener { // Key Listener, damit
+															// mit ESC das
+															// Fenster beendet
+															// werden kann
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -219,7 +222,10 @@ public class PasswortAendern extends JDialog {
 
 	}
 
-	public class MeinActionListener implements ActionListener {
+	public class MeinActionListener implements ActionListener { // ActionListener,
+																// für Drücken
+																// auf den
+																// Ändern Button
 
 		public void actionPerformed(ActionEvent e) {
 
