@@ -62,11 +62,8 @@ public class RaumAnlegen extends JDialog {
 	 */
 	public RaumAnlegen(final Raumplaner_View rv) {
 		setModal(true); // Fenster wird aufgebaut
-		setIconImage(Toolkit
-				.getDefaultToolkit()
-				.getImage(
-						RaumAnlegen.class
-								.getResource("/ressources/menu_raum_anlegen_transp.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RaumAnlegen.class
+				.getResource("/ressources/menu_raum_anlegen_transp.png")));
 		setResizable(false);
 		this.rv = rv;
 		setTitle("Raum anlegen");
@@ -383,21 +380,20 @@ public class RaumAnlegen extends JDialog {
 				if (feedback == true) // Rückgabewert der Methode
 										// Ausstattung anlegen
 				{
-					erfolg("Raum wurde angelegt");
-					System.out.println("Raum wurde angelegt");
+					erfolg("Raum wurde angelegt!");
+					System.out.println("Raum wurde angelegt!");
 					rv.setRaumArray(SQL_Schnittstelle.getRooms()); // aktualisiert
 																	// die
 																	// Räume
 					dispose();
 				} else {
-					erfolg("Raum konnte nicht angelegt werden");
-					System.out.println("Raum konnte nicht angelegt werden");
+					erfolg("Raum konnte nicht angelegt werden!");
+					System.out.println("Raum konnte nicht angelegt werden!");
 				}
 			} else {
-				JOptionPane.showMessageDialog(
-						null, // Fehlermeldung, wenn nicht
-								// alle Pflichtfelder
-								// ausgefüllt sind
+				JOptionPane.showMessageDialog(null, // Fehlermeldung, wenn nicht
+													// alle Pflichtfelder
+													// ausgefüllt sind
 						"Bitte füllen Sie die Pflichtfelder aus!", "Achtung!",
 						JOptionPane.ERROR_MESSAGE);
 			}
