@@ -94,8 +94,7 @@ public class BenutzerLoeschen extends JDialog {
 					.deleteBenutzer(meinPanelBenutzer.getSelectedBenutzerID());
 			if (feedback == true) {// Rückgabewert der Methode Ausstattung
 									// anlegen
-				// Nach löschen des Benutzers wird das Fenster
-				// geschlossen
+
 				Erfolg("Benutzer wurde gelöscht!");
 				dispose();
 			} else {

@@ -63,7 +63,7 @@ public class Logout extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setInvisible();
+				dispose();
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -75,7 +75,5 @@ public class Logout extends JDialog {
 	}
 
 	/* Oberfläche unsichtbar machen */
-	private void setInvisible() {
-		this.setVisible(false);
-	}
+
 }

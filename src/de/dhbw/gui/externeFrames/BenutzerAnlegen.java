@@ -85,8 +85,8 @@ public class BenutzerAnlegen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
-								// unsichtbar
+				dispose();// Beim Klicken auf Abbrechen wird Fenster
+							// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -259,10 +259,6 @@ public class BenutzerAnlegen extends JDialog {
 		return pw;
 	}
 
-	private void setInvisible() { // Fenster unsichtbar machen
-		this.setVisible(false);
-	}
-
 	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
@@ -287,8 +283,9 @@ public class BenutzerAnlegen extends JDialog {
 				if (feedback == true) {// Rückgabewert der Methode
 										// Ausstattung
 										// anlegen
-					setInvisible();
+
 					Erfolg("Benutzer wurde erstellt!");
+					dispose();
 				} else {
 					Erfolg("Benutzer konnte nicht erstellt werden!");
 				}
@@ -307,7 +304,7 @@ public class BenutzerAnlegen extends JDialog {
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				setInvisible();
+				dispose();
 			}
 		}
 
