@@ -31,7 +31,7 @@ public abstract class SQL_Schnittstelle {
 	/**
 	 * Stellt eine Verbindung zur Datenbank her.
 	 */
-	public static void createConnection() {
+	public static boolean createConnection() {
 		try {
 			// Datenbanktreiber fuer MySQL laden
 			Class.forName("com.mysql.jdbc.Driver");
@@ -45,10 +45,12 @@ public abstract class SQL_Schnittstelle {
 			con = DriverManager.getConnection(
 					"jdbc:mysql://sql2.freemysqlhosting.net:3306/sql293125",
 					"sql293125", "dG2!gP3!");
+			return true;
 		} catch (SQLException s) {
 			System.out.println("SQL-Exception aufgetreten");
-			Error_Message_Box.laufzeitfehler(s,
+			Error_Message_Box.dbVerbindungsfehler(s,
 					"de.dhbw.java.SQL_Schnittstelle_createConnection");
+			return false;
 		}
 	} // end method createConnection
 
@@ -636,7 +638,8 @@ public abstract class SQL_Schnittstelle {
 			String ausstattungsartBezeichnung) {
 		// TODO Auto-generated method stub
 		try {
-			ausstattungsartBezeichnung=GUI_Schnittstelle.preventSQLInjection(ausstattungsartBezeichnung);
+			ausstattungsartBezeichnung = GUI_Schnittstelle
+					.preventSQLInjection(ausstattungsartBezeichnung);
 			String updateString = "INSERT INTO ausstattungsArtenLager ( bezeichnung) VALUES ('"
 					+ ausstattungsartBezeichnung + "')";
 

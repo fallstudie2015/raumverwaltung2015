@@ -77,6 +77,8 @@ public abstract class GUI_Schnittstelle {
 				 * Hier müssen die Buchungen benutzerspezifisch geladen werden
 				 */
 				raumplanerView.setVisible(true);
+				Error_Message_Box.programmstart("GUI_Schnittstelle",
+						"loginCheck");
 
 			} else {
 				loginView.getLoginWrongLabel().setVisible(true);
@@ -87,11 +89,12 @@ public abstract class GUI_Schnittstelle {
 					"de.dhbw.java.GUI_Schnittstelle.check");
 		}
 	}
-	public static String preventSQLInjection(String sqlBefehl){
-		
-		sqlBefehl= sqlBefehl.replaceAll(">", " ");
-		sqlBefehl= sqlBefehl.replaceAll("<", " ");
-		sqlBefehl= sqlBefehl.replaceAll("'", " ");
+
+	public static String preventSQLInjection(String sqlBefehl) {
+
+		sqlBefehl = sqlBefehl.replaceAll(">", " ");
+		sqlBefehl = sqlBefehl.replaceAll("<", " ");
+		sqlBefehl = sqlBefehl.replaceAll("'", " ");
 		sqlBefehl.trim();
 		return sqlBefehl;
 	}

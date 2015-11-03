@@ -24,10 +24,12 @@ public class Start {
 				e.printStackTrace();
 			}
 			// SQL-Connection zum Server wird aufgebaut
-			SQL_Schnittstelle.createConnection();
+			boolean erfolgreich = SQL_Schnittstelle.createConnection();
 			// Login Fenster wird erstellt und angezeigt
-			Login_View lf = new Login_View();
-			lf.setVisible(true);
+			if (erfolgreich) {
+				Login_View lf = new Login_View();
+				lf.setVisible(true);
+			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e, "startpunkt.start.main");
 		}
