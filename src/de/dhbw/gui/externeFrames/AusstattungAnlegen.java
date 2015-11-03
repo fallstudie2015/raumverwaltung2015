@@ -76,8 +76,8 @@ public class AusstattungAnlegen extends JDialog {
 		btnAbbrechen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnAbbrechen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
-								// unsichtbar
+				dispose();// Beim Klicken auf Abbrechen wird Fenster
+							// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnAbbrechen);
@@ -130,10 +130,6 @@ public class AusstattungAnlegen extends JDialog {
 		return gefuellt;
 	}
 
-	private void setInvisible() { // Fenster unsichtbar machen
-		this.setVisible(false);
-	}
-
 	public static void Erfolg(String nachricht) { // MessageBox für Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
@@ -158,8 +154,8 @@ public class AusstattungAnlegen extends JDialog {
 				if (feedback == true) { // Rückgabewert der Methode
 										// Ausstattung
 										// anlegen
-					setInvisible();
 					Erfolg("Ausstattung wurde erstellt!");
+					dispose();
 				} else {
 					Erfolg("Ausstattung konnte nicht erstellt werden!");
 					rv.setGrundausstattungArray(
@@ -180,7 +176,7 @@ public class AusstattungAnlegen extends JDialog {
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				setInvisible();
+				dispose();
 			}
 		}
 

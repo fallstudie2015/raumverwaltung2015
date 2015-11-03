@@ -72,8 +72,8 @@ public class PasswortAendern extends JDialog {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
-								// unsichtbar
+				dispose();// Beim Klicken auf Abbrechen wird Fenster
+							// unsichtbar
 			}
 		});
 		splitPane.setRightComponent(btnNewButton_1);
@@ -190,10 +190,6 @@ public class PasswortAendern extends JDialog {
 		return pw;
 	}
 
-	private void setInvisible() { // Fenster unsichtbar machen
-		this.setVisible(false);
-	}
-
 	public static void PwGeaendert(String nachricht) { // MessageBox für
 														// Rückgabewert
 		JOptionPane.showMessageDialog(null, nachricht, "Information",
@@ -208,7 +204,7 @@ public class PasswortAendern extends JDialog {
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-				setInvisible();
+				dispose();
 			}
 		}
 
@@ -234,7 +230,7 @@ public class PasswortAendern extends JDialog {
 			PwGeaendert(feedback);// Rückgabewert der Methode Ausstattung
 									// anlegen
 			if (feedback == "Passwort wurde erfolgreich geandert!") {
-				setInvisible();
+				dispose();
 			}
 		}
 
