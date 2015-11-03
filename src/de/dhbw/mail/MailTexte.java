@@ -33,6 +33,15 @@ public abstract class MailTexte {
 		return betreff;
 	}
 
+	/* Betreff für die E-Mail bei Stornierung eigener Buchung */
+	public static String getBetreffStornierungEigeneBuchung(Buchung buchung) {
+
+		String betreff = new String("Eine Ihrer Buchungen am "
+				+ buchung.getDatum() + " wurde storniert");
+
+		return betreff;
+	}
+
 	/* Betreff für die E-Mail bei Reservierungsbestätigung */
 	public static String getBetreffBestaetigen(Buchung buchung) {
 
@@ -119,13 +128,44 @@ public abstract class MailTexte {
 	public static String getTextStornierung(Buchung buchung) {
 
 		String antwort = new String(
-				"Sehr geehrte Verwalter, \n\n " + "eine Buchung von "
-						+ SQL_Schnittstelle.getBenutzerName(
-								buchung.getBenutzerID())
-				+ " wurde storniert. \n\n Datum:  \t " + buchung.getDatum()
+				"Sehr geehrte Verwalter, \n\n eine Buchung von "
+						+ SQL_Schnittstelle
+								.getBenutzerName(buchung.getBenutzerID())
+						+ " wurde storniert. \n\n Datum:  \t "
+						+ buchung.getDatum() + " \n Uhrzeit:\t "
+						+ buchung.getZeitVon() + " bis " + buchung.getZeitBis()
+						+ " \n Raum:   \t"
+						+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+
+		return antwort;
+	}
+
+	/* Text für Stornierung eigene Buchung */
+	public static String getTextEigeneStornierung(Buchung buchung) {
+
+		String antwort = new String("Hallo "
+				+ SQL_Schnittstelle.getBenutzerName(buchung.getBenutzerID())
+				+ ",\n\n Ihre Buchung vom: \t " + buchung.getDatum()
 				+ " \n Uhrzeit:\t " + buchung.getZeitVon() + " bis "
 				+ buchung.getZeitBis() + " \n Raum:   \t"
-				+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
+				+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()))
+				+ "\n\n wurde storniert.";
+
+		return antwort;
+	}
+
+	/* Text für Hausmeister für Stornierung */
+	public static String getTextStornierungHausmeister(Buchung buchung) {
+
+		String antwort = new String(
+				"Sehr geehrter Hausmeister, \n\n eine Buchung von "
+						+ SQL_Schnittstelle
+								.getBenutzerName(buchung.getBenutzerID())
+						+ " wurde storniert. \n\n Datum:  \t "
+						+ buchung.getDatum() + " \n Uhrzeit:\t "
+						+ buchung.getZeitVon() + " bis " + buchung.getZeitBis()
+						+ " \n Raum:   \t"
+						+ SQL_Schnittstelle.getRaumName(buchung.getRaumID()));
 
 		return antwort;
 	}

@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.java.Buchung;
@@ -114,14 +115,14 @@ public class Stornieren_View extends JDialog {
 
 		JPanel zeitPanel = new JPanel();
 		try {
-			zeitPanel.setLayout(new FlowLayout());
+			zeitPanel.setLayout(new GridLayout(1, 3));
 
 			txtZeitVon = new JTextField("" + buchung.getZeitVon() + "");
 			txtZeitBis = new JTextField("" + buchung.getZeitBis() + "");
 
 			zeitPanel.add(txtZeitVon);
 			txtZeitVon.setEditable(false);
-			zeitPanel.add(new JLabel(" - "));
+			zeitPanel.add(new JLabel(" - ", SwingConstants.CENTER));
 			zeitPanel.add(txtZeitBis);
 			txtZeitBis.setEditable(false);
 		} catch (Exception ex) {
@@ -278,6 +279,18 @@ public class Stornieren_View extends JDialog {
 				mbv.getRaumView()
 						.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 				MailConnection mail = new MailConnection();
+				mail.sendMail(MailTexte.hausmeisterPostfach,
+						MailTexte.getBetreffStornierung(mbv.getBuchung()),
+						MailTexte.getTextStornierungHausmeister(
+								mbv.getBuchung()));
+
+				mail.sendMail(
+						SQL_Schnittstelle.getBenutzerEmail(
+								mbv.getBuchung().getBenutzerID()),
+						MailTexte.getBetreffStornierungEigeneBuchung(
+								mbv.getBuchung()),
+						MailTexte.getTextEigeneStornierung(mbv.getBuchung()));
+
 				mail.sendMail(MailTexte.verwalterPostfach,
 						MailTexte.getBetreffStornierung(mbv.getBuchung()),
 						MailTexte.getTextStornierung(mbv.getBuchung()));
