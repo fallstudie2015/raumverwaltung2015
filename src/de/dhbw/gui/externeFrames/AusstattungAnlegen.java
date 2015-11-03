@@ -41,6 +41,7 @@ public class AusstattungAnlegen extends JDialog {
 	 * Fenster aufbauen
 	 */
 	public AusstattungAnlegen(Raumplaner_View rv) {
+
 		this.rv = rv;
 		setModal(true); // Ab hier: Fenster wird aufgebaut
 		setIconImage(Toolkit.getDefaultToolkit()

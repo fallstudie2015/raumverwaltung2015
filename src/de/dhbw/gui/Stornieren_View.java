@@ -65,7 +65,7 @@ public class Stornieren_View extends JDialog {
 	/* Konstruktor der alle Komponenten auf ein mal erzeugt */
 	public Stornieren_View(Raumplaner_View mutterView,
 			Buchung uebergabeBuchung) {
-
+		this.setTitle("Stornodialog");
 		mutterFenster = mutterView;
 		buchung = uebergabeBuchung;
 		this.setModal(true);
@@ -208,7 +208,8 @@ public class Stornieren_View extends JDialog {
 			txtZeitBis = new JTextField("" + buchung.getZeitBis());
 			txtBestuhlung = new JTextField("" + buchung.getBestuhlung());
 			txtKommentar = new JTextField("" + buchung.getKommentar());
-			txtAusstattung = new JTextField("Hier fehlt die Ausstattung");
+			txtAusstattung = new JTextField("" + SQL_Schnittstelle
+					.getAusstattungBuchung(buchung.getBuchungsID()));
 		} catch (Exception ex) {
 			Error_Message_Box.laufzeitfehler(ex,
 					"gui.Bestaetigungs_View.befuelleMainPanel");

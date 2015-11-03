@@ -77,7 +77,7 @@ public class Bestaetigungs_View extends JDialog {
 	 */
 	public Bestaetigungs_View(Raumplaner_View mutterView,
 			Buchung uebergabeBuchung) {
-
+		this.setTitle("Bestätigungsdialog");
 		mutterFenster = mutterView;
 		buchung = uebergabeBuchung;
 		this.setModal(true);
