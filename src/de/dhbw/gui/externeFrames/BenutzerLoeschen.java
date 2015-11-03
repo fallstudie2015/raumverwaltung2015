@@ -10,8 +10,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -36,8 +34,11 @@ public class BenutzerLoeschen extends JDialog {
 	 */
 	public BenutzerLoeschen() {
 		setModal(true); // Ab hier: Fenster wird aufgebaut
-		setIconImage(Toolkit.getDefaultToolkit().getImage(BenutzerLoeschen.class
-				.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
+		setIconImage(Toolkit
+				.getDefaultToolkit()
+				.getImage(
+						BenutzerLoeschen.class
+								.getResource("/ressources/menu_benutzer_loeschen_transp.png")));
 		setResizable(false);
 		setTitle("Benutzer löschen");
 		setLocationRelativeTo(this);
@@ -97,8 +98,8 @@ public class BenutzerLoeschen extends JDialog {
 					.deleteBenutzer(meinPanelBenutzer.getSelectedBenutzerID());
 			if (feedback == true) {// Rückgabewert der Methode Ausstattung
 									// anlegen
-				setInvisible();// Beim Klicken auf Abbrechen wird Fenster
-								// unsichtbar
+				setInvisible();// Nach löschen des Benutzers wird das Fenster
+				// unsichtbar
 				Erfolg("Benutzer wurde gelöscht!");
 			} else {
 				Erfolg("Benutzer konnte nicht gelöscht werden!");
