@@ -35,8 +35,8 @@ public abstract class SQL_Schnittstelle {
 		try {
 			// Datenbanktreiber fuer MySQL laden
 			Class.forName("com.mysql.jdbc.Driver");
-			System.out
-					.println("Treiber gefunden\n--------------------------------");
+			System.out.println(
+					"Treiber gefunden\n--------------------------------");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Treiber nicht gefunden");
 		}
@@ -187,9 +187,9 @@ public abstract class SQL_Schnittstelle {
 			ResultSet rs = sqlAbfrage(abfrageString);
 			// Räume werden in einer Schleife zur Liste hinzugefügt
 			while (rs.next()) {
-				raumListe.add(new Raum(rs.getInt("raumid"), rs
-						.getString("name"), rs.getString("strasse"), rs
-						.getString("stock"), rs.getInt("maxAnzPersonen")));
+				raumListe.add(new Raum(rs.getInt("raumid"),
+						rs.getString("name"), rs.getString("strasse"),
+						rs.getString("stock"), rs.getInt("maxAnzPersonen")));
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -211,13 +211,13 @@ public abstract class SQL_Schnittstelle {
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 			// Alle Datensätze werden zu einer ArrayListe hinzugefügt
 			while (rs.next()) {
-				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
-						.getString("telefon"), rs.getDate("datum"), rs
-						.getTime("zeitvon"), rs.getTime("zeitbis"), rs
-						.getString("kommentar"), rs.getString("bestuhlung"), rs
-						.getInt("benutzerid"), rs.getInt("raumid"), rs
-						.getString("status"), rs
-						.getString("veranstaltungsBezeichnung")));
+				buchungListe.add(new Buchung(rs.getInt("buchungid"),
+						rs.getString("telefon"), rs.getDate("datum"),
+						rs.getTime("zeitvon"), rs.getTime("zeitbis"),
+						rs.getString("kommentar"), rs.getString("bestuhlung"),
+						rs.getInt("benutzerid"), rs.getInt("raumid"),
+						rs.getString("status"),
+						rs.getString("veranstaltungsBezeichnung")));
 			}
 
 		} catch (Exception e) {
@@ -256,8 +256,8 @@ public abstract class SQL_Schnittstelle {
 				ausstattung = "";
 				while (rsa.next()) {
 					if (rs.getInt("buchungid") == rsa.getInt("buchungid")) {
-						ausstattung = ausstattung
-								+ rsa.getString("bezeichnung") + ", ";
+						ausstattung = ausstattung + rsa.getString("bezeichnung")
+								+ ", ";
 					}
 				}
 				rsa.beforeFirst();
@@ -266,15 +266,16 @@ public abstract class SQL_Schnittstelle {
 							ausstattung.length() - 2);
 				}
 
-				buchungListe.add(new BuchungPlus(rs.getInt("buchungid"), rs
-						.getString("telefon"), rs.getDate("datum"), rs
-						.getTime("zeitvon"), rs.getTime("zeitbis"), rs
-						.getString("kommentar"), rs.getString("bestuhlung"), rs
-						.getInt("benutzerid"), rs.getInt("raumid"), rs
-						.getString("status"), rs.getString("vorname") + " "
-						+ rs.getString("nachname"), ausstattung, rs
-						.getString("bereich"), rs
-						.getString("veranstaltungsBezeichnung")));
+				buchungListe.add(new BuchungPlus(rs.getInt("buchungid"),
+						rs.getString("telefon"), rs.getDate("datum"),
+						rs.getTime("zeitvon"), rs.getTime("zeitbis"),
+						rs.getString("kommentar"), rs.getString("bestuhlung"),
+						rs.getInt("benutzerid"), rs.getInt("raumid"),
+						rs.getString("status"),
+						rs.getString("vorname") + " "
+								+ rs.getString("nachname"),
+						ausstattung, rs.getString("bereich"),
+						rs.getString("veranstaltungsBezeichnung")));
 			}
 		} catch (Exception e) {
 			Error_Message_Box.laufzeitfehler(e,
@@ -329,28 +330,10 @@ public abstract class SQL_Schnittstelle {
 				intExterneTeilnehmer = 1;
 			}
 			String updateString = "INSERT INTO buchung (telefon, datum, zeitvon, zeitbis, kommentar, bestuhlung, benutzerid, raumid, status, anzPersonen, externeTeilnehmer, veranstaltungsbezeichnung) VALUES('"
-					+ telefon
-					+ "', '"
-					+ datum
-					+ "', '"
-					+ zeitVon
-					+ "', '"
-					+ zeitBis
-					+ "', '"
-					+ kommentar
-					+ "', '"
-					+ bestuhlung
-					+ "', "
-					+ benutzerId
-					+ ", "
-					+ raumId
-					+ ", '"
-					+ status
-					+ "', "
-					+ anzPersonen
-					+ ", "
-					+ intExterneTeilnehmer
-					+ ", '"
+					+ telefon + "', '" + datum + "', '" + zeitVon + "', '"
+					+ zeitBis + "', '" + kommentar + "', '" + bestuhlung + "', "
+					+ benutzerId + ", " + raumId + ", '" + status + "', "
+					+ anzPersonen + ", " + intExterneTeilnehmer + ", '"
 					+ veranstaltungsbezeichnung + "')";
 			int buchungId = SQL_Schnittstelle.sqlInsert(updateString);
 			String ausstattung = null;
@@ -384,13 +367,13 @@ public abstract class SQL_Schnittstelle {
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
-				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
-						.getString("telefon"), rs.getDate("datum"), rs
-						.getTime("zeitvon"), rs.getTime("zeitbis"), rs
-						.getString("kommentar"), rs.getString("bestuhlung"), rs
-						.getInt("benutzerid"), rs.getInt("raumid"), rs
-						.getString("status"), rs
-						.getString("veranstaltungsBezeichnung")));
+				buchungListe.add(new Buchung(rs.getInt("buchungid"),
+						rs.getString("telefon"), rs.getDate("datum"),
+						rs.getTime("zeitvon"), rs.getTime("zeitbis"),
+						rs.getString("kommentar"), rs.getString("bestuhlung"),
+						rs.getInt("benutzerid"), rs.getInt("raumid"),
+						rs.getString("status"),
+						rs.getString("veranstaltungsBezeichnung")));
 			}
 
 		} catch (Exception e) {
@@ -446,8 +429,7 @@ public abstract class SQL_Schnittstelle {
 			String abfrageString = "SELECT buchungid as 'ID', r.name as 'Raumbez.', datum as Datum ,zeitvon as 'Zeit von', zeitbis as 'Zeit bis', sb.bezeichnung AS Status "
 					+ "FROM buchung b JOIN raum r ON r.raumid = b.raumid "
 					+ "JOIN statusBezeichnung sb ON sb.abkuerzung = b.status "
-					+ "WHERE benutzerid = "
-					+ benutzerid
+					+ "WHERE benutzerid = " + benutzerid
 					+ " AND b.datum >= DATE(NOW()) ORDER BY b.datum; ";
 			rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
@@ -497,7 +479,8 @@ public abstract class SQL_Schnittstelle {
 	 * @param ausstattungId
 	 *            ID der zugehörigen Ausstattung
 	 */
-	public static void insertBuchungAusstattung(int buchungId, int ausstattungId) {
+	public static void insertBuchungAusstattung(int buchungId,
+			int ausstattungId) {
 		// TODO Auto-generated method stub
 		try {
 
@@ -534,17 +517,11 @@ public abstract class SQL_Schnittstelle {
 
 		try {
 			String updateString = "INSERT INTO logging (klasse, methode, lokalMessage, message, typ, dateTime, benutzerid) VALUES('"
-					+ klasse.replace("'", "''")
-					+ "', '"
-					+ methode.replace("'", "''")
-					+ "', '"
-					+ localMessage.replace("'", "''")
-					+ "', '"
-					+ message.replace("'", "''")
-					+ "', '"
-					+ type.replace("'", "''")
-					+ "', now(), '"
-					+ benutzerID
+					+ klasse.replace("'", "''") + "', '"
+					+ methode.replace("'", "''") + "', '"
+					+ localMessage.replace("'", "''") + "', '"
+					+ message.replace("'", "''") + "', '"
+					+ type.replace("'", "''") + "', now(), '" + benutzerID
 					+ "')";
 
 			int rowAffected = SQL_Schnittstelle.sqlInsert(updateString);
@@ -581,12 +558,7 @@ public abstract class SQL_Schnittstelle {
 			stock = GUI_Schnittstelle.preventSQLInjection(stock);
 
 			String updateString = "INSERT INTO raum (name, strasse, stock, maxAnzPersonen, entfernt) VALUES('"
-					+ name
-					+ "', '"
-					+ strasse
-					+ "', '"
-					+ stock
-					+ "', '"
+					+ name + "', '" + strasse + "', '" + stock + "', '"
 					+ maxAnzPersonen + "', '0')";
 			String grunAusstattungBezeichnung = null;
 			int raumId = SQL_Schnittstelle.sqlInsert(updateString);
@@ -645,9 +617,8 @@ public abstract class SQL_Schnittstelle {
 
 			SQL_Schnittstelle.sqlInsert(updateString);
 		} catch (Exception e) {
-			Error_Message_Box
-					.laufzeitfehler(e,
-							"de.dhbw.java.SQL_Schnittstelle.insertAusstattungsArtenLager");
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.insertAusstattungsArtenLager");
 			return false;
 		}
 		return true;
@@ -732,9 +703,8 @@ public abstract class SQL_Schnittstelle {
 			SQL_Schnittstelle.sqlUpdateDelete(updateString);
 
 		} catch (Exception e) {
-			Error_Message_Box
-					.laufzeitfehler(e,
-							"de.dhbw.java.SQL_Schnittstelle.updateBuchungStatus(int, char)");
+			Error_Message_Box.laufzeitfehler(e,
+					"de.dhbw.java.SQL_Schnittstelle.updateBuchungStatus(int, char)");
 			return false;
 		}
 		return true;
@@ -789,9 +759,9 @@ public abstract class SQL_Schnittstelle {
 
 			int raumId = getRaumID(raumbezeichnung);
 			String updateString = "Update buchung set status = '" + status
-					+ "' where datum = '" + datum + "'and zeitvon = '"
-					+ zeitVon + "' and zeitbis = '" + zeitBis
-					+ "' and raumid = '" + raumId + "'";
+					+ "' where datum = '" + datum + "'and zeitvon = '" + zeitVon
+					+ "' and zeitbis = '" + zeitBis + "' and raumid = '"
+					+ raumId + "'";
 
 			System.out.println("updateString " + updateString);
 			SQL_Schnittstelle.sqlUpdateDelete(updateString);
@@ -956,9 +926,9 @@ public abstract class SQL_Schnittstelle {
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
-				ausstattungListe.add(new Ausstattung(rs
-						.getInt("ausstattungsArtenLagerid"), rs
-						.getString("bezeichnung")));
+				ausstattungListe.add(
+						new Ausstattung(rs.getInt("ausstattungsArtenLagerid"),
+								rs.getString("bezeichnung")));
 			}
 
 		} catch (Exception e) {
@@ -983,9 +953,9 @@ public abstract class SQL_Schnittstelle {
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
-				grundAusstattungListe.add(new Ausstattung(rs
-						.getInt("raumAusstattungid"), rs
-						.getString("bezeichnung")));
+				grundAusstattungListe
+						.add(new Ausstattung(rs.getInt("raumAusstattungid"),
+								rs.getString("bezeichnung")));
 			}
 
 		} catch (Exception e) {
@@ -1052,7 +1022,7 @@ public abstract class SQL_Schnittstelle {
 			// prüft ob die das neue Passwort mit seiner Wiederholung
 			// übereinstimmt
 			if (!neuesPasswort.equals(neuesPasswortWiederholt)) {
-				return "Das neue Passwort und dessen Wiederholung sind nicht identisch";
+				return "Das neue Passwort und dessen Wiederholung sind nicht identisch!";
 			}
 			int benutzerId = Benutzer.getBenutzerID();
 
@@ -1068,7 +1038,7 @@ public abstract class SQL_Schnittstelle {
 					"de.dhbw.java.SQL_Schnittstelle.passwortAendern");
 
 		}
-		return "Passwort wurde erfolgreich geandert!";
+		return "Passwort wurde erfolgreich geändert!";
 	} // end method passwortAendern
 
 	/**
@@ -1167,13 +1137,13 @@ public abstract class SQL_Schnittstelle {
 			ResultSet rs = SQL_Schnittstelle.sqlAbfrage(abfrageString);
 
 			while (rs.next()) {
-				buchungListe.add(new Buchung(rs.getInt("buchungid"), rs
-						.getString("telefon"), rs.getDate("datum"), rs
-						.getTime("zeitvon"), rs.getTime("zeitbis"), rs
-						.getString("kommentar"), rs.getString("bestuhlung"), rs
-						.getInt("benutzerid"), rs.getInt("raumid"), rs
-						.getString("status"), rs
-						.getString("veranstaltungsBezeichnung")));
+				buchungListe.add(new Buchung(rs.getInt("buchungid"),
+						rs.getString("telefon"), rs.getDate("datum"),
+						rs.getTime("zeitvon"), rs.getTime("zeitbis"),
+						rs.getString("kommentar"), rs.getString("bestuhlung"),
+						rs.getInt("benutzerid"), rs.getInt("raumid"),
+						rs.getString("status"),
+						rs.getString("veranstaltungsBezeichnung")));
 			}
 
 		} catch (Exception e) {
@@ -1200,7 +1170,8 @@ public abstract class SQL_Schnittstelle {
 			rs.beforeFirst();
 			while (rs.next()) {
 				System.out.print(zeile + ": " + "\t");
-				for (int i = 1; i < rs.getMetaData().getColumnCount() + 1; i++) {
+				for (int i = 1; i < rs.getMetaData().getColumnCount()
+						+ 1; i++) {
 					System.out.print(rs.getString(i) + "\t");
 				}
 				zeile++;
@@ -1239,17 +1210,10 @@ public abstract class SQL_Schnittstelle {
 			bereich = GUI_Schnittstelle.preventSQLInjection(bereich);
 
 			passwort = EncryptPassword.SHA512(passwort);
-			rueckgabeBenutzerID = SQL_Schnittstelle
-					.sqlInsert("INSERT INTO benutzer (nachname, vorname, email, passwort, rolle, bereich)"
-							+ " VALUES ('"
-							+ nachname
-							+ "', '"
-							+ vorname
-							+ "', '"
-							+ email
-							+ "', '"
-							+ passwort
-							+ "', '"
+			rueckgabeBenutzerID = SQL_Schnittstelle.sqlInsert(
+					"INSERT INTO benutzer (nachname, vorname, email, passwort, rolle, bereich)"
+							+ " VALUES ('" + nachname + "', '" + vorname
+							+ "', '" + email + "', '" + passwort + "', '"
 							+ rolle + "', '" + bereich + "')");
 			if (rueckgabeBenutzerID != -1) {
 				antwort = true;
@@ -1300,8 +1264,8 @@ public abstract class SQL_Schnittstelle {
 	public static boolean deleteAusstattungArt(String bezeichnung) {
 		try {
 
-			int rowAffected = SQL_Schnittstelle
-					.sqlUpdateDelete("DELETE FROM ausstattungsArtenLager WHERE bezeichnung = '"
+			int rowAffected = SQL_Schnittstelle.sqlUpdateDelete(
+					"DELETE FROM ausstattungsArtenLager WHERE bezeichnung = '"
 							+ bezeichnung + "'");
 
 			if (rowAffected == 0) {
@@ -1318,8 +1282,8 @@ public abstract class SQL_Schnittstelle {
 	public static boolean deleteAusstattungArtByID(int id) {
 		try {
 
-			int rowAffected = SQL_Schnittstelle
-					.sqlUpdateDelete("DELETE FROM ausstattungsArtenLager WHERE ausstattungsArtenLagerid = '"
+			int rowAffected = SQL_Schnittstelle.sqlUpdateDelete(
+					"DELETE FROM ausstattungsArtenLager WHERE ausstattungsArtenLagerid = '"
 							+ id + "'");
 
 			if (rowAffected == 0) {

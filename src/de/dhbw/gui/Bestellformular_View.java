@@ -37,11 +37,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.plaf.basic.BasicSpinnerUI;
 
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
-import com.toedter.components.JSpinField;
 
 import de.dhbw.java.Ausstattung;
 import de.dhbw.java.Benutzer;
@@ -51,22 +49,26 @@ import de.dhbw.mail.MailTexte;
 
 public class Bestellformular_View extends JPanel {
 
-	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel, zeitVonLabel, zeitBisLabel, personenLabel,
-			technikLabel, ausstattungLabel, bestuhlungLabel, bezLabel, maxLabel, limitLabel;
+	private JLabel raumLabel, nameLabel, bereichLabel, telLabel, datumLabel,
+			zeitVonLabel, zeitBisLabel, personenLabel, technikLabel,
+			ausstattungLabel, bestuhlungLabel, bezLabel, maxLabel, limitLabel;
 	private JTextField telField, bezField;
 	// private JSpinField persField;
 	private JDateChooser dateChooser;
 	private java.util.Date oldDate;
-	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB, zeitBisStundeCB, zeitBisMinuteCB;
+	private JComboBox<String> bestuhlungCB, zeitVonStundeCB, zeitVonMinuteCB,
+			zeitBisStundeCB, zeitBisMinuteCB;
 	private JButton reservierenButton, abbrechenButton;
 	private JTextArea sonstigeArea;
 	private JCheckBox externCheck;
-	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
-	private final String stundeBis[] = { "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" };
+	private final String stundeVon[] = { "08", "09", "10", "11", "12", "13",
+			"14", "15", "16", "17", "18" };
+	private final String stundeBis[] = { "08", "09", "10", "11", "12", "13",
+			"14", "15", "16", "17", "18", "19" };
 	private final String minute[] = { "00", "15", "30", "45" };
 	private Ausstattung ausstattung[];
-	private final String bestuhulung[] = { "Standard", "U-Form", "Blockbildung", "Schulbanksystem",
-			"Sonderbestuhlung" };
+	private final String bestuhulung[] = { "Standard", "U-Form", "Blockbildung",
+			"Schulbanksystem", "Sonderbestuhlung" };
 	private Ausstattung technik[];
 	private String raumName;
 	private JScrollPane sonstigeScroller, pane;
@@ -87,8 +89,8 @@ public class Bestellformular_View extends JPanel {
 	 * Raum_View benötigt, um bei einer erfolgten Buchung, den Kalender aktuell
 	 * zu halten
 	 */
-	public Bestellformular_View(JFrame frame, String name, String nachname, int raumId, TappedPaneBuchung panel,
-			String bereich, Raum_View rv) {
+	public Bestellformular_View(JFrame frame, String name, String nachname,
+			int raumId, TappedPaneBuchung panel, String bereich, Raum_View rv) {
 		// initView();
 		this.raumId = raumId;
 		this.raum = rv;
@@ -152,10 +154,9 @@ public class Bestellformular_View extends JPanel {
 	 */
 	private JPanel raumUndNamePanel() {
 		raumLabel = new JLabel(raumName);
-		raumLabel.setPreferredSize(new Dimension(100, 30));
 
 		nameLabel = new JLabel(nutzerVorname + " " + nutzerNachname);
-		nameLabel.setPreferredSize(new Dimension(125, 30));
+		nameLabel.setPreferredSize(new Dimension(175, 30));
 
 		bereichLabel = new JLabel(nutzerBereich);
 		bereichLabel.setPreferredSize(new Dimension(175, 30));
@@ -280,12 +281,12 @@ public class Bestellformular_View extends JPanel {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				String proof = SQL_Schnittstelle
-						.pruefeBuchungskonflikt(raumName, new Date(dateChooser.getDate().getTime()),
-								Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem()
-										+ ":00"),
-						Time.valueOf(
-								zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00"));
+				String proof = SQL_Schnittstelle.pruefeBuchungskonflikt(
+						raumName, new Date(dateChooser.getDate().getTime()),
+						Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
+								+ zeitVonMinuteCB.getSelectedItem() + ":00"),
+						Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
+								+ zeitBisMinuteCB.getSelectedItem() + ":00"));
 				if (proof != null) {
 					reservierenButton.setEnabled(false);
 					limitLabel.setText(proof);
@@ -338,12 +339,12 @@ public class Bestellformular_View extends JPanel {
 		ItemListener il = new ItemListener() {
 
 			public void itemStateChanged(ItemEvent e) {
-				String proof = SQL_Schnittstelle
-						.pruefeBuchungskonflikt(raumName, new Date(dateChooser.getDate().getTime()),
-								Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem()
-										+ ":00"),
-						Time.valueOf(
-								zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00"));
+				String proof = SQL_Schnittstelle.pruefeBuchungskonflikt(
+						raumName, new Date(dateChooser.getDate().getTime()),
+						Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
+								+ zeitVonMinuteCB.getSelectedItem() + ":00"),
+						Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
+								+ zeitBisMinuteCB.getSelectedItem() + ":00"));
 				if (proof != null) {
 					reservierenButton.setEnabled(false);
 					limitLabel.setText(proof);
@@ -354,7 +355,8 @@ public class Bestellformular_View extends JPanel {
 					// Label über reservieren rot anzeigen mit Onhalt von proof
 				}
 
-				if (zeitBisStundeCB.getSelectedItem() == "19" && zeitBisMinuteCB.getSelectedIndex() != 0) {
+				if (zeitBisStundeCB.getSelectedItem() == "19"
+						&& zeitBisMinuteCB.getSelectedIndex() != 0) {
 					zeitBisMinuteCB.setSelectedIndex(0);
 				}
 			}
@@ -487,7 +489,8 @@ public class Bestellformular_View extends JPanel {
 		sonstigeArea.setLineWrap(true);
 		sonstigeArea.setVisible(true);
 
-		sonstigeScroller = new JScrollPane(sonstigeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		sonstigeScroller = new JScrollPane(sonstigeArea,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		sonstigeScroller.setPreferredSize(new Dimension(200, 100));
 		sonstigeScroller.setVisible(false);
@@ -590,7 +593,8 @@ public class Bestellformular_View extends JPanel {
 					raum.setBuchungArray(SQL_Schnittstelle.getBuchungPlus());
 					MailConnection mail = new MailConnection();
 					Date datum = new Date(dateChooser.getDate().getTime());
-					mail.sendMail(MailTexte.verwalterPostfach, MailTexte.getBetreffNeueReservierung(),
+					mail.sendMail(MailTexte.verwalterPostfach,
+							MailTexte.getBetreffNeueReservierung(),
 							MailTexte.getTextNeueReservierung(datum));
 
 					ausstattungList.clear();
@@ -602,7 +606,8 @@ public class Bestellformular_View extends JPanel {
 					frame.validate();
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Es ist ein Fehler bei der Reservierung aufgetreten!");
+					JOptionPane.showMessageDialog(null,
+							"Es ist ein Fehler bei der Reservierung aufgetreten!");
 				}
 			}
 		});
@@ -670,7 +675,8 @@ public class Bestellformular_View extends JPanel {
 		spinner = new JSpinner(spinnerModel);
 		spinner.setPreferredSize(new Dimension(105, 30));
 		spinner.setEditor(new JSpinner.DefaultEditor(spinner));
-		((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(false);
+		((JSpinner.DefaultEditor) spinner.getEditor()).getTextField()
+				.setEditable(false);
 
 		maxPers = max;
 		// maxLabel.setText("(" + maxPers + ")");
@@ -689,9 +695,11 @@ public class Bestellformular_View extends JPanel {
 		} else {
 			if (min.equals("45")) {
 				zeitBisMinuteCB.setSelectedIndex(0);
-				zeitBisStundeCB.setSelectedIndex(zeitVonStundeCB.getSelectedIndex() + 1);
+				zeitBisStundeCB.setSelectedIndex(
+						zeitVonStundeCB.getSelectedIndex() + 1);
 			} else {
-				zeitBisMinuteCB.setSelectedIndex(zeitVonMinuteCB.getSelectedIndex() + 1);
+				zeitBisMinuteCB.setSelectedIndex(
+						zeitVonMinuteCB.getSelectedIndex() + 1);
 				zeitBisStundeCB.setSelectedItem(hr);
 			}
 		}
@@ -730,10 +738,10 @@ public class Bestellformular_View extends JPanel {
 		String telefon = telField.getText();
 		String bezeichnung = bezField.getText();
 		Date datum = new Date(dateChooser.getDate().getTime());
-		Time zeitVon = Time
-				.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem() + ":00");
-		Time zeitBis = Time
-				.valueOf(zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem() + ":00");
+		Time zeitVon = Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
+				+ zeitVonMinuteCB.getSelectedItem() + ":00");
+		Time zeitBis = Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
+				+ zeitBisMinuteCB.getSelectedItem() + ":00");
 		String kommentar = sonstigeArea.getText();
 		String bestuhlung = String.valueOf(bestuhlungCB.getSelectedItem());
 		int benutzerId = Benutzer.getBenutzerID();
@@ -741,8 +749,10 @@ public class Bestellformular_View extends JPanel {
 		boolean externeTeilnehmer = externCheck.isSelected();
 
 		if (proofField(zeitVon, zeitBis)) {
-			return SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon, zeitBis, kommentar, bestuhlung, benutzerId,
-					raumId, 'v', anzPersonen, ausstattungList, externeTeilnehmer, bezeichnung);
+			return SQL_Schnittstelle.insertBuchung(telefon, datum, zeitVon,
+					zeitBis, kommentar, bestuhlung, benutzerId, raumId, 'v',
+					anzPersonen, ausstattungList, externeTeilnehmer,
+					bezeichnung);
 		} else {
 			return false;
 		}
@@ -763,7 +773,8 @@ public class Bestellformular_View extends JPanel {
 			return false;
 		}
 		if (zeitBis.before(zeitVon) || zeitBis.equals(zeitVon)) {
-			JOptionPane.showMessageDialog(null, "Die Angaben der Zeit sind Falsch. Bitte ändern Sie die Angabe!");
+			JOptionPane.showMessageDialog(null,
+					"Die Angaben der Zeit sind Falsch. Bitte ändern Sie die Angabe!");
 			return false;
 		}
 		return true;
@@ -779,11 +790,13 @@ public class Bestellformular_View extends JPanel {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (oldDate != dateChooser.getDate()) {
-					String proof = SQL_Schnittstelle.pruefeBuchungskonflikt(raumName,
-							new Date(dateChooser.getDate().getTime()),
-							Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":" + zeitVonMinuteCB.getSelectedItem()
+					String proof = SQL_Schnittstelle.pruefeBuchungskonflikt(
+							raumName, new Date(dateChooser.getDate().getTime()),
+							Time.valueOf(zeitVonStundeCB.getSelectedItem() + ":"
+									+ zeitVonMinuteCB.getSelectedItem()
 									+ ":00"),
-							Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":" + zeitBisMinuteCB.getSelectedItem()
+							Time.valueOf(zeitBisStundeCB.getSelectedItem() + ":"
+									+ zeitBisMinuteCB.getSelectedItem()
 									+ ":00"));
 					if (proof != null) {
 						reservierenButton.setEnabled(false);

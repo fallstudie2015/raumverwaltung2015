@@ -229,7 +229,7 @@ public class PasswortAendern extends JDialog {
 					GetPasswortAlt(), GetPasswortNeu1(), GetPasswortNeu2());
 			PwGeaendert(feedback);// Rückgabewert der Methode Ausstattung
 									// anlegen
-			if (feedback == "Passwort wurde erfolgreich geandert!") {
+			if (feedback == "Passwort wurde erfolgreich geändert!") {
 				dispose();
 			}
 		}
